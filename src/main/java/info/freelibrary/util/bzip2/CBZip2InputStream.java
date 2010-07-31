@@ -1,26 +1,32 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements. See the NOTICE file distributed with this
+ * work for additional information regarding copyright ownership. The ASF
+ * licenses this file to You under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * 
+ * This package is based on the work done by Keiron Liddle, Aftex Software
+ * <keiron@aftexsw.com> to whom the Ant project is very grateful for his great
+ * code.
+ * 
+ * The BZip2 classes were then extracted from the Ant project and made available
+ * by Kohsuke Kawaguchi <http://www.kohsuke.org/bzip2/>.
+ * 
+ * Then the BZip2 classes were put in the info.freelibrary package for inclusion
+ * in this utilities package.
  */
 
-/*
- * This package is based on the work done by Keiron Liddle, Aftex Software
- * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
- * great code.
- */
 package info.freelibrary.util.bzip2;
 
 import java.io.InputStream;
@@ -37,9 +43,9 @@ import java.io.IOException;
  * usage.
  * </p>
  * <p>
- * <tt>CBZip2InputStream</tt> reads bytes from the compressed source stream
- * via the single byte {@link java.io.InputStream#read() read()} method
- * exclusively. Thus you should consider to use a buffered source stream.
+ * <tt>CBZip2InputStream</tt> reads bytes from the compressed source stream via
+ * the single byte {@link java.io.InputStream#read() read()} method exclusively.
+ * Thus you should consider to use a buffered source stream.
  * </p>
  * <p>
  * Instances of this class are not threadsafe.
@@ -62,8 +68,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		int nInUseShadow = 0;
 
 		for (int i = 0; i < 256; i++) {
-			if (inUse[i])
-				seqToUnseq[nInUseShadow++] = (byte) i;
+			if (inUse[i]) seqToUnseq[nInUseShadow++] = (byte) i;
 		}
 
 		this.nInUse = nInUseShadow;
@@ -157,9 +162,9 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	 * </p>
 	 * 
 	 * @throws IOException
-	 *         if the stream content is malformed or an I/O error occurs.
+	 *             if the stream content is malformed or an I/O error occurs.
 	 * @throws NullPointerException
-	 *         if <tt>in == null</tt>
+	 *             if <tt>in == null</tt>
 	 */
 	public CBZip2InputStream(final InputStream in) throws IOException {
 		super();
@@ -178,20 +183,15 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	}
 
 	public int read(final byte[] dest, final int offs, final int len)
-		throws IOException {
-		if (offs < 0) {
-			throw new IndexOutOfBoundsException("offs(" + offs + ") < 0.");
-		}
-		if (len < 0) {
-			throw new IndexOutOfBoundsException("len(" + len + ") < 0.");
-		}
-		if (offs + len > dest.length) {
-			throw new IndexOutOfBoundsException("offs(" + offs + ") + len("
-					+ len + ") > dest.length(" + dest.length + ").");
-		}
-		if (this.in == null) {
-			throw new IOException("stream closed");
-		}
+			throws IOException {
+		if (offs < 0) { throw new IndexOutOfBoundsException("offs(" + offs
+				+ ") < 0."); }
+		if (len < 0) { throw new IndexOutOfBoundsException("len(" + len
+				+ ") < 0."); }
+		if (offs + len > dest.length) { throw new IndexOutOfBoundsException(
+				"offs(" + offs + ") + len(" + len + ") > dest.length("
+						+ dest.length + ")."); }
+		if (this.in == null) { throw new IOException("stream closed"); }
 
 		final int hi = offs + len;
 		int destOffs = offs;
@@ -248,11 +248,9 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 				char magic3 = (char) this.in.read();
 				char magic4 = (char) this.in.read();
 
-				if (magic3 != 'Z' || magic4 != 'h') {
-					throw new IOException(
-							"Stream is not BZip2 formatted: expected 'BZh' as first bytes but got 'B"
-									+ magic3 + magic4 + "'");
-				}
+				if (magic3 != 'Z' || magic4 != 'h') { throw new IOException(
+						"Stream is not BZip2 formatted: expected 'BZh' as first bytes but got 'B"
+								+ magic3 + magic4 + "'"); }
 			}
 			else {
 				throw new IOException(
@@ -262,10 +260,9 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		}
 
 		int blockSize = this.in.read();
-		if ((blockSize < '1') || (blockSize > '9')) {
-			throw new IOException("Stream is not BZip2 formatted: illegal "
-					+ "blocksize " + (char) blockSize);
-		}
+		if ((blockSize < '1') || (blockSize > '9')) { throw new IOException(
+				"Stream is not BZip2 formatted: illegal " + "blocksize "
+						+ (char) blockSize); }
 
 		this.blockSize100k = blockSize - '0';
 
@@ -368,9 +365,8 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			do {
 				int thech = inShadow.read();
 
-				if (thech < 0) {
-					throw new IOException("unexpected end of stream");
-				}
+				if (thech < 0) { throw new IOException(
+						"unexpected end of stream"); }
 
 				bsBuffShadow = (bsBuffShadow << 8) | thech;
 				bsLiveShadow += 8;
@@ -391,9 +387,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		if (bsLiveShadow < 1) {
 			int thech = this.in.read();
 
-			if (thech < 0) {
-				throw new IOException("unexpected end of stream");
-			}
+			if (thech < 0) { throw new IOException("unexpected end of stream"); }
 
 			bsBuffShadow = (bsBuffShadow << 8) | thech;
 			bsLiveShadow += 8;
@@ -679,14 +673,12 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 					ll8[++lastShadow] = ch;
 				}
 
-				if (lastShadow >= limitLast) {
-					throw new IOException("block overrun");
-				}
+				if (lastShadow >= limitLast) { throw new IOException(
+						"block overrun"); }
 			}
 			else {
-				if (++lastShadow >= limitLast) {
-					throw new IOException("block overrun");
-				}
+				if (++lastShadow >= limitLast) { throw new IOException(
+						"block overrun"); }
 
 				final char tmp = yy[nextSym - 1];
 				unzftab[seqToUnseq[tmp] & 0xff]++;
@@ -799,9 +791,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	}
 
 	private void setupBlock() throws IOException {
-		if (this.data == null) {
-			return;
-		}
+		if (this.data == null) { return; }
 
 		final int[] cftab = this.data.cftab;
 		final int[] tt = this.data.initTT(this.last + 1);
@@ -818,9 +808,8 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			tt[cftab[ll8[i] & 0xff]++] = i;
 		}
 
-		if ((this.origPtr < 0) || (this.origPtr >= tt.length)) {
-			throw new IOException("stream corrupted");
-		}
+		if ((this.origPtr < 0) || (this.origPtr >= tt.length)) { throw new IOException(
+				"stream corrupted"); }
 
 		this.su_tPos = tt[this.origPtr];
 		this.su_count = 0;
@@ -1014,7 +1003,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		/**
 		 * Initializes the {@link #tt} array. This method is called when the
 		 * required length of the array is known. I don't initialize it at
-		 * construction time to avoid unneccessary memory allocation when
+		 * construction time to avoid unnecessary memory allocation when
 		 * compressing small files.
 		 */
 		final int[] initTT(int length) {

@@ -14,13 +14,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * 
+ * This package is based on the work done by Keiron Liddle, Aftex Software
+ * <keiron@aftexsw.com> to whom the Ant project is very grateful for his great
+ * code.
+ * 
+ * The BZip2 classes were then extracted from the Ant project and made available
+ * by Kohsuke Kawaguchi <http://www.kohsuke.org/bzip2/>.
+ * 
+ * Then the BZip2 classes were put in the info.freelibrary package for inclusion
+ * in this utilities package.
  */
 
-/*
- * This package is based on the work done by Keiron Liddle, Aftex Software
- * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
- * great code.
- */
 package info.freelibrary.util.bzip2;
 
 /**

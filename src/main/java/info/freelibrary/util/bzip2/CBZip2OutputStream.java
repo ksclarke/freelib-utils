@@ -1,26 +1,32 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements. See the NOTICE file distributed with this
+ * work for additional information regarding copyright ownership. The ASF
+ * licenses this file to You under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * 
+ * This package is based on the work done by Keiron Liddle, Aftex Software
+ * <keiron@aftexsw.com> to whom the Ant project is very grateful for his great
+ * code.
+ * 
+ * The BZip2 classes were then extracted from the Ant project and made available
+ * by Kohsuke Kawaguchi <http://www.kohsuke.org/bzip2/>.
+ * 
+ * Then the BZip2 classes were put in the info.freelibrary package for inclusion
+ * in this utilities package.
  */
 
-/*
- * This package is based on the work done by Keiron Liddle, Aftex Software
- * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
- * great code.
- */
 package info.freelibrary.util.bzip2;
 
 import java.io.OutputStream;
@@ -389,9 +395,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 	}
 
 	public void close() throws IOException {
-		if (closed) {
-			return;
-		}
+		if (closed) { return; }
 
 		if (runLength > 0) {
 			writeRun();
@@ -840,7 +844,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 		/* Now the selectors. */
 		bsW(3, nGroups);
 		bsW(15, nSelectors);
-		
+
 		for (i = 0; i < nSelectors; i++) {
 			for (j = 0; j < selectorMtf[i]; j++) {
 				bsW(1, 1);
@@ -902,9 +906,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 		int v;
 
 		bigN = hi - lo + 1;
-		if (bigN < 2) {
-			return;
-		}
+		if (bigN < 2) { return; }
 
 		hp = 0;
 		while (incs[hp] < bigN) {
@@ -965,9 +967,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 				zptr[j] = v;
 				i++;
 
-				if (workDone > workLimit && firstAttempt) {
-					return;
-				}
+				if (workDone > workLimit && firstAttempt) { return; }
 			}
 		}
 	}
@@ -1037,9 +1037,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 
 			if (hi - lo < SMALL_THRESH || d > DEPTH_THRESH) {
 				simpleSort(lo, hi, d);
-				if (workDone > workLimit && firstAttempt) {
-					return;
-				}
+				if (workDone > workLimit && firstAttempt) { return; }
 				continue;
 			}
 
@@ -1261,9 +1259,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 						if (hi > lo) {
 							qSort3(lo, hi, 2);
 							numQSorted += (hi - lo + 1);
-							if (workDone > workLimit && firstAttempt) {
-								return;
-							}
+							if (workDone > workLimit && firstAttempt) { return; }
 						}
 						ftab[sb] |= SETMASK;
 					}
@@ -1387,49 +1383,37 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
 		c1 = block[i1 + 1];
 		c2 = block[i2 + 1];
-		if (c1 != c2) {
-			return (c1 > c2);
-		}
+		if (c1 != c2) { return (c1 > c2); }
 		i1++;
 		i2++;
 
@@ -1438,53 +1422,37 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 		do {
 			c1 = block[i1 + 1];
 			c2 = block[i2 + 1];
-			if (c1 != c2) {
-				return (c1 > c2);
-			}
+			if (c1 != c2) { return (c1 > c2); }
 			s1 = quadrant[i1];
 			s2 = quadrant[i2];
-			if (s1 != s2) {
-				return (s1 > s2);
-			}
+			if (s1 != s2) { return (s1 > s2); }
 			i1++;
 			i2++;
 
 			c1 = block[i1 + 1];
 			c2 = block[i2 + 1];
-			if (c1 != c2) {
-				return (c1 > c2);
-			}
+			if (c1 != c2) { return (c1 > c2); }
 			s1 = quadrant[i1];
 			s2 = quadrant[i2];
-			if (s1 != s2) {
-				return (s1 > s2);
-			}
+			if (s1 != s2) { return (s1 > s2); }
 			i1++;
 			i2++;
 
 			c1 = block[i1 + 1];
 			c2 = block[i2 + 1];
-			if (c1 != c2) {
-				return (c1 > c2);
-			}
+			if (c1 != c2) { return (c1 > c2); }
 			s1 = quadrant[i1];
 			s2 = quadrant[i2];
-			if (s1 != s2) {
-				return (s1 > s2);
-			}
+			if (s1 != s2) { return (s1 > s2); }
 			i1++;
 			i2++;
 
 			c1 = block[i1 + 1];
 			c2 = block[i2 + 1];
-			if (c1 != c2) {
-				return (c1 > c2);
-			}
+			if (c1 != c2) { return (c1 > c2); }
 			s1 = quadrant[i1];
 			s2 = quadrant[i2];
-			if (s1 != s2) {
-				return (s1 > s2);
-			}
+			if (s1 != s2) { return (s1 > s2); }
 			i1++;
 			i2++;
 
@@ -1507,8 +1475,8 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 
 	/*
 	 * Knuth's increments seem to work better than Incerpi-Sedgewick here.
-	 * Possibly because the number of elems to sort is usually small, typically <=
-	 * 20.
+	 * Possibly because the number of elems to sort is usually small, typically
+	 * <= 20.
 	 */
 	private int[] incs = { 1, 4, 13, 40, 121, 364, 1093, 3280, 9841, 29524,
 			88573, 265720, 797161, 2391484 };
