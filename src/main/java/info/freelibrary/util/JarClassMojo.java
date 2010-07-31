@@ -90,7 +90,7 @@ public class JarClassMojo extends AbstractMojo {
 
 						bIn.read(bytes);
 						bOut.write(bytes);
-						
+
 						bOut.close();
 						bIn.close();
 					}
@@ -115,10 +115,8 @@ public class JarClassMojo extends AbstractMojo {
 				File dir = new File(target, dirName);
 
 				if (!dir.exists()) {
-					if (!dir.mkdir()) {
-						throw new IOException("Couldn't create "
-								+ dir.getAbsolutePath());
-					}
+					if (!dir.mkdir()) { throw new IOException(
+							"Couldn't create " + dir.getAbsolutePath()); }
 				}
 
 				target = dir;

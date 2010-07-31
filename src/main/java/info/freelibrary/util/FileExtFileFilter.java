@@ -28,9 +28,7 @@ public class FileExtFileFilter implements FilenameFilter {
 	public boolean accept(File aDir, String aFileName) {
 		for (String extension : myExtensions) {
 			if (new File(aDir, aFileName).isFile()
-					&& aFileName.endsWith(extension)) {
-				return true;
-			}
+					&& aFileName.endsWith(extension)) { return true; }
 		}
 
 		return false;

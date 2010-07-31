@@ -27,12 +27,10 @@ public class StringUtils {
 	 * null. If the passed in object is not a string, a cast exception will be
 	 * thrown.
 	 * 
-	 * @param aStringObj
-	 *            The string to be trimmed
+	 * @param aStringObj The string to be trimmed
 	 * @return The trimmed string or null if string is empty
-	 * @throws ClassCastException
-	 *             If the supplied object cannot be cast to a
-	 *             <code>String</code>
+	 * @throws ClassCastException If the supplied object cannot be cast to a
+	 *         <code>String</code>
 	 */
 	public static String trimToNull(Object aStringObj) {
 		return trimTo(aStringObj, null);
@@ -44,14 +42,11 @@ public class StringUtils {
 	 * default value because most times a boolean with either exist or not (and
 	 * in the case of not a default should be specified).
 	 * 
-	 * @param aStringObj
-	 *            A boolean in string form
-	 * @param aBool
-	 *            A default boolean value
+	 * @param aStringObj A boolean in string form
+	 * @param aBool A default boolean value
 	 * @return The boolean representation of the string value or the default
 	 *         value
-	 * @throws ClassCastException
-	 *             If the supplied object is not a string
+	 * @throws ClassCastException If the supplied object is not a string
 	 */
 	public static boolean trimToBool(Object aStringObj, boolean aBool) {
 		try {
@@ -67,17 +62,13 @@ public class StringUtils {
 	 * Trims a string; if there is nothing left after the trimming, returns
 	 * whatever the default value passed in is.
 	 * 
-	 * @param aString
-	 *            The string to be trimmed
+	 * @param aString The string to be trimmed
 	 * @return The trimmed string or the default value if string is empty
-	 * @throws ClassCastException
-	 *             If the supplied <code>Object</code> can't be a
-	 *             <code>String</code>
+	 * @throws ClassCastException If the supplied <code>Object</code> can't be a
+	 *         <code>String</code>
 	 */
 	public static String trimTo(Object aString, String aDefault) {
-		if (aString == null) {
-			return aDefault;
-		}
+		if (aString == null) { return aDefault; }
 
 		// Will throw ClassCastException if Object can't be cast to String
 		String trimmed = ((String) aString).trim();
@@ -85,15 +76,12 @@ public class StringUtils {
 	}
 
 	/**
-	 * Pads the beggining of a supplied string with the repetition of a supplied
+	 * Pads the beginning of a supplied string with the repetition of a supplied
 	 * value.
 	 * 
-	 * @param aString
-	 *            The string to pad
-	 * @param aPadding
-	 *            The string to be repeated as the padding
-	 * @param aRepeatCount
-	 *            How many times to repeat the padding
+	 * @param aString The string to pad
+	 * @param aPadding The string to be repeated as the padding
+	 * @param aRepeatCount How many times to repeat the padding
 	 * @return The front padded string
 	 */
 	public static String padStart(String aString, String aPadding,
@@ -115,12 +103,9 @@ public class StringUtils {
 	 * Pads the end of a supplied string with the repetition of a supplied
 	 * value.
 	 * 
-	 * @param aString
-	 *            The string to pad
-	 * @param aPadding
-	 *            The string to be repeated as the padding
-	 * @param aRepeatCount
-	 *            How many times to repeat the padding
+	 * @param aString The string to pad
+	 * @param aPadding The string to be repeated as the padding
+	 * @param aRepeatCount How many times to repeat the padding
 	 * @return The end padded string
 	 */
 	public static String padEnd(String aString, String aPadding,
@@ -141,10 +126,8 @@ public class StringUtils {
 	/**
 	 * Creates a new string from the repetition of a supplied value.
 	 * 
-	 * @param aValue
-	 *            The string to repeat, creating a new string
-	 * @param aRepeatCount
-	 *            The number of times to repeat the supplied value
+	 * @param aValue The string to repeat, creating a new string
+	 * @param aRepeatCount The number of times to repeat the supplied value
 	 * @return The new string containing the supplied value repeated the
 	 *         specified number of times
 	 */
@@ -161,10 +144,8 @@ public class StringUtils {
 	/**
 	 * Creates a new string from the repetition of a supplied char.
 	 * 
-	 * @param aChar
-	 *            The char to repeat, creating a new string
-	 * @param aRepeatCount
-	 *            The number of times to repeat the supplied value
+	 * @param aChar The char to repeat, creating a new string
+	 * @param aRepeatCount The number of times to repeat the supplied value
 	 * @return The new string containing the supplied value repeated the
 	 *         specified number of times
 	 */
@@ -182,11 +163,9 @@ public class StringUtils {
 	 * Reads the contents of a file into a string using the character set
 	 * encoding of the local system.
 	 * 
-	 * @param aFile
-	 *            The file from which to read
+	 * @param aFile The file from which to read
 	 * @return The information read from the file
-	 * @throws IOException
-	 *             If the supplied file could not be read
+	 * @throws IOException If the supplied file could not be read
 	 */
 	public static String read(File aFile) throws IOException {
 		String string = new String(readBytes(aFile));
@@ -202,11 +181,9 @@ public class StringUtils {
 	 * Reads the contents of a file into a string using the UTF-8 character set
 	 * encoding.
 	 * 
-	 * @param aFile
-	 *            The file from which to read
+	 * @param aFile The file from which to read
 	 * @return The information read from the file
-	 * @throws IOException
-	 *             If the supplied file could not be read
+	 * @throws IOException If the supplied file could not be read
 	 */
 	public static String readAsUTF8(File aFile) throws IOException {
 		String string = new String(readBytes(aFile), UTF_8);
@@ -221,8 +198,8 @@ public class StringUtils {
 	/**
 	 * Removes empty and null strings from a string array.
 	 * 
-	 * @param aStringArray
-	 *            An array of strings that may contain empty or null strings
+	 * @param aStringArray An array of strings that may contain empty or null
+	 *        strings
 	 * @return A string array without empty or null strings
 	 */
 	public static String[] trim(String[] aStringArray) {
@@ -242,21 +219,15 @@ public class StringUtils {
 	 * calling their <code>Object.toString()</code> method). Concatenated
 	 * strings are separated using the supplied 'padding' character.
 	 * 
-	 * @param aObjArray
-	 *            An array of objects whose <code>toString()</code>
-	 *            representations should be concatenated
-	 * @param aPadChar
-	 *            The character used to separate concatenated strings
+	 * @param aObjArray An array of objects whose <code>toString()</code>
+	 *        representations should be concatenated
+	 * @param aPadChar The character used to separate concatenated strings
 	 * @return A concatenation of the supplied objects' string representations
 	 */
 	public static String toString(Object[] aObjArray, char aPadChar) {
-		if (aObjArray.length == 0) {
-			return "";
-		}
+		if (aObjArray.length == 0) { return ""; }
 
-		if (aObjArray.length == 1) {
-			return aObjArray[0].toString();
-		}
+		if (aObjArray.length == 1) { return aObjArray[0].toString(); }
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -273,9 +244,8 @@ public class StringUtils {
 	 * string values but, since a string array doesn't have a toString(), the
 	 * map's toString() method doesn't produce a useful output. This fixes that.
 	 * 
-	 * @param aMap
-	 *            A map of string keys and string array values to turn into a
-	 *            single string representation of the map
+	 * @param aMap A map of string keys and string array values to turn into a
+	 *        single string representation of the map
 	 * @return A concatenation of the supplied map's string values
 	 */
 	public static String toString(Map<String, String[]> aMap) {
@@ -309,8 +279,7 @@ public class StringUtils {
 	 * Adds line numbers to any string. This is useful when I need to debug an
 	 * XQuery outside the context of an IDE (i.e., in debugging output).
 	 * 
-	 * @param aMessage
-	 *            Text to which line numbers should be added
+	 * @param aMessage Text to which line numbers should be added
 	 * @return The supplied text with line numbers at the first of each line
 	 */
 	public static String addLineNumbers(String aMessage) {
@@ -334,20 +303,18 @@ public class StringUtils {
 	/**
 	 * Reads the contents of a file into a byte array.
 	 * 
-	 * @param aFile
-	 *            The file from which to read
+	 * @param aFile The file from which to read
 	 * @return The bytes read from the file
-	 * @throws IOException
-	 *             If the supplied file could not be read in its entirety
+	 * @throws IOException If the supplied file could not be read in its
+	 *         entirety
 	 */
 	private static byte[] readBytes(File aFile) throws IOException {
 		FileInputStream fileStream = new FileInputStream(aFile);
 		ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
 		int read = fileStream.getChannel().read(buf);
 
-		if (read != aFile.length()) {
-			throw new IOException("Failed to read whole file");
-		}
+		if (read != aFile.length()) { throw new IOException(
+				"Failed to read whole file"); }
 
 		return buf.array();
 	}
@@ -356,8 +323,7 @@ public class StringUtils {
 	 * Parses strings with an integer range (e.g., 2-5) and returns an expanded
 	 * integer array {2, 3, 4, 5} with those values.
 	 * 
-	 * @param aIntRange
-	 *            A string representation of a range of integers
+	 * @param aIntRange A string representation of a range of integers
 	 * @return An int array with the expanded values of the string
 	 *         representation
 	 */
@@ -393,7 +359,7 @@ public class StringUtils {
 	public static String toString(int aInt) {
 		return toUpcaseString(aInt).toLowerCase();
 	}
-	
+
 	public static String toUpcaseString(int aInt) {
 		switch (aInt) {
 		case 1:

@@ -12,9 +12,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XMLBundleControl extends ResourceBundle.Control {
 
 	private static final String FORMAT = "xml";

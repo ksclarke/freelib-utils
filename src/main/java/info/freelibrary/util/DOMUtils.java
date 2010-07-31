@@ -12,19 +12,20 @@ public class DOMUtils implements XMLConstants {
 			.compile("&(lt|gt|amp|quot|apos|#.{3}|#x.{4});.*");
 
 	private static boolean PRETTY_PRINTED;
-	
-	private DOMUtils() {}
-	
+
+	private DOMUtils() {
+	}
+
 	// This isn't real pretty printing
 	public static boolean brokenUp() {
 		return PRETTY_PRINTED;
 	}
-	
+
 	// This isn't real pretty printing
 	public static void brokenUp(boolean aBool) {
 		PRETTY_PRINTED = aBool;
 	}
-	
+
 	public static String toXML(Node aNode) {
 		return buildXML(new StringBuilder(), aNode, 0).toString();
 	}
@@ -75,14 +76,14 @@ public class DOMUtils implements XMLConstants {
 
 			aBuilder.append(START_CLOSE_ELEM).append(nodeName);
 			aBuilder.append(END_FULL_ELEM);
-			
+
 			if (brokenUp()) {
 				aBuilder.append(System.getProperty("line.separator"));
 			}
 		}
 		else {
 			aBuilder.append(END_EMPTY_ELEM);
-			
+
 			if (brokenUp()) {
 				aBuilder.append(System.getProperty("line.separator"));
 			}
@@ -125,7 +126,7 @@ public class DOMUtils implements XMLConstants {
 				result.append(character);
 			}
 		}
-		
+
 		return result.toString();
 	}
 }

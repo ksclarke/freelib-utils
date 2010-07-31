@@ -6,7 +6,7 @@ package info.freelibrary.util;
 public final class Stopwatch {
 
 	private boolean myTimerIsRunning;
-	
+
 	private long myStart;
 
 	private long myStop;
@@ -14,14 +14,11 @@ public final class Stopwatch {
 	/**
 	 * Start the stopwatch.
 	 * 
-	 * @throws IllegalStateException
-	 *             if the stopwatch is already running.
+	 * @throws IllegalStateException if the stopwatch is already running.
 	 */
 	public void start() {
-		if (myTimerIsRunning) {
-			throw new IllegalStateException(
-					"Must stop before calling start again.");
-		}
+		if (myTimerIsRunning) { throw new IllegalStateException(
+				"Must stop before calling start again."); }
 
 		myStart = System.currentTimeMillis();
 		myTimerIsRunning = true;
@@ -30,44 +27,39 @@ public final class Stopwatch {
 	/**
 	 * Stop the stopwatch.
 	 * 
-	 * @throws IllegalStateException
-	 *             if the stopwatch is not already running.
+	 * @throws IllegalStateException if the stopwatch is not already running.
 	 */
 	public void stop() {
-		if (!myTimerIsRunning) {
-			throw new IllegalStateException(
-					"Cannot stop if not currently running.");
-		}
+		if (!myTimerIsRunning) { throw new IllegalStateException(
+				"Cannot stop if not currently running."); }
 
 		myStop = System.currentTimeMillis();
 		myTimerIsRunning = false;
 	}
-	
+
 	/**
-	 * Stop the stopwatch (as soon as possible) after a certain number of seconds.
+	 * Stop the stopwatch (as soon as possible) after a certain number of
+	 * seconds.
 	 * 
-	 * @throws IllegalStateException
-	 *             if the stopwatch is not already running.
+	 * @throws IllegalStateException if the stopwatch is not already running.
 	 */
 	public void stopAfter(int aSecondsCount) {
-		if (!myTimerIsRunning) {
-			throw new IllegalStateException("Cannot stop if not currently running");
-		}
-		
+		if (!myTimerIsRunning) { throw new IllegalStateException(
+				"Cannot stop if not currently running"); }
+
 		while (((System.currentTimeMillis() - myStart) / 1000) < aSecondsCount);
-		
+
 		myStop = System.currentTimeMillis();
 		myTimerIsRunning = false;
 	}
-	
+
 	/**
 	 * Express the "reading" on the stopwatch in seconds.
 	 * 
 	 * @return Time elapsed in stopwatch in seconds
 	 * 
-	 * @throws IllegalStateException
-	 *             if the Stopwatch has never been used, or if the stopwatch is
-	 *             still running.
+	 * @throws IllegalStateException if the Stopwatch has never been used, or if
+	 *         the stopwatch is still running.
 	 */
 	public String getSeconds() {
 		StringBuilder result = new StringBuilder();
@@ -79,30 +71,27 @@ public final class Stopwatch {
 		result.append(timeGap % 1000);
 		result.append(" msecs");
 
-		if (myTimerIsRunning) {
-			throw new IllegalStateException("Must stop first.");
-		}
+		if (myTimerIsRunning) { throw new IllegalStateException(
+				"Must stop first."); }
 
 		return result.toString();
 	}
-	
+
 	/**
 	 * Express the "reading" on the stopwatch in milliseconds.
 	 * 
 	 * @return Time elapsed in stopwatch in milliseconds
 	 * 
-	 * @throws IllegalStateException
-	 *             if the Stopwatch has never been used, or if the stopwatch is
-	 *             still running.
+	 * @throws IllegalStateException if the Stopwatch has never been used, or if
+	 *         the stopwatch is still running.
 	 */
 	public String getMilliseconds() {
 		StringBuilder result = new StringBuilder();
 		result.append(myStop - myStart);
 		result.append(" msecs");
 
-		if (myTimerIsRunning) {
-			throw new IllegalStateException("Must stop first.");
-		}
+		if (myTimerIsRunning) { throw new IllegalStateException(
+				"Must stop first."); }
 
 		return result.toString();
 	}

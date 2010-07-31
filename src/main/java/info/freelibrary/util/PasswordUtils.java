@@ -7,6 +7,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import net.iharder.Base64;
+
 public final class PasswordUtils {
 
 	private PasswordUtils() {}
@@ -32,7 +34,7 @@ public final class PasswordUtils {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA");
 			digest.update((aText + aSalt).getBytes("UTF-8"));
-			return Base64Utils.encodeBytes(digest.digest());
+			return Base64.encodeBytes(digest.digest());
 		}
 		catch (NoSuchAlgorithmException details) {
 			throw new RuntimeException(details); // programming error

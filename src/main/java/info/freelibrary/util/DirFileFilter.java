@@ -7,11 +7,7 @@ public class DirFileFilter implements FilenameFilter {
 
 	@Override
 	public boolean accept(File aDir, String aFileName) {
-		if (new File(aDir, aFileName).isDirectory()) {
-			return true;
-		}
-
-		return false;
+		return new File(aDir, aFileName).isDirectory() ? true : false;
 	}
 
 }
