@@ -32,12 +32,8 @@ package info.freelibrary.util.bzip2;
 /**
  * Base class for both the compress and decompress classes. Holds common arrays,
  * and static data.
- * <p>
- * This interface is public for historical purposes. You should have no need to
- * use it.
- * </p>
  */
-public interface BZip2Constants {
+interface BZip2Constants {
 
 	int baseBlockSize = 100000;
 
