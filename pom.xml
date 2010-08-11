@@ -16,9 +16,14 @@
 			<comments>The BZip2 classes are licensed under APL 2.0</comments>
 		</license>
 		<license>
-			<name>GNU General Public License, Version 3.0</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
-			<comments>Everything else is licensed under GNU GPL 3.0</comments>
+			<name>GNU Lesser General Public License, Version 2.1</name>
+			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+			<comments>Everything else is licensed under GNU LGPL 2.1 or 3.0 (at your option)</comments>
+		</license>
+		<license>
+			<name>GNU Lesser General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+			<comments>Everything else is licensed under GNU LGPL 2.1 or 3.0 (at your option)</comments>
 		</license>
 	</licenses>
 	<scm>
