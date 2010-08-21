@@ -1,5 +1,5 @@
 /**
- * 
+ * Licensed under the GNU LGPL v.2.1 or later.
  */
 package info.freelibrary.util;
 
@@ -7,16 +7,35 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 /**
+ * A file name filter that checks the file extention to determine whether the
+ * filter matches the file name or not. It can have a single or multiple file
+ * extensions in the form: 'gif' or 'xml'.
+ * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class FileExtFileFilter implements FilenameFilter {
 
+	// Extensions registered with this filter
 	private String[] myExtensions;
 
+	/**
+	 * Constructor for a <code>FilenameFilter</code> that checks a single file
+	 * extension against supplied file names, looking for matches.
+	 * 
+	 * @param aFileExtList A list of file extensions (minus the '.') against
+	 *        which we want to compare
+	 */
 	public FileExtFileFilter(String aFileExt) {
 		myExtensions = new String[] { "." + aFileExt };
 	}
 
+	/**
+	 * Constructor for a <code>FilenameFilter</code> that checks an array of
+	 * file extensions against supplied file names, looking for matches.
+	 * 
+	 * @param aFileExtList A list of file extensions (minus the '.') against
+	 *        which we want to compare
+	 */
 	public FileExtFileFilter(String... aFileExtList) {
 		myExtensions = new String[aFileExtList.length];
 
@@ -25,13 +44,40 @@ public class FileExtFileFilter implements FilenameFilter {
 		}
 	}
 
+	/**
+	 * Returns true if the supplied file name and parent directory are a match
+	 * for this <code>FilenameFilter</code>.
+	 * 
+	 * @param aDir A parent directory for the supplied file name
+	 * @param aFileName The file name we want to check against our filter
+	 * @return True if the filter matches the supplied parent and file name;
+	 *         else, false
+	 */
 	public boolean accept(File aDir, String aFileName) {
 		for (String extension : myExtensions) {
 			if (new File(aDir, aFileName).isFile()
-					&& aFileName.endsWith(extension)) { return true; }
+					&& aFileName.endsWith(extension)) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
+	/**
+	 * Returns whether or not the supplied file extension is one that this
+	 * filter matches.
+	 * 
+	 * @param aFileExt A file extension like: jpg, gif, jp2, txt, xml, etc.
+	 * @return True if this filter matches files with the supplied extension
+	 */
+	public boolean filters(String aFileExt) {
+		for (String extension : myExtensions) {
+			if (extension.equals("." + aFileExt)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

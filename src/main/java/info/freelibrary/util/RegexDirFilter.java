@@ -1,5 +1,5 @@
 /**
- * 
+ * Licensed under the GNU LGPL v.2.1 or later.
  */
 package info.freelibrary.util;
 
