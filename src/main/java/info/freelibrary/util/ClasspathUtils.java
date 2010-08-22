@@ -179,17 +179,15 @@ public class ClasspathUtils {
 			}
 
 			if (file.isDirectory()) {
-				for (String name : file.list()) {
-					File target = new File(file, aFilename);
+				File target = new File(file, aFilename);
 
-					if (target.exists()) {
-						if (LOGGER.isDebugEnabled()) {
-							LOGGER.debug("Found {} in {}", new String[] {
-									aFilename, cpEntry });
-						}
-
-						return new FileInputStream(target);
+				if (target.exists()) {
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("Found {} in {}", new String[] {
+								aFilename, cpEntry });
 					}
+
+					return new FileInputStream(target);
 				}
 			}
 			else if (filter.accept(file.getParentFile(), file.getName())) {
