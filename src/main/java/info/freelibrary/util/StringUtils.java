@@ -127,6 +127,41 @@ public class StringUtils {
 	}
 
 	/**
+	 * Formats a string with or without line breaks into a string with
+	 * lines with less than 80 characters per line.
+	 * 
+	 * @param aString A string to format
+	 * @return A string formatted into 80 characters or less lines
+	 */
+	public static String formatTo80Chars(String aString) {
+		StringBuilder builder = new StringBuilder();
+		String[] words = aString.split("\\s");
+		int count = 0;
+		
+		for (String word : words) {
+			count += word.length();
+			
+			if (count < 80) {
+				builder.append(word);
+				
+				if ((count += 1) < 80) {
+					builder.append(' ');
+				}
+				else {
+					builder.append("\r\n  ");
+					count = 2;
+				}
+			}
+			else {
+				builder.append("\r\n  ").append(word);
+				count = word.length() + 2; // two spaces at start of line
+			}
+		}
+		
+		return builder.toString();
+	}
+	
+	/**
 	 * Creates a new string from the repetition of a supplied value.
 	 * 
 	 * @param aValue The string to repeat, creating a new string

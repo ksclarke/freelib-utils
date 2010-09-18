@@ -3,9 +3,11 @@
  */
 package info.freelibrary.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 
 import junit.framework.TestCase;
 
@@ -23,6 +25,29 @@ public class StringUtilTest extends TestCase {
 		Assert.assertEquals(defValue, StringUtils.trimTo(null, defValue));
 		Assert.assertEquals(defValue, StringUtils.trimTo("", defValue));
 		Assert.assertEquals("original", finalAssertion);
+	}
+
+	public void testFormatTo80Chars() {
+		File testFile1 = new File("src/test/resources/80_char_test_1.txt");
+
+		try {
+			String test1 = StringUtils.read(testFile1);
+
+			String formattedTest1 = StringUtils.formatTo80Chars(test1);
+			StringReader stringReader = new StringReader(formattedTest1);
+			BufferedReader reader = new BufferedReader(stringReader);
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				if (line.length() > 79) {
+					Assert.fail("Line <[ '" + line + "' ]> has a length of "
+							+ line.length() + " chars");
+				}
+			}
+		}
+		catch (IOException details) {
+			Assert.fail(details.getMessage());
+		}
 	}
 
 	/*
@@ -108,22 +133,23 @@ public class StringUtilTest extends TestCase {
 
 		Assert.assertEquals(desired, StringUtils.addLineNumbers(original));
 	}
-	
+
 	/*
 	 * Test method for 'info.freelibrary.util.StringUtil.parseIntRange(String)'
 	 */
 	public void testParseIntRange() {
 		Assert.assertArrayEquals(new int[] { 1111 }, StringUtils
 				.parseIntRange("1111"));
-		Assert.assertArrayEquals(new int[] { 1000, 1001, 1002, 1003, 1004, 1005 },
-				StringUtils.parseIntRange("1000-1005"));
-		
+		Assert.assertArrayEquals(
+				new int[] { 1000, 1001, 1002, 1003, 1004, 1005 }, StringUtils
+						.parseIntRange("1000-1005"));
+
 		try {
 			StringUtils.parseIntRange("1001-1000");
 			fail("Failed to catch inverted number range");
 		}
 		catch (NumberFormatException details) {}
-		
+
 		try {
 			StringUtils.parseIntRange("1000-");
 			fail("Failed to catch single number range value");
