@@ -12,6 +12,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides a few convenience methods for working with strings.
@@ -19,6 +24,9 @@ import java.util.Map.Entry;
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class StringUtils {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(StringUtils.class);
 
 	public static final String UTF_8 = "UTF-8";
 
@@ -92,16 +100,29 @@ public class StringUtils {
 	 * @return The formatted string
 	 */
 	public static String formatMessage(String aMessage, String[] aDetails) {
-		String[] parts = aMessage.split("\\{\\}");
-		StringBuilder builder = new StringBuilder();
+		int position = 0;
+		int count = 0;
 
-		if (parts.length != aDetails.length) {
-			throw new IndexOutOfBoundsException(
-					"Parameter count doesn't match curly brace count");
+		while ((position = aMessage.indexOf("{}", position)) != -1) {
+			position += 1;
+			count += 1;
 		}
 
+		if (count != aDetails.length) {
+			throw new IndexOutOfBoundsException(
+					"Different number of slots and values: " + count + " and "
+							+ aDetails.length);
+		}
+
+		String[] parts = aMessage.split("\\{\\}");
+		StringBuilder builder = new StringBuilder();
+		
 		for (int index = 0; index < parts.length; index++) {
-			builder.append(parts[index]).append(aDetails[index]);
+			builder.append(parts[index]);
+
+			if (index < aDetails.length) {
+				builder.append(aDetails[index]);
+			}
 		}
 
 		return builder.length() == 0 ? aMessage : builder.toString();

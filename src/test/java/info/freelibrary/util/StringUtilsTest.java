@@ -41,7 +41,14 @@ public class StringUtilsTest {
 
 		try {
 			StringUtils.formatMessage(message, new String[] { "first" });
-			fail("Failed to catch uneven count between slots, values");
+			fail("Failed to notice more slots than values");
+		}
+		catch (IndexOutOfBoundsException details) {}
+
+		try {
+			String[] array = new String[] { "first", "second", "third" };
+			StringUtils.formatMessage(message, array);
+			fail("Failed to notice more values than slots");
 		}
 		catch (IndexOutOfBoundsException details) {}
 	}
