@@ -22,8 +22,7 @@ public class StringUtils {
 
 	public static final String UTF_8 = "UTF-8";
 
-	private StringUtils() {
-	}
+	private StringUtils() {}
 
 	/**
 	 * Trims a string; if there is nothing left after the trimming, returns
@@ -71,11 +70,41 @@ public class StringUtils {
 	 *         <code>String</code>
 	 */
 	public static String trimTo(Object aString, String aDefault) {
-		if (aString == null) { return aDefault; }
+		if (aString == null) {
+			return aDefault;
+		}
 
 		// Will throw ClassCastException if Object can't be cast to String
 		String trimmed = ((String) aString).trim();
 		return trimmed.length() == 0 ? aDefault : trimmed;
+	}
+
+	/**
+	 * Takes a <code>String</code> in the form "This is {} text {}" and replaces
+	 * the <code>{}</code>s with values from the supplied <code>String[]</code>.
+	 * The number of curly braces should be the same as the number of strings in
+	 * the string array.
+	 * 
+	 * @param aMessage A string that contains curly braces in the form
+	 *        <code>{}</code>
+	 * @param aDetails Strings that should be put in place of the curly braces
+	 *        in the message string.
+	 * @return The formatted string
+	 */
+	public static String formatMessage(String aMessage, String[] aDetails) {
+		String[] parts = aMessage.split("\\{\\}");
+		StringBuilder builder = new StringBuilder();
+
+		if (parts.length != aDetails.length) {
+			throw new IndexOutOfBoundsException(
+					"Parameter count doesn't match curly brace count");
+		}
+
+		for (int index = 0; index < parts.length; index++) {
+			builder.append(parts[index]).append(aDetails[index]);
+		}
+
+		return builder.length() == 0 ? aMessage : builder.toString();
 	}
 
 	/**
@@ -127,8 +156,8 @@ public class StringUtils {
 	}
 
 	/**
-	 * Formats a string with or without line breaks into a string with
-	 * lines with less than 80 characters per line.
+	 * Formats a string with or without line breaks into a string with lines
+	 * with less than 80 characters per line.
 	 * 
 	 * @param aString A string to format
 	 * @return A string formatted into 80 characters or less lines
@@ -137,13 +166,13 @@ public class StringUtils {
 		StringBuilder builder = new StringBuilder();
 		String[] words = aString.split("\\s");
 		int count = 0;
-		
+
 		for (String word : words) {
 			count += word.length();
-			
+
 			if (count < 80) {
 				builder.append(word);
-				
+
 				if ((count += 1) < 80) {
 					builder.append(' ');
 				}
@@ -157,10 +186,10 @@ public class StringUtils {
 				count = word.length() + 2; // two spaces at start of line
 			}
 		}
-		
+
 		return builder.toString();
 	}
-	
+
 	/**
 	 * Creates a new string from the repetition of a supplied value.
 	 * 
@@ -263,9 +292,13 @@ public class StringUtils {
 	 * @return A concatenation of the supplied objects' string representations
 	 */
 	public static String toString(Object[] aObjArray, char aPadChar) {
-		if (aObjArray.length == 0) { return ""; }
+		if (aObjArray.length == 0) {
+			return "";
+		}
 
-		if (aObjArray.length == 1) { return aObjArray[0].toString(); }
+		if (aObjArray.length == 1) {
+			return aObjArray[0].toString();
+		}
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -351,8 +384,9 @@ public class StringUtils {
 		ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
 		int read = fileStream.getChannel().read(buf);
 
-		if (read != aFile.length()) { throw new IOException(
-				"Failed to read whole file"); }
+		if (read != aFile.length()) {
+			throw new IOException("Failed to read whole file");
+		}
 
 		return buf.array();
 	}

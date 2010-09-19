@@ -3,8 +3,6 @@
  */
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,9 +10,10 @@ import java.util.jar.JarFile;
 
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 /**
- * @author Kevin S. Clarke <ksclarke@gmail.com>
- * 
+ * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
 

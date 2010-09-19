@@ -4,18 +4,23 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class XMLBundleControlTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-	XMLBundleControl myControl;
+/**
+ * Tests of the <code>XMLBundleControl</code> class.
+ * 
+ * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ */
+public class XMLBundleControlTest {
 
-	@Override
-	protected void setUp() throws Exception {
-		myControl = new XMLBundleControl();
-	}
+	XMLBundleControl myControl = new XMLBundleControl();
 
-	public void testGetFormatsString() {
+	@Test
+	public void getFormatsString() {
 		boolean successful = false;
 
 		assertEquals("xml", myControl.getFormats("yada").get(0));
@@ -30,7 +35,8 @@ public class XMLBundleControlTest extends TestCase {
 		assertTrue(successful);
 	}
 
-	public void testNewBundleStringLocaleStringClassLoaderBoolean() {
+	@Test
+	public void newBundleStringLocaleStringClassLoaderBoolean() {
 		boolean successful = false;
 
 		try {
@@ -91,8 +97,9 @@ public class XMLBundleControlTest extends TestCase {
 		successful = false;
 
 		try {
-			myControl.newBundle("aBaseName", Locale.getDefault(), null,
-					getClass().getClassLoader(), true);
+			Locale locale = Locale.getDefault();
+			ClassLoader cl = getClass().getClassLoader();
+			myControl.newBundle("aBaseName", locale, null, cl, true);
 		}
 		catch (NullPointerException details) {
 			successful = true;
@@ -111,8 +118,8 @@ public class XMLBundleControlTest extends TestCase {
 		successful = false;
 
 		try {
-			myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat",
-					null, true);
+			Locale locale = Locale.getDefault();
+			myControl.newBundle("aBaseName", locale, "aFormat", null, true);
 		}
 		catch (NullPointerException details) {
 			successful = true;
@@ -130,11 +137,11 @@ public class XMLBundleControlTest extends TestCase {
 		assertTrue(successful);
 	}
 
-	public void testNewBundle() {
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("Messages", myControl);
+	@Test
+	public void newBundle() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Messages", myControl);
 		// you can also put files in a structure info.freelibrary.util.Messages
-		
+
 		bundle.getString("jarClassLoader.init");
 	}
 }
