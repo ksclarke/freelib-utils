@@ -9,10 +9,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class XMLBundleControl extends ResourceBundle.Control {
@@ -37,7 +35,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
 		if (aFormat.equals(FORMAT)) {
 			String bundleName = toBundleName(aBaseName, aLocale);
 			String resourceName = toResourceName(bundleName, aFormat);
-			
+
 			if (aReload) {
 				URL url = aLoader.getResource(resourceName);
 
@@ -76,34 +74,6 @@ public class XMLBundleControl extends ResourceBundle.Control {
 			if (arg == null) {
 				throw new NullPointerException();
 			}
-		}
-	}
-
-	private static class XMLResourceBundle extends ResourceBundle {
-		private Properties myProperties;
-
-		XMLResourceBundle(InputStream stream) throws IOException {
-			myProperties = new Properties();
-			myProperties.loadFromXML(stream);
-		}
-
-		protected Object handleGetObject(String key) {
-			return myProperties.getProperty(key);
-		}
-
-		public Enumeration<String> getKeys() {
-			final Enumeration<?> enumeration = myProperties.elements();
-			
-			return new Enumeration<String>() {
-
-				public boolean hasMoreElements() {
-					return enumeration.hasMoreElements();
-				}
-
-				public String nextElement() {
-					return (String) enumeration.nextElement();
-				}
-			};
 		}
 	}
 }
