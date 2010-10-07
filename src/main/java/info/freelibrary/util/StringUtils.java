@@ -12,11 +12,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a few convenience methods for working with strings.
@@ -24,9 +19,6 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class StringUtils {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(StringUtils.class);
 
 	public static final String UTF_8 = "UTF-8";
 
