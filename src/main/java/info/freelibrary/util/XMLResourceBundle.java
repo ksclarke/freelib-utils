@@ -46,4 +46,8 @@ public class XMLResourceBundle extends ResourceBundle {
 		return StringUtils.formatMessage(super.getString(aMessage),
 				new String[] { aDetail });
 	}
+	
+	public String get(String aMessage) {
+		return getString(aMessage);
+	}
 }
