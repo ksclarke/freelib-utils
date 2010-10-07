@@ -37,12 +37,12 @@ public class XMLResourceBundle extends ResourceBundle {
 		};
 	}
 
-	public String getString(String aMessage, String[] aDetailsArray) {
+	public String get(String aMessage, String[] aDetailsArray) {
 		return StringUtils.formatMessage(super.getString(aMessage),
 				aDetailsArray);
 	}
 
-	public String getString(String aMessage, String aDetail) {
+	public String get(String aMessage, String aDetail) {
 		return StringUtils.formatMessage(super.getString(aMessage),
 				new String[] { aDetail });
 	}
