@@ -4,10 +4,14 @@
 package info.freelibrary.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,6 +117,11 @@ public class FileUtils implements FileUtilConstants {
 		return toXML(aFilePath, aPattern, false);
 	}
 
+	public static String toXML(String aFilePath, boolean aDeepConversion)
+			throws FileNotFoundException, ParserConfigurationException {
+		return toXML(aFilePath, ".*", aDeepConversion);
+	}
+
 	public static String toXML(String aFilePath, String aPattern,
 			boolean aDeepConversion) throws FileNotFoundException,
 			ParserConfigurationException {
@@ -193,9 +202,31 @@ public class FileUtils implements FileUtilConstants {
 		}
 	}
 
+	public static void copy(File aFromFile, File aToFile) throws IOException {
+		if ((aFromFile.isDirectory() && aToFile.isFile())
+				|| (aFromFile.isFile() && aToFile.isDirectory())) {
+			throw new IOException(
+					"Can't copy file to directory or directory to file");
+		}
+
+		if (aFromFile.isDirectory()) {
+			if (!aToFile.exists() && !aToFile.mkdirs()) {
+				throw new RuntimeException("Unable to create new directory: "
+						+ aToFile.getAbsolutePath());
+			}
+
+			for (File file : aFromFile.listFiles()) {
+				copy(file, new File(aToFile, file.getName()));
+			}
+		}
+		else {
+			copyFile(aFromFile, aToFile);
+		}
+	}
+
 	public static String sizeFromBytes(long aByteCount) {
 		long count;
-		
+
 		if ((count = aByteCount / 1073741824) > 0) {
 			return count + " gigabytes";
 		}
@@ -205,10 +236,39 @@ public class FileUtils implements FileUtilConstants {
 		else if ((count = aByteCount / 1024) > 0) {
 			return count + " kilobytes";
 		}
-		
+
 		return count + " bytes";
 	}
-	
+
+	private static void copyFile(File aSourceFile, File aDestFile)
+			throws IOException {
+		FileChannel source = null;
+		FileChannel dest = null;
+
+		// destructive copy
+		if (aDestFile.exists()) {
+			aDestFile.delete();
+		}
+
+		aDestFile.createNewFile();
+
+		try {
+			source = new FileInputStream(aSourceFile).getChannel();
+			dest = new FileOutputStream(aDestFile).getChannel();
+
+			dest.transferFrom(source, 0, source.size());
+		}
+		finally {
+			if (source != null) {
+				source.close();
+			}
+
+			if (dest != null) {
+				dest.close();
+			}
+		}
+	}
+
 	private static Element add(File aFile, Element aParent,
 			RegexFileFilter aFilter, boolean aDeepAdd)
 			throws ParserConfigurationException {
