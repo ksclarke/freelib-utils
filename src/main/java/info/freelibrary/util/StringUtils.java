@@ -79,6 +79,10 @@ public class StringUtils {
 		return trimmed.length() == 0 ? aDefault : trimmed;
 	}
 
+	public static String formatMessage(String aMessage, String aDetail) {
+		return formatMessage(aMessage, new String[] { aDetail });
+	}
+
 	/**
 	 * Takes a <code>String</code> in the form "This is {} text {}" and replaces
 	 * the <code>{}</code>s with values from the supplied <code>String[]</code>.
@@ -108,7 +112,7 @@ public class StringUtils {
 
 		String[] parts = aMessage.split("\\{\\}");
 		StringBuilder builder = new StringBuilder();
-		
+
 		for (int index = 0; index < parts.length; index++) {
 			builder.append(parts[index]);
 
