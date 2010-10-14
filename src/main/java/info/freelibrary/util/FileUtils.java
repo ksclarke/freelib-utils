@@ -12,10 +12,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Formatter;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -166,22 +170,36 @@ public class FileUtils implements FileUtilConstants {
 		throw new MalformedURLException("Not a file URL");
 	}
 
-	public static File[] listFiles(File aDir, FilenameFilter aFilter) {
+	public static File[] listFiles(File aDir, FilenameFilter aFilter)
+			throws FileNotFoundException {
 		return listFiles(aDir, aFilter, false, null);
 	}
 
 	public static File[] listFiles(File aDir, FilenameFilter aFilter,
-			boolean aDeepListing) {
+			boolean aDeepListing) throws FileNotFoundException {
 		return listFiles(aDir, aFilter, aDeepListing, null);
 	}
 
 	public static File[] listFiles(File aDir, FilenameFilter aFilter,
-			boolean aDeepListing, String[] aIgnoreList) {
+			boolean aDeepListing, String[] aIgnoreList)
+			throws FileNotFoundException {
+		if (!aDir.exists()) {
+			throw new FileNotFoundException(aDir.getAbsolutePath());
+		}
+
 		if (!aDeepListing) {
 			return aDir.listFiles(aFilter);
 		}
 		else {
 			ArrayList<File> fileList = new ArrayList<File>();
+			String[] ignoreList;
+
+			if (aIgnoreList == null) {
+				ignoreList = new String[0];
+			}
+			else {
+				ignoreList = aIgnoreList;
+			}
 
 			for (File file : aDir.listFiles()) {
 				String fileName = file.getName();
@@ -191,7 +209,7 @@ public class FileUtils implements FileUtilConstants {
 				}
 
 				if (file.isDirectory()
-						&& (Arrays.binarySearch(aIgnoreList, fileName) < 0)) {
+						&& (Arrays.binarySearch(ignoreList, fileName) < 0)) {
 					File[] files = listFiles(file, aFilter, aDeepListing);
 					fileList.addAll(Arrays.asList(files));
 				}
@@ -240,6 +258,22 @@ public class FileUtils implements FileUtilConstants {
 		return count + " bytes";
 	}
 
+	public static String hash(File aFile, String aAlgorithm)
+			throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+		MessageDigest md = MessageDigest.getInstance(aAlgorithm);
+		FileInputStream inStream = new FileInputStream(aFile);
+		DigestInputStream mdStream = new DigestInputStream(inStream, md);
+		byte[] bytes = new byte[8192];
+		while (mdStream.read(bytes) != -1);
+		Formatter formatter = new Formatter();
+		
+		for (byte bite : md.digest()) {
+			formatter.format("%02x", bite);
+		}
+
+		return formatter.toString();
+	}
+
 	private static void copyFile(File aSourceFile, File aDestFile)
 			throws IOException {
 		FileChannel source = null;
@@ -271,7 +305,7 @@ public class FileUtils implements FileUtilConstants {
 
 	private static Element add(File aFile, Element aParent,
 			RegexFileFilter aFilter, boolean aDeepAdd)
-			throws ParserConfigurationException {
+			throws ParserConfigurationException, FileNotFoundException {
 		Element element;
 		String tagName;
 
