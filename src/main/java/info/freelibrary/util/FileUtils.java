@@ -268,9 +268,9 @@ public class FileUtils implements FileUtilConstants {
 		Formatter formatter = new Formatter();
 		
 		for (byte bite : md.digest()) {
-			formatter.format("%02x", bite);
-		}
-
+            formatter.format("%02x", bite);
+        }
+		
 		return formatter.toString();
 	}
 
