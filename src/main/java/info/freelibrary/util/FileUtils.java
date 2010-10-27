@@ -11,6 +11,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -266,12 +267,16 @@ public class FileUtils implements FileUtilConstants {
 		byte[] bytes = new byte[8192];
 		while (mdStream.read(bytes) != -1);
 		Formatter formatter = new Formatter();
-		
+
 		for (byte bite : md.digest()) {
-            formatter.format("%02x", bite);
-        }
-		
+			formatter.format("%02x", bite);
+		}
+
 		return formatter.toString();
+	}
+
+	public static String getMimeType(String aFileUrl) throws IOException {
+		return URLConnection.getFileNameMap().getContentTypeFor(aFileUrl);
 	}
 
 	private static void copyFile(File aSourceFile, File aDestFile)
