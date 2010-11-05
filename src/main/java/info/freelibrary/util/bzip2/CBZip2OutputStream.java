@@ -420,8 +420,14 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
 		nBlocksRandomised = 0;
 
 		/*
-		 * Write `magic' bytes h indicating file-format == huffmanised, followed
-		 * by a digit indicating blockSize100k.
+		 * Write signature/magic number
+		 */
+		bsPutUChar('B');
+		bsPutUChar('Z');
+		
+		/*
+		 * Write 'h' for Bzip2 ('H'uffman coding), followed by a digit indicating
+		 * blockSize100k.
 		 */
 		bsPutUChar('h');
 		bsPutUChar('0' + blockSize100k);
