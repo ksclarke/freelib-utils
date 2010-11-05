@@ -14,6 +14,11 @@ public class IOUtils {
 
 	public static final void copyStream(InputStream aInputStream,
 			OutputStream aOutputStream) throws IOException {
+		IOUtils.copyStream(aInputStream, aOutputStream, true);
+	}
+
+	public static final void copyStream(InputStream aInputStream,
+			OutputStream aOutputStream, boolean aCompleteCopy) throws IOException {
 		BufferedInputStream iStream = new BufferedInputStream(aInputStream);
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		BufferedOutputStream oStream = new BufferedOutputStream(aOutputStream);
@@ -27,8 +32,12 @@ public class IOUtils {
 		};
 
 		oStream.write(byteStream.toByteArray());
-		oStream.close();
-		iStream.close();
+		oStream.flush();
+		
+		if (aCompleteCopy) {
+			oStream.close();
+			iStream.close();
+		}
 	}
 
 }
