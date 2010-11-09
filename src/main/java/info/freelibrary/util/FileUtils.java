@@ -221,6 +221,28 @@ public class FileUtils implements FileUtilConstants {
 		}
 	}
 
+	/**
+	 * Deletes a directory and all its children.
+	 * 
+	 * @param aDir A directory to delete
+	 */
+	public static boolean delete(File aDir) {
+		if (aDir.exists()) {
+			File[] files = aDir.listFiles();
+			
+			for (int index = 0; index < files.length; index++) {
+				if (files[index].isDirectory()) {
+					delete(files[index]);
+				}
+				else {
+					files[index].delete();
+				}
+			}
+		}
+
+		return aDir.delete();
+	}
+
 	public static void copy(File aFromFile, File aToFile) throws IOException {
 		if ((aFromFile.isDirectory() && aToFile.isFile())
 				|| (aFromFile.isFile() && aToFile.isDirectory())) {
