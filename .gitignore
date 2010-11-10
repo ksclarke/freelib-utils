@@ -6,3 +6,4 @@
 /target/maven-archiver
 /target/surefire-reports
 /target/test-classes
+/target/site
