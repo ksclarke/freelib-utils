@@ -1,0 +1,3 @@
+[submodule "target/site"]
+	path = target/site
+	url = git@github.com:ksclarke/freelib-utils.git

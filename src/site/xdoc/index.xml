@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<author>Kevin S. Clarke</author>
+		<title>FreeLibrary Utilities</title>
+	</properties>
+	<meta name="keyword" content="java, utilities"/>
+	<body>
+		<section name="Introduction">
+			<p>
+				A small set of Java utilities.
+			</p>
+		</section>
+	</body>
+</document>
