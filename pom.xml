@@ -93,7 +93,7 @@
 							</links>
 							<show>public</show>
 							<source>1.6</source>
-							<sourcepath>src/main/java/info/freelibrary/util</sourcepath>
+							<sourcepath>src/main/java/info/freelibrary</sourcepath>
 						</configuration>
 						<reports>
 							<report>javadoc</report>
