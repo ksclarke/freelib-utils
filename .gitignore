@@ -1,9 +1,4 @@
 .classpath
 .project
 .settings
-/target/classes
-/target/*.jar
-/target/maven-archiver
-/target/surefire-reports
-/target/test-classes
-/target/site
+/target
