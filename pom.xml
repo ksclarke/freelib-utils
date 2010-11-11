@@ -91,6 +91,7 @@
 							<links>
 								<link>http://download.oracle.com/javase/6/docs/api/</link>
 							</links>
+							<notimestamp>true</notimestamp>
 							<show>public</show>
 							<source>1.6</source>
 							<sourcepath>src/main/java/info/freelibrary</sourcepath>
