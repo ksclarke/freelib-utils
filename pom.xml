@@ -8,7 +8,7 @@
 	<version>0.2.3-SNAPSHOT</version>
 	<name>FreeLibrary Utilities</name>
 	<description>A small collection of utility classes used by other FreeLibrary projects.</description>
-	<url>http://wiki.github.com/ksclarke/freelib-utils/</url>
+	<url>http://freelibrary.info/freelib-utils/</url>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License, Version 3.0</name>
