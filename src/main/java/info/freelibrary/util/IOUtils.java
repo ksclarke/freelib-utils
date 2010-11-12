@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class IOUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
-	
+
 	public static final void closeQuietly(InputStream aInputStream) {
 		if (aInputStream != null) {
 			try {
@@ -29,7 +29,7 @@ public class IOUtils {
 			}
 		}
 	}
-	
+
 	public static final void closeQuietly(OutputStream aOutputStream) {
 		if (aOutputStream != null) {
 			try {
@@ -42,33 +42,23 @@ public class IOUtils {
 			}
 		}
 	}
-	
-	public static final void copyStream(InputStream aInputStream,
-			OutputStream aOutputStream) throws IOException {
-		IOUtils.copyStream(aInputStream, aOutputStream, true);
-	}
 
-	public static final void copyStream(InputStream aInputStream,
-			OutputStream aOutputStream, boolean aCompleteCopy) throws IOException {
-		BufferedInputStream iStream = new BufferedInputStream(aInputStream);
+	public static final void copyStream(InputStream aInStream,
+			OutputStream aOutStream) throws IOException {
+		BufferedOutputStream outStream = new BufferedOutputStream(aOutStream);
+		BufferedInputStream inStream = new BufferedInputStream(aInStream);
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		BufferedOutputStream oStream = new BufferedOutputStream(aOutputStream);
 		byte[] buffer = new byte[1024];
 		int bytesRead = 0;
 
 		while (true) {
-			bytesRead = iStream.read(buffer);
+			bytesRead = inStream.read(buffer);
 			if (bytesRead == -1) break;
 			byteStream.write(buffer, 0, bytesRead);
 		};
 
-		oStream.write(byteStream.toByteArray());
-		oStream.flush();
-		
-		if (aCompleteCopy) {
-			oStream.close();
-			iStream.close();
-		}
+		outStream.write(byteStream.toByteArray());
+		outStream.flush();
 	}
 
 }
