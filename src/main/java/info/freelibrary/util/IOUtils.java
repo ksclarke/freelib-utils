@@ -9,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,32 @@ public class IOUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
+	public static final void closeQuietly(Reader aReader) {
+		if (aReader != null) {
+			try {
+				aReader.close();
+			}
+			catch (IOException details) {
+				if (LOGGER.isErrorEnabled()) {
+					LOGGER.error(details.getMessage(), details);
+				}
+			}
+		}
+	}
+	
+	public static final void closeQuietly(Writer aWriter) {
+		if (aWriter != null) {
+			try {
+				aWriter.close();
+			}
+			catch (IOException details) {
+				if (LOGGER.isErrorEnabled()) {
+					LOGGER.error(details.getMessage(), details);
+				}
+			}
+		}
+	}
+	
 	public static final void closeQuietly(InputStream aInputStream) {
 		if (aInputStream != null) {
 			try {

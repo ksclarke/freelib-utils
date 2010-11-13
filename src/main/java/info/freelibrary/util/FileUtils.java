@@ -25,10 +25,15 @@ import java.util.Formatter;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class FileUtils implements FileUtilConstants {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(FileUtils.class);
 
 	private FileUtils() {}
 
@@ -229,13 +234,16 @@ public class FileUtils implements FileUtilConstants {
 	public static boolean delete(File aDir) {
 		if (aDir.exists()) {
 			File[] files = aDir.listFiles();
-			
+
 			for (int index = 0; index < files.length; index++) {
 				if (files[index].isDirectory()) {
 					delete(files[index]);
 				}
 				else {
-					files[index].delete();
+					if (!files[index].delete() && LOGGER.isWarnEnabled()) {
+						LOGGER.warn("Unable to delete: "
+								+ files[index].getAbsolutePath());
+					}
 				}
 			}
 		}
@@ -294,6 +302,7 @@ public class FileUtils implements FileUtilConstants {
 			formatter.format("%02x", bite);
 		}
 
+		IOUtils.closeQuietly(mdStream);
 		return formatter.toString();
 	}
 
@@ -303,30 +312,30 @@ public class FileUtils implements FileUtilConstants {
 
 	private static void copyFile(File aSourceFile, File aDestFile)
 			throws IOException {
-		FileChannel source = null;
-		FileChannel dest = null;
+		FileOutputStream outputStream = null;
+		FileInputStream inputStream = null;
 
 		// destructive copy
 		if (aDestFile.exists()) {
-			aDestFile.delete();
+			if (!aDestFile.delete() && LOGGER.isWarnEnabled()) {
+				LOGGER.warn("Unable to delete: " + aDestFile.getAbsolutePath());
+			}
 		}
 
-		aDestFile.createNewFile();
+		if (!aDestFile.createNewFile() && LOGGER.isWarnEnabled()) {
+			LOGGER.warn("Failed to create: " + aDestFile.getAbsolutePath());
+		}
 
 		try {
-			source = new FileInputStream(aSourceFile).getChannel();
-			dest = new FileOutputStream(aDestFile).getChannel();
+			outputStream = new FileOutputStream(aDestFile);
+			inputStream = new FileInputStream(aSourceFile);
 
-			dest.transferFrom(source, 0, source.size());
+			FileChannel source = inputStream.getChannel();
+			outputStream.getChannel().transferFrom(source, 0, source.size());
 		}
 		finally {
-			if (source != null) {
-				source.close();
-			}
-
-			if (dest != null) {
-				dest.close();
-			}
+			IOUtils.closeQuietly(outputStream);
+			IOUtils.closeQuietly(inputStream);
 		}
 	}
 

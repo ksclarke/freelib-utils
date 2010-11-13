@@ -22,8 +22,8 @@ public class FileExtFileFilter implements FilenameFilter {
 	 * Constructor for a <code>FilenameFilter</code> that checks a single file
 	 * extension against supplied file names, looking for matches.
 	 * 
-	 * @param aFileExtList A list of file extensions (minus the '.') against
-	 *        which we want to compare
+	 * @param aFileExt A file extensions (minus the '.') against which we want
+	 *        to compare
 	 */
 	public FileExtFileFilter(String aFileExt) {
 		myExtensions = new String[] { "." + aFileExt };

@@ -4,6 +4,7 @@
 package info.freelibrary.xq;
 
 import info.freelibrary.util.DOMUtils;
+import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.StringUtils;
 
 import java.io.BufferedReader;
@@ -38,6 +39,7 @@ public class Put {
 
 	private static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
 	private static final String XQ_MIME_TYPE = "application/xquery xq xql xquery";
+	private static final String EOL = System.getProperty("line.separator");
 	private static final String CHARSET = "UTF-8";
 
 	public static final Element put(String aFileName, String aURL) throws IOException {
@@ -54,29 +56,38 @@ public class Put {
 		
 		String contentType = fileTypeMap.getContentType(aFile);
 		HttpURLConnection http = connect(aURL, contentType);
-		OutputStream outStream = http.getOutputStream();
-		OutputStreamWriter writer = new OutputStreamWriter(outStream, CHARSET);
-		BufferedWriter bufferedWriter = new BufferedWriter(writer);
 		StringBuilder response = new StringBuilder();
-
-		// Serialize the element as XML
-		bufferedWriter.write(StringUtils.readAsUTF8(aFile));
-		bufferedWriter.close();
+		OutputStream out = http.getOutputStream();
+		BufferedWriter bWriter = null;
+		
+		try {		
+			bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
+			bWriter.write(StringUtils.readAsUTF8(aFile));
+		}
+		finally {
+			bWriter.close();
+		}
 
 		int responseCode = http.getResponseCode();
 		String responseMessage = http.getResponseMessage();
 
 		if (responseCode == 200) {
+			BufferedReader bReader = null;
+			
 			InputStream inStream = http.getInputStream();
 			InputStreamReader reader = new InputStreamReader(inStream);
-			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 
-			while ((line = bufferedReader.readLine()) != null) {
-				response.append(line + System.getProperty("line.separator"));
+			try {
+				bReader = new BufferedReader(reader);
+			
+				while ((line = bReader.readLine()) != null) {
+					response.append(line + EOL);
+				}
 			}
-
-			reader.close();
+			finally {
+				IOUtils.closeQuietly(bReader);
+			}
 		}
 
 		if (response.length() == 0) {
@@ -110,16 +121,22 @@ public class Put {
 		int responseCode = writeXML(aNode, http);
 
 		if (responseCode == 200) {
-			InputStream inStream = http.getInputStream();
-			InputStreamReader reader = new InputStreamReader(inStream);
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String line;
+			BufferedReader bReader = null;
+			
+			try {
+				InputStream inStream = http.getInputStream();
+				InputStreamReader reader = new InputStreamReader(inStream);
+				String line;
+				
+				bReader = new BufferedReader(reader);
 
-			while ((line = bufferedReader.readLine()) != null) {
-				response.append(line + System.getProperty("line.separator"));
+				while ((line = bReader.readLine()) != null) {
+					response.append(line).append(EOL);
+				}
 			}
-
-			reader.close();
+			finally {
+				IOUtils.closeQuietly(bReader);
+			}
 		}
 
 		if (response.length() == 0) {
@@ -181,13 +198,17 @@ public class Put {
 	 */
 	private static final int writeXML(Element aNode, HttpURLConnection aHTTPConn)
 			throws IOException {
-		OutputStream outStream = aHTTPConn.getOutputStream();
-		OutputStreamWriter writer = new OutputStreamWriter(outStream, CHARSET);
-		BufferedWriter bufferedWriter = new BufferedWriter(writer);
-
-		// Serialize the element as XML
-		bufferedWriter.write(DOMUtils.toXML(aNode));
-		bufferedWriter.close();
+		BufferedWriter bWriter = null;
+		
+		try {
+			OutputStream out = aHTTPConn.getOutputStream();
+		
+			bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
+			bWriter.write(DOMUtils.toXML(aNode));
+		}
+		finally {
+			IOUtils.closeQuietly(bWriter);
+		}
 
 		return aHTTPConn.getResponseCode();
 	}

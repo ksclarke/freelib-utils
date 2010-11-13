@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -446,7 +447,7 @@ public class StringUtils {
 	}
 
 	public static String toString(int aInt) {
-		return toUpcaseString(aInt).toLowerCase();
+		return toUpcaseString(aInt).toLowerCase(Locale.getDefault());
 	}
 
 	public static String toUpcaseString(int aInt) {

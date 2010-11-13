@@ -4,6 +4,7 @@
 package info.freelibrary.xq;
 
 import info.freelibrary.util.DOMUtils;
+import info.freelibrary.util.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,6 +35,7 @@ import org.xml.sax.SAXException;
 public class Post {
 
 	private static final String CONTENT_TYPE = "application/xml; charset=utf-8";
+	private static final String EOL = System.getProperty("line.separator");
 	private static final String CHARSET = "UTF-8";
 
 	public static final Element post(URL aURL, Element aNode)
@@ -43,16 +45,22 @@ public class Post {
 		int responseCode = write(aNode, http);
 
 		if (responseCode == 200) {
-			InputStream inStream = http.getInputStream();
-			InputStreamReader reader = new InputStreamReader(inStream);
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String line;
+			BufferedReader bReader = null;
+			
+			try {
+				InputStream inStream = http.getInputStream();
+				InputStreamReader reader = new InputStreamReader(inStream);
+				String line;
 
-			while ((line = bufferedReader.readLine()) != null) {
-				response.append(line + System.getProperty("line.separator"));
+				bReader = new BufferedReader(reader);
+				
+				while ((line = bReader.readLine()) != null) {
+					response.append(line + EOL);
+				}
 			}
-
-			reader.close();
+			finally {
+				IOUtils.closeQuietly(bReader);
+			}
 		}
 
 		if (response.length() == 0) {
@@ -113,13 +121,18 @@ public class Post {
 	 */
 	private static final int write(Element aNode, HttpURLConnection aHTTPConn)
 			throws IOException {
-		OutputStream outStream = aHTTPConn.getOutputStream();
-		OutputStreamWriter writer = new OutputStreamWriter(outStream, CHARSET);
-		BufferedWriter bufferedWriter = new BufferedWriter(writer);
-
-		// Serialize the element as XML
-		bufferedWriter.write(DOMUtils.toXML(aNode));
-		bufferedWriter.close();
+		BufferedWriter bWriter = null;
+		
+		try {
+			OutputStream out = aHTTPConn.getOutputStream();
+			OutputStreamWriter writer = new OutputStreamWriter(out, CHARSET);
+		
+			bWriter = new BufferedWriter(writer);
+			bWriter.write(DOMUtils.toXML(aNode));
+		}
+		finally {
+			IOUtils.closeQuietly(bWriter);
+		}
 
 		return aHTTPConn.getResponseCode();
 	}
