@@ -12,19 +12,19 @@ public abstract class I18nObject {
 			.getBundle("Messages", new XMLBundleControl());
 
 	protected String getI18n(String aMessage) {
-		return BUNDLE.get(aMessage);
+		return normalizeWS(BUNDLE.get(aMessage));
 	}
 
 	protected String getI18n(String aMessage, String aDetail) {
-		return BUNDLE.get(aMessage, aDetail);
+		return normalizeWS(BUNDLE.get(aMessage, aDetail));
 	}
 
 	protected String getI18n(String aMessage, String[] aDetailsArray) {
-		return BUNDLE.get(aMessage, aDetailsArray);
+		return normalizeWS(BUNDLE.get(aMessage, aDetailsArray));
 	}
 
 	protected String getI18n(String aMessage, File aFile) {
-		return BUNDLE.get(aMessage, aFile.getAbsolutePath());
+		return normalizeWS(BUNDLE.get(aMessage, aFile.getAbsolutePath()));
 	}
 
 	protected String getI18n(String aMessage, File[] aFileArray) {
@@ -34,7 +34,7 @@ public abstract class I18nObject {
 			fileNames[index] = aFileArray[index].getAbsolutePath();
 		}
 
-		return BUNDLE.get(aMessage, fileNames);
+		return normalizeWS(BUNDLE.get(aMessage, fileNames));
 	}
 
 	protected String getI18n(String aMessage, Object[] aObjArray) {
@@ -49,6 +49,10 @@ public abstract class I18nObject {
 			}
 		}
 
-		return BUNDLE.get(aMessage, strings);
+		return normalizeWS(BUNDLE.get(aMessage, strings));
+	}
+	
+	private String normalizeWS(String aMessage) {
+		return aMessage.replaceAll("\\s+", " ");
 	}
 }
