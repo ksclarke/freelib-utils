@@ -8,7 +8,7 @@
 	<body>
 		<section name="Introduction">
 			<p>
-				A small set of Java utilities.
+				A small set of Java utilities.  Includes classes for IO, strings, XML, etc.
 			</p>
 		</section>
 	</body>
