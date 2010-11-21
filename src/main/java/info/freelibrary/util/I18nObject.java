@@ -15,6 +15,14 @@ public abstract class I18nObject {
 		return normalizeWS(BUNDLE.get(aMessage));
 	}
 
+	protected String getI18n(String aMessage, long aLongDetail) {
+		return normalizeWS(BUNDLE.get(aMessage, Long.toString(aLongDetail)));
+	}
+	
+	protected String getI18n(String aMessage, int aIntDetail) {
+		return normalizeWS(BUNDLE.get(aMessage, Integer.toString(aIntDetail)));
+	}
+	
 	protected String getI18n(String aMessage, String aDetail) {
 		return normalizeWS(BUNDLE.get(aMessage, aDetail));
 	}
@@ -51,7 +59,7 @@ public abstract class I18nObject {
 
 		return normalizeWS(BUNDLE.get(aMessage, strings));
 	}
-	
+
 	private String normalizeWS(String aMessage) {
 		return aMessage.replaceAll("\\s+", " ");
 	}
