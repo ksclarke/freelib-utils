@@ -23,4 +23,10 @@ public class RegexDirFilter implements FilenameFilter {
 				&& myPattern.matcher(aFilename).matches();
 	}
 
+	/**
+	 * Returns a string version of the regex used as a filter.
+	 */
+	public String toString() {
+		return myPattern.toString();
+	}
 }
