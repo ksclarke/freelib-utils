@@ -189,7 +189,7 @@ public class FileUtils implements FileUtilConstants {
 	public static File[] listFiles(File aDir, FilenameFilter aFilter,
 			boolean aDeepListing, String[] aIgnoreList)
 			throws FileNotFoundException {
-		if (!aDir.exists()) {
+		if (aDir == null || !aDir.exists()) {
 			throw new FileNotFoundException(aDir.getAbsolutePath());
 		}
 
