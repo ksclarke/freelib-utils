@@ -195,8 +195,10 @@ public class FileUtils implements FileUtilConstants {
 		}
 
 		if (aDir.isFile()) {
-			return aFilter.accept(aDir.getParentFile(), aDir.getName()) ? new File[] { aDir }
-					: new File[0];
+			File parent = aDir.getParentFile();
+			boolean accept = aFilter.accept(parent, aDir.getName());
+
+			return accept ? new File[] { aDir } : new File[0];
 		}
 
 		if (!aDeepListing) {
