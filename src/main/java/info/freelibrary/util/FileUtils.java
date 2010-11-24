@@ -35,7 +35,8 @@ public class FileUtils implements FileUtilConstants {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileUtils.class);
 
-	private FileUtils() {}
+	private FileUtils() {
+	}
 
 	/**
 	 * Creates a string of XML that describes the supplied file or directory
@@ -193,6 +194,11 @@ public class FileUtils implements FileUtilConstants {
 			throw new FileNotFoundException(aDir.getAbsolutePath());
 		}
 
+		if (aDir.isFile()) {
+			return aFilter.accept(aDir.getParentFile(), aDir.getName()) ? new File[] { aDir }
+					: new File[0];
+		}
+
 		if (!aDeepListing) {
 			return aDir.listFiles(aFilter);
 		}
@@ -279,12 +285,14 @@ public class FileUtils implements FileUtilConstants {
 		if ((count = aByteCount / 1073741824) > 0) {
 			return count + " gigabytes";
 		}
-		else if ((count = aByteCount / 1048576) > 0) {
-			return count + " megabytes";
-		}
-		else if ((count = aByteCount / 1024) > 0) {
-			return count + " kilobytes";
-		}
+		else
+			if ((count = aByteCount / 1048576) > 0) {
+				return count + " megabytes";
+			}
+			else
+				if ((count = aByteCount / 1024) > 0) {
+					return count + " kilobytes";
+				}
 
 		return count + " bytes";
 	}
@@ -295,7 +303,8 @@ public class FileUtils implements FileUtilConstants {
 		FileInputStream inStream = new FileInputStream(aFile);
 		DigestInputStream mdStream = new DigestInputStream(inStream, md);
 		byte[] bytes = new byte[8192];
-		while (mdStream.read(bytes) != -1);
+		while (mdStream.read(bytes) != -1)
+			;
 		Formatter formatter = new Formatter();
 
 		for (byte bite : md.digest()) {
