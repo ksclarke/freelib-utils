@@ -35,8 +35,7 @@ public class FileUtils implements FileUtilConstants {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileUtils.class);
 
-	private FileUtils() {
-	}
+	private FileUtils() {}
 
 	/**
 	 * Creates a string of XML that describes the supplied file or directory
@@ -235,6 +234,28 @@ public class FileUtils implements FileUtilConstants {
 	}
 
 	/**
+	 * Gets the calculated size of a directory of files.
+	 * 
+	 * @param aFile A file or directory from which to calculate size
+	 * @return The calculated size of the supplied directory or file
+	 */
+	public static long getSize(File aFile) {
+		long size = 0;
+
+		if (aFile != null && aFile.exists()) {
+			size += aFile.length();
+
+			if (aFile.isDirectory()) {
+				for (File file : aFile.listFiles()) {
+					size += getSize(file);
+				}
+			}
+		}
+
+		return size;
+	}
+
+	/**
 	 * Deletes a directory and all its children.
 	 * 
 	 * @param aDir A directory to delete
@@ -282,21 +303,23 @@ public class FileUtils implements FileUtilConstants {
 	}
 
 	public static String sizeFromBytes(long aByteCount) {
+		return sizeFromBytes(aByteCount, false);
+	}
+	
+	public static String sizeFromBytes(long aByteCount, boolean aAbbreviatedLabel) {
 		long count;
 
 		if ((count = aByteCount / 1073741824) > 0) {
-			return count + " gigabytes";
+			return count + (aAbbreviatedLabel ? " GB"  : " gigabytes");
 		}
-		else
-			if ((count = aByteCount / 1048576) > 0) {
-				return count + " megabytes";
-			}
-			else
-				if ((count = aByteCount / 1024) > 0) {
-					return count + " kilobytes";
-				}
+		else if ((count = aByteCount / 1048576) > 0) {
+			return count + (aAbbreviatedLabel ? " MB" : " megabytes");
+		}
+		else if ((count = aByteCount / 1024) > 0) {
+			return count + (aAbbreviatedLabel ? " KB" : " kilobytes");
+		}
 
-		return count + " bytes";
+		return count + (aAbbreviatedLabel ? " B" : " bytes");
 	}
 
 	public static String hash(File aFile, String aAlgorithm)
@@ -305,8 +328,7 @@ public class FileUtils implements FileUtilConstants {
 		FileInputStream inStream = new FileInputStream(aFile);
 		DigestInputStream mdStream = new DigestInputStream(inStream, md);
 		byte[] bytes = new byte[8192];
-		while (mdStream.read(bytes) != -1)
-			;
+		while (mdStream.read(bytes) != -1);
 		Formatter formatter = new Formatter();
 
 		for (byte bite : md.digest()) {
