@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.util.jar.JarFile;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.fail;
 
@@ -16,6 +18,9 @@ import static org.junit.Assert.fail;
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ClasspathUtilsTest.class);
 
 	/**
 	 * Test method for {@link info.freelibrary.util.ClasspathUtils#getDirs()}.
@@ -49,11 +54,11 @@ public class ClasspathUtilsTest {
 	 */
 	@Test
 	public void testGetDirsFilenameFilter() {
-		RegexDirFilter filter = new RegexDirFilter("(.*)classes");
-		int count = ClasspathUtils.getDirFiles(filter).length;
+		RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
+		int count = ClasspathUtils.getDirs(filter).length;
 
-		if (count != 2) {
-			fail("Expected to find 2 matches for regex but found " + count);
+		if (count != 1) {
+			fail("Expected to find 1 matches for regex but found " + count);
 		}
 	}
 
@@ -64,11 +69,11 @@ public class ClasspathUtilsTest {
 	 */
 	@Test
 	public void testGetDirFilesFilenameFilter() {
-		RegexDirFilter filter = new RegexDirFilter("(.*)classes");
+		RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
 		int count = ClasspathUtils.getDirFiles(filter).length;
 
-		if (count != 2) {
-			fail("Expected to find 2 matches for regex but found " + count);
+		if (count != 1) {
+			fail("Expected to find 1 matches for regex but found " + count);
 		}
 	}
 
