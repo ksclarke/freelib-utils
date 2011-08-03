@@ -3,6 +3,7 @@
  */
 package info.freelibrary.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -49,5 +50,43 @@ public class XMLResourceBundle extends ResourceBundle {
 	
 	public String get(String aMessage) {
 		return getString(aMessage);
+	}
+	
+	public String get(String aMessage, File[] aFileArray) {
+		String[] strings = new String[aFileArray.length];
+		
+		for (int index = 0; index < strings.length; index++) {
+			strings[index] = aFileArray[index].getAbsolutePath();
+		}
+		
+		return StringUtils.formatMessage(super.getString(aMessage), strings);
+	}
+	
+	public String get(String aMessage, File aFile) {
+		return StringUtils.formatMessage(super.getString(aMessage),
+				new String[] { aFile.getAbsolutePath() });
+	}
+	
+	public String get(File aFile) {
+		return getString(aFile.getAbsolutePath());
+	}
+	
+	public String get(String aMessage, Object[] aDetailsArray) {
+		String[] strings = new String[aDetailsArray.length];
+		
+		for (int index = 0; index < strings.length; index++) {
+			strings[index] = aDetailsArray[index].toString();
+		}
+		
+		return StringUtils.formatMessage(super.getString(aMessage), strings);
+	}
+	
+	public String get(String aMessage, Object aDetail) {
+		return StringUtils.formatMessage(super.getString(aMessage),
+				new String[] { aDetail.toString() });
+	}
+	
+	public String get(Object aObject) {
+		return getString(aObject.toString());
 	}
 }
