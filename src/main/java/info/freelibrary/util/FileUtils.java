@@ -35,7 +35,8 @@ public class FileUtils implements FileUtilConstants {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileUtils.class);
 
-	private FileUtils() {}
+	private FileUtils() {
+	}
 
 	/**
 	 * Creates a string of XML that describes the supplied file or directory
@@ -264,14 +265,16 @@ public class FileUtils implements FileUtilConstants {
 		if (aDir.exists()) {
 			File[] files = aDir.listFiles();
 
-			for (int index = 0; index < files.length; index++) {
-				if (files[index].isDirectory()) {
-					delete(files[index]);
-				}
-				else {
-					if (!files[index].delete() && LOGGER.isWarnEnabled()) {
-						LOGGER.warn("Unable to delete: "
-								+ files[index].getAbsolutePath());
+			if (files != null) {
+				for (int index = 0; index < files.length; index++) {
+					if (files[index].isDirectory()) {
+						delete(files[index]);
+					}
+					else {
+						if (!files[index].delete() && LOGGER.isWarnEnabled()) {
+							LOGGER.warn("Unable to delete: "
+									+ files[index].getAbsolutePath());
+						}
 					}
 				}
 			}
@@ -305,12 +308,13 @@ public class FileUtils implements FileUtilConstants {
 	public static String sizeFromBytes(long aByteCount) {
 		return sizeFromBytes(aByteCount, false);
 	}
-	
-	public static String sizeFromBytes(long aByteCount, boolean aAbbreviatedLabel) {
+
+	public static String sizeFromBytes(long aByteCount,
+			boolean aAbbreviatedLabel) {
 		long count;
 
 		if ((count = aByteCount / 1073741824) > 0) {
-			return count + (aAbbreviatedLabel ? " GB"  : " gigabytes");
+			return count + (aAbbreviatedLabel ? " GB" : " gigabytes");
 		}
 		else if ((count = aByteCount / 1048576) > 0) {
 			return count + (aAbbreviatedLabel ? " MB" : " megabytes");
@@ -328,7 +332,8 @@ public class FileUtils implements FileUtilConstants {
 		FileInputStream inStream = new FileInputStream(aFile);
 		DigestInputStream mdStream = new DigestInputStream(inStream, md);
 		byte[] bytes = new byte[8192];
-		while (mdStream.read(bytes) != -1);
+		while (mdStream.read(bytes) != -1)
+			;
 		Formatter formatter = new Formatter();
 
 		for (byte bite : md.digest()) {
