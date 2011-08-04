@@ -20,6 +20,14 @@ public class PairtreeObject extends File {
 	private static final XMLResourceBundle BUNDLE = (XMLResourceBundle) ResourceBundle
 			.getBundle("Messages", new XMLBundleControl());
 
+	/**
+	 * Creates a new Pairtree object for the supplied name in the supplied
+	 * Pairtree structure.
+	 * 
+	 * @param aRoot An existing Pairtree structure
+	 * @param aName The name of the Pairtree object
+	 * @throws IOException If there is a problem creating the Pairtree structure
+	 */
 	PairtreeObject(PairtreeRoot aRoot, String aName) throws IOException {
 		super(aRoot, PairtreeUtils.mapToPPath(aName));
 
@@ -33,6 +41,16 @@ public class PairtreeObject extends File {
 		}
 	}
 
+	/**
+	 * Creates a new Pairtree object for the supplied name in the supplied
+	 * Pairtree structure.
+	 * 
+	 * @param aRoot The root of the Pairtree structure
+	 * @param aPrefix A Pairtree prefix to use when creating the directory
+	 *        structure
+	 * @param aName The name of the Pairtree object to create
+	 * @throws IOException If there is a problem creating the object
+	 */
 	PairtreeObject(PairtreeRoot aRoot, String aPrefix, String aName)
 			throws IOException {
 		super(aRoot, PairtreeUtils.mapToPPath(aPrefix, aName));
@@ -47,6 +65,9 @@ public class PairtreeObject extends File {
 		}
 	}
 
+	/**
+	 * Returns a string representation of the Pairtree object.
+	 */
 	public String toString() {
 		return getAbsolutePath();
 	}

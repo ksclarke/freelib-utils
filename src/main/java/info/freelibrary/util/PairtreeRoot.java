@@ -33,21 +33,46 @@ public class PairtreeRoot extends File {
 
 	private String myPairtreePrefix;
 
-	public PairtreeRoot() throws PairtreeException, IOException {
+	/**
+	 * Creates a new Pairtree structure in the current directory. This will
+	 * create the related version file too.
+	 * 
+	 * @throws IOException If there is a problem creating the structure
+	 */
+	public PairtreeRoot() throws IOException {
 		this(new File("."));
 	}
 
-	public PairtreeRoot(String aPairtreePrefix) throws PairtreeException,
-			IOException {
+	/**
+	 * Creates a new Pairtree structure, using a Pairtree prefix, in the current
+	 * directory. This will create the related version and Pairtree prefix files
+	 * too.
+	 * 
+	 * @throws IOException If there is a problem creating the structure
+	 */
+	public PairtreeRoot(String aPairtreePrefix) throws IOException {
 		this(new File("."), aPairtreePrefix);
 	}
 
-	public PairtreeRoot(File aParentDir) throws PairtreeException, IOException {
+	/**
+	 * Creates a new Pairtree structure in the supplied directory. This will
+	 * create the related version file too.
+	 * 
+	 * @throws IOException If there is a problem creating the structure
+	 */
+	public PairtreeRoot(File aParentDir) throws IOException {
 		this(aParentDir, null);
 	}
 
+	/**
+	 * Creates a new Pairtree structure, using a Pairtree prefix, in the
+	 * supplied directory. This will create the related version and Pairtree
+	 * prefix files too.
+	 * 
+	 * @throws IOException If there is a problem creating the structure
+	 */
 	public PairtreeRoot(File aParentDir, String aPairtreePrefix)
-			throws PairtreeException, IOException {
+			throws IOException {
 		super(aParentDir, PAIRTREE_ROOT);
 
 		if (aPairtreePrefix != null) {
@@ -66,17 +91,30 @@ public class PairtreeRoot extends File {
 		}
 
 		if (!mkdirs()) {
-			throw new PairtreeException(BUNDLE.get("pt.cant_mkdirs", this));
+			throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
 		}
 
 		writeVersionFile(new File(aParentDir, getVersionFileName()));
 	}
 
+	/**
+	 * Returns a directory in the Pairtree directory for the supplied name. File
+	 * to be put into the structure can use this as a parent directory.
+	 * 
+	 * @param aName The name of the Pairtree object (the object's ID)
+	 * @return A <code>PairtreeObject</code> (directory in the Pairtree
+	 *         structure).
+	 * @throws IOException
+	 */
 	public PairtreeObject getObject(String aName) throws IOException {
 		return myPairtreePrefix == null ? new PairtreeObject(this, aName)
 				: new PairtreeObject(this, myPairtreePrefix, aName);
 	}
 
+	/**
+	 * Deletes the Pairtree structure, including all contained and related
+	 * files.
+	 */
 	public boolean delete() {
 		File prefixFile = new File(getParentFile(), PAIRTREE_PREFIX);
 		File ptVersion = new File(getParentFile(), getVersionFileName());

@@ -30,10 +30,6 @@ public class PairtreeRootTest {
 			LOGGER.error(details.getMessage(), details);
 			fail(details.getMessage());
 		}
-		catch (PairtreeException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
 		finally {
 			if (root != null) {
 				root.delete();
@@ -52,10 +48,6 @@ public class PairtreeRootTest {
 			assertEquals(true, root.canWrite());
 		}
 		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		catch (PairtreeException details) {
 			LOGGER.error(details.getMessage(), details);
 			fail(details.getMessage());
 		}
@@ -79,10 +71,6 @@ public class PairtreeRootTest {
 			LOGGER.error(details.getMessage(), details);
 			fail(details.getMessage());
 		}
-		catch (PairtreeException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
 		finally {
 			if (root != null) {
 				root.delete();
@@ -101,10 +89,6 @@ public class PairtreeRootTest {
 			assertEquals(true, root.canWrite());
 		}
 		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		catch (PairtreeException details) {
 			LOGGER.error(details.getMessage(), details);
 			fail(details.getMessage());
 		}
