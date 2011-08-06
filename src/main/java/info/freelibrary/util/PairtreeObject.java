@@ -31,7 +31,7 @@ public class PairtreeObject extends File {
 	PairtreeObject(PairtreeRoot aRoot, String aName) throws IOException {
 		super(aRoot, PairtreeUtils.mapToPPath(aName));
 
-		if (!mkdirs()) {
+		if (!exists() && !mkdirs()) {
 			throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
 		}
 
@@ -55,7 +55,7 @@ public class PairtreeObject extends File {
 			throws IOException {
 		super(aRoot, PairtreeUtils.mapToPPath(aPrefix, aName));
 
-		if (!mkdirs()) {
+		if (!exists() && !mkdirs()) {
 			throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
 		}
 

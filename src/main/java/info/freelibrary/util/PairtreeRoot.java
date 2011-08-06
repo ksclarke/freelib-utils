@@ -154,20 +154,22 @@ public class PairtreeRoot extends File {
 	}
 
 	private void writeVersionFile(File aFile) throws IOException {
-		FileWriter writer = new FileWriter(aFile);
-
-		writer.write(BUNDLE.get("pt.verfile.content1", PAIRTREE_VERSION_NUM));
-		writer.write(LINE_SEP);
-		writer.write(BUNDLE.get("pt.verfile.content2"));
-		writer.write(LINE_SEP);
-		writer.close();
+		if (!aFile.exists()) {
+			FileWriter writer = new FileWriter(aFile);
+			writer.write(BUNDLE.get("pt.verfile.content1", PAIRTREE_VERSION_NUM));
+			writer.write(LINE_SEP);
+			writer.write(BUNDLE.get("pt.verfile.content2"));
+			writer.write(LINE_SEP);
+			writer.close();
+		}
 	}
 
 	private void writePrefixFile(File aFile, String aPrefix) throws IOException {
-		FileWriter writer = new FileWriter(aFile);
-
-		writer.write(aPrefix);
-		writer.write(LINE_SEP);
-		writer.close();
+		if (!aFile.exists()) {
+			FileWriter writer = new FileWriter(aFile);
+			writer.write(aPrefix);
+			writer.write(LINE_SEP);
+			writer.close();
+		}
 	}
 }
