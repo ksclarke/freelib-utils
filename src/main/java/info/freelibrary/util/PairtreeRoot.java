@@ -90,7 +90,7 @@ public class PairtreeRoot extends File {
 			}
 		}
 
-		if (!mkdirs()) {
+		if (!exists() && !mkdirs()) {
 			throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
 		}
 
@@ -156,7 +156,8 @@ public class PairtreeRoot extends File {
 	private void writeVersionFile(File aFile) throws IOException {
 		if (!aFile.exists()) {
 			FileWriter writer = new FileWriter(aFile);
-			writer.write(BUNDLE.get("pt.verfile.content1", PAIRTREE_VERSION_NUM));
+			writer.write(BUNDLE
+					.get("pt.verfile.content1", PAIRTREE_VERSION_NUM));
 			writer.write(LINE_SEP);
 			writer.write(BUNDLE.get("pt.verfile.content2"));
 			writer.write(LINE_SEP);
@@ -170,6 +171,14 @@ public class PairtreeRoot extends File {
 			writer.write(aPrefix);
 			writer.write(LINE_SEP);
 			writer.close();
+		}
+		else {
+			String prefix = StringUtils.read(aFile);
+
+			if (!prefix.equals(aPrefix)) {
+				throw new IOException(BUNDLE.get("pt.bad_prefix", new String[] {
+						prefix, aPrefix }));
+			}
 		}
 	}
 }

@@ -9,6 +9,7 @@
     <entry key="pt.using_prefix">Using Pairtree prefix: {}</entry>
     <entry key="pt.object_created1">Pairtree Object created: {} ({})</entry>
     <entry key="pt.object_created2">Pairtree Object created: {} ({} | {})</entry>
+    <entry key="pt.bad_prefix">Trying to write wrong Pairtree prefix ({} vs. {})</entry>
     <entry key="pt.verfile.content1">This directory conforms to Pairtree Version {}. Updated spec:</entry>
     <entry key="pt.verfile.content2">http://www.cdlib.org/inside/diglib/pairtree/pairtreespec.html</entry>
 </properties>
