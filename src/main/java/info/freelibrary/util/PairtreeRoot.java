@@ -83,7 +83,7 @@ public class PairtreeRoot extends File {
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug(BUNDLE.get("pt.creating_root", aParentDir));
+			LOGGER.debug(BUNDLE.get("pt.retrieving_root", aParentDir));
 
 			if (aPairtreePrefix != null) {
 				LOGGER.debug(BUNDLE.get("pt.using_prefix", myPairtreePrefix));

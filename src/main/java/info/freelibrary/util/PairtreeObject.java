@@ -36,7 +36,7 @@ public class PairtreeObject extends File {
 		}
 
 		if (LOGGER.isInfoEnabled()) {
-			LOGGER.debug(BUNDLE.get("pt.object_created1", new String[] {
+			LOGGER.debug(BUNDLE.get("pt.object_retrieved1", new String[] {
 					getAbsolutePath(), aName }));
 		}
 	}
@@ -60,7 +60,7 @@ public class PairtreeObject extends File {
 		}
 
 		if (LOGGER.isInfoEnabled()) {
-			LOGGER.debug(BUNDLE.get("pt.object_created2", new String[] {
+			LOGGER.debug(BUNDLE.get("pt.object_retrieved2", new String[] {
 					getAbsolutePath(), aPrefix, aName }));
 		}
 	}
