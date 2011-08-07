@@ -105,7 +105,6 @@ public class PairtreeRootTest {
 
 		try {
 			root = new PairtreeRoot();
-			System.out.println(root.getObject("asdffdsa").toString());
 		}
 		catch (Exception details) {
 			if (LOGGER.isDebugEnabled()) {
