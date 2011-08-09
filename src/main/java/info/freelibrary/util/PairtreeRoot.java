@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class PairtreeRoot extends File {
 
-	public static final String PAIRTREE_VERSION_NUM = "0.1";
+	public static final String PT_VERSION_NUM = "0.1";
 
 	private static final String LINE_SEP = System.getProperty("line.separator");
 
@@ -145,32 +145,83 @@ public class PairtreeRoot extends File {
 		return result;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((myPairtreePrefix == null) ? 0 : myPairtreePrefix.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object aObject) {
+		if (this == aObject) {
+			return true;
+		}
+
+		if (!super.equals(aObject)) {
+			return false;
+		}
+
+		if (getClass() != aObject.getClass()) {
+			return false;
+		}
+
+		PairtreeRoot other = (PairtreeRoot) aObject;
+
+		if (myPairtreePrefix == null) {
+			if (other.myPairtreePrefix != null) {
+				return false;
+			}
+		}
+		else if (!myPairtreePrefix.equals(other.myPairtreePrefix)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private String getPairtreePrefix() {
 		return myPairtreePrefix;
 	}
 
 	private String getVersionFileName() {
-		return PAIRTREE_VERSION + PAIRTREE_VERSION_NUM.replace('.', '_');
+		return PAIRTREE_VERSION + PT_VERSION_NUM.replace('.', '_');
 	}
 
 	private void writeVersionFile(File aFile) throws IOException {
 		if (!aFile.exists()) {
-			FileWriter writer = new FileWriter(aFile);
-			writer.write(BUNDLE
-					.get("pt.verfile.content1", PAIRTREE_VERSION_NUM));
-			writer.write(LINE_SEP);
-			writer.write(BUNDLE.get("pt.verfile.content2"));
-			writer.write(LINE_SEP);
-			writer.close();
+			FileWriter writer = null;
+
+			try {
+				writer = new FileWriter(aFile);
+				writer.write(BUNDLE.get("pt.verfile.content1", PT_VERSION_NUM));
+				writer.write(LINE_SEP);
+				writer.write(BUNDLE.get("pt.verfile.content2"));
+				writer.write(LINE_SEP);
+				writer.close();
+			}
+			finally {
+				IOUtils.closeQuietly(writer);
+			}
 		}
 	}
 
 	private void writePrefixFile(File aFile, String aPrefix) throws IOException {
 		if (!aFile.exists()) {
-			FileWriter writer = new FileWriter(aFile);
-			writer.write(aPrefix);
-			writer.write(LINE_SEP);
-			writer.close();
+			FileWriter writer = null;
+
+			try {
+				writer = new FileWriter(aFile);
+				writer.write(aPrefix);
+				writer.write(LINE_SEP);
+				writer.close();
+			}
+			finally {
+				IOUtils.closeQuietly(writer);
+			}
 		}
 		else {
 			String prefix = StringUtils.read(aFile);

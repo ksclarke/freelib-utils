@@ -89,7 +89,8 @@ public class PairtreeUtils {
 			shorties.add(cleanId.substring(start, end));
 			start = end;
 		}
-		return concat(shorties.toArray(new String[] {}));
+
+		return concat(shorties.toArray(new String[shorties.size()]));
 	}
 
 	public static String mapToPPath(String basePath, String id) {

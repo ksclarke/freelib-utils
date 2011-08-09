@@ -47,7 +47,7 @@ public class DOMUtils implements XMLConstants {
 				Node attribute = attributes.item(index);
 				String nsURI = attribute.getNamespaceURI();
 
-				if ((nsURI != null && !aNode.equals(XML1998_NS_URI))
+				if ((nsURI != null && !aNode.getNamespaceURI().equals(XML1998_NS_URI))
 						|| nsURI == null) {
 
 					if (!XML.equals(attribute.getLocalName())) {
