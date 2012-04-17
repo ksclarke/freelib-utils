@@ -377,10 +377,6 @@ public class FileUtils implements FileUtilConstants {
 		}
 
 		if (aDestFile.exists() && aSourceFile.canRead()) {
-		    if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Changing perms on newly copied files");
-		    }
-
 		    aDestFile.setReadable(true, true);
 		}
 		
