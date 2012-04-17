@@ -375,6 +375,22 @@ public class FileUtils implements FileUtilConstants {
 			IOUtils.closeQuietly(outputStream);
 			IOUtils.closeQuietly(inputStream);
 		}
+		
+		if (aDestFile.exists() && aSourceFile.canRead()) {
+		    if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Changing perms on newly copied files");
+		    }
+
+		    aDestFile.setReadable(true, true);
+		}
+		
+		if (aDestFile.exists() && aSourceFile.canWrite()) {
+		    aDestFile.setWritable(true, true);
+		}
+
+		if (aDestFile.exists() && aSourceFile.canExecute()) {
+		    aDestFile.setExecutable(true, true);
+		}
 	}
 
 	private static Element add(File aFile, Element aParent,
