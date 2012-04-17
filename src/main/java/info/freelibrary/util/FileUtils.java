@@ -375,7 +375,7 @@ public class FileUtils implements FileUtilConstants {
 			IOUtils.closeQuietly(outputStream);
 			IOUtils.closeQuietly(inputStream);
 		}
-		
+
 		if (aDestFile.exists() && aSourceFile.canRead()) {
 		    if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Changing perms on newly copied files");
