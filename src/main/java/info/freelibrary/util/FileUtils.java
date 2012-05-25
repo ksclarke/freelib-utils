@@ -219,11 +219,19 @@ public class FileUtils implements FileUtilConstants {
 				String fileName = file.getName();
 
 				if (aFilter.accept(aDir, fileName)) {
+				    	if (LOGGER.isDebugEnabled()) {
+				    	    LOGGER.debug("Match file: {}", file);
+				    	}
+				    
 					fileList.add(file);
 				}
 
 				if (file.isDirectory()
 						&& (Arrays.binarySearch(ignoreList, fileName) < 0)) {
+				    	if (LOGGER.isDebugEnabled()) {
+				    	    LOGGER.debug("Descending into: {}", file);
+				    	}
+				    
 					File[] files = listFiles(file, aFilter, aDeepListing);
 					fileList.addAll(Arrays.asList(files));
 				}
@@ -234,6 +242,20 @@ public class FileUtils implements FileUtilConstants {
 		}
 	}
 
+	public static String stripExt(File aFile) {
+	    return stripExt(aFile.getName());
+	}
+	
+	public static String stripExt(String aFilename) {
+	    int index = aFilename.lastIndexOf('.');
+	    
+	    if (index != -1) {
+		return aFilename.substring(0, index);
+	    }
+	    
+	    return aFilename;
+	}
+	
 	/**
 	 * Gets the calculated size of a directory of files.
 	 * 

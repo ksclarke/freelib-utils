@@ -14,131 +14,131 @@ import org.slf4j.LoggerFactory;
 
 public class PairtreeRootTest {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PairtreeRootTest.class);
+    private static final Logger LOGGER = LoggerFactory
+	    .getLogger(PairtreeRootTest.class);
 
-	@Test
-	public void testPairtreeRoot() {
-		PairtreeRoot root = null;
+    @Test
+    public void testPairtreeRoot() {
+	PairtreeRoot root = null;
 
-		try {
-			root = new PairtreeRoot();
-			checkVersionFile(root.getParentFile());
-			assertEquals(true, root.canWrite());
-		}
-		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		finally {
-			if (root != null) {
-				root.delete();
-			}
-		}
+	try {
+	    root = new PairtreeRoot();
+	    checkVersionFile(root.getParentFile());
+	    assertEquals(true, root.canWrite());
 	}
-
-	@Test
-	public void testPairtreeRootString() {
-		PairtreeRoot root = null;
-
-		try {
-			root = new PairtreeRoot("myPrefix");
-			checkVersionFile(root.getParentFile());
-			checkPrefixFile(root.getParentFile());
-			assertEquals(true, root.canWrite());
-		}
-		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		finally {
-			if (root != null) {
-				root.delete();
-			}
-		}
+	catch (IOException details) {
+	    LOGGER.error(details.getMessage(), details);
+	    fail(details.getMessage());
 	}
-
-	@Test
-	public void testPairtreeRootFile() {
-		PairtreeRoot root = null;
-
-		try {
-			root = new PairtreeRoot(new File("src/test/resources"));
-			checkVersionFile(root.getParentFile());
-			assertEquals(true, root.canWrite());
-		}
-		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		finally {
-			if (root != null) {
-				root.delete();
-			}
-		}
+	finally {
+	    if (root != null) {
+		root.delete();
+	    }
 	}
+    }
 
-	@Test
-	public void testPairtreeRootFileString() {
-		PairtreeRoot root = null;
+    @Test
+    public void testPairtreeRootString() {
+	PairtreeRoot root = null;
 
-		try {
-			root = new PairtreeRoot(new File("src/test/resources"), "myPrefix");
-			checkVersionFile(root.getParentFile());
-			checkPrefixFile(root.getParentFile());
-			assertEquals(true, root.canWrite());
-		}
-		catch (IOException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
-		finally {
-			if (root != null) {
-				root.delete();
-			}
-		}
+	try {
+	    root = new PairtreeRoot("myPrefix");
+	    checkVersionFile(root.getParentFile());
+	    checkPrefixFile(root.getParentFile());
+	    assertEquals(true, root.canWrite());
 	}
-
-	@Test
-	public void testGetObjectName() {
-		PairtreeRoot root = null;
-
-		try {
-			root = new PairtreeRoot();
-		}
-		catch (Exception details) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug(details.getMessage(), details);
-			}
-
-			fail(details.getMessage());
-		}
-		finally {
-			if (root != null) {
-				root.delete();
-			}
-		}
+	catch (IOException details) {
+	    LOGGER.error(details.getMessage(), details);
+	    fail(details.getMessage());
 	}
-
-	private void checkVersionFile(File aDir) {
-		FilenameFilter filter = new RegexFileFilter("pairtree_version.*");
-
-		try {
-			File[] files = FileUtils.listFiles(aDir, filter);
-
-			assertEquals(files.length, 1);
-
-			for (File file : files) {
-				assertEquals(true, file.exists());
-			}
-		}
-		catch (FileNotFoundException details) {
-			LOGGER.error(details.getMessage(), details);
-			fail(details.getMessage());
-		}
+	finally {
+	    if (root != null) {
+		root.delete();
+	    }
 	}
+    }
 
-	private void checkPrefixFile(File aDir) {
-		assertEquals(true, new File(aDir, "pairtree_prefix").exists());
+    @Test
+    public void testPairtreeRootFile() {
+	PairtreeRoot root = null;
+
+	try {
+	    root = new PairtreeRoot(new File("src/test/resources"));
+	    checkVersionFile(root.getParentFile());
+	    assertEquals(true, root.canWrite());
 	}
+	catch (IOException details) {
+	    LOGGER.error(details.getMessage(), details);
+	    fail(details.getMessage());
+	}
+	finally {
+	    if (root != null) {
+		root.delete();
+	    }
+	}
+    }
+
+    @Test
+    public void testPairtreeRootFileString() {
+	PairtreeRoot root = null;
+
+	try {
+	    root = new PairtreeRoot(new File("src/test/resources"), "myPrefix");
+	    checkVersionFile(root.getParentFile());
+	    checkPrefixFile(root.getParentFile());
+	    assertEquals(true, root.canWrite());
+	}
+	catch (IOException details) {
+	    LOGGER.error(details.getMessage(), details);
+	    fail(details.getMessage());
+	}
+	finally {
+	    if (root != null) {
+		root.delete();
+	    }
+	}
+    }
+
+    @Test
+    public void testGetObjectName() {
+	PairtreeRoot root = null;
+
+	try {
+	    root = new PairtreeRoot();
+	}
+	catch (Exception details) {
+	    if (LOGGER.isDebugEnabled()) {
+		LOGGER.debug(details.getMessage(), details);
+	    }
+
+	    fail(details.getMessage());
+	}
+	finally {
+	    if (root != null) {
+		root.delete();
+	    }
+	}
+    }
+
+    private void checkVersionFile(File aDir) {
+	FilenameFilter filter = new RegexFileFilter("pairtree_version.*");
+
+	try {
+	    File[] files = FileUtils.listFiles(aDir, filter);
+
+	    assertEquals(files.length, 1);
+
+	    for (File file : files) {
+		assertEquals(true, file.exists());
+	    }
+	}
+	catch (FileNotFoundException details) {
+	    LOGGER.error(details.getMessage(), details);
+	    fail(details.getMessage());
+	}
+    }
+
+    private void checkPrefixFile(File aDir) {
+	assertEquals(true, new File(aDir, "pairtree_prefix").exists());
+    }
 }
