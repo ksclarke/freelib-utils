@@ -114,11 +114,16 @@ public class StringUtils {
 		String[] parts = aMessage.split("\\{\\}");
 		StringBuilder builder = new StringBuilder();
 
-		for (int index = 0; index < parts.length; index++) {
-			builder.append(parts[index]);
+		if (count == 1 && parts.length == 0) {
+			builder.append(aDetails[0]);
+		}
+		else {
+			for (int index = 0; index < parts.length; index++) {
+				builder.append(parts[index]);
 
-			if (index < aDetails.length) {
-				builder.append(aDetails[index]);
+				if (index < aDetails.length) {
+					builder.append(aDetails[index]);
+				}
 			}
 		}
 

@@ -12,4 +12,6 @@
     <entry key="pt.bad_prefix">Trying to write wrong Pairtree prefix ({} vs. {})</entry>
     <entry key="pt.verfile.content1">This directory conforms to Pairtree Version {}. Updated spec:</entry>
     <entry key="pt.verfile.content2">http://www.cdlib.org/inside/diglib/pairtree/pairtreespec.html</entry>
+    
+    <entry key="test.my.exception">{}</entry>
 </properties>
