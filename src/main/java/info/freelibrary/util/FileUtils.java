@@ -19,14 +19,19 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -35,8 +40,7 @@ public class FileUtils implements FileUtilConstants {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileUtils.class);
 
-	private FileUtils() {
-	}
+	private FileUtils() {}
 
 	/**
 	 * Creates a string of XML that describes the supplied file or directory
@@ -139,6 +143,47 @@ public class FileUtils implements FileUtilConstants {
 		return DOMUtils.toXML(toElement(aFilePath, aPattern, aDeepConversion));
 	}
 
+	public static Map<String, List<String>> toHashMap(String aFilePath)
+			throws FileNotFoundException {
+		return toHashMap(aFilePath, null, null);
+	}
+
+	public static Map<String, List<String>> toHashMap(String aFilePath, String aPattern)
+			throws FileNotFoundException {
+		return toHashMap(aFilePath, aPattern, null);
+	}
+
+	public static Map<String, List<String>> toHashMap(String aFilePath,
+			String aPattern, String[] aIgnoreList) throws FileNotFoundException {
+		String filePattern = aPattern != null ? aPattern : ".*";
+		RegexFileFilter filter = new RegexFileFilter(filePattern);
+		Map<String, List<String>> fileMap = new HashMap();
+		File source = new File(aFilePath);
+		
+		for (File file : listFiles(source, filter, true, aIgnoreList)) {
+			String fileName = file.getName();
+			String filePath = file.getAbsolutePath();
+			
+			if (fileMap.containsKey(fileName)) {
+				List<String> paths = fileMap.get(fileName);
+
+				if (!paths.contains(filePath)) {
+					paths.add(filePath);
+				}
+				else {
+					throw new RuntimeException("Found duplicate file path name");
+				}
+			}
+			else {
+				ArrayList<String> pathList = new ArrayList<String>();
+				pathList.add(filePath);
+				fileMap.put(fileName, pathList);
+			}
+		}
+
+		return Collections.unmodifiableMap(fileMap);
+	}
+
 	public static Element toElement(String aFilePath, String aPattern)
 			throws FileNotFoundException, ParserConfigurationException {
 		return toElement(aFilePath, aPattern, false);
@@ -219,19 +264,19 @@ public class FileUtils implements FileUtilConstants {
 				String fileName = file.getName();
 
 				if (aFilter.accept(aDir, fileName)) {
-				    	if (LOGGER.isDebugEnabled()) {
-				    	    LOGGER.debug("Match file: {}", file);
-				    	}
-				    
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("Match file: {}", file);
+					}
+
 					fileList.add(file);
 				}
 
 				if (file.isDirectory()
 						&& (Arrays.binarySearch(ignoreList, fileName) < 0)) {
-				    	if (LOGGER.isDebugEnabled()) {
-				    	    LOGGER.debug("Descending into: {}", file);
-				    	}
-				    
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("Descending into: {}", file);
+					}
+
 					File[] files = listFiles(file, aFilter, aDeepListing);
 					fileList.addAll(Arrays.asList(files));
 				}
@@ -243,19 +288,19 @@ public class FileUtils implements FileUtilConstants {
 	}
 
 	public static String stripExt(File aFile) {
-	    return stripExt(aFile.getName());
+		return stripExt(aFile.getName());
 	}
-	
+
 	public static String stripExt(String aFilename) {
-	    int index = aFilename.lastIndexOf('.');
-	    
-	    if (index != -1) {
-		return aFilename.substring(0, index);
-	    }
-	    
-	    return aFilename;
+		int index = aFilename.lastIndexOf('.');
+
+		if (index != -1) {
+			return aFilename.substring(0, index);
+		}
+
+		return aFilename;
 	}
-	
+
 	/**
 	 * Gets the calculated size of a directory of files.
 	 * 
@@ -354,8 +399,7 @@ public class FileUtils implements FileUtilConstants {
 		FileInputStream inStream = new FileInputStream(aFile);
 		DigestInputStream mdStream = new DigestInputStream(inStream, md);
 		byte[] bytes = new byte[8192];
-		while (mdStream.read(bytes) != -1)
-			;
+		while (mdStream.read(bytes) != -1);
 		Formatter formatter = new Formatter();
 
 		for (byte bite : md.digest()) {
@@ -399,15 +443,15 @@ public class FileUtils implements FileUtilConstants {
 		}
 
 		if (aDestFile.exists() && aSourceFile.canRead()) {
-		    aDestFile.setReadable(true, true);
+			aDestFile.setReadable(true, true);
 		}
-		
+
 		if (aDestFile.exists() && aSourceFile.canWrite()) {
-		    aDestFile.setWritable(true, true);
+			aDestFile.setWritable(true, true);
 		}
 
 		if (aDestFile.exists() && aSourceFile.canExecute()) {
-		    aDestFile.setExecutable(true, true);
+			aDestFile.setExecutable(true, true);
 		}
 	}
 
