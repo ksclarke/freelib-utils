@@ -1,6 +1,7 @@
 /**
  * Licensed under the GNU LGPL v.2.1 or later.
  */
+
 package info.freelibrary.util;
 
 import java.io.IOException;
@@ -12,38 +13,63 @@ import java.security.SecureRandom;
 
 import net.iharder.Base64;
 
+/**
+ * Utilities for use with password creation.
+ * 
+ * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ */
 public final class PasswordUtils {
 
-	private PasswordUtils() {}
+    private PasswordUtils() {
+    }
 
-	public final static String generateSalt() {
-		return new BigInteger(40, new SecureRandom()).toString(32);
-	}
+    /**
+     * Generates a salt for working with passwords.
+     * 
+     * @return A salt
+     */
+    public static String generateSalt() {
+        return new BigInteger(40, new SecureRandom()).toString(32);
+    }
 
-	public final static String encrypt(String aText) throws IOException {
-		return PasswordUtils.encrypt(aText, "");
-	}
+    /**
+     * Encrypts the supplied text.
+     * 
+     * @param aText The text to be encrypted
+     * @return The encrypted password
+     * @throws IOException If there is trouble encrypting the supplied text
+     */
+    public static String encrypt(String aText) throws IOException {
+        return PasswordUtils.encrypt(aText, "");
+    }
 
-	public final static String encrypt(String aText, String aSalt)
-			throws IOException {
-		if (aText == null) {
-			throw new NullPointerException("Text to encrypt is null");
-		}
+    /**
+     * Encrypts the supplied text using the supplied salt.
+     * 
+     * @param aText The text to be encrypted
+     * @param aSalt The salt to use in the encryption
+     * @return The encrypted password
+     * @throws IOException If there is trouble encrypting the supplied text
+     */
+    public static String encrypt(String aText, String aSalt)
+        throws IOException {
+        if (aText == null) {
+            throw new NullPointerException("Text to encrypt is null");
+        }
 
-		if (aSalt == null) {
-			throw new NullPointerException("Salt to encrypt with is null");
-		}
+        if (aSalt == null) {
+            throw new NullPointerException("Salt to encrypt with is null");
+        }
 
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA");
-			digest.update((aText + aSalt).getBytes("UTF-8"));
-			return Base64.encodeBytes(digest.digest());
-		}
-		catch (NoSuchAlgorithmException details) {
-			throw new RuntimeException(details); // programming error
-		}
-		catch (UnsupportedEncodingException details) {
-			throw new RuntimeException(details); // programming error
-		}
-	}
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA");
+            String saltedText = aText + aSalt;
+            digest.update(saltedText.getBytes("UTF-8"));
+            return Base64.encodeBytes(digest.digest());
+        } catch (NoSuchAlgorithmException details) {
+            throw new RuntimeException(details); // programming error
+        } catch (UnsupportedEncodingException details) {
+            throw new RuntimeException(details); // programming error
+        }
+    }
 }

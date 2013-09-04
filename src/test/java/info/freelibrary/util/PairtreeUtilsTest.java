@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 /*
@@ -42,7 +43,7 @@ package info.freelibrary.util;
 
  */
 
-import info.freelibrary.util.InvalidPpathException;
+import info.freelibrary.util.InvalidPPathException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,149 +52,149 @@ import static org.junit.Assert.*;
 
 public class PairtreeUtilsTest {
 
-	@Before
-	public void setup() {
-		PairtreeUtils.setSeparator('/');
-	}
+    @Before
+    public void setup() {
+        PairtreeUtils.setSeparator('/');
+    }
 
-	@Test
-	public void testMapToPPath() {
-		assertEquals("ab/cd", PairtreeUtils.mapToPPath("abcd"));
-		assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
-		assertEquals("12/-9/86/xy/4", PairtreeUtils.mapToPPath("12-986xy4"));
+    @Test
+    public void testMapToPPath() {
+        assertEquals("ab/cd", PairtreeUtils.mapToPPath("abcd"));
+        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
+        assertEquals("12/-9/86/xy/4", PairtreeUtils.mapToPPath("12-986xy4"));
 
-		assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-				.mapToPPath(null, "13030_45xqv_793842495", null));
-		assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5/793842495", PairtreeUtils
-				.mapToPPath(null, "13030_45xqv_793842495", "793842495"));
-		assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-				.mapToPPath("/data", "13030_45xqv_793842495", null));
-		assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-				.mapToPPath("/data/", "13030_45xqv_793842495", null));
-		assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495",
-				PairtreeUtils.mapToPPath("/data", "13030_45xqv_793842495",
-						"793842495"));
+        assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
+                .mapToPPath(null, "13030_45xqv_793842495", null));
+        assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5/793842495", PairtreeUtils
+                .mapToPPath(null, "13030_45xqv_793842495", "793842495"));
+        assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
+                .mapToPPath("/data", "13030_45xqv_793842495", null));
+        assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
+                .mapToPPath("/data/", "13030_45xqv_793842495", null));
+        assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495",
+                PairtreeUtils.mapToPPath("/data", "13030_45xqv_793842495",
+                        "793842495"));
 
-	}
+    }
 
-	@Test
-	public void testIdCleaning() {
-		assertEquals("ark+=13030=xt12t3", PairtreeUtils
-				.cleanId("ark:/13030/xt12t3"));
-		assertEquals("http+==n2t,info=urn+nbn+se+kb+repos-1", PairtreeUtils
-				.cleanId("http://n2t.info/urn:nbn:se:kb:repos-1"));
-		assertEquals("what-the-^2a@^3f#!^5e!^3f", PairtreeUtils
-				.cleanId("what-the-*@?#!^!?"));
-	}
+    @Test
+    public void testIdCleaning() {
+        assertEquals("ark+=13030=xt12t3", PairtreeUtils
+                .cleanId("ark:/13030/xt12t3"));
+        assertEquals("http+==n2t,info=urn+nbn+se+kb+repos-1", PairtreeUtils
+                .cleanId("http://n2t.info/urn:nbn:se:kb:repos-1"));
+        assertEquals("what-the-^2a@^3f#!^5e!^3f", PairtreeUtils
+                .cleanId("what-the-*@?#!^!?"));
+    }
 
-	@Test
-	public void testIdUncleaning() {
-		assertEquals("ark:/13030/xt12t3", PairtreeUtils
-				.uncleanId("ark+=13030=xt12t3"));
-		assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1", PairtreeUtils
-				.uncleanId("http+==n2t,info=urn+nbn+se+kb+repos-1"));
-		assertEquals("what-the-*@?#!^!?", PairtreeUtils
-				.uncleanId("what-the-^2a@^3f#!^5e!^3f"));
-	}
+    @Test
+    public void testIdUncleaning() {
+        assertEquals("ark:/13030/xt12t3", PairtreeUtils
+                .uncleanId("ark+=13030=xt12t3"));
+        assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1", PairtreeUtils
+                .uncleanId("http+==n2t,info=urn+nbn+se+kb+repos-1"));
+        assertEquals("what-the-*@?#!^!?", PairtreeUtils
+                .uncleanId("what-the-^2a@^3f#!^5e!^3f"));
+    }
 
-	@Test
-	public void testMapToPPathWithIdCleaning() {
-		assertEquals("ar/k+/=1/30/30/=x/t1/2t/3", PairtreeUtils
-				.mapToPPath("ark:/13030/xt12t3"));
+    @Test
+    public void testMapToPPathWithIdCleaning() {
+        assertEquals("ar/k+/=1/30/30/=x/t1/2t/3", PairtreeUtils
+                .mapToPPath("ark:/13030/xt12t3"));
 
-		assertEquals("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1",
-				PairtreeUtils
-						.mapToPPath("http://n2t.info/urn:nbn:se:kb:repos-1"));
-		assertEquals("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f", PairtreeUtils
-				.mapToPPath("what-the-*@?#!^!?"));
-	}
+        assertEquals("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1",
+                PairtreeUtils
+                        .mapToPPath("http://n2t.info/urn:nbn:se:kb:repos-1"));
+        assertEquals("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f", PairtreeUtils
+                .mapToPPath("what-the-*@?#!^!?"));
+    }
 
-	@Test
-	public void testExtractEncapsulatingDir() throws InvalidPpathException {
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("ab"));
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("ab/cd"));
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("ab/cd/"));
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("ab/cd/ef/g"));
-		assertNull(PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/ef/g/"));
-		assertEquals("h", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/ef/g/h"));
-		assertEquals("h", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/ef/g/h/"));
-		assertEquals("efg", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/efg"));
-		assertEquals("efg", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/efg/"));
-		assertEquals("h", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/ef/g/h"));
-		assertEquals("h", PairtreeUtils
-				.extractEncapsulatingDirFromPpath("ab/cd/ef/g/h/"));
+    @Test
+    public void testExtractEncapsulatingDir() throws InvalidPPathException {
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab"));
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd"));
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd/"));
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd/ef/g"));
+        assertNull(PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/"));
+        assertEquals("h", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h/"));
+        assertEquals("efg", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/efg"));
+        assertEquals("efg", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/efg/"));
+        assertEquals("h", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils
+                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h/"));
 
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("/data",
-				"/data/ab"));
-		assertNull(PairtreeUtils.extractEncapsulatingDirFromPpath("/data/",
-				"/data/ab"));
-		assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPpath(
-				"/data", "/data/ab/cd/ef/g/h"));
-		assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPpath(
-				"/data/", "/data/ab/cd/ef/g/h"));
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("/data",
+                "/data/ab"));
+        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("/data/",
+                "/data/ab"));
+        assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPPath(
+                "/data", "/data/ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPPath(
+                "/data/", "/data/ab/cd/ef/g/h"));
 
-	}
+    }
 
-	@Test
-	public void testMapToId() throws InvalidPpathException {
-		assertEquals("ab", PairtreeUtils.mapToId("ab"));
-		assertEquals("abcd", PairtreeUtils.mapToId("ab/cd"));
-		assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
-		assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg"));
-		assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg/"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
-		assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
+    @Test
+    public void testMapToId() throws InvalidPPathException {
+        assertEquals("ab", PairtreeUtils.mapToId("ab"));
+        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd"));
+        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
+        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg"));
+        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
+        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
 
-		assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
-		assertEquals("12-986xy4", PairtreeUtils.mapToId("12/-9/86/xy/4"));
+        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
+        assertEquals("12-986xy4", PairtreeUtils.mapToId("12/-9/86/xy/4"));
 
-		assertEquals("13030_45xqv_793842495", PairtreeUtils
-				.mapToId("13/03/0_/45/xq/v_/79/38/42/49/5"));
-		assertEquals("13030_45xqv_793842495", PairtreeUtils
-				.mapToId("13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
-		assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
-				"/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
-		assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data/",
-				"/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
-		assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
-				"/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
-	}
+        assertEquals("13030_45xqv_793842495", PairtreeUtils
+                .mapToId("13/03/0_/45/xq/v_/79/38/42/49/5"));
+        assertEquals("13030_45xqv_793842495", PairtreeUtils
+                .mapToId("13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
+                "/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data/",
+                "/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
+                "/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
+    }
 
-	@Test(expected = InvalidPpathException.class)
-	public void testInvalidExtractEncapsulatingDir1()
-			throws InvalidPpathException {
-		PairtreeUtils.extractEncapsulatingDirFromPpath("abc");
-	}
+    @Test(expected = InvalidPPathException.class)
+    public void testInvalidExtractEncapsulatingDir1()
+            throws InvalidPPathException {
+        PairtreeUtils.extractEncapsulatingDirFromPPath("abc");
+    }
 
-	@Test(expected = InvalidPpathException.class)
-	public void testInvalidExtractEncapsulatingDir2()
-			throws InvalidPpathException {
-		PairtreeUtils.extractEncapsulatingDirFromPpath("ab/cdx/efg/");
-	}
+    @Test(expected = InvalidPPathException.class)
+    public void testInvalidExtractEncapsulatingDir2()
+            throws InvalidPPathException {
+        PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cdx/efg/");
+    }
 
-	@Test
-	public void testMapToIdWithIdCleaning() throws InvalidPpathException {
-		assertEquals("ark:/13030/xt12t3", PairtreeUtils
-				.mapToId("ar/k+/=1/30/30/=x/t1/2t/3"));
+    @Test
+    public void testMapToIdWithIdCleaning() throws InvalidPPathException {
+        assertEquals("ark:/13030/xt12t3", PairtreeUtils
+                .mapToId("ar/k+/=1/30/30/=x/t1/2t/3"));
 
-		// This example from the spec is wrong
-		// assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1",
-		// PairtreeUtils.mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/n/bn/+s/e+/kb/+/re/p/os/-1"));
-		assertEquals(
-				"http://n2t.info/urn:nbn:se:kb:repos-1",
-				PairtreeUtils
-						.mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1"));
-		assertEquals("what-the-*@?#!^!?", PairtreeUtils
-				.mapToId("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f"));
-	}
+        // This example from the spec is wrong
+        // assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1",
+        // PairtreeUtils.mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/n/bn/+s/e+/kb/+/re/p/os/-1"));
+        assertEquals(
+                "http://n2t.info/urn:nbn:se:kb:repos-1",
+                PairtreeUtils
+                        .mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1"));
+        assertEquals("what-the-*@?#!^!?", PairtreeUtils
+                .mapToId("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f"));
+    }
 }

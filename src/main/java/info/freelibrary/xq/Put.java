@@ -1,6 +1,7 @@
 /**
  * Licensed under the GNU LGPL v.2.1 or later.
  */
+
 package info.freelibrary.xq;
 
 import info.freelibrary.util.DOMUtils;
@@ -37,179 +38,211 @@ import org.xml.sax.SAXException;
  */
 public class Put {
 
-	private static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
-	private static final String XQ_MIME_TYPE = "application/xquery xq xql xquery";
-	private static final String EOL = System.getProperty("line.separator");
-	private static final String CHARSET = "UTF-8";
+    private static final String XML_CONTENT_TYPE =
+            "application/xml; charset=utf-8";
 
-	public static final Element put(String aFileName, String aURL) throws IOException {
-		return put(new File(aFileName), new URL(aURL));
-	}
-	
-	public static final Element put(String aFileName, URL aURL) throws IOException {
-		return put(new File(aFileName), aURL);
-	}
-	
-	public static final Element put(File aFile, URL aURL) throws IOException {
-		MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
-		fileTypeMap.addMimeTypes(XQ_MIME_TYPE);
-		
-		String contentType = fileTypeMap.getContentType(aFile);
-		HttpURLConnection http = connect(aURL, contentType);
-		StringBuilder response = new StringBuilder();
-		OutputStream out = http.getOutputStream();
-		BufferedWriter bWriter = null;
-		
-		try {		
-			bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
-			bWriter.write(StringUtils.readAsUTF8(aFile));
-		}
-		finally {
-			bWriter.close();
-		}
+    private static final String XQ_MIME_TYPE =
+            "application/xquery xq xql xquery";
 
-		int responseCode = http.getResponseCode();
-		String responseMessage = http.getResponseMessage();
+    private static final String EOL = System.getProperty("line.separator");
 
-		if (responseCode == 200) {
-			BufferedReader bReader = null;
-			
-			InputStream inStream = http.getInputStream();
-			InputStreamReader reader = new InputStreamReader(inStream);
-			String line;
+    private static final String CHARSET = "UTF-8";
 
-			try {
-				bReader = new BufferedReader(reader);
-			
-				while ((line = bReader.readLine()) != null) {
-					response.append(line + EOL);
-				}
-			}
-			finally {
-				IOUtils.closeQuietly(bReader);
-			}
-		}
+    /**
+     * PUTs the file represented from the supplied file name to the supplied URL
+     * (in string form).
+     * 
+     * @param aFileName The file name of the file to PUT to the supplied URL
+     * @param aURL The place to PUT the supplied file name
+     * @return The XML response from the PUT
+     * @throws IOException If there is trouble with the PUT
+     */
+    public static Element put(String aFileName, String aURL)
+        throws IOException {
+        return put(new File(aFileName), new URL(aURL));
+    }
 
-		if (response.length() == 0) {
-			response.append("<empty/>");
-		}
+    /**
+     * PUTs the file represented from the supplied file name to the supplied
+     * {@link URL}.
+     * 
+     * @param aFileName The file name of the file to PUT to the supplied URL
+     * @param aURL The place to PUT the supplied file name
+     * @return The XML response from the PUT
+     * @throws IOException If there is trouble with the PUT
+     */
+    public static Element put(String aFileName, URL aURL) throws IOException {
+        return put(new File(aFileName), aURL);
+    }
 
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-			StringReader reader = new StringReader(response.toString());
-			Document doc = docBuilder.parse(new InputSource(reader));
-			String codeAsText = Integer.toString(responseCode);
-			Element root = doc.getDocumentElement();
+    /**
+     * PUTs the supplied {@link File} to the supplied {@link URL}.
+     * 
+     * @param aFile The file to PUT to the supplied URL
+     * @param aURL The place to PUT the supplied file
+     * @return The XML response from the PUT
+     * @throws IOException If there is trouble with the PUT
+     */
+    public static Element put(File aFile, URL aURL) throws IOException {
+        MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+        fileTypeMap.addMimeTypes(XQ_MIME_TYPE);
 
-			root.setAttribute("responseCode", codeAsText);
-			root.setAttribute("responseMessage", responseMessage);
+        String contentType = fileTypeMap.getContentType(aFile);
+        HttpURLConnection http = connect(aURL, contentType);
+        StringBuilder response = new StringBuilder();
+        OutputStream out = http.getOutputStream();
+        BufferedWriter bWriter = null;
 
-			return root;
-		}
-		catch (ParserConfigurationException details) {
-			throw new RuntimeException(details);
-		}
-		catch (SAXException details) {
-			throw new RuntimeException(details);
-		}
-	}
+        try {
+            bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
+            bWriter.write(StringUtils.readAsUTF8(aFile));
+        } finally {
+            IOUtils.closeQuietly(bWriter);
+        }
 
-	public static final Element put(URL aURL, Element aNode) throws IOException {
-		HttpURLConnection http = connect(aURL, XML_CONTENT_TYPE);
-		StringBuilder response = new StringBuilder();
-		int responseCode = writeXML(aNode, http);
+        int responseCode = http.getResponseCode();
+        String responseMessage = http.getResponseMessage();
 
-		if (responseCode == 200) {
-			BufferedReader bReader = null;
-			
-			try {
-				InputStream inStream = http.getInputStream();
-				InputStreamReader reader = new InputStreamReader(inStream);
-				String line;
-				
-				bReader = new BufferedReader(reader);
+        if (responseCode == 200) {
+            BufferedReader bReader = null;
 
-				while ((line = bReader.readLine()) != null) {
-					response.append(line).append(EOL);
-				}
-			}
-			finally {
-				IOUtils.closeQuietly(bReader);
-			}
-		}
+            InputStream in = http.getInputStream();
+            InputStreamReader reader = new InputStreamReader(in, CHARSET);
+            String line;
 
-		if (response.length() == 0) {
-			response.append("<empty/>");
-		}
+            try {
+                bReader = new BufferedReader(reader);
 
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-			StringReader reader = new StringReader(response.toString());
-			Document doc = docBuilder.parse(new InputSource(reader));
-			String codeAsText = Integer.toString(responseCode);
-			Element root = doc.getDocumentElement();
+                while ((line = bReader.readLine()) != null) {
+                    response.append(line + EOL);
+                }
+            } finally {
+                IOUtils.closeQuietly(bReader);
+            }
+        }
 
-			root.setAttribute("responseCode", codeAsText);
+        if (response.length() == 0) {
+            response.append("<empty/>");
+        }
 
-			return root;
-		}
-		catch (ParserConfigurationException details) {
-			throw new RuntimeException(details);
-		}
-		catch (SAXException details) {
-			throw new RuntimeException(details);
-		}
-	}
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+            StringReader reader = new StringReader(response.toString());
+            Document doc = docBuilder.parse(new InputSource(reader));
+            String codeAsText = Integer.toString(responseCode);
+            Element root = doc.getDocumentElement();
 
-	/**
-	 * Connects to a remote resource represented by a URL and sets the
-	 * connection method to POST.
-	 * 
-	 * @param aURL The URL representation of a remote resource
-	 * @return An active <code>HttpURLConnection</code>
-	 * @throws IOException If there was a problem making the connection
-	 */
-	private static final HttpURLConnection connect(URL aURL, String aContentType)
-			throws IOException {
-		HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
+            root.setAttribute("responseCode", codeAsText);
+            root.setAttribute("responseMessage", responseMessage);
 
-		// Set this to a PUT
-		http.setDoOutput(true);
-		http.setRequestMethod("PUT");
+            return root;
+        } catch (ParserConfigurationException details) {
+            throw new RuntimeException(details);
+        } catch (SAXException details) {
+            throw new RuntimeException(details);
+        }
+    }
 
-		// Properly set content type so receiving applications knows what
-		// to expect (some won't process it otherwise)
-		http.setRequestProperty("content-type", aContentType);
+    /**
+     * PUTs the supplied XML element to the supplied {@link URL}.
+     * 
+     * @param aElement The XML element to PUT to the supplied URL
+     * @param aURL The place to PUT the supplied file name
+     * @return The XML response from the PUT
+     * @throws IOException If there is trouble with the PUT
+     */
+    public static Element put(URL aURL, Element aElement) throws IOException {
+        HttpURLConnection http = connect(aURL, XML_CONTENT_TYPE);
+        StringBuilder response = new StringBuilder();
+        int responseCode = writeXML(aElement, http);
 
-		http.connect();
+        if (responseCode == 200) {
+            BufferedReader bReader = null;
 
-		return http;
-	}
+            try {
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in, CHARSET);
+                String line;
 
-	/**
-	 * Writes an XML element to an HTTP POST connection.
-	 * 
-	 * @param aNode An XML element to write
-	 * @param aHTTPConn The HTTP connection to which we write the element
-	 * @return The status code of the write (whether it was successful)
-	 * @throws IOException If there is a problem writing to the remote resource
-	 */
-	private static final int writeXML(Element aNode, HttpURLConnection aHTTPConn)
-			throws IOException {
-		BufferedWriter bWriter = null;
-		
-		try {
-			OutputStream out = aHTTPConn.getOutputStream();
-		
-			bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
-			bWriter.write(DOMUtils.toXML(aNode));
-		}
-		finally {
-			IOUtils.closeQuietly(bWriter);
-		}
+                bReader = new BufferedReader(reader);
 
-		return aHTTPConn.getResponseCode();
-	}
+                while ((line = bReader.readLine()) != null) {
+                    response.append(line).append(EOL);
+                }
+            } finally {
+                IOUtils.closeQuietly(bReader);
+            }
+        }
+
+        if (response.length() == 0) {
+            response.append("<empty/>");
+        }
+
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+            StringReader reader = new StringReader(response.toString());
+            Document doc = docBuilder.parse(new InputSource(reader));
+            String codeAsText = Integer.toString(responseCode);
+            Element root = doc.getDocumentElement();
+
+            root.setAttribute("responseCode", codeAsText);
+
+            return root;
+        } catch (ParserConfigurationException details) {
+            throw new RuntimeException(details);
+        } catch (SAXException details) {
+            throw new RuntimeException(details);
+        }
+    }
+
+    /**
+     * Connects to a remote resource represented by a URL and sets the
+     * connection method to POST.
+     * 
+     * @param aURL The URL representation of a remote resource
+     * @return An active <code>HttpURLConnection</code>
+     * @throws IOException If there was a problem making the connection
+     */
+    private static HttpURLConnection connect(URL aURL, String aContentType)
+        throws IOException {
+        HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
+
+        // Set this to a PUT
+        http.setDoOutput(true);
+        http.setRequestMethod("PUT");
+
+        // Properly set content type so receiving applications knows what
+        // to expect (some won't process it otherwise)
+        http.setRequestProperty("content-type", aContentType);
+
+        http.connect();
+
+        return http;
+    }
+
+    /**
+     * Writes an XML element to an HTTP POST connection.
+     * 
+     * @param aNode An XML element to write
+     * @param aHTTPConn The HTTP connection to which we write the element
+     * @return The status code of the write (whether it was successful)
+     * @throws IOException If there is a problem writing to the remote resource
+     */
+    private static final int writeXML(Element aNode, HttpURLConnection aConx)
+        throws IOException {
+        BufferedWriter bWriter = null;
+
+        try {
+            OutputStream out = aConx.getOutputStream();
+
+            bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
+            bWriter.write(DOMUtils.toXML(aNode));
+        } finally {
+            IOUtils.closeQuietly(bWriter);
+        }
+
+        return aConx.getResponseCode();
+    }
 }

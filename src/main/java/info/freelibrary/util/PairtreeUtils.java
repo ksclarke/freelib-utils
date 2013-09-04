@@ -1,14 +1,11 @@
-package info.freelibrary.util;
-
 /*
-
  ===============================================================================
  This class (Pairtree) was originally written by Justin Littman (jlit@loc.gov)
  It has been modified and renamed by Kevin S. Clarke (ksclarke@gmail.com)
  ===============================================================================
 
- This software is a work of the United States Government and is not subject 
- to copyright protection in the United States. 
+ This software is a work of the United States Government and is not subject
+ to copyright protection in the United States.
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +16,7 @@ package info.freelibrary.util;
  THE SOFTWARE.
 
 
- Foreign copyrights may apply. To the extent that foreign copyrights in the 
+ Foreign copyrights may apply. To the extent that foreign copyrights in the
  software exist outside the United States, the following terms apply:
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,269 +39,365 @@ package info.freelibrary.util;
 
  */
 
+package info.freelibrary.util;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utilities for working with Pairtrees.
+ * 
+ * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ */
 public class PairtreeUtils {
 
-	public static final String HEX_INDICATOR = "^";
+    public static final String HEX_INDICATOR = "^";
 
-	private static Character mySeparator = File.separatorChar;
+    private static Character mySeparator = File.separatorChar;
 
-	private static int myShortyLength = 2;
+    private static int myShortyLength = 2;
 
-	public static int getShortyLength() {
-		return myShortyLength;
-	}
+    /**
+     * Returns the Pairtree shorty length.
+     * 
+     * @return The Pairtree shorty length
+     */
+    public static int getShortyLength() {
+        return myShortyLength;
+    }
 
-	public static void setShortyLength(int length) {
-		myShortyLength = length;
-	}
+    /**
+     * Sets the Pairtree shorty length
+     * 
+     * @param aLength A length to set as the shorty length
+     */
+    public static void setShortyLength(int aLength) {
+        myShortyLength = aLength;
+    }
 
-	public static Character getSeparator() {
-		return mySeparator;
-	}
+    /**
+     * Returns the separator character.
+     * 
+     * @return The separator character
+     */
+    public static Character getSeparator() {
+        return mySeparator;
+    }
 
-	public static void setSeparator(Character separator) {
-		mySeparator = separator;
-	}
+    /**
+     * Sets the separator character.
+     * 
+     * @param aSeparator The separator character
+     */
+    public static void setSeparator(Character aSeparator) {
+        mySeparator = aSeparator;
+    }
 
-	public static String mapToPPath(String id) {
-		assert id != null;
-		
-		String cleanId = cleanId(id);
-		List<String> shorties = new ArrayList<String>();
-		int start = 0;
-		
-		while (start < cleanId.length()) {
-			int end = start + myShortyLength;
-			
-			if (end > cleanId.length()) {
-				end = cleanId.length();
-			}
-			
-			shorties.add(cleanId.substring(start, end));
-			start = end;
-		}
+    /**
+     * Maps the supplied ID to a Pairtree path.
+     * 
+     * @param aID An ID to map to a Pairtree path
+     * @return The Pairtree path for the supplied ID
+     */
+    public static String mapToPPath(String aID) {
+        assert aID != null;
 
-		return concat(shorties.toArray(new String[shorties.size()]));
-	}
+        String cleanId = cleanId(aID);
+        List<String> shorties = new ArrayList<String>();
+        int start = 0;
 
-	public static String mapToPPath(String basePath, String id) {
-		return concat(basePath, mapToPPath(id), null);
-	}
-	
-	public static String mapToPPath(String basePath, String id,
-			String encapsulatingDirName) {
-		return concat(basePath, mapToPPath(id), encapsulatingDirName);
-	}
+        while (start < cleanId.length()) {
+            int end = start + myShortyLength;
 
-	public static String mapToId(String basepath, String ppath)
-			throws InvalidPpathException {
-		String newPath = removeBasepath(basepath, ppath);
-		return mapToId(newPath);
-	}
+            if (end > cleanId.length()) {
+                end = cleanId.length();
+            }
 
-	public static String mapToId(String ppath) throws InvalidPpathException {
-		String id = ppath;
+            shorties.add(cleanId.substring(start, end));
+            start = end;
+        }
 
-		if (id.endsWith(Character.toString(mySeparator))) {
-			id = id.substring(0, id.length() - 1);
-		}
+        return concat(shorties.toArray(new String[shorties.size()]));
+    }
 
-		String encapsulatingDir = extractEncapsulatingDirFromPpath(ppath);
+    /**
+     * Maps the supplied ID to a Pairtree path using the supplied base path.
+     * 
+     * @param aID An ID to map to a Pairtree path
+     * @param aBasePath The base path to use in the mapping
+     * @return The Pairtree path for the supplied ID
+     */
+    public static String mapToPPath(String aBasePath, String aID) {
+        return concat(aBasePath, mapToPPath(aID), null);
+    }
 
-		if (encapsulatingDir != null) {
-			id = id.substring(0, id.length() - encapsulatingDir.length());
-		}
+    /**
+     * Maps the supplied ID to a Pairtree path using the supplied base path.
+     * 
+     * @param aID An ID to map to a Pairtree path
+     * @param aBasePath The base path to use in the mapping
+     * @param aEncapsulatingDirName The name of the encapsulating directory
+     * @return The Pairtree path for the supplied ID
+     */
+    public static String mapToPPath(String aBasePath, String aID,
+            String aEncapsulatingDirName) {
+        return concat(aBasePath, mapToPPath(aID), aEncapsulatingDirName);
+    }
 
-		id = id.replace(Character.toString(mySeparator), "");
-		id = uncleanId(id);
+    /**
+     * Maps the supplied base path to an ID using the supplied Pairtree path.
+     * 
+     * @param aBasePath A base path to use for the mapping
+     * @param aPtPath A Pairtree path to map to an ID
+     * @return The ID that is a result of the mapping
+     * @throws InvalidPPathException If there is trouble mapping the path
+     */
+    public static String mapToId(String aBasePath, String aPtPath)
+        throws InvalidPPathException {
+        String newPath = removeBasepath(aBasePath, aPtPath);
+        return mapToId(newPath);
+    }
 
-		return id;
-	}
+    /**
+     * Maps the supplied base path to an ID.
+     * 
+     * @param aPPath A Pairtree path to map to an ID
+     * @return The ID that is a result of the mapping
+     * @throws InvalidPPathException If there is trouble mapping the path
+     */
+    public static String mapToId(String aPPath) throws InvalidPPathException {
+        String id = aPPath;
 
-	public static String extractEncapsulatingDirFromPpath(String basepath,
-			String ppath) throws InvalidPpathException {
-		String newPath = removeBasepath(basepath, ppath);
-		return extractEncapsulatingDirFromPpath(newPath);
-	}
+        if (id.endsWith(Character.toString(mySeparator))) {
+            id = id.substring(0, id.length() - 1);
+        }
 
-	public static String extractEncapsulatingDirFromPpath(String ppath)
-			throws InvalidPpathException {
-		assert ppath != null;
+        String encapsulatingDir = extractEncapsulatingDirFromPPath(aPPath);
 
-		// Walk the ppath looking for first non-shorty
-		String[] ppathParts = ppath.split("\\" + mySeparator);
+        if (encapsulatingDir != null) {
+            id = id.substring(0, id.length() - encapsulatingDir.length());
+        }
 
-		// If there is only 1 part
-		if (ppathParts.length == 1) {
-			// If part <= shorty length then no encapsulating dir
-			if (ppathParts[0].length() <= myShortyLength) {
-				return null;
-			}
-			// Else no ppath
-			else {
-				throw new InvalidPpathException(StringUtils.formatMessage(
-						"Ppath ({}) contains no shorties", ppath));
-			}
-		}
+        id = id.replace(Character.toString(mySeparator), "");
+        id = uncleanId(id);
 
-		// All parts up to next to last and last should have shorty length
-		for (int i = 0; i < ppathParts.length - 2; i++) {
-			if (ppathParts[i].length() != myShortyLength) {
-				throw new InvalidPpathException(StringUtils.formatMessage(
-						"Ppath ({}) has parts of incorrect length", ppath));
-			}
-		}
+        return id;
+    }
 
-		String nextToLastPart = ppathParts[ppathParts.length - 2];
-		String lastPart = ppathParts[ppathParts.length - 1];
+    /**
+     * Extracts the encapsulating directory from the supplied Pairtree path,
+     * using the supplied base path.
+     * 
+     * @param aBasePath A base path for the Pairtree path
+     * @param aPPath The Pairtree path
+     * @return The name of the encapsulating directory
+     * @throws InvalidPPathException If there is a problem extracting the
+     *         encapsulating directory
+     */
+    public static String extractEncapsulatingDirFromPPath(String aBasePath,
+            String aPPath) throws InvalidPPathException {
+        String newPath = removeBasepath(aBasePath, aPPath);
+        return extractEncapsulatingDirFromPPath(newPath);
+    }
 
-		// Next to last should have shorty length or less
-		if (nextToLastPart.length() > myShortyLength) {
-			throw new InvalidPpathException(StringUtils.formatMessage(
-					"Ppath ({}) has parts of incorrect length", ppath));
-		}
+    /**
+     * Extracts the encapsulating directory from the supplied Pairtree path.
+     * 
+     * @param aPtPath The Pairtree path from which to extract the encapsulating
+     *        directory
+     * @return The name of the encapsulating directory
+     * @throws InvalidPPathException If there is a problem extracting the
+     *         encapsulating directory
+     */
+    public static String extractEncapsulatingDirFromPPath(String aPtPath)
+        throws InvalidPPathException {
+        assert aPtPath != null;
 
-		// If next to last has shorty length
-		if (nextToLastPart.length() == myShortyLength) {
-			// If last has length > shorty length then encapsulating dir
-			if (lastPart.length() > myShortyLength) {
-				return lastPart;
-			}
-			// Else no encapsulating dir
-			else {
-				return null;
-			}
-		}
+        // Walk the Pairtree path looking for first non-shorty
+        String[] pPathParts = aPtPath.split("\\" + mySeparator);
 
-		// Else last is encapsulating dir
-		return lastPart;
+        // If there is only 1 part
+        if (pPathParts.length == 1) {
+            // If part <= shorty length then no encapsulating directory
+            if (pPathParts[0].length() <= myShortyLength) {
+                return null;
+            } else { // Else no Pairtree path
+                throw new InvalidPPathException(StringUtils.formatMessage(
+                        "PtPath {} contains no shorties", aPtPath));
+            }
+        }
 
-	}
+        // All parts up to next to last and last should have shorty length
+        for (int i = 0; i < pPathParts.length - 2; i++) {
+            if (pPathParts[i].length() != myShortyLength) {
+                throw new InvalidPPathException(StringUtils.formatMessage(
+                        "PtPath {} has parts of incorrect length", aPtPath));
+            }
+        }
 
-	private static String concat(String... paths) {
-		if (paths == null || paths.length == 0) {
-			return null;
-		}
+        String nextToLastPart = pPathParts[pPathParts.length - 2];
+        String lastPart = pPathParts[pPathParts.length - 1];
 
-		StringBuffer pathBuf = new StringBuffer();
-		Character lastChar = null;
+        // Next to last should have shorty length or less
+        if (nextToLastPart.length() > myShortyLength) {
+            throw new InvalidPPathException(StringUtils.formatMessage(
+                    "Pairtree Path {} has parts of incorrect length", aPtPath));
+        }
 
-		for (int i = 0; i < paths.length; i++) {
-			if (paths[i] != null) {
-				if (lastChar != null && (!mySeparator.equals(lastChar))) {
-					pathBuf.append(mySeparator);
-				}
+        // If next to last has shorty length
+        if (nextToLastPart.length() == myShortyLength) {
+            // If last has length > shorty length then encapsulating directory
+            if (lastPart.length() > myShortyLength) {
+                return lastPart;
+            } else { // Else no encapsulating directory
+                return null;
+            }
+        }
 
-				pathBuf.append(paths[i]);
-				lastChar = paths[i].charAt(paths[i].length() - 1);
-			}
-		}
+        // Else last is encapsulating directory
+        return lastPart;
+    }
 
-		return pathBuf.toString();
-	}
+    /**
+     * Concatenates the Pairtree paths varargs.
+     * 
+     * @param aPathsVarargs The Pairtree paths varargs
+     * @return The concatenated Pairtree paths
+     */
+    private static String concat(String... aPathsVarargs) {
+        if (aPathsVarargs == null || aPathsVarargs.length == 0) {
+            return null;
+        }
 
-	public static String removeBasepath(String basePath, String path) {
-		assert basePath != null;
-		assert path != null;
-		String newPath = path;
+        StringBuffer pathBuf = new StringBuffer();
+        Character lastChar = null;
 
-		if (path.startsWith(basePath)) {
-			newPath = newPath.substring(basePath.length());
-			
-			if (newPath.startsWith(Character.toString(mySeparator))) {
-				newPath = newPath.substring(1);
-			}
-		}
+        for (int i = 0; i < aPathsVarargs.length; i++) {
+            if (aPathsVarargs[i] != null) {
+                int length;
 
-		return newPath;
-	}
+                if (lastChar != null && !mySeparator.equals(lastChar)) {
+                    pathBuf.append(mySeparator);
+                }
 
-	public static String cleanId(String id) {
-		assert id != null;
-		// First pass
-		byte[] bytes;
-		
-		try {
-			bytes = id.getBytes("utf-8");
-		}
-		catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("Error getting UTF-8 for path", e);
-		}
+                pathBuf.append(aPathsVarargs[i]);
+                length = aPathsVarargs[i].length();
+                lastChar = aPathsVarargs[i].charAt(length - 1);
+            }
+        }
 
-		StringBuffer idBuf = new StringBuffer();
+        return pathBuf.toString();
+    }
 
-		for (int c = 0; c < bytes.length; c++) {
-			byte b = bytes[c];
-			int i = (int) b & 0xff;
+    /**
+     * Removes the base path from the supplied Pairtree path.
+     * 
+     * @param aBasePath A base path for a Pairtree path
+     * @param aPPath A Pairtree path
+     * @return The Pairtree path without the base path
+     */
+    public static String removeBasepath(String aBasePath, String aPPath) {
+        assert aBasePath != null;
+        assert aPPath != null;
+        String newPath = aPPath;
 
-			if (i < 0x21 || i > 0x7e || i == 0x22 || i == 0x2a || i == 0x2b
-					|| i == 0x2c || i == 0x3c || i == 0x3d || i == 0x3e
-					|| i == 0x3f || i == 0x5c || i == 0x5e || i == 0x7c) {
-				// Encode
-				idBuf.append(HEX_INDICATOR);
-				idBuf.append(Integer.toHexString(i));
-			}
-			else {
-				// Don't encode
-				char[] chars = Character.toChars(i);
-				
-				assert chars.length == 1;
-				idBuf.append(chars[0]);
-			}
-		}
+        if (aPPath.startsWith(aBasePath)) {
+            newPath = newPath.substring(aBasePath.length());
 
-		for (int c = 0; c < idBuf.length(); c++) {
-			char ch = idBuf.charAt(c);
-			
-			if (ch == '/') {
-				idBuf.setCharAt(c, '=');
-			}
-			else if (ch == ':') {
-				idBuf.setCharAt(c, '+');
-			}
-			else if (ch == '.') {
-				idBuf.setCharAt(c, ',');
-			}
-		}
+            if (newPath.startsWith(Character.toString(mySeparator))) {
+                newPath = newPath.substring(1);
+            }
+        }
 
-		return idBuf.toString();
-	}
+        return newPath;
+    }
 
-	public static String uncleanId(String id) {
-		StringBuffer idBuf = new StringBuffer();
+    /**
+     * Cleans an ID for use in a Pairtree path.
+     * 
+     * @param aID An idea to be cleaned
+     * @return The cleaned ID for use in a Pairtree path
+     */
+    public static String cleanId(String aID) {
+        assert aID != null;
+        byte[] bytes; // First pass
 
-		for (int c = 0; c < id.length(); c++) {
-			char ch = id.charAt(c);
-			
-			if (ch == '=') {
-				idBuf.append('/');
-			}
-			else if (ch == '+') {
-				idBuf.append(':');
-			}
-			else if (ch == ',') {
-				idBuf.append('.');
-			}
-			else if (ch == '^') {
-				// Get the next 2 chars
-				String hex = id.substring(c + 1, c + 3);
-				char[] chars = Character.toChars(Integer.parseInt(hex, 16));
-				
-				assert chars.length == 1;
-				idBuf.append(chars[0]);
-				c = c + 2;
-			}
-			else {
-				idBuf.append(ch);
-			}
-		}
+        try {
+            bytes = aID.getBytes("utf-8");
+        } catch (UnsupportedEncodingException details) {
+            throw new RuntimeException("Error getting UTF-8 for path", details);
+        }
 
-		return idBuf.toString();
-	}
+        StringBuffer idBuf = new StringBuffer();
+
+        for (int c = 0; c < bytes.length; c++) {
+            byte b = bytes[c];
+            int i = (int) b & 0xff;
+
+            if (i < 0x21 || i > 0x7e || i == 0x22 || i == 0x2a || i == 0x2b ||
+                    i == 0x2c || i == 0x3c || i == 0x3d || i == 0x3e ||
+                    i == 0x3f || i == 0x5c || i == 0x5e || i == 0x7c) {
+                // Encode
+                idBuf.append(HEX_INDICATOR);
+                idBuf.append(Integer.toHexString(i));
+            } else {
+                // Don't encode
+                char[] chars = Character.toChars(i);
+
+                assert chars.length == 1;
+                idBuf.append(chars[0]);
+            }
+        }
+
+        for (int c = 0; c < idBuf.length(); c++) {
+            char ch = idBuf.charAt(c);
+
+            if (ch == '/') {
+                idBuf.setCharAt(c, '=');
+            } else if (ch == ':') {
+                idBuf.setCharAt(c, '+');
+            } else if (ch == '.') {
+                idBuf.setCharAt(c, ',');
+            }
+        }
+
+        return idBuf.toString();
+    }
+
+    /**
+     * Unclean the ID from the Pairtree path.
+     * 
+     * @param aID A cleaned ID to unclean
+     * @return The unclean ID
+     */
+    public static String uncleanId(String aID) {
+        StringBuffer idBuf = new StringBuffer();
+
+        for (int c = 0; c < aID.length(); c++) {
+            char ch = aID.charAt(c);
+
+            if (ch == '=') {
+                idBuf.append('/');
+            } else if (ch == '+') {
+                idBuf.append(':');
+            } else if (ch == ',') {
+                idBuf.append('.');
+            } else if (ch == '^') {
+                // Get the next 2 chars
+                String hex = aID.substring(c + 1, c + 3);
+                char[] chars = Character.toChars(Integer.parseInt(hex, 16));
+
+                assert chars.length == 1;
+                idBuf.append(chars[0]);
+                c = c + 2;
+            } else {
+                idBuf.append(ch);
+            }
+        }
+
+        return idBuf.toString();
+    }
 }

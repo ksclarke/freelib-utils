@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import java.io.IOException;
@@ -21,129 +22,108 @@ public class XMLBundleControlTest {
 
     @Test
     public void getFormatsString() {
-	boolean successful = false;
+        boolean successful = false;
 
-	assertEquals("xml", myControl.getFormats("yada").get(0));
+        assertEquals("xml", myControl.getFormats("yada").get(0));
 
-	try {
-	    myControl.getFormats(null).get(0);
-	}
-	catch (NullPointerException details) {
-	    successful = true;
-	}
+        try {
+            myControl.getFormats(null).get(0);
+        } catch (NullPointerException details) {
+            successful = true;
+        }
 
-	assertTrue(successful);
+        assertTrue(successful);
     }
 
     @Test
     public void newBundleStringLocaleStringClassLoaderBoolean() {
-	boolean successful = false;
+        boolean successful = false;
 
-	try {
-	    myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat",
-		    getClass().getClassLoader(), true);
-	}
-	catch (NullPointerException details) {
-	    fail(details.getMessage());
-	}
-	catch (IOException details) {
-	    fail(details.getMessage());
-	}
-	catch (InstantiationException details) {
-	    fail(details.getMessage());
-	}
-	catch (IllegalAccessException details) {
-	    fail(details.getMessage());
-	}
+        try {
+            myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat",
+                    getClass().getClassLoader(), true);
+        } catch (NullPointerException details) {
+            fail(details.getMessage());
+        } catch (IOException details) {
+            fail(details.getMessage());
+        } catch (InstantiationException details) {
+            fail(details.getMessage());
+        } catch (IllegalAccessException details) {
+            fail(details.getMessage());
+        }
 
-	try {
-	    myControl.newBundle(null, Locale.getDefault(), "aFormat",
-		    getClass().getClassLoader(), true);
-	}
-	catch (NullPointerException details) {
-	    successful = true;
-	}
-	catch (IOException details) {
-	    fail(details.getMessage());
-	}
-	catch (InstantiationException details) {
-	    fail(details.getMessage());
-	}
-	catch (IllegalAccessException details) {
-	    fail(details.getMessage());
-	}
+        try {
+            myControl.newBundle(null, Locale.getDefault(), "aFormat",
+                    getClass().getClassLoader(), true);
+        } catch (NullPointerException details) {
+            successful = true;
+        } catch (IOException details) {
+            fail(details.getMessage());
+        } catch (InstantiationException details) {
+            fail(details.getMessage());
+        } catch (IllegalAccessException details) {
+            fail(details.getMessage());
+        }
 
-	assertTrue(successful);
-	successful = false;
+        assertTrue(successful);
+        successful = false;
 
-	try {
-	    myControl.newBundle("aBaseName", null, "aFormat", getClass()
-		    .getClassLoader(), true);
-	}
-	catch (NullPointerException details) {
-	    successful = true;
-	}
-	catch (IOException details) {
-	    fail(details.getMessage());
-	}
-	catch (InstantiationException details) {
-	    fail(details.getMessage());
-	}
-	catch (IllegalAccessException details) {
-	    fail(details.getMessage());
-	}
+        try {
+            myControl.newBundle("aBaseName", null, "aFormat", getClass()
+                    .getClassLoader(), true);
+        } catch (NullPointerException details) {
+            successful = true;
+        } catch (IOException details) {
+            fail(details.getMessage());
+        } catch (InstantiationException details) {
+            fail(details.getMessage());
+        } catch (IllegalAccessException details) {
+            fail(details.getMessage());
+        }
 
-	assertTrue(successful);
-	successful = false;
+        assertTrue(successful);
+        successful = false;
 
-	try {
-	    Locale locale = Locale.getDefault();
-	    ClassLoader cl = getClass().getClassLoader();
-	    myControl.newBundle("aBaseName", locale, null, cl, true);
-	}
-	catch (NullPointerException details) {
-	    successful = true;
-	}
-	catch (IOException details) {
-	    fail(details.getMessage());
-	}
-	catch (InstantiationException details) {
-	    fail(details.getMessage());
-	}
-	catch (IllegalAccessException details) {
-	    fail(details.getMessage());
-	}
+        try {
+            Locale locale = Locale.getDefault();
+            ClassLoader cl = getClass().getClassLoader();
+            myControl.newBundle("aBaseName", locale, null, cl, true);
+        } catch (NullPointerException details) {
+            successful = true;
+        } catch (IOException details) {
+            fail(details.getMessage());
+        } catch (InstantiationException details) {
+            fail(details.getMessage());
+        } catch (IllegalAccessException details) {
+            fail(details.getMessage());
+        }
 
-	assertTrue(successful);
-	successful = false;
+        assertTrue(successful);
+        successful = false;
 
-	try {
-	    Locale locale = Locale.getDefault();
-	    myControl.newBundle("aBaseName", locale, "aFormat", null, true);
-	}
-	catch (NullPointerException details) {
-	    successful = true;
-	}
-	catch (IOException details) {
-	    fail(details.getMessage());
-	}
-	catch (InstantiationException details) {
-	    fail(details.getMessage());
-	}
-	catch (IllegalAccessException details) {
-	    fail(details.getMessage());
-	}
+        try {
+            Locale locale = Locale.getDefault();
+            myControl.newBundle("aBaseName", locale, "aFormat", null, true);
+        } catch (NullPointerException details) {
+            successful = true;
+        } catch (IOException details) {
+            fail(details.getMessage());
+        } catch (InstantiationException details) {
+            fail(details.getMessage());
+        } catch (IllegalAccessException details) {
+            fail(details.getMessage());
+        }
 
-	assertTrue(successful);
+        assertTrue(successful);
     }
 
     @Test
     public void newBundle() {
-	ResourceBundle bundle = ResourceBundle.getBundle(
-		"FreeLib-Utils_Messages", myControl);
+        ResourceBundle bundle =
+                ResourceBundle.getBundle("FreeLib-Utils_Messages", myControl);
 
-	// you can also put files in a structure info.freelibrary.util.Messages
+        // you can also put files in a structure info.freelibrary.util.Messages
 
-	bundle.getString("jarClassLoader.init");
+        bundle.getString("jarClassLoader.init");
     }
 }
