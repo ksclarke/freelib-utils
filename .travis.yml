@@ -1,0 +1,18 @@
+language: java
+
+jdk:
+  - openjdk7
+
+script: "mvn install"
+
+notifications:
+  email:
+    recipients:
+      - ksclarke@gmail.com
+    on_failure: change
+    on_success: never
+  irc:
+    channels:
+      - irc.freenode.org#freelibrary
+    on_failure: always
+    on_success: always
