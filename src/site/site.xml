@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="FreeLibrary Utilities"
+<project name="FreeLib-Utils"
     xmlns="http://maven.apache.org/DECORATION/1.3.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
 
     <bannerLeft>
-        <name>Freelibrary Utilities</name>
+        <name>FreeLibrary Utilities</name>
         <href>http://projects.freelibrary.info/freelib-utils</href>
     </bannerLeft>
 
