@@ -1,15 +1,14 @@
 
 package info.freelibrary.util;
 
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Locale;
 
 /**
  * Tests of the <code>XMLBundleControl</code> class.
@@ -18,112 +17,101 @@ import static org.junit.Assert.fail;
  */
 public class XMLBundleControlTest {
 
-    XMLBundleControl myControl = new XMLBundleControl();
+    private XMLBundleControl myControl;
 
+    /**
+     * Sets up the <code>XMLBundleControl</code> used in the tests.
+     */
+    @Before
+    public void setup() {
+        myControl = new XMLBundleControl();
+    }
+
+    /**
+     * Tests {@link XMLBundleControl#getFormats(String)}.
+     */
     @Test
-    public void getFormatsString() {
-        boolean successful = false;
-
+    public void testGetFormatsString() {
         assertEquals("xml", myControl.getFormats("yada").get(0));
 
         try {
             myControl.getFormats(null).get(0);
-        } catch (NullPointerException details) {
-            successful = true;
+            fail("Failed to throw expected NullPointerException");
+        } catch (Exception details) {
+            assertTrue(details instanceof NullPointerException);
         }
-
-        assertTrue(successful);
     }
 
+    /**
+     * Tests standard new bundle construction.
+     */
     @Test
     public void newBundleStringLocaleStringClassLoaderBoolean() {
-        boolean successful = false;
-
         try {
             myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat",
                     getClass().getClassLoader(), true);
-        } catch (NullPointerException details) {
-            fail(details.getMessage());
-        } catch (IOException details) {
-            fail(details.getMessage());
-        } catch (InstantiationException details) {
-            fail(details.getMessage());
-        } catch (IllegalAccessException details) {
+        } catch (Exception details) {
             fail(details.getMessage());
         }
+    }
 
+    /**
+     * Tests new bundle construction when a null is passed in as a name.
+     */
+    @Test
+    public void newBundleWithNullBundleName() {
         try {
             myControl.newBundle(null, Locale.getDefault(), "aFormat",
                     getClass().getClassLoader(), true);
-        } catch (NullPointerException details) {
-            successful = true;
-        } catch (IOException details) {
-            fail(details.getMessage());
-        } catch (InstantiationException details) {
-            fail(details.getMessage());
-        } catch (IllegalAccessException details) {
-            fail(details.getMessage());
+            fail("Failed to throw expected NullPointerException");
+        } catch (Exception details) {
+            assertTrue(details instanceof NullPointerException);
         }
+    }
 
-        assertTrue(successful);
-        successful = false;
-
+    /**
+     * Tests new bundle construction when a null is passed in as a locale.
+     */
+    @Test
+    public void newBundleWithNullLocale() {
         try {
             myControl.newBundle("aBaseName", null, "aFormat", getClass()
                     .getClassLoader(), true);
-        } catch (NullPointerException details) {
-            successful = true;
-        } catch (IOException details) {
-            fail(details.getMessage());
-        } catch (InstantiationException details) {
-            fail(details.getMessage());
-        } catch (IllegalAccessException details) {
-            fail(details.getMessage());
+            fail("Failed to throw expected NullPointerException");
+        } catch (Exception details) {
+            assertTrue(details instanceof NullPointerException);
         }
+    }
 
-        assertTrue(successful);
-        successful = false;
-
+    /**
+     * Tests new bundle construction when a null is passed in as a format.
+     */
+    @Test
+    public void newBundleWithNullFormat() {
         try {
             Locale locale = Locale.getDefault();
             ClassLoader cl = getClass().getClassLoader();
+
             myControl.newBundle("aBaseName", locale, null, cl, true);
-        } catch (NullPointerException details) {
-            successful = true;
-        } catch (IOException details) {
-            fail(details.getMessage());
-        } catch (InstantiationException details) {
-            fail(details.getMessage());
-        } catch (IllegalAccessException details) {
-            fail(details.getMessage());
+            fail("Failed to throw expected NullPointerException");
+        } catch (Exception details) {
+            assertTrue(details instanceof NullPointerException);
         }
+    }
 
-        assertTrue(successful);
-        successful = false;
-
+    /**
+     * Tests new bundle construction when a null is passed in as a
+     * <code>ClassLoader</code>.
+     */
+    @Test
+    public void newBundleWithNullClassLoader() {
         try {
             Locale locale = Locale.getDefault();
             myControl.newBundle("aBaseName", locale, "aFormat", null, true);
-        } catch (NullPointerException details) {
-            successful = true;
-        } catch (IOException details) {
-            fail(details.getMessage());
-        } catch (InstantiationException details) {
-            fail(details.getMessage());
-        } catch (IllegalAccessException details) {
-            fail(details.getMessage());
+            fail("Failed to throw expected NullPointerException");
+        } catch (Exception details) {
+            assertTrue(details instanceof NullPointerException);
         }
-
-        assertTrue(successful);
     }
 
-    @Test
-    public void newBundle() {
-        ResourceBundle bundle =
-                ResourceBundle.getBundle("FreeLib-Utils_Messages", myControl);
-
-        // you can also put files in a structure info.freelibrary.util.Messages
-
-        bundle.getString("jarClassLoader.init");
-    }
 }

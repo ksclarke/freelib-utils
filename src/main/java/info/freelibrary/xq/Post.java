@@ -50,7 +50,7 @@ public class Post {
      * @throws IOException If there is trouble POSTing to the URL
      */
     public static final Element post(URL aURL, Element aNode)
-        throws IOException {
+            throws IOException {
         StringBuilder response = new StringBuilder();
         HttpURLConnection http = connect(aURL);
         int responseCode = write(aNode, http);
@@ -104,7 +104,7 @@ public class Post {
      * @throws IOException If there was a problem making the connection
      */
     private static final HttpURLConnection connect(URL aHttpURL)
-        throws IOException {
+            throws IOException {
         HttpURLConnection http = (HttpURLConnection) aHttpURL.openConnection();
 
         // Set this to a POST
@@ -129,7 +129,7 @@ public class Post {
      * @throws IOException If there is a problem writing to the remote resource
      */
     private static final int write(Element aNode, HttpURLConnection aHttpConn)
-        throws IOException {
+            throws IOException {
         BufferedWriter bWriter = null;
 
         try {

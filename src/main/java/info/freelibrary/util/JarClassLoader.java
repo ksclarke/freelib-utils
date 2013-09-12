@@ -78,7 +78,7 @@ public class JarClassLoader extends URLClassLoader {
      * @throws Exception If there is trouble locating the main class
      */
     public JarClassLoader(List<URL> aListOfURLs, String aMainClassName)
-        throws Exception {
+            throws Exception {
         super(aListOfURLs.toArray(new URL[aListOfURLs.size()]));
 
         loadClass(aMainClassName).newInstance();

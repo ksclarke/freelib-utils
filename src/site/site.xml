@@ -3,7 +3,7 @@
     xmlns="http://maven.apache.org/DECORATION/1.3.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
-    
+
     <bannerLeft>
         <name>Freelibrary Utilities</name>
         <href>http://projects.freelibrary.info/freelib-utils</href>
@@ -12,13 +12,13 @@
     <publishDate position="bottom" format="yyyy-MM-dd" />
     <version position="bottom" />
     <googleAnalyticsAccountId>${ga.accountId}</googleAnalyticsAccountId>
-    
+
     <skin>
         <groupId>lt.velykis.maven.skins</groupId>
         <artifactId>reflow-maven-skin</artifactId>
         <version>1.0.0</version>
     </skin>
-    
+
     <custom>
         <reflowSkin>
             <protocolRelativeURLs>true</protocolRelativeURLs>
@@ -54,12 +54,12 @@
             <skinAttribution>false</skinAttribution>
         </reflowSkin>
     </custom>
-    
+
     <body>
         <head>
             <link rel="author" href="https://plus.google.com/106980687849423472398/about"/>
         </head>
-        
+
         <links>
             <item name="GitHub Page ↗"
                 href="https://github.com/ksclarke/freelib-utils" target="_new" />

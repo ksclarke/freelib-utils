@@ -19,6 +19,9 @@ public class PairtreeRootTest {
     private static final Logger LOGGER = LoggerFactory
             .getLogger(PairtreeRootTest.class);
 
+    /**
+     * Test method for {@link PairtreeRoot#PairtreeRoot()}.
+     */
     @Test
     public void testPairtreeRoot() {
         PairtreeRoot root = null;
@@ -37,6 +40,9 @@ public class PairtreeRootTest {
         }
     }
 
+    /**
+     * Test method for {@link PairtreeRoot#PairtreeRoot(String)}.
+     */
     @Test
     public void testPairtreeRootString() {
         PairtreeRoot root = null;
@@ -56,6 +62,9 @@ public class PairtreeRootTest {
         }
     }
 
+    /**
+     * Test method for {@link PairtreeRoot#PairtreeRoot(File)}.
+     */
     @Test
     public void testPairtreeRootFile() {
         PairtreeRoot root = null;
@@ -74,6 +83,9 @@ public class PairtreeRootTest {
         }
     }
 
+    /**
+     * Test method for {@link PairtreeRoot#PairtreeRoot(File, String)}.
+     */
     @Test
     public void testPairtreeRootFileString() {
         PairtreeRoot root = null;
@@ -93,6 +105,9 @@ public class PairtreeRootTest {
         }
     }
 
+    /**
+     * Test method for {@link PairtreeRoot#getObjectName()}.
+     */
     @Test
     public void testGetObjectName() {
         PairtreeRoot root = null;
@@ -112,11 +127,16 @@ public class PairtreeRootTest {
         }
     }
 
-    private void checkVersionFile(File aDir) {
+    /**
+     * Checks the Pairtree version file in the supplied directory.
+     * 
+     * @param aPtDir A Pairtree directory
+     */
+    private void checkVersionFile(File aPtDir) {
         FilenameFilter filter = new RegexFileFilter("pairtree_version.*");
 
         try {
-            File[] files = FileUtils.listFiles(aDir, filter);
+            File[] files = FileUtils.listFiles(aPtDir, filter);
 
             assertEquals(files.length, 1);
 
@@ -129,7 +149,12 @@ public class PairtreeRootTest {
         }
     }
 
-    private void checkPrefixFile(File aDir) {
-        assertEquals(true, new File(aDir, "pairtree_prefix").exists());
+    /**
+     * Checks that the Pairtree prefix file exists in the supplied directory.
+     * 
+     * @param aPtDir A Pairtree directory
+     */
+    private void checkPrefixFile(File aPtDir) {
+        assertEquals(true, new File(aPtDir, "pairtree_prefix").exists());
     }
 }

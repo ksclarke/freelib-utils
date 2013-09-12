@@ -9,7 +9,7 @@ package info.freelibrary.util;
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
-public class InvalidPPathException extends Exception {
+public class InvalidPtPathException extends Exception {
 
     /**
      * The <code>serialVersionUID</code> for <code>InvalidPpathException</code>.
@@ -21,7 +21,7 @@ public class InvalidPPathException extends Exception {
      * 
      * @param aMessage
      */
-    public InvalidPPathException(String aMessage) {
+    public InvalidPtPathException(String aMessage) {
         super(aMessage);
     }
 

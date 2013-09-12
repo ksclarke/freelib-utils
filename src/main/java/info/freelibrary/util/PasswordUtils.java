@@ -52,7 +52,7 @@ public final class PasswordUtils {
      * @throws IOException If there is trouble encrypting the supplied text
      */
     public static String encrypt(String aText, String aSalt)
-        throws IOException {
+            throws NullPointerException, IOException {
         if (aText == null) {
             throw new NullPointerException("Text to encrypt is null");
         }

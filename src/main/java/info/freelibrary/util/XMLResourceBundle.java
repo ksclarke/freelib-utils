@@ -83,7 +83,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aArray The string values to insert into the supplied message
      * @return A message with the supplied values integrated into it
      */
-    public String get(String aMessage, String[] aArray) {
+    public String get(String aMessage, String... aArray) {
         return StringUtils.formatMessage(super.getString(aMessage), aArray);
     }
 
@@ -117,7 +117,7 @@ public class XMLResourceBundle extends ResourceBundle {
      *        into the message value
      * @return The message value with the supplied file names integrated
      */
-    public String get(String aMessage, File[] aFileArray) {
+    public String get(String aMessage, File... aFileArray) {
         String[] strings = new String[aFileArray.length];
 
         for (int index = 0; index < strings.length; index++) {
@@ -159,7 +159,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aDetailsArray Additional details for the message
      * @return The value of the bundle message
      */
-    public String get(String aMessage, Object[] aDetailsArray) {
+    public String get(String aMessage, Object... aDetailsArray) {
         String[] strings = new String[aDetailsArray.length];
 
         for (int index = 0; index < strings.length; index++) {

@@ -156,7 +156,7 @@ public class IOUtils {
      * @throws IOException If there is a problem reading or writing
      */
     public static final void copyStream(File aFile, OutputStream aOutStream)
-        throws IOException {
+            throws IOException {
         FileInputStream input = new FileInputStream(aFile);
         FileChannel channel = input.getChannel();
         byte[] buffer = new byte[256 * 1024];

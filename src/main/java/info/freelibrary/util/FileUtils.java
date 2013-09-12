@@ -93,7 +93,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Element toElement(String aFilePath)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toElement(aFilePath, ".*");
     }
 
@@ -111,7 +111,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Element toElement(String aFilePath, boolean aBool)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toElement(aFilePath, ".*", aBool);
     }
 
@@ -128,7 +128,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Document toDocument(String aFilePath)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toDocument(aFilePath, ".*");
     }
 
@@ -147,7 +147,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, String aPattern)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toXML(aFilePath, aPattern, false);
     }
 
@@ -166,7 +166,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, boolean aDeepConversion)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toXML(aFilePath, ".*", aDeepConversion);
     }
 
@@ -204,7 +204,7 @@ public class FileUtils {
      *         does not exist
      */
     public static Map<String, List<String>> toHashMap(String aFilePath)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         return toHashMap(aFilePath, null, null);
     }
 
@@ -239,10 +239,11 @@ public class FileUtils {
      * @return An unmodifiable map representing the files in the file structure
      * @throws FileNotFoundException If the directory for the supplied file path
      *         does not exist
+     * @throws RuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(String aFilePath,
-            String aPattern, String[] aIgnoreList)
-        throws FileNotFoundException {
+            String aPattern, String[] aIgnoreList) throws RuntimeException,
+            FileNotFoundException {
         String filePattern = aPattern != null ? aPattern : ".*";
         RegexFileFilter filter = new RegexFileFilter(filePattern);
         Map<String, List<String>> fileMap = new HashMap<String, List<String>>();
@@ -286,7 +287,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Element toElement(String aFilePath, String aPattern)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toElement(aFilePath, aPattern, false);
     }
 
@@ -336,7 +337,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Document toDocument(String aFilePath, String aPattern)
-        throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, ParserConfigurationException {
         return toDocument(aFilePath, aPattern, false);
     }
 
@@ -390,7 +391,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
     public static File[] listFiles(File aDir, FilenameFilter aFilter)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         return listFiles(aDir, aFilter, false, null);
     }
 
@@ -423,7 +424,7 @@ public class FileUtils {
      */
     public static File[] listFiles(File aDir, FilenameFilter aFilter,
             boolean aDeepListing, String[] aIgnoreList)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         if (!aDir.exists()) {
             throw new FileNotFoundException(aDir.getAbsolutePath());
         }
@@ -622,11 +623,10 @@ public class FileUtils {
      * @return A hash string
      * @throws NoSuchAlgorithmException If the supplied algorithm isn't
      *         supported
-     * @throws FileNotFoundException If the supplied file doesn't exist
      * @throws IOException If there is trouble reading the file
      */
     public static String hash(File aFile, String aAlgorithm)
-        throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+            throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance(aAlgorithm);
         FileInputStream inStream = new FileInputStream(aFile);
         DigestInputStream mdStream = new DigestInputStream(inStream, md);
@@ -663,8 +663,16 @@ public class FileUtils {
         return URLConnection.getFileNameMap().getContentTypeFor(aFileUrl);
     }
 
+    /**
+     * Copies a non-directory file from one location to another.
+     * 
+     * @param aSourceFile A file to copy
+     * @param aDestFile A destination location for the copied file
+     * @return True if the copy was successful; else, false
+     * @throws IOException If there is a problem copying the file
+     */
     private static boolean copyFile(File aSourceFile, File aDestFile)
-        throws IOException {
+            throws IOException {
         FileOutputStream outputStream = null;
         FileInputStream inputStream = null;
         boolean success = true;
@@ -717,7 +725,7 @@ public class FileUtils {
 
     private static Element add(File aFile, Element aParent,
             RegexFileFilter aFilter, boolean aDeepAdd)
-        throws ParserConfigurationException, FileNotFoundException {
+            throws ParserConfigurationException, FileNotFoundException {
         Element element;
         String tagName;
 
@@ -753,6 +761,12 @@ public class FileUtils {
         return element;
     }
 
+    /**
+     * Copy file metadata into the supplied file element.
+     * 
+     * @param aFile A file to extract metadata from
+     * @param aElement A destination element for the file metadata
+     */
     private static void copyMetadata(File aFile, Element aElement) {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         StringBuilder permissions = new StringBuilder();

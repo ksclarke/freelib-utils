@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 package info.freelibrary.util;
 
@@ -13,12 +10,14 @@ import org.junit.Test;
 import static org.junit.Assert.fail;
 
 /**
+ * Tests the {@link ClasspathUtils} class.
+ * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
 
     /**
-     * Test method for {@link info.freelibrary.util.ClasspathUtils#getDirs()}.
+     * Test method for {@link ClasspathUtils#getDirs()}.
      */
     @Test
     public void testGetDirs() {
@@ -31,7 +30,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getDirFiles()}.
+     * {@link ClasspathUtils#getDirFiles()}.
      */
     @Test
     public void testGetDirFiles() {
@@ -44,7 +43,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getDirs(java.io.FilenameFilter)}
+     * {@link ClasspathUtils#getDirs(java.io.FilenameFilter)}
      * .
      */
     @Test
@@ -59,7 +58,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getDirFiles(java.io.FilenameFilter)}
+     * {@link ClasspathUtils#getDirFiles(java.io.FilenameFilter)}
      * .
      */
     @Test
@@ -73,20 +72,20 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for {@link info.freelibrary.util.ClasspathUtils#getJars()}.
+     * Test method for {@link ClasspathUtils#getJars()}.
      */
     @Test
     public void testGetJars() {
         for (String jarName : ClasspathUtils.getJars()) {
             if (!jarName.endsWith(".jar")) {
-                fail(jarName + " isn't a jar file (or has the wrong extension)");
+                fail(jarName + " doesn't have a .jar extension as expected");
             }
         }
     }
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getJars(java.io.FilenameFilter)}
+     * {@link ClasspathUtils#getJars(java.io.FilenameFilter)}
      * .
      */
     @Test
@@ -100,7 +99,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getJarFiles()}.
+     * {@link ClasspathUtils#getJarFiles()}.
      */
     @Test
     public void testGetJarFiles() {
@@ -117,7 +116,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#getJarFiles(java.io.FilenameFilter)}
+     * {@link ClasspathUtils#getJarFiles(java.io.FilenameFilter)}
      * .
      */
     @Test
@@ -136,7 +135,7 @@ public class ClasspathUtilsTest {
 
     /**
      * Test method for
-     * {@link info.freelibrary.util.ClasspathUtils#findFirst(java.lang.String)}.
+     * {@link ClasspathUtils#findFirst(java.lang.String)}.
      */
     @Test
     public void testFindFirst() {
@@ -148,7 +147,7 @@ public class ClasspathUtilsTest {
 
             // Looking for a class file that is buried in a dir structure
             if (!ClasspathUtils.find("info/freelibrary/xq/Put.class")) {
-                fail("Didn't find info/freelibrary/xq/Put.class like it should");
+                fail("Didn't find expected info/freelibrary/xq/Put.class");
             }
 
             // Looking for something that doesn't exist

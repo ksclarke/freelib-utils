@@ -8,8 +8,8 @@ package info.freelibrary.util;
  It has been modified and renamed by Kevin S. Clarke (ksclarke@gmail.com)
  ===============================================================================
 
- This software is a work of the United States Government and is not subject 
- to copyright protection in the United States. 
+ This software is a work of the United States Government and is not subject
+ to copyright protection in the United States.
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,7 +20,7 @@ package info.freelibrary.util;
  THE SOFTWARE.
 
 
- Foreign copyrights may apply. To the extent that foreign copyrights in the 
+ Foreign copyrights may apply. To the extent that foreign copyrights in the
  software exist outside the United States, the following terms apply:
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -43,158 +43,182 @@ package info.freelibrary.util;
 
  */
 
-import info.freelibrary.util.InvalidPPathException;
-
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class PairtreeUtilsTest {
 
-    @Before
-    public void setup() {
+    /**
+     * Sets up the Pairtree path separator for the tests.
+     */
+    @BeforeClass
+    public static void setup() {
         PairtreeUtils.setSeparator('/');
     }
 
+    /**
+     * Tests mapping the supplied ID to a Pairtree path.
+     */
     @Test
-    public void testMapToPPath() {
-        assertEquals("ab/cd", PairtreeUtils.mapToPPath("abcd"));
-        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
-        assertEquals("12/-9/86/xy/4", PairtreeUtils.mapToPPath("12-986xy4"));
+    public void testMapToPtPath() {
+        assertEquals("ab/cd", PairtreeUtils.mapToPtPath("abcd"));
+        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPtPath("abcdefg"));
+        assertEquals("12/-9/86/xy/4", PairtreeUtils.mapToPtPath("12-986xy4"));
 
         assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-                .mapToPPath(null, "13030_45xqv_793842495", null));
+                .mapToPtPath(null, "13030_45xqv_793842495", null));
         assertEquals("13/03/0_/45/xq/v_/79/38/42/49/5/793842495", PairtreeUtils
-                .mapToPPath(null, "13030_45xqv_793842495", "793842495"));
+                .mapToPtPath(null, "13030_45xqv_793842495", "793842495"));
         assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-                .mapToPPath("/data", "13030_45xqv_793842495", null));
+                .mapToPtPath("/data", "13030_45xqv_793842495", null));
         assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5", PairtreeUtils
-                .mapToPPath("/data/", "13030_45xqv_793842495", null));
+                .mapToPtPath("/data/", "13030_45xqv_793842495", null));
         assertEquals("/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495",
-                PairtreeUtils.mapToPPath("/data", "13030_45xqv_793842495",
+                PairtreeUtils.mapToPtPath("/data", "13030_45xqv_793842495",
                         "793842495"));
 
     }
 
+    /**
+     * Tests encoding (i.e., "cleaning") the supplied ID.
+     */
     @Test
-    public void testIdCleaning() {
+    public void testEncodeID() {
         assertEquals("ark+=13030=xt12t3", PairtreeUtils
-                .cleanId("ark:/13030/xt12t3"));
+                .encodeID("ark:/13030/xt12t3"));
         assertEquals("http+==n2t,info=urn+nbn+se+kb+repos-1", PairtreeUtils
-                .cleanId("http://n2t.info/urn:nbn:se:kb:repos-1"));
+                .encodeID("http://n2t.info/urn:nbn:se:kb:repos-1"));
         assertEquals("what-the-^2a@^3f#!^5e!^3f", PairtreeUtils
-                .cleanId("what-the-*@?#!^!?"));
+                .encodeID("what-the-*@?#!^!?"));
     }
 
+    /**
+     * Tests decoding (i.e., the opposite of "cleaning") the supplied ID.
+     */
     @Test
-    public void testIdUncleaning() {
+    public void testDecodeID() {
         assertEquals("ark:/13030/xt12t3", PairtreeUtils
-                .uncleanId("ark+=13030=xt12t3"));
+                .decodeID("ark+=13030=xt12t3"));
         assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1", PairtreeUtils
-                .uncleanId("http+==n2t,info=urn+nbn+se+kb+repos-1"));
+                .decodeID("http+==n2t,info=urn+nbn+se+kb+repos-1"));
         assertEquals("what-the-*@?#!^!?", PairtreeUtils
-                .uncleanId("what-the-^2a@^3f#!^5e!^3f"));
+                .decodeID("what-the-^2a@^3f#!^5e!^3f"));
     }
 
+    /**
+     * Tests mapping the supplied ID to a Pairtree path, with ID encoding.
+     */
     @Test
-    public void testMapToPPathWithIdCleaning() {
+    public void testMapToPtPathWithIdCleaning() {
         assertEquals("ar/k+/=1/30/30/=x/t1/2t/3", PairtreeUtils
-                .mapToPPath("ark:/13030/xt12t3"));
+                .mapToPtPath("ark:/13030/xt12t3"));
 
         assertEquals("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1",
                 PairtreeUtils
-                        .mapToPPath("http://n2t.info/urn:nbn:se:kb:repos-1"));
+                        .mapToPtPath("http://n2t.info/urn:nbn:se:kb:repos-1"));
+
         assertEquals("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f", PairtreeUtils
-                .mapToPPath("what-the-*@?#!^!?"));
+                .mapToPtPath("what-the-*@?#!^!?"));
     }
 
+    /**
+     * Tests getting the encapsulating directory from the supplied Pairtree
+     * path.
+     * 
+     * @throws InvalidPtPathException If the supplied path isn't a valid
+     *         Pairtree path
+     */
     @Test
-    public void testExtractEncapsulatingDir() throws InvalidPPathException {
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab"));
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd"));
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd/"));
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cd/ef/g"));
-        assertNull(PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/"));
-        assertEquals("h", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h"));
-        assertEquals("h", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h/"));
-        assertEquals("efg", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/efg"));
-        assertEquals("efg", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/efg/"));
-        assertEquals("h", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h"));
-        assertEquals("h", PairtreeUtils
-                .extractEncapsulatingDirFromPPath("ab/cd/ef/g/h/"));
+    public void testGetEncapsulatingDir() throws InvalidPtPathException {
+        assertNull(PairtreeUtils.getEncapsulatingDir("ab"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("ab/cd"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("ab/cd/"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g/"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g/h/"));
+        assertEquals("efg", PairtreeUtils.getEncapsulatingDir("ab/cd/efg"));
+        assertEquals("efg", PairtreeUtils.getEncapsulatingDir("ab/cd/efg/"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("ab/cd/ef/g/h/"));
 
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("/data",
-                "/data/ab"));
-        assertNull(PairtreeUtils.extractEncapsulatingDirFromPPath("/data/",
-                "/data/ab"));
-        assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPPath(
-                "/data", "/data/ab/cd/ef/g/h"));
-        assertEquals("h", PairtreeUtils.extractEncapsulatingDirFromPPath(
-                "/data/", "/data/ab/cd/ef/g/h"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("/data", "/data/ab"));
+        assertNull(PairtreeUtils.getEncapsulatingDir("/data/", "/data/ab"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("/data",
+                "/data/ab/cd/ef/g/h"));
+        assertEquals("h", PairtreeUtils.getEncapsulatingDir("/data/",
+                "/data/ab/cd/ef/g/h"));
 
     }
 
+    /**
+     * Tests extracting an ID from a supplied Pairtree path.
+     * 
+     * @throws InvalidPtPathException If the supplied path isn't a valid
+     *         Pairtree path.
+     */
     @Test
-    public void testMapToId() throws InvalidPPathException {
-        assertEquals("ab", PairtreeUtils.mapToId("ab"));
-        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd"));
-        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
-        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg"));
-        assertEquals("abcd", PairtreeUtils.mapToId("ab/cd/efg/"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h"));
-        assertEquals("abcdefg", PairtreeUtils.mapToId("ab/cd/ef/g/h/"));
+    public void testMapToId() throws InvalidPtPathException {
+        assertEquals("ab", PairtreeUtils.mapToID("ab"));
+        assertEquals("abcd", PairtreeUtils.mapToID("ab/cd"));
+        assertEquals("abcd", PairtreeUtils.mapToID("ab/cd/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g/h"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g/h/"));
+        assertEquals("abcd", PairtreeUtils.mapToID("ab/cd/efg"));
+        assertEquals("abcd", PairtreeUtils.mapToID("ab/cd/efg/"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g/h"));
+        assertEquals("abcdefg", PairtreeUtils.mapToID("ab/cd/ef/g/h/"));
 
-        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPPath("abcdefg"));
-        assertEquals("12-986xy4", PairtreeUtils.mapToId("12/-9/86/xy/4"));
+        assertEquals("ab/cd/ef/g", PairtreeUtils.mapToPtPath("abcdefg"));
+        assertEquals("12-986xy4", PairtreeUtils.mapToID("12/-9/86/xy/4"));
 
         assertEquals("13030_45xqv_793842495", PairtreeUtils
-                .mapToId("13/03/0_/45/xq/v_/79/38/42/49/5"));
+                .mapToID("13/03/0_/45/xq/v_/79/38/42/49/5"));
         assertEquals("13030_45xqv_793842495", PairtreeUtils
-                .mapToId("13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
-        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
+                .mapToID("13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToID("/data",
                 "/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
-        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data/",
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToID("/data/",
                 "/data/13/03/0_/45/xq/v_/79/38/42/49/5"));
-        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToId("/data",
+        assertEquals("13030_45xqv_793842495", PairtreeUtils.mapToID("/data",
                 "/data/13/03/0_/45/xq/v_/79/38/42/49/5/793842495"));
     }
 
-    @Test(expected = InvalidPPathException.class)
-    public void testInvalidExtractEncapsulatingDir1()
-            throws InvalidPPathException {
-        PairtreeUtils.extractEncapsulatingDirFromPPath("abc");
+    /**
+     * Tests that an invalid Pairtree path isn't accepted when requesting the
+     * encapsulating directory; it fails if an exception isn't thrown.
+     * 
+     * @throws InvalidPtPathException If the supplied path isn't a valid
+     *         Pairtree path
+     */
+    @Test(expected = InvalidPtPathException.class)
+    public void testInvalidGetEncapsulatingDir() throws InvalidPtPathException {
+        PairtreeUtils.getEncapsulatingDir("ab/cdx/efg/");
+        PairtreeUtils.getEncapsulatingDir("abc");
     }
 
-    @Test(expected = InvalidPPathException.class)
-    public void testInvalidExtractEncapsulatingDir2()
-            throws InvalidPPathException {
-        PairtreeUtils.extractEncapsulatingDirFromPPath("ab/cdx/efg/");
-    }
-
+    /**
+     * Tests mapping a Pairtree path to an ID, with ID encoding.
+     * 
+     * @throws InvalidPtPathException If the supplied path isn't a valid
+     *         Pairtree path
+     */
     @Test
-    public void testMapToIdWithIdCleaning() throws InvalidPPathException {
-        assertEquals("ark:/13030/xt12t3", PairtreeUtils
-                .mapToId("ar/k+/=1/30/30/=x/t1/2t/3"));
+    public void testMapToIdWithIdEncoding() throws InvalidPtPathException {
+        String path = "ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1";
 
-        // This example from the spec is wrong
-        // assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1",
-        // PairtreeUtils.mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/n/bn/+s/e+/kb/+/re/p/os/-1"));
-        assertEquals(
-                "http://n2t.info/urn:nbn:se:kb:repos-1",
-                PairtreeUtils
-                        .mapToId("ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1"));
+        assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1", PairtreeUtils
+                .mapToID(path));
+
+        assertEquals("ark:/13030/xt12t3", PairtreeUtils
+                .mapToID("ar/k+/=1/30/30/=x/t1/2t/3"));
+
         assertEquals("what-the-*@?#!^!?", PairtreeUtils
-                .mapToId("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f"));
+                .mapToID("wh/at/-t/he/-^/2a/@^/3f/#!/^5/e!/^3/f"));
     }
 }

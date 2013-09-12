@@ -48,7 +48,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     public ResourceBundle newBundle(String aBaseName, Locale aLocale,
             String aFormat, ClassLoader aClassLoader, boolean aReload)
-        throws IllegalAccessException, InstantiationException, IOException {
+            throws IllegalAccessException, InstantiationException, IOException {
         ResourceBundle bundle = null;
 
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
@@ -89,7 +89,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
      *         {@link ResourceBundle} from the supplied {@link InputStream}
      */
     private ResourceBundle makeBundle(InputStream aInputStream)
-        throws IOException {
+            throws IOException {
         BufferedInputStream bufferedInputStream;
         ResourceBundle bundle;
 

@@ -266,7 +266,7 @@ public class StringUtils {
      * @throws IOException If the supplied file could not be read
      */
     public static String read(File aFile, String aCharsetName)
-        throws IOException {
+            throws IOException {
         return read(aFile, Charset.forName(aCharsetName));
     }
 

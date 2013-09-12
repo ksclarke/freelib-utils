@@ -204,7 +204,7 @@ public class ClasspathUtils {
      *         <code>FilenameFilter</code>
      */
     public static JarFile[] getJarFiles(FilenameFilter aFilter)
-        throws IOException {
+            throws IOException {
         ArrayList<JarFile> list = new ArrayList<JarFile>();
         FileExtFileFilter filter = new FileExtFileFilter("jar");
 

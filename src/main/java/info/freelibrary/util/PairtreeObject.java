@@ -40,7 +40,7 @@ public class PairtreeObject extends File {
      * @throws IOException If there is a problem creating the Pairtree structure
      */
     PairtreeObject(PairtreeRoot aRoot, String aName) throws IOException {
-        super(aRoot, PairtreeUtils.mapToPPath(aName));
+        super(aRoot, PairtreeUtils.mapToPtPath(aName));
 
         if (!exists() && !mkdirs()) {
             throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
@@ -63,8 +63,8 @@ public class PairtreeObject extends File {
      * @throws IOException If there is a problem creating the object
      */
     PairtreeObject(PairtreeRoot aRoot, String aPrefix, String aName)
-        throws IOException {
-        super(aRoot, PairtreeUtils.mapToPPath(aPrefix, aName));
+            throws IOException {
+        super(aRoot, PairtreeUtils.mapToPtPath(aPrefix, aName));
 
         if (!exists() && !mkdirs()) {
             throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));

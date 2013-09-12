@@ -84,7 +84,7 @@ public class PairtreeRoot extends File {
      * @throws IOException If there is a problem creating the structure
      */
     public PairtreeRoot(File aParentDir, String aPairtreePrefix)
-        throws IOException {
+            throws IOException {
         super(aParentDir, PAIRTREE_ROOT);
 
         if (aPairtreePrefix != null) {
@@ -243,7 +243,7 @@ public class PairtreeRoot extends File {
      * @throws IOException If there is trouble writing to the file
      */
     private void writePrefixFile(File aFile, String aPtPrefix)
-        throws IOException {
+            throws IOException {
         if (!aFile.exists()) {
             OutputStreamWriter writer = null;
 
@@ -261,8 +261,8 @@ public class PairtreeRoot extends File {
             String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
 
             if (!prefix.equals(aPtPrefix)) {
-                throw new IOException(BUNDLE.get("pt.bad_prefix", new String[] {
-                    prefix, aPtPrefix}));
+                throw new IOException(BUNDLE.get("pt.bad_prefix", prefix,
+                        aPtPrefix));
             }
         }
     }

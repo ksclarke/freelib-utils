@@ -4,6 +4,8 @@
 
 package info.freelibrary.xq;
 
+import java.io.FileNotFoundException;
+
 import info.freelibrary.util.DOMUtils;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.StringUtils;
@@ -55,10 +57,11 @@ public class Put {
      * @param aFileName The file name of the file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
      * @return The XML response from the PUT
+     * @throws FileNotFoundException If the supplied file name doesn't exist
      * @throws IOException If there is trouble with the PUT
      */
     public static Element put(String aFileName, String aURL)
-        throws IOException {
+            throws FileNotFoundException, IOException {
         return put(new File(aFileName), new URL(aURL));
     }
 
@@ -206,7 +209,7 @@ public class Put {
      * @throws IOException If there was a problem making the connection
      */
     private static HttpURLConnection connect(URL aURL, String aContentType)
-        throws IOException {
+            throws IOException {
         HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
 
         // Set this to a PUT
@@ -231,7 +234,7 @@ public class Put {
      * @throws IOException If there is a problem writing to the remote resource
      */
     private static final int writeXML(Element aNode, HttpURLConnection aConx)
-        throws IOException {
+            throws IOException {
         BufferedWriter bWriter = null;
 
         try {

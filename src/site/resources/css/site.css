@@ -1,71 +1,67 @@
 .color-highlight {
-	color: #225E9B;
-}
-
-body {
-	
+  color: #225E9B;
 }
 
 body[class*="page-themes-bootswatch"] {
-	background-image: none;
+  background-image: none;
 }
 
 body[class*="page-themes-bootswatch"] .color-highlight {
-	color: inherit;
+  color: inherit;
 }
 
 h2 {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 h3, h4, h5, h6 {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 .carousel-caption a {
-	color: white;
+  color: white;
 }
 
 .jumbotron {
-	padding-top: 20px;
+  padding-top: 20px;
 }
 
 .toc-separator {
-	display: none;
+  display: none;
 }
 
 .page-header {
-	margin: 0px;
-	padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 /* A bit of workaround for links being not clickable due to :before element in headings */
 h2[id]:before {
-	height: 30px;
-	margin-top: -30px;
+  height: 30px;
+  margin-top: -30px;
 }
 
 .sidebar {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .sidebar h3 {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 pre {
-	background-color: #eee;
-	margin-left: 20px;
+  background-color: #eee;
+  margin-left: 20px;
 }
 
 .nav-header {
-	color: #666;
+  color: #666;
 }
 
 .imageLink {
-	padding-right: 4px;
+  padding-right: 4px;
 }
 
 .main-body {
-	margin-top: -20px;
+  margin-top: -20px;
 }

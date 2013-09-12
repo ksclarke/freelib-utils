@@ -41,7 +41,7 @@ public class BufferedFileWriter extends BufferedWriter {
      *         isn't supported by the JVM
      */
     public BufferedFileWriter(File aFile, String aEncoding)
-        throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException, UnsupportedEncodingException {
         super(new OutputStreamWriter(new FileOutputStream(aFile), aEncoding));
     }
 
@@ -54,7 +54,7 @@ public class BufferedFileWriter extends BufferedWriter {
      * @throws FileNotFoundException If the supplied file cannot be found
      */
     private static final Writer getWriter(File aFile)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         try {
             return new OutputStreamWriter(new FileOutputStream(aFile), "UTF-8");
         } catch (UnsupportedEncodingException details) {

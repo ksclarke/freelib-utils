@@ -16,11 +16,6 @@
 			<url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
 			<comments>Licensed under the GNU LGPL 3.0 or later (at your option)</comments>
 		</license>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<comments>The BZip2 classes are licensed under the APL 2.0</comments>
-		</license>
 	</licenses>
 	<scm>
 		<connection>scm:git:git@github.com:ksclarke/freelib-utils.git</connection>

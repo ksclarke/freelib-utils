@@ -38,7 +38,7 @@ public class BufferedFileReader extends BufferedReader {
      * @throws FileNotFoundException If the supplied file couldn't be found
      */
     public BufferedFileReader(File aFile, String aEncoding)
-        throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException, UnsupportedEncodingException {
         super(new InputStreamReader(new FileInputStream(aFile), aEncoding));
     }
 
@@ -50,7 +50,7 @@ public class BufferedFileReader extends BufferedReader {
      * @throws FileNotFoundException If the supplied file couldn't be found
      */
     private static final Reader getReader(File aFile)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         try {
             return new InputStreamReader(new FileInputStream(aFile), "UTF-8");
         } catch (UnsupportedEncodingException details) {

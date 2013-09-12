@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Tests of the <code>StringUtils</code> class.
+ * Tests of the {@link StringUtils} class.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -25,8 +25,11 @@ public class StringUtilsTest {
 
     private static final String CHARSET = "UTF-8";
 
+    /**
+     * Tests {@link StringUtils#trimTo(Object, String)}.
+     */
     @Test
-    public void trimTo() {
+    public void trimToStringString() {
         String assertion = StringUtils.trimTo(" original ", "default");
 
         assertEquals("default", StringUtils.trimTo(null, "default"));
@@ -34,8 +37,11 @@ public class StringUtilsTest {
         assertEquals("original", assertion);
     }
 
+    /**
+     * Tests {@link StringUtils#formatMessage()}.
+     */
     @Test
-    public void formatMessage() {
+    public void formatMessageStringStringArray() {
         String message = "This is the {} and the {}";
         String[] values = new String[] {"first", "second"};
         String result = StringUtils.formatMessage(message, values);
@@ -56,8 +62,11 @@ public class StringUtilsTest {
         }
     }
 
+    /**
+     * Tests {@link StringUtils#formatTo80Chars(String)}.
+     */
     @Test
-    public void testFormatTo80Chars() {
+    public void testFormatTo80CharsString() {
         File testFile1 = new File("src/test/resources/80_char_test_1.txt");
 
         try {
@@ -78,15 +87,21 @@ public class StringUtilsTest {
         }
     }
 
+    /**
+     * Tests {@link StringUtils#trimToNull(String)}.
+     */
     @Test
-    public void testTrimToNull() {
+    public void testTrimToNullString() {
         assertEquals(null, StringUtils.trimToNull(""));
         assertEquals("a", StringUtils.trimToNull(" a "));
         assertEquals(null, StringUtils.trimToNull(null));
     }
 
+    /**
+     * Tests {@link StringUtils#read(File, String)}.
+     */
     @Test
-    public void testRead() {
+    public void testReadFileString() {
         File tmpFile = new File(getClass().getName());
         String original = "This is my content?\nYes!";
 
@@ -103,6 +118,9 @@ public class StringUtilsTest {
         }
     }
 
+    /**
+     * Tests {@link StringUtils#toString(Object[], Char)}.
+     */
     @Test
     public void toStringObjectArrayChar() {
         Integer i1 = new Integer(1);
@@ -113,40 +131,57 @@ public class StringUtilsTest {
         assertEquals("1~21~3", StringUtils.toString(array, '~'));
     }
 
+    /**
+     * Tests {@link StringUtils#repeat(String, Int)}.
+     */
     @Test
     public void repeatStringInt() {
         assertEquals("!@!@!@", StringUtils.repeat("!@", 3));
     }
 
+    /**
+     * Tests {@link StringUtils#repeat(Char, Int)}.
+     */
     @Test
     public void repeatCharInt() {
         assertEquals("@@@", StringUtils.repeat("@", 3));
     }
 
+    /**
+     * Tests {@link StringUtils#padStart(String, String, Int)}.
+     */
     @Test
-    public void testPadStart() {
+    public void testPadStartStringStringInt() {
         String result = StringUtils.padStart("source", "!@", 3);
         assertEquals("!@!@!@source", result);
     }
 
+    /**
+     * Tests {@link StringUtils#padEnd(String, String, Int)}.
+     */
     @Test
-    public void testPadEnd() {
+    public void testPadEndStringStringInt() {
         String result = StringUtils.padEnd("source", "!@", 3);
         assertEquals("source!@!@!@", result);
     }
 
+    /**
+     * Tests {@link StringUtils#addLineNumbers(String)}.
+     */
     @Test
-    public void testAddLineNumbers() {
-        String original =
-                "This is my content?\nYes!\n\nThis is my content?\nNo!";
-        String desired =
-                "1 This is my content?\n2 Yes!\n3 \n4 This is my content?\n5 No!";
+    public void testAddLineNumbersString() {
+        String original = "This is my content?\nYes!\n\nThis is my content?";
+        String expected =
+                "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
 
-        assertEquals(desired, StringUtils.addLineNumbers(original));
+        assertEquals(expected, StringUtils.addLineNumbers(original));
     }
 
+    /**
+     * Tests {@link StringUtils#parseIntRange(String)}.
+     */
     @Test
-    public void testParseIntRange() {
+    public void testParseIntRangeString() {
         int[] iArray1 = new int[] {1111};
         int[] iArray2 = new int[] {1000, 1001, 1002, 1003, 1004, 1005};
 
