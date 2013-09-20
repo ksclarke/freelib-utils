@@ -9,6 +9,6 @@ public class I18nObjectWrapper extends I18nObject {
      * Constructs a I18nObject wrapper for testing.
      */
     public I18nObjectWrapper() {
-        super("FreeLib-Utils_Messages");
+        super("freelib-utils_messages");
     }
 }

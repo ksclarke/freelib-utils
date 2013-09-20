@@ -25,4 +25,39 @@ public class InvalidPtPathException extends Exception {
         super(aMessage);
     }
 
+    /**
+     * Constructor for an invalid Pairtree path that takes an exception message
+     * and additional details to be input into the {}s in the message.
+     * 
+     * @param aMessage An exception message
+     * @param aDetailsVarargs Additional details to insert into the message
+     */
+    public InvalidPtPathException(String aMessage, String... aDetailsVarargs) {
+        super(StringUtils.format(aMessage, aDetailsVarargs));
+    }
+
+    /**
+     * Constructor for an invalid Pairtree path that takes an exception message
+     * and a related exception.
+     * 
+     * @param aMessage An exception message
+     * @param aCause An upstream exception
+     */
+    public InvalidPtPathException(String aMessage, Exception aCause) {
+        super(aMessage, aCause);
+    }
+
+    /**
+     * Constructor for an invalid Pairtree path that takes an exception message,
+     * a related exception, and additional details to be input into the {}s in
+     * the message.
+     * 
+     * @param aMessage An exception message
+     * @param aCause An upstream exception
+     * @param aDetailsVarargs Additional details to insert into the message
+     */
+    public InvalidPtPathException(String aMessage, Exception aCause,
+            String... aDetailsVarargs) {
+        super(StringUtils.format(aMessage, aDetailsVarargs), aCause);
+    }
 }

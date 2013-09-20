@@ -84,7 +84,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return A message with the supplied values integrated into it
      */
     public String get(String aMessage, String... aArray) {
-        return StringUtils.formatMessage(super.getString(aMessage), aArray);
+        return StringUtils.format(super.getString(aMessage), aArray);
     }
 
     /**
@@ -95,7 +95,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return A message with the supplied string value integrated into it
      */
     public String get(String aMessage, String aDetail) {
-        return StringUtils.formatMessage(super.getString(aMessage), aDetail);
+        return StringUtils.format(super.getString(aMessage), aDetail);
     }
 
     /**
@@ -124,7 +124,7 @@ public class XMLResourceBundle extends ResourceBundle {
             strings[index] = aFileArray[index].getAbsolutePath();
         }
 
-        return StringUtils.formatMessage(super.getString(aMessage), strings);
+        return StringUtils.format(super.getString(aMessage), strings);
     }
 
     /**
@@ -137,7 +137,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The message value with the supplied file name integrated
      */
     public String get(String aMessage, File aFile) {
-        return StringUtils.formatMessage(super.getString(aMessage),
+        return StringUtils.format(super.getString(aMessage),
                 new String[] {aFile.getAbsolutePath()});
     }
 
@@ -166,7 +166,7 @@ public class XMLResourceBundle extends ResourceBundle {
             strings[index] = aDetailsArray[index].toString();
         }
 
-        return StringUtils.formatMessage(super.getString(aMessage), strings);
+        return StringUtils.format(super.getString(aMessage), strings);
     }
 
     /**
@@ -178,7 +178,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The value of the bundle message
      */
     public String get(String aMessage, Object aDetail) {
-        return StringUtils.formatMessage(super.getString(aMessage),
+        return StringUtils.format(super.getString(aMessage),
                 new String[] {aDetail.toString()});
     }
 

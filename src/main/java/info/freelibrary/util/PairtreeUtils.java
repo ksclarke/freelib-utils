@@ -225,7 +225,7 @@ public class PairtreeUtils {
             if (pPathParts[0].length() <= myShortyLength) {
                 return null;
             } else { // Else no Pairtree path
-                throw new InvalidPtPathException(StringUtils.formatMessage(
+                throw new InvalidPtPathException(StringUtils.format(
                         "PtPath {} contains no shorties", aPtPath));
             }
         }
@@ -233,7 +233,7 @@ public class PairtreeUtils {
         // All parts up to next to last and last should have shorty length
         for (int i = 0; i < pPathParts.length - 2; i++) {
             if (pPathParts[i].length() != myShortyLength) {
-                throw new InvalidPtPathException(StringUtils.formatMessage(
+                throw new InvalidPtPathException(StringUtils.format(
                         "PtPath {} has parts of incorrect length", aPtPath));
             }
         }
@@ -243,7 +243,7 @@ public class PairtreeUtils {
 
         // Next to last should have shorty length or less
         if (nextToLastPart.length() > myShortyLength) {
-            throw new InvalidPtPathException(StringUtils.formatMessage(
+            throw new InvalidPtPathException(StringUtils.format(
                     "Pairtree Path {} has parts of incorrect length", aPtPath));
         }
 

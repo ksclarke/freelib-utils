@@ -141,8 +141,8 @@ public class ClasspathUtilsTest {
     public void testFindFirst() {
         try {
             // Looking for a file at the root of a dir in the classpath
-            if (!ClasspathUtils.find("FreeLib-Utils_Messages.xml")) {
-                fail("Didn't find FreeLib-Utils_Messages.xml like it should");
+            if (!ClasspathUtils.find("freelib-utils_messages.xml")) {
+                fail("Didn't find freelib-utils_messages.xml like it should");
             }
 
             // Looking for a class file that is buried in a dir structure
