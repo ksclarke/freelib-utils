@@ -42,7 +42,7 @@
 		</developer>
 	</developers>
 	<properties>
-		<freelib.build.tools.version>0.0.1-SNAPSHOT</freelib.build.tools.version>
+		<freelib.build.tools.version>0.0.1</freelib.build.tools.version>
 		<iharder.base64.version>2.3.8</iharder.base64.version>
 		<commons.compress.version>1.5</commons.compress.version>
 		<slf4j.version>1.7.5</slf4j.version>
