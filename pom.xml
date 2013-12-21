@@ -116,7 +116,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<failsOnError>true</failsOnError>
+					<failsOnError>false</failsOnError>
 					<consoleOutput>true</consoleOutput>
 					<!-- these are loaded from the freelib-build-tools jar -->
 					<configLocation>checkstyle/checkstyle.xml</configLocation>
