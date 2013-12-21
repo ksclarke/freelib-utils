@@ -117,6 +117,7 @@
 				</dependencies>
 				<configuration>
 					<failsOnError>false</failsOnError>
+					<failOnViolation>false</failOnViolation>
 					<consoleOutput>true</consoleOutput>
 					<!-- these are loaded from the freelib-build-tools jar -->
 					<configLocation>checkstyle/checkstyle.xml</configLocation>
@@ -168,15 +169,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<!-- copies site templates into the site directory -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<!--<configuration>
-					<outputDirectory>${basedir}/src/site/markdown</outputDirectory>
-				</configuration>-->
 			</plugin>
 			<!-- compiles the project's Java code; no minimum JDK specified -->
 			<plugin>
@@ -300,7 +292,8 @@
 							<artifactId>maven-checkstyle-plugin</artifactId>
 							<version>${maven.checkstyle.version}</version>
 							<configuration>
-								<failsOnError>true</failsOnError>
+								<failsOnError>false</failsOnError>
+								<failOnViolation>false</failOnViolation>
 								<consoleOutput>true</consoleOutput>
 								<!-- this is configured in the earlier checkstyle config -->
 								<configLocation>checkstyle/checkstyle.xml</configLocation>
@@ -316,7 +309,7 @@
 								<aggregate>true</aggregate>
 								<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 								<minimumTokens>100</minimumTokens>
-								<linkXRef>true</linkXRef>
+								<!--<linkXRef>true</linkXRef>-->
 								<verbose>true</verbose>
 								<targetJdk>1.7</targetJdk>
 							</configuration>
