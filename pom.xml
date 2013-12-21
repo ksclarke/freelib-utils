@@ -83,6 +83,25 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<!-- site's markdown template resources -->
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.md</include>
+				</includes>
+				<targetPath>${basedir}/src</targetPath>
+			</resource>
+			<!-- normal types of project resources -->
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.md</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<!-- checks project's code for conformance to coding standards -->
 			<plugin>
@@ -121,12 +140,13 @@
 				<executions>
 					<execution>
 						<id>unpack</id>
-						<phase>package</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
 							<artifactItems>
+								<!-- copies the site stylesheets into the project -->
 								<artifactItem>
 									<groupId>info.freelibrary</groupId>
 									<artifactId>freelib-build-tools</artifactId>
@@ -135,10 +155,28 @@
 									<includes>**/*.css,**/*.js</includes>
 									<outputDirectory>${project.build.directory}</outputDirectory>
 								</artifactItem>
+								<!-- copies site templates into the resources directory -->
+								<artifactItem>
+									<groupId>info.freelibrary</groupId>
+									<artifactId>freelib-build-tools</artifactId>
+									<version>${freelib.build.tools.version}</version>
+									<type>jar</type>
+									<includes>**/*.md</includes>
+									<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+								</artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- copies site templates into the site directory -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<!--<configuration>
+					<outputDirectory>${basedir}/src/site/markdown</outputDirectory>
+				</configuration>-->
 			</plugin>
 			<!-- compiles the project's Java code; no minimum JDK specified -->
 			<plugin>

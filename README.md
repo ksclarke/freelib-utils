@@ -1,11 +1,6 @@
-# FreeLibrary Utilities
+# FreeLibrary Utilities [![Build Status](https://travis-ci.org/ksclarke/freelib-utils.png?branch=master)](https://travis-ci.org/ksclarke/freelib-utils)
 
-FreeLib-Utils is a small collection of convenience and utility classes used by other FreeLibrary projects. It includes utilities related to: string manipulation, IO, XML/XQuery, ResourceBundles, ClassLoaders, I18N, and Pairtree file systems.
-
-### Project Status
-
-[![Build Status](https://travis-ci.org/ksclarke/freelib-utils.png?branch=master)](https://travis-ci.org/ksclarke/freelib-utils) (master)
-[![Build Status](https://travis-ci.org/ksclarke/freelib-utils.png?branch=develop)](https://travis-ci.org/ksclarke/freelib-utils) (develop)
+This project is a small collection of convenience and utility classes, mostly used by other FreeLibrary projects. It includes utilities related to I18N, IO, ResourceBundles, String manipulation, XQuery, ClassLoaders, and Pairtree file systems.
 
 ### License
 
