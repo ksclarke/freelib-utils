@@ -184,6 +184,24 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 			</plugin>
+			<!-- cleans up build artifacts -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}/src</directory>
+							<includes>
+								<include>**/coders-welcome.md</include>
+								<include>**/testers-welcome.md</include>
+								<include>**/translators-welcome.md</include>
+								<include>**/documentors-welcome.md</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 			<!-- maven site generates documentation for use in project website -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
