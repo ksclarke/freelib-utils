@@ -116,12 +116,11 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<failsOnError>false</failsOnError>
-					<failOnViolation>false</failOnViolation>
 					<consoleOutput>true</consoleOutput>
-					<!-- these are loaded from the freelib-build-tools jar -->
+					<!-- these checks are loaded from the freelib-build-tools jar -->
 					<configLocation>checkstyle/checkstyle.xml</configLocation>
-					<suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+					<!-- these suppressions are project specific -->
+					<suppressionsLocation>${project.build.directory}/classes/checkstyle-suppressions.xml</suppressionsLocation>
 				</configuration>
 				<executions>
 					<execution>
@@ -292,12 +291,11 @@
 							<artifactId>maven-checkstyle-plugin</artifactId>
 							<version>${maven.checkstyle.version}</version>
 							<configuration>
-								<failsOnError>false</failsOnError>
-								<failOnViolation>false</failOnViolation>
 								<consoleOutput>true</consoleOutput>
-								<!-- this is configured in the earlier checkstyle config -->
+								<!-- these checks are loaded from the freelib-build-tools jar -->
 								<configLocation>checkstyle/checkstyle.xml</configLocation>
-								<suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+								<!-- these suppressions are project specific -->
+								<suppressionsLocation>${project.build.directory}/classes/checkstyle-suppressions.xml</suppressionsLocation>
 							</configuration>
 						</plugin>
 						<!-- source code analyzer somewhat similar to findbugs -->
