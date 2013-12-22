@@ -6,6 +6,6 @@
     
 <suppressions>
     <!-- have to ignore indentation checks until upstream checkstyle is fixed -->
-    <!--   Cf. http://_goes_here -->
+    <!--   Cf. https://github.com/checkstyle/checkstyle/pull/80 -->
     <suppress checks="IndentationCheck" files=".*\.java" />
 </suppressions>
