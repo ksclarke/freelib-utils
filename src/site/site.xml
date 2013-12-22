@@ -95,6 +95,7 @@
             <item name="FindBugs Report" href="findbugs.html" />
             <item name="Test Coverage" href="cobertura/index.html" target="_new" />
             <item name="PMD Report" href="pmd.html" />
+            <item name="CPD Report" href="cpd.html" />
             <item name="Checkstyle Report" href="checkstyle.html" />
             <item name="JDepend Metrics" href="jdepend-report.html" />
             <item name="Change Log" href="changelog.html"/>
