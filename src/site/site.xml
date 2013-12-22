@@ -103,9 +103,11 @@
         </menu>
         <menu name="Build Status">
             <item img="https://travis-ci.org/ksclarke/freelib-utils.png?branch=master"
-                name="(master)" href="https://travis-ci.org/ksclarke/freelib-utils"/>
+                name="(master)" href="https://travis-ci.org/ksclarke/freelib-utils"
+                target="_new"/>
             <item img="https://travis-ci.org/ksclarke/freelib-utils.png?branch=develop"
-                name="(develop)" href="https://travis-ci.org/ksclarke/freelib-utils"/>
+                name="(develop)" href="https://travis-ci.org/ksclarke/freelib-utils"
+                target="_new"/>
         </menu>
         <menu name="Maven Docs" ref="reports"/>
         <menu name="Maven Theme">
