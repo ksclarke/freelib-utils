@@ -23,7 +23,7 @@ public abstract class I18nObject {
      */
     public I18nObject() {
         BUNDLE =
-                (XMLResourceBundle) ResourceBundle.getBundle("Messages",
+                (XMLResourceBundle) ResourceBundle.getBundle("messages",
                         new XMLBundleControl());
     }
 
@@ -31,12 +31,13 @@ public abstract class I18nObject {
      * Constructor for an I18NObject that takes a {@link ResourceBundle} as an
      * argument.
      * 
-     * @param aBundleName The name of a {@link ResourceBundle}
+     * @param aBundleName The name of a {@link ResourceBundle} that gets lower
+     *        cased automatically
      */
     public I18nObject(String aBundleName) {
         BUNDLE =
-                (XMLResourceBundle) ResourceBundle.getBundle(aBundleName,
-                        new XMLBundleControl());
+                (XMLResourceBundle) ResourceBundle.getBundle(aBundleName
+                        .toLowerCase(), new XMLBundleControl());
     }
 
     /**
@@ -46,7 +47,7 @@ public abstract class I18nObject {
      * @return An internationalized value
      */
     protected String getI18n(String aMessage) {
-        return normalizeWS(BUNDLE.get(aMessage));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage));
     }
 
     /**
@@ -58,7 +59,8 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, long aLongDetail) {
-        return normalizeWS(BUNDLE.get(aMessage, Long.toString(aLongDetail)));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Long
+                .toString(aLongDetail)));
     }
 
     /**
@@ -70,7 +72,8 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, int aIntDetail) {
-        return normalizeWS(BUNDLE.get(aMessage, Integer.toString(aIntDetail)));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Integer
+                .toString(aIntDetail)));
     }
 
     /**
@@ -82,7 +85,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, String aDetail) {
-        return normalizeWS(BUNDLE.get(aMessage, aDetail));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aDetail));
     }
 
     /**
@@ -93,8 +96,8 @@ public abstract class I18nObject {
      * @param aDetailsArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, String[] aDetailsArray) {
-        return normalizeWS(BUNDLE.get(aMessage, aDetailsArray));
+    protected String getI18n(String aMessage, String... aDetailsArray) {
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aDetailsArray));
     }
 
     /**
@@ -106,7 +109,8 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18N(String aMessage, Exception aException) {
-        return normalizeWS(BUNDLE.get(aMessage, aException.getMessage()));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aException
+                .getMessage()));
     }
 
     /**
@@ -118,7 +122,8 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, File aFile) {
-        return normalizeWS(BUNDLE.get(aMessage, aFile.getAbsolutePath()));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aFile
+                .getAbsolutePath()));
     }
 
     /**
@@ -129,14 +134,14 @@ public abstract class I18nObject {
      * @param aFileArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, File[] aFileArray) {
+    protected String getI18n(String aMessage, File... aFileArray) {
         String[] fileNames = new String[aFileArray.length];
 
         for (int index = 0; index < fileNames.length; index++) {
             fileNames[index] = aFileArray[index].getAbsolutePath();
         }
 
-        return normalizeWS(BUNDLE.get(aMessage, fileNames));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, fileNames));
     }
 
     /**
@@ -147,7 +152,7 @@ public abstract class I18nObject {
      * @param aObjArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, Object[] aObjArray) {
+    protected String getI18n(String aMessage, Object... aObjArray) {
         String[] strings = new String[aObjArray.length];
 
         for (int index = 0; index < aObjArray.length; index++) {
@@ -158,16 +163,7 @@ public abstract class I18nObject {
             }
         }
 
-        return normalizeWS(BUNDLE.get(aMessage, strings));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, strings));
     }
 
-    /**
-     * Normalizes white space in the message value.
-     * 
-     * @param aMessage A message
-     * @return The message with white space normalized
-     */
-    private String normalizeWS(String aMessage) {
-        return aMessage.replaceAll("\\s+", " ");
-    }
 }

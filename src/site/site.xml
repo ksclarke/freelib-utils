@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
 
     <bannerLeft>
-        <name>FreeLibrary Utilities</name>
+        <name>FreeLib-Utils</name>
         <href>http://projects.freelibrary.info/freelib-utils</href>
     </bannerLeft>
 
@@ -41,7 +41,7 @@
             </bottomNav>
             <pages>
                 <index project="freelib-utils">
-                    <titleTemplate>FreeLibrary Utilities Project</titleTemplate>
+                    <titleTemplate>FreeLibrary Utilities</titleTemplate>
                     <breadcrumbs>false</breadcrumbs>
                     <toc>false</toc>
                     <markPageHeader>true</markPageHeader>
@@ -61,7 +61,7 @@
         </head>
 
         <links>
-            <item name="GitHub Page ↗"
+            <item name="GitHub Page"
                 href="https://github.com/ksclarke/freelib-utils" target="_new" />
             <item name="Download Zip"
                 href="https://github.com/ksclarke/freelib-utils/archive/master.zip" />
@@ -69,9 +69,9 @@
 
         <!-- top navbar -->
         <menu name="Read the Docs">
-            <item name="Introduction" href="index.html" />
-            <item name="Javadocs ↗" href="apidocs/index.html" target="_new" />
-            <item name="Issues Queue ↗" target="_new"
+            <item name="Introduction" href="index.html#" />
+            <item name="Javadocs" href="apidocs/index.html" target="_new" />
+            <item name="Issues Queue" target="_new"
                 href="https://github.com/ksclarke/freelib-utils/issues" />
             <item name="License" href="license.html" />
         </menu>
@@ -85,16 +85,17 @@
         <menu name="Contributions">
             <item name="Test Drive the Project" href="testers-welcome.html" />
             <item name="Help Improve the Docs" href="documenters-welcome.html" />
-            <item name="Translators Welcome" href="translaters-welcome.html" />
+            <item name="Translators Welcome" href="translators-welcome.html" />
             <item name="Submit a Pull Request" href="coders-welcome.html" />
         </menu>
         <menu name="Donations">
-            <item name="Buy Me a Beer ↗" href="${paypal.button}" target="_new" />
+            <item name="Buy Me a Beer" href="${paypal.button}" target="_new" />
         </menu>
         <menu name="Developer Reports">
             <item name="FindBugs Report" href="findbugs.html" />
-            <item name="Test Coverage ↗" href="cobertura/index.html" target="_new" />
+            <item name="Test Coverage" href="cobertura/index.html" target="_new" />
             <item name="PMD Report" href="pmd.html" />
+            <item name="CPD Report" href="cpd.html" />
             <item name="Checkstyle Report" href="checkstyle.html" />
             <item name="JDepend Metrics" href="jdepend-report.html" />
             <item name="Change Log" href="changelog.html"/>
@@ -102,9 +103,9 @@
         </menu>
         <menu name="Build Status">
             <item img="https://travis-ci.org/ksclarke/freelib-utils.png?branch=master"
-                name="(master) ↗" href="https://travis-ci.org/ksclarke/freelib-utils"/>
+                name="(master)" href="https://travis-ci.org/ksclarke/freelib-utils"/>
             <item img="https://travis-ci.org/ksclarke/freelib-utils.png?branch=develop"
-                name="(develop) ↗" href="https://travis-ci.org/ksclarke/freelib-utils"/>
+                name="(develop)" href="https://travis-ci.org/ksclarke/freelib-utils"/>
         </menu>
         <menu name="Maven Docs" ref="reports"/>
         <menu name="Maven Theme">
@@ -112,7 +113,7 @@
                 href="http://andriusvelykis.github.io/reflow-maven-skin/" />
         </menu>
         <menu name="Site Copyright">
-            <item name="GNU Free Doc License ↗" target="_new"
+            <item name="GNU Free Doc License" target="_new"
                 href="http://www.gnu.org/licenses/fdl-1.3-standalone.html" />
         </menu>
     </body>

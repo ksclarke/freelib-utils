@@ -29,7 +29,7 @@ public class PairtreeObject extends File {
 
     private static final XMLResourceBundle BUNDLE =
             (XMLResourceBundle) ResourceBundle.getBundle(
-                    "FreeLib-Utils_Messages", new XMLBundleControl());
+                    "freelib-utils_messages", new XMLBundleControl());
 
     /**
      * Creates a new Pairtree object for the supplied name in the supplied

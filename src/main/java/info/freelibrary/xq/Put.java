@@ -98,7 +98,7 @@ public class Put {
 
         try {
             bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
-            bWriter.write(StringUtils.readAsUTF8(aFile));
+            bWriter.write(StringUtils.read(aFile));
         } finally {
             IOUtils.closeQuietly(bWriter);
         }

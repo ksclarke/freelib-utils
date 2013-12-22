@@ -38,7 +38,7 @@ public class PairtreeRoot extends File {
 
     private static final XMLResourceBundle BUNDLE =
             (XMLResourceBundle) ResourceBundle.getBundle(
-                    "FreeLib-Utils_Messages", new XMLBundleControl());
+                    "freelib-utils_messages", new XMLBundleControl());
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(PairtreeRoot.class);

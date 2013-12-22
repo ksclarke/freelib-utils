@@ -90,8 +90,8 @@ public class StringUtils {
      * @param aDetail An additional detail to integrate into the message
      * @return The formatted message
      */
-    public static String formatMessage(String aMessage, String aDetail) {
-        return formatMessage(aMessage, new String[] {aDetail});
+    public static String format(String aMessage, String aDetail) {
+        return format(aMessage, new String[] {aDetail});
     }
 
     /**
@@ -106,7 +106,7 @@ public class StringUtils {
      *        in the message string.
      * @return The formatted string
      */
-    public static String formatMessage(String aMessage, String[] aDetails) {
+    public static String format(String aMessage, String... aDetails) {
         int position = 0;
         int count = 0;
 
@@ -137,6 +137,16 @@ public class StringUtils {
         }
 
         return builder.length() == 0 ? aMessage : builder.toString();
+    }
+
+    /**
+     * Normalizes white space in the message value.
+     * 
+     * @param aMessage A message
+     * @return The message with white space normalized
+     */
+    public static String normalizeWS(String aMessage) {
+        return aMessage.replaceAll("\\s+", " ");
     }
 
     /**
@@ -194,7 +204,7 @@ public class StringUtils {
      * @param aString A string to format
      * @return A string formatted into 80 characters or less lines
      */
-    public static String formatTo80Chars(String aString) {
+    public static String to80Chars(String aString) {
         StringBuilder builder = new StringBuilder();
         String[] words = aString.split("\\s");
         int count = 0;
@@ -297,7 +307,7 @@ public class StringUtils {
      * @return The information read from the file
      * @throws IOException If the supplied file could not be read
      */
-    public static String readAsUTF8(File aFile) throws IOException {
+    public static String read(File aFile) throws IOException {
         String string = new String(readBytes(aFile), UTF_8);
 
         if (string.endsWith(System.getProperty("line.separator"))) {
@@ -310,11 +320,10 @@ public class StringUtils {
     /**
      * Removes empty and null strings from a string array.
      * 
-     * @param aStringArray An array of strings that may contain empty or null
-     *        strings
+     * @param aStringArray A varargs that may contain empty or null strings
      * @return A string array without empty or null strings
      */
-    public static String[] trim(String[] aStringArray) {
+    public static String[] trim(String... aStringArray) {
         ArrayList<String> list = new ArrayList<String>();
 
         for (String string : aStringArray) {
@@ -482,6 +491,16 @@ public class StringUtils {
      */
     public static String toString(int aInt) {
         return toUpcaseString(aInt).toLowerCase(Locale.getDefault());
+    }
+
+    /**
+     * Reverses the characters in a string.
+     * 
+     * @param aString A string whose characters are to be reversed
+     * @return A string with the supplied string reversed
+     */
+    public static String reverse(String aString) {
+        return new StringBuffer(aString).reverse().toString();
     }
 
     /**

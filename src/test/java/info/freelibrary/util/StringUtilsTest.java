@@ -44,19 +44,19 @@ public class StringUtilsTest {
     public void formatMessageStringStringArray() {
         String message = "This is the {} and the {}";
         String[] values = new String[] {"first", "second"};
-        String result = StringUtils.formatMessage(message, values);
+        String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
 
         try {
-            StringUtils.formatMessage(message, new String[] {"first"});
+            StringUtils.format(message, new String[] {"first"});
             fail("Failed to notice more slots than values");
         } catch (IndexOutOfBoundsException details) {
         }
 
         try {
             String[] array = new String[] {"first", "second", "third"};
-            StringUtils.formatMessage(message, array);
+            StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
         } catch (IndexOutOfBoundsException details) {
         }
@@ -71,7 +71,7 @@ public class StringUtilsTest {
 
         try {
             String test1 = StringUtils.read(testFile1, CHARSET);
-            String formattedTest1 = StringUtils.formatTo80Chars(test1);
+            String formattedTest1 = StringUtils.to80Chars(test1);
             StringReader stringReader = new StringReader(formattedTest1);
             BufferedReader reader = new BufferedReader(stringReader);
             String line;
