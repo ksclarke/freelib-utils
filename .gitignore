@@ -1,5 +1,6 @@
 # These files are dynamically created by the maven-dependency-plugin 
 src/main/resources/site
+src/main/resources/checkstyle
 
 # These files are dynamically created by the maven-resources-plugin
 src/site/markdown/coders-welcome.md
