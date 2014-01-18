@@ -24,7 +24,21 @@ public class RegexFileFilter implements FilenameFilter {
      * @param aPattern The regular expression for the filter
      */
     public RegexFileFilter(String aPattern) {
-        myPattern = Pattern.compile(aPattern);
+        this(aPattern, false);
+    }
+
+    /**
+     * Constructor for a regular expression {@link FilenameFilter} that creates
+     * a case insensitive.
+     * 
+     * @param aPattern The regular expression for the filter
+     */
+    public RegexFileFilter(String aPattern, boolean aCaseInsensitivePattern) {
+        if (aCaseInsensitivePattern) {
+            myPattern = Pattern.compile(aPattern, Pattern.CASE_INSENSITIVE);
+        } else {
+            myPattern = Pattern.compile(aPattern);
+        }
     }
 
     /**
