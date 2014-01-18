@@ -91,7 +91,9 @@ public class StringUtils {
      * @return The formatted message
      */
     public static String format(String aMessage, String aDetail) {
-        return format(aMessage, new String[] {aDetail});
+        return format(aMessage, new String[] {
+            aDetail
+        });
     }
 
     /**
@@ -199,12 +201,13 @@ public class StringUtils {
 
     /**
      * Formats a string with or without line breaks into a string with lines
-     * with less than 80 characters per line.
+     * with less than a supplied number of characters per line.
      * 
      * @param aString A string to format
-     * @return A string formatted into 80 characters or less lines
+     * @param aCount A number of characters to allow per line
+     * @return A string formatted using the supplied count
      */
-    public static String to80Chars(String aString) {
+    public static String toCharCount(String aString, int aCount) {
         StringBuilder builder = new StringBuilder();
         String[] words = aString.split("\\s");
         int count = 0;
@@ -212,10 +215,10 @@ public class StringUtils {
         for (String word : words) {
             count += word.length();
 
-            if (count < 80) {
+            if (count < aCount) {
                 builder.append(word);
 
-                if ((count += 1) < 80) {
+                if ((count += 1) < aCount) {
                     builder.append(' ');
                 } else {
                     builder.append("\r\n  ");
@@ -333,6 +336,17 @@ public class StringUtils {
         }
 
         return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * A convenience method for toString(Object[], char) to add varargs support.
+     * 
+     * @param aPadChar A padding character
+     * @param aVarArg A varargs into which to insert the padding character
+     * @return A string form of the varargs with padding added
+     */
+    public static String toString(char aPadChar, Object... aVarArg) {
+        return toString(aPadChar, aVarArg);
     }
 
     /**

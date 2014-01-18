@@ -71,7 +71,7 @@ public class StringUtilsTest {
 
         try {
             String test1 = StringUtils.read(testFile1, CHARSET);
-            String formattedTest1 = StringUtils.to80Chars(test1);
+            String formattedTest1 = StringUtils.toCharCount(test1, 80);
             StringReader stringReader = new StringReader(formattedTest1);
             BufferedReader reader = new BufferedReader(stringReader);
             String line;

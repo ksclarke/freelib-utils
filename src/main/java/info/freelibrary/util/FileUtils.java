@@ -205,7 +205,7 @@ public class FileUtils {
      */
     public static Map<String, List<String>> toHashMap(String aFilePath)
             throws FileNotFoundException {
-        return toHashMap(aFilePath, null, null);
+        return toHashMap(aFilePath, null, (String[]) null);
     }
 
     /**
@@ -223,7 +223,7 @@ public class FileUtils {
      */
     public static Map<String, List<String>> toHashMap(String aFilePath,
             String aPattern) throws FileNotFoundException {
-        return toHashMap(aFilePath, aPattern, null);
+        return toHashMap(aFilePath, aPattern, (String[]) null);
     }
 
     /**
@@ -242,7 +242,7 @@ public class FileUtils {
      * @throws RuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(String aFilePath,
-            String aPattern, String[] aIgnoreList) throws RuntimeException,
+            String aPattern, String... aIgnoreList) throws RuntimeException,
             FileNotFoundException {
         String filePattern = aPattern != null ? aPattern : ".*";
         RegexFileFilter filter = new RegexFileFilter(filePattern);
@@ -392,7 +392,7 @@ public class FileUtils {
      */
     public static File[] listFiles(File aDir, FilenameFilter aFilter)
             throws FileNotFoundException {
-        return listFiles(aDir, aFilter, false, null);
+        return listFiles(aDir, aFilter, false, (String[]) null);
     }
 
     /**
@@ -407,7 +407,7 @@ public class FileUtils {
      */
     public static File[] listFiles(File aDir, FilenameFilter aFilter,
             boolean aDeepListing) throws FileNotFoundException {
-        return listFiles(aDir, aFilter, aDeepListing, null);
+        return listFiles(aDir, aFilter, aDeepListing, (String[]) null);
     }
 
     /**
@@ -423,7 +423,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
     public static File[] listFiles(File aDir, FilenameFilter aFilter,
-            boolean aDeepListing, String[] aIgnoreList)
+            boolean aDeepListing, String... aIgnoreList)
             throws FileNotFoundException {
         if (!aDir.exists()) {
             throw new FileNotFoundException(aDir.getAbsolutePath());
