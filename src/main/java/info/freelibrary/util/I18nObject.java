@@ -108,7 +108,7 @@ public abstract class I18nObject {
      * @param aException Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18N(String aMessage, Exception aException) {
+    protected String getI18n(String aMessage, Exception aException) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, aException
                 .getMessage()));
     }
@@ -166,4 +166,14 @@ public abstract class I18nObject {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, strings));
     }
 
+    /**
+     * Returns true if this I18N object contains the requested I18N key; else,
+     * false.
+     * 
+     * @param aKey A key to check to see if it exists
+     * @return True if the key exists; else, false
+     */
+    protected boolean hasI18nKey(String aKey) {
+        return BUNDLE.containsKey(aKey);
+    }
 }

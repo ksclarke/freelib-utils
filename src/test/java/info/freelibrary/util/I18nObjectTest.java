@@ -2,8 +2,10 @@
 package info.freelibrary.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.util.MissingResourceException;
 
 import info.freelibrary.util.test.I18nObjectWrapper;
 
@@ -24,11 +26,11 @@ public class I18nObjectTest {
      * Test method for {@link I18nObject#getI18N(String, Exception)}.
      */
     @Test
-    public void testGetI18StringException() {
+    public void testGetI18nStringException() {
         String expectedMessage = "MY EXCEPTION";
         Exception exception = new IOException(expectedMessage);
         I18nObjectWrapper test = new I18nObjectWrapper();
-        String foundMessage = test.getI18N("test.my.exception", exception);
+        String foundMessage = test.getI18n("test.my.exception", exception);
 
         assertEquals(expectedMessage, foundMessage);
     }
@@ -58,7 +60,7 @@ public class I18nObjectTest {
     }
 
     /**
-     *  Test method for {@link I18nObject#getI18N(String, Array)}.
+     * Test method for {@link I18nObject#getI18N(String, Array)}.
      */
     @Test
     public void testGetI18nStringStringArray() {
@@ -89,4 +91,18 @@ public class I18nObjectTest {
         // fail("Not yet implemented");
     }
 
+    /**
+     * Test method for {@link I18nObject#getI18N(String)}.
+     */
+    @Test
+    public void testGetI18nBounceBack() {
+        try {
+            I18nObjectWrapper test = new I18nObjectWrapper();
+            String message = test.getI18n("something.not.found");
+
+            fail("Failed to throw MissingResourceException");
+        } catch (MissingResourceException details) {
+            // this is expected
+        }
+    }
 }

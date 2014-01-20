@@ -133,6 +133,34 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- enforces some rules for the project, like checkstyle does for code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.3.1</version>
+				<executions>
+					<execution>
+						<id>enforce-no-snapshots</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<failFast>true</failFast>
+							<rules>
+								<!-- don't want to allow snapshots unless excluded -->
+								<!--
+									can be skipped by adding following to command line:
+									  -Denforcer.skip=true
+								-->
+								<requireReleaseDeps>
+									<message>Sorry, no dependency snapshots allowed! Skip this check by adding the following to the command line: -Denforcer.skip=true</message>
+								</requireReleaseDeps>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- extracts project site's css and js from freelib-build-tools jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
