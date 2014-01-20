@@ -73,8 +73,6 @@ public class FileUtils {
      * @return Am XML string representation of the file structure
      * @throws FileNotFoundException If the supplied file or directory can not
      *         be found
-     * @throws ParserConfigurationException If the default XML parser for the
-     *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath) throws FileNotFoundException,
             TransformerException {
@@ -144,8 +142,6 @@ public class FileUtils {
      *         structure
      * @throws FileNotFoundException If the supplied file or directory can not
      *         be found
-     * @throws ParserConfigurationException If the default XML parser for the
-     *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, String aPattern)
             throws FileNotFoundException, TransformerException {
@@ -163,8 +159,6 @@ public class FileUtils {
      *         structure
      * @throws FileNotFoundException If the supplied file or directory can not
      *         be found
-     * @throws ParserConfigurationException If the default XML parser for the
-     *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, boolean aDeepConversion)
             throws FileNotFoundException, TransformerException {
@@ -301,12 +295,10 @@ public class FileUtils {
      *        should be built
      * @param aPattern A regular expression pattern which files included in the
      *        Element should match
-     * @param aDeepConversion Whether the conversion should descend through
+     * @param aDeepTransformation Whether the conversion should descend through
      *        subdirectories
      * @return An XML Element representation of the directory structure
      * @throws FileNotFoundException If the supplied directory isn't found
-     * @throws ParserConfigurationException If the default XML parser for the
-     *         JRE isn't configured correctly
      */
     public static Element toElement(String aFilePath, String aPattern,
             boolean aDeepTransformation) throws FileNotFoundException {

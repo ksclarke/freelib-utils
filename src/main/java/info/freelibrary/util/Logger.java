@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 /**
- * Create a SLF4J logger that is backed by a {@link ResourceBundle}.
+ * Create a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
- *
  */
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
@@ -34,7 +33,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
     /**
      * Creates a logger from the supplied class name that uses the supplied
-     * {@link ResourceBundle} as the message source.
+     * {@link java.util.ResourceBundle} as the message source.
      * 
      * @param aClass The class whose name should be used as the logger name
      * @param aBundleName The <code>ResourceBundle</code> to pull text from
@@ -46,7 +45,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
     /**
      * Creates a logger from the supplied name that uses the supplied
-     * {@link ResourceBundle} as the message source.
+     * {@link java.util.ResourceBundle} as the message source.
      * 
      * @param aLoggerName The name of the logger to be constructed
      * @param aBundleName The <code>ResourceBundle</code> to pull text from

@@ -120,6 +120,7 @@
 				<version>${maven.checkstyle.version}</version>
 				<configuration>
 					<consoleOutput>true</consoleOutput>
+					<violationSeverity>warning</violationSeverity>
 					<configLocation>${basedir}/target/classes/checkstyle/checkstyle.xml</configLocation>
 				</configuration>
 				<executions>
