@@ -46,6 +46,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 		<junit.version>4.11</junit.version>
+		<xom.version>1.2.5</xom.version>
 		<maven.checkstyle.version>2.10</maven.checkstyle.version>
 
 		<!-- used for finding the unpacked checkstyle-suppressions.xml file -->
@@ -70,8 +71,8 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>compile</scope>
 		</dependency>
+		<!-- below dependencies are only used for testing -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -82,6 +83,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>${xom.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

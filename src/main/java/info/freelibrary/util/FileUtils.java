@@ -29,6 +29,7 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +77,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath) throws FileNotFoundException,
-            ParserConfigurationException {
+            TransformerException {
         return toXML(aFilePath, ".*");
     }
 
@@ -147,7 +148,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, String aPattern)
-            throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, TransformerException {
         return toXML(aFilePath, aPattern, false);
     }
 
@@ -166,7 +167,7 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, boolean aDeepConversion)
-            throws FileNotFoundException, ParserConfigurationException {
+            throws FileNotFoundException, TransformerException {
         return toXML(aFilePath, ".*", aDeepConversion);
     }
 
@@ -178,18 +179,17 @@ public class FileUtils {
      * @param aFilePath The file or directory to be returned as XML
      * @param aPattern A regular expression pattern to evaluate file matches
      *        against
-     * @param aDeepConversion Whether the subdirectories are included
+     * @param aDeepTransformation Whether the subdirectories are included
      * @return A string of XML describing the supplied file system path's
      *         structure
      * @throws FileNotFoundException If the supplied file or directory can not
      *         be found
-     * @throws ParserConfigurationException If the default XML parser for the
-     *         JRE isn't configured correctly
      */
     public static String toXML(String aFilePath, String aPattern,
-            boolean aDeepConversion) throws FileNotFoundException,
-            ParserConfigurationException {
-        return DOMUtils.toXML(toElement(aFilePath, aPattern, aDeepConversion));
+            boolean aDeepTransformation) throws FileNotFoundException,
+            TransformerException {
+        Element element = toElement(aFilePath, aPattern, aDeepTransformation);
+        return DOMUtils.toXML(element);
     }
 
     /**
@@ -309,13 +309,12 @@ public class FileUtils {
      *         JRE isn't configured correctly
      */
     public static Element toElement(String aFilePath, String aPattern,
-            boolean aDeepConversion) throws FileNotFoundException,
-            ParserConfigurationException {
+            boolean aDeepTransformation) throws FileNotFoundException {
         RegexFileFilter filter = new RegexFileFilter(aPattern);
         File file = new File(aFilePath);
 
         if (file.exists() && file.canRead()) {
-            return add(file, null, filter, aDeepConversion);
+            return add(file, null, filter, aDeepTransformation);
         }
 
         throw new FileNotFoundException(aFilePath);
@@ -433,7 +432,9 @@ public class FileUtils {
             File parent = aDir.getParentFile();
             boolean accept = aFilter.accept(parent, aDir.getName());
 
-            return accept ? new File[] {aDir} : new File[0];
+            return accept ? new File[] {
+                aDir
+            } : new File[0];
         }
 
         if (!aDeepListing) {
@@ -725,7 +726,7 @@ public class FileUtils {
 
     private static Element add(File aFile, Element aParent,
             RegexFileFilter aFilter, boolean aDeepAdd)
-            throws ParserConfigurationException, FileNotFoundException {
+            throws FileNotFoundException {
         Element element;
         String tagName;
 
@@ -736,9 +737,14 @@ public class FileUtils {
         }
 
         if (aParent == null) {
-            element =
-                    DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                            .newDocument().createElement(tagName);
+            try {
+                DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+                Document doc = f.newDocumentBuilder().newDocument();
+
+                element = doc.createElement(tagName);
+            } catch (ParserConfigurationException details) {
+                throw new RuntimeException(details);
+            }
         } else {
             element = aParent.getOwnerDocument().createElement(tagName);
             aParent.appendChild(element);
@@ -750,6 +756,15 @@ public class FileUtils {
             if (aDeepAdd) {
                 for (File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
                     element.appendChild(add(dir, element, aFilter, aDeepAdd));
+                }
+            } else {
+                Document doc = element.getOwnerDocument();
+
+                for (File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
+                    Element dirElem = doc.createElement(DIR_TYPE);
+
+                    element.appendChild(dirElem);
+                    copyMetadata(dir, dirElem);
                 }
             }
 
