@@ -342,11 +342,11 @@ public class StringUtils {
      * A convenience method for toString(Object[], char) to add varargs support.
      * 
      * @param aPadChar A padding character
-     * @param aVarArg A varargs into which to insert the padding character
+     * @param aVarargs A varargs into which to insert the padding character
      * @return A string form of the varargs with padding added
      */
-    public static String toString(char aPadChar, Object... aVarArg) {
-        return toString(aPadChar, aVarArg);
+    public static String toString(char aPadChar, Object... aVarargs) {
+        return toString(aVarargs, aPadChar);
     }
 
     /**

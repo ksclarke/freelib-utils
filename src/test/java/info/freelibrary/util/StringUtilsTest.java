@@ -43,19 +43,25 @@ public class StringUtilsTest {
     @Test
     public void formatMessageStringStringArray() {
         String message = "This is the {} and the {}";
-        String[] values = new String[] {"first", "second"};
+        String[] values = new String[] {
+            "first", "second"
+        };
         String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
 
         try {
-            StringUtils.format(message, new String[] {"first"});
+            StringUtils.format(message, new String[] {
+                "first"
+            });
             fail("Failed to notice more slots than values");
         } catch (IndexOutOfBoundsException details) {
         }
 
         try {
-            String[] array = new String[] {"first", "second", "third"};
+            String[] array = new String[] {
+                "first", "second", "third"
+            };
             StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
         } catch (IndexOutOfBoundsException details) {
@@ -127,8 +133,26 @@ public class StringUtilsTest {
         Integer i2 = new Integer(21);
         Integer i3 = new Integer(3);
 
-        Integer[] array = new Integer[] {i1, i2, i3};
+        Integer[] array = new Integer[] {
+            i1, i2, i3
+        };
         assertEquals("1~21~3", StringUtils.toString(array, '~'));
+    }
+
+    /**
+     * Tests {@link StringUtils#toString(char, Object...)}.
+     */
+    @Test
+    public void toStringCharVarargs() {
+        Integer i1 = new Integer(1);
+        Integer i2 = new Integer(21);
+        Integer i3 = new Integer(3);
+
+        Object[] array = new Object[] {
+            i1, i2, i3
+        };
+
+        assertEquals("1~21~3", StringUtils.toString('~', array));
     }
 
     /**
@@ -182,8 +206,12 @@ public class StringUtilsTest {
      */
     @Test
     public void testParseIntRangeString() {
-        int[] iArray1 = new int[] {1111};
-        int[] iArray2 = new int[] {1000, 1001, 1002, 1003, 1004, 1005};
+        int[] iArray1 = new int[] {
+            1111
+        };
+        int[] iArray2 = new int[] {
+            1000, 1001, 1002, 1003, 1004, 1005
+        };
 
         assertArrayEquals(iArray1, StringUtils.parseIntRange("1111"));
         assertArrayEquals(iArray2, StringUtils.parseIntRange("1000-1005"));

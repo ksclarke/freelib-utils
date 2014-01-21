@@ -51,11 +51,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(String aMessage, Object... aVararg) {
+    public void debug(String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.debug(getI18n(aMessage), aVararg);
+            LOGGER.debug(getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.debug(aMessage, aVararg);
+            LOGGER.debug(aMessage, aVarargs);
         }
     }
 
@@ -96,11 +96,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Object... aVararg) {
+    public void debug(Marker aMarker, String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.debug(aMarker, getI18n(aMessage), aVararg);
+            LOGGER.debug(aMarker, getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.debug(aMarker, aMessage, aVararg);
+            LOGGER.debug(aMarker, aMessage, aVarargs);
         }
     }
 
@@ -142,11 +142,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage, Object... aVararg) {
+    public void error(String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.error(getI18n(aMessage), aVararg);
+            LOGGER.error(getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.error(aMessage, aVararg);
+            LOGGER.error(aMessage, aVarargs);
         }
     }
 
@@ -187,11 +187,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Object... aVararg) {
+    public void error(Marker aMarker, String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.error(aMarker, getI18n(aMessage), aVararg);
+            LOGGER.error(aMarker, getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.error(aMarker, aMessage, aVararg);
+            LOGGER.error(aMarker, aMessage, aVarargs);
         }
     }
 
@@ -238,11 +238,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage, Object... aVararg) {
+    public void info(String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.info(getI18n(aMessage), aVararg);
+            LOGGER.info(getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.info(aMessage, aVararg);
+            LOGGER.info(aMessage, aVarargs);
         }
     }
 
@@ -283,11 +283,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Object... aVararg) {
+    public void info(Marker aMarker, String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.info(aMarker, getI18n(aMessage), aVararg);
+            LOGGER.info(aMarker, getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.info(aMarker, aMessage, aVararg);
+            LOGGER.info(aMarker, aMessage, aVarargs);
         }
     }
 
@@ -379,11 +379,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String aMessage, Object... aVararg) {
+    public void trace(String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.trace(getI18n(aMessage), aVararg);
+            LOGGER.trace(getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.trace(aMessage, aVararg);
+            LOGGER.trace(aMessage, aVarargs);
         }
     }
 
@@ -424,11 +424,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Object... aVararg) {
+    public void trace(Marker aMarker, String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.trace(aMarker, getI18n(aMessage), aVararg);
+            LOGGER.trace(aMarker, getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.trace(aMarker, aMessage, aVararg);
+            LOGGER.trace(aMarker, aMessage, aVarargs);
         }
     }
 
@@ -470,11 +470,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage, Object... aVararg) {
+    public void warn(String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.warn(getI18n(aMessage), aVararg);
+            LOGGER.warn(getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.warn(aMessage, aVararg);
+            LOGGER.warn(aMessage, aVarargs);
         }
     }
 
@@ -515,11 +515,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Object... aVararg) {
+    public void warn(Marker aMarker, String aMessage, Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
-            LOGGER.warn(aMarker, getI18n(aMessage), aVararg);
+            LOGGER.warn(aMarker, getI18n(aMessage), aVarargs);
         } else {
-            LOGGER.warn(aMarker, aMessage, aVararg);
+            LOGGER.warn(aMarker, aMessage, aVarargs);
         }
     }
 
