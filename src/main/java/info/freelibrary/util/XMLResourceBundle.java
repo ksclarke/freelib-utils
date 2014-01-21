@@ -137,8 +137,9 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The message value with the supplied file name integrated
      */
     public String get(String aMessage, File aFile) {
-        return StringUtils.format(super.getString(aMessage),
-                new String[] {aFile.getAbsolutePath()});
+        return StringUtils.format(super.getString(aMessage), new String[] {
+            aFile.getAbsolutePath()
+        });
     }
 
     /**
@@ -178,8 +179,9 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The value of the bundle message
      */
     public String get(String aMessage, Object aDetail) {
-        return StringUtils.format(super.getString(aMessage),
-                new String[] {aDetail.toString()});
+        return StringUtils.format(super.getString(aMessage), new String[] {
+            aDetail.toString()
+        });
     }
 
     /**
@@ -191,5 +193,16 @@ public class XMLResourceBundle extends ResourceBundle {
      */
     public String get(Object aObject) {
         return getString(aObject.toString());
+    }
+
+    /**
+     * Returns true if the supplied key is found in the internal bundle; else,
+     * false.
+     * 
+     * @param aKey The resource key for which to check in the bundle
+     * @return True if key exists in the bundle; else, false
+     */
+    public boolean containsKey(String aKey) {
+        return myProperties.containsKey(aKey);
     }
 }

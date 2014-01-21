@@ -2,6 +2,7 @@
 package info.freelibrary.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, Exception)}.
+     * Test method for {@link I18nObject#getI18n(String, Exception)}.
      */
     @Test
     public void testGetI18nStringException() {
@@ -36,7 +37,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, Long)}.
+     * Test method for {@link I18nObject#getI18n(String, Long)}.
      */
     @Test
     public void testGetI18nStringLong() {
@@ -44,7 +45,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, Int)}.
+     * Test method for {@link I18nObject#getI18n(String, Int)}.
      */
     @Test
     public void testGetI18nStringInt() {
@@ -52,7 +53,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, String)}.
+     * Test method for {@link I18nObject#getI18n(String, String)}.
      */
     @Test
     public void testGetI18nStringString() {
@@ -60,7 +61,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, Array)}.
+     * Test method for {@link I18nObject#getI18n(String, Array)}.
      */
     @Test
     public void testGetI18nStringStringArray() {
@@ -68,7 +69,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, File)}.
+     * Test method for {@link I18nObject#getI18n(String, File)}.
      */
     @Test
     public void testGetI18nStringFile() {
@@ -76,7 +77,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, FileArray)}.
+     * Test method for {@link I18nObject#getI18n(String, FileArray)}.
      */
     @Test
     public void testGetI18nStringFileArray() {
@@ -84,7 +85,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String, ObjectArray)}.
+     * Test method for {@link I18nObject#getI18n(String, ObjectArray)}.
      */
     @Test
     public void testGetI18nStringObjectArray() {
@@ -92,17 +93,26 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18N(String)}.
+     * Test method for {@link I18nObject#getI18n(String)}.
      */
     @Test
     public void testGetI18nBounceBack() {
         try {
-            I18nObjectWrapper test = new I18nObjectWrapper();
-            String message = test.getI18n("something.not.found");
+            new I18nObjectWrapper().getI18n("something.not.found");
 
             fail("Failed to throw MissingResourceException");
         } catch (MissingResourceException details) {
             // this is expected
         }
+    }
+
+    /**
+     * Test method for {@link I18nObject#hasI18nKey()}.
+     */
+    @Test
+    public void testHasI18nKey() {
+        I18nObjectWrapper i18nObj = new I18nObjectWrapper();
+        assertTrue(i18nObj.hasI18nKey("test.i18n"));
+        assertEquals("test i18n", i18nObj.getI18n("test.i18n"));
     }
 }

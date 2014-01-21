@@ -14,4 +14,5 @@
     <entry key="pt.verfile.content2">http://www.cdlib.org/inside/diglib/pairtree/pairtreespec.html</entry>
 
     <entry key="test.my.exception">{}</entry>
+    <entry key="test.i18n">test i18n</entry>
 </properties>

@@ -1,7 +1,6 @@
 
 package info.freelibrary.util;
 
-import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 /**
@@ -18,41 +17,19 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * 
      * @param aClass A class to use as the name of the logger
      */
-    public Logger(Class<?> aClass) {
-        LOGGER = LoggerFactory.getLogger(aClass);
+    Logger(org.slf4j.Logger aLogger) {
+        super();
+        LOGGER = aLogger;
     }
 
     /**
-     * Creates a logger using the supplied name.
+     * Creates a logger using the supplied class as the name.
      * 
-     * @param aLoggerName The name of the logger to construct
+     * @param aClass A class to use as the name of the logger
      */
-    public Logger(String aLoggerName) {
-        LOGGER = LoggerFactory.getLogger(aLoggerName);
-    }
-
-    /**
-     * Creates a logger from the supplied class name that uses the supplied
-     * {@link java.util.ResourceBundle} as the message source.
-     * 
-     * @param aClass The class whose name should be used as the logger name
-     * @param aBundleName The <code>ResourceBundle</code> to pull text from
-     */
-    public Logger(Class<?> aClass, String aBundleName) {
+    Logger(org.slf4j.Logger aLogger, String aBundleName) {
         super(aBundleName);
-        LOGGER = LoggerFactory.getLogger(aClass);
-    }
-
-    /**
-     * Creates a logger from the supplied name that uses the supplied
-     * {@link java.util.ResourceBundle} as the message source.
-     * 
-     * @param aLoggerName The name of the logger to be constructed
-     * @param aBundleName The <code>ResourceBundle</code> to pull text from
-     */
-    public Logger(String aLoggerName, String aBundleName) {
-        super(aBundleName);
-        LOGGER = LoggerFactory.getLogger(aLoggerName);
+        LOGGER = aLogger;
     }
 
     @Override
