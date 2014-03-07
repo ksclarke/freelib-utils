@@ -114,8 +114,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Object a1stDetail,
-            Object a2ndDetail) {
+    public void debug(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -205,8 +204,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Object a1stDetail,
-            Object a2ndDetail) {
+    public void error(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -301,8 +299,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Object a1stDetail,
-            Object a2ndDetail) {
+    public void info(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -442,8 +439,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Object a1stDetail,
-            Object a2ndDetail) {
+    public void trace(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -533,8 +529,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Object a1stDetail,
-            Object a2ndDetail) {
+    public void warn(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {

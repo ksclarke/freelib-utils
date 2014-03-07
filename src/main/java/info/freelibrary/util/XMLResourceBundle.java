@@ -24,8 +24,7 @@ public class XMLResourceBundle extends ResourceBundle {
     private Properties myProperties;
 
     /**
-     * Constructor that allows {@link ResourceBundle}s to be backed by XML
-     * files.
+     * Constructor that allows {@link ResourceBundle}s to be backed by XML files.
      * 
      * @param aInStream An XML {@link InputStream}
      * @throws IOException If there is trouble reading from the XML file
@@ -58,8 +57,7 @@ public class XMLResourceBundle extends ResourceBundle {
             /**
              * Returns whether the {@link Enumeration} has more elements.
              * 
-             * @return True if the {@link Enumeration} has more elements; else,
-             *         false.
+             * @return True if the {@link Enumeration} has more elements; else, false.
              */
             public boolean hasMoreElements() {
                 return enumeration.hasMoreElements();
@@ -109,12 +107,10 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Returns the string form of the requested message with the file values
-     * integrated into it.
+     * Returns the string form of the requested message with the file values integrated into it.
      * 
      * @param aMessage A message key to use to return a message value
-     * @param aFileArray An array of files, whose names should be integrated
-     *        into the message value
+     * @param aFileArray An array of files, whose names should be integrated into the message value
      * @return The message value with the supplied file names integrated
      */
     public String get(String aMessage, File... aFileArray) {
@@ -128,12 +124,10 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Returns the string form of the requested message with the file value
-     * integrated into it.
+     * Returns the string form of the requested message with the file value integrated into it.
      * 
      * @param aMessage A message key to use to return a message value
-     * @param aFile A file whose name should be integrated into the message
-     *        value
+     * @param aFile A file whose name should be integrated into the message value
      * @return The message value with the supplied file name integrated
      */
     public String get(String aMessage, File aFile) {
@@ -153,8 +147,7 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Gets the value from the {@link ResourceBundle} for the supplied message
-     * key and additional details.
+     * Gets the value from the {@link ResourceBundle} for the supplied message key and additional details.
      * 
      * @param aMessage A message key
      * @param aDetailsArray Additional details for the message
@@ -171,8 +164,7 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Gets the value from the {@link ResourceBundle} for the supplied message
-     * key and additional details.
+     * Gets the value from the {@link ResourceBundle} for the supplied message key and additional details.
      * 
      * @param aMessage A message key
      * @param aDetail Additional details for the message
@@ -185,8 +177,7 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Gets the value from the {@link ResourceBundle} for the supplied message
-     * key.
+     * Gets the value from the {@link ResourceBundle} for the supplied message key.
      * 
      * @param aObject A message key
      * @return The value of the bundle message
@@ -196,8 +187,7 @@ public class XMLResourceBundle extends ResourceBundle {
     }
 
     /**
-     * Returns true if the supplied key is found in the internal bundle; else,
-     * false.
+     * Returns true if the supplied key is found in the internal bundle; else, false.
      * 
      * @param aKey The resource key for which to check in the bundle
      * @return True if key exists in the bundle; else, false

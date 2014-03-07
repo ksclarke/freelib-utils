@@ -51,8 +51,7 @@ public final class PasswordUtils {
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
      */
-    public static String encrypt(String aText, String aSalt)
-            throws NullPointerException, IOException {
+    public static String encrypt(String aText, String aSalt) throws NullPointerException, IOException {
         if (aText == null) {
             throw new NullPointerException("Text to encrypt is null");
         }

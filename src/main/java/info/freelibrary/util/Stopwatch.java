@@ -24,8 +24,7 @@ public final class Stopwatch {
      */
     public void start() {
         if (myTimerIsRunning) {
-            throw new IllegalStateException(
-                    "Must stop before calling start again.");
+            throw new IllegalStateException("Must stop before calling start again.");
         }
 
         myStart = System.currentTimeMillis();
@@ -39,8 +38,7 @@ public final class Stopwatch {
      */
     public void stop() {
         if (!myTimerIsRunning) {
-            throw new IllegalStateException(
-                    "Cannot stop if not currently running.");
+            throw new IllegalStateException("Cannot stop if not currently running.");
         }
 
         myStop = System.currentTimeMillis();
@@ -48,8 +46,7 @@ public final class Stopwatch {
     }
 
     /**
-     * Stop the stopwatch (as soon as possible) after a certain number of
-     * seconds.
+     * Stop the stopwatch (as soon as possible) after a certain number of seconds.
      * 
      * @throws IllegalStateException if the stopwatch is not already running.
      */
@@ -57,8 +54,7 @@ public final class Stopwatch {
         int stopCount = aSecondsCount;
 
         if (!myTimerIsRunning) {
-            throw new IllegalStateException(
-                    "Cannot stop if not currently running");
+            throw new IllegalStateException("Cannot stop if not currently running");
         }
 
         while (stopCount < aSecondsCount) {
@@ -73,8 +69,7 @@ public final class Stopwatch {
      * Express the "reading" on the stopwatch in seconds.
      * 
      * @return Time elapsed in stopwatch in seconds
-     * @throws IllegalStateException if the Stopwatch has never been used, or if
-     *         the stopwatch is still running.
+     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getSeconds() {
         StringBuilder result = new StringBuilder();
@@ -97,8 +92,7 @@ public final class Stopwatch {
      * Express the "reading" on the stopwatch in milliseconds.
      * 
      * @return Time elapsed in stopwatch in milliseconds
-     * @throws IllegalStateException if the Stopwatch has never been used, or if
-     *         the stopwatch is still running.
+     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getMilliseconds() {
         StringBuilder result = new StringBuilder();

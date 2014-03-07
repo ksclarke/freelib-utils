@@ -117,15 +117,14 @@ public class IOUtils {
     }
 
     /**
-     * Writes from an input stream to an output stream; you're responsible for
-     * closing the <code>InputStream</code> and <code>OutputStream</code>.
+     * Writes from an input stream to an output stream; you're responsible for closing the <code>InputStream</code> and
+     * <code>OutputStream</code>.
      * 
      * @param aInStream The stream from which to read
      * @param aOutStream The stream from which to write
      * @throws IOException If there is trouble reading or writing
      */
-    public static final void copyStream(InputStream aInStream,
-            OutputStream aOutStream) throws IOException {
+    public static final void copyStream(InputStream aInStream, OutputStream aOutStream) throws IOException {
         BufferedOutputStream outStream = new BufferedOutputStream(aOutStream);
         BufferedInputStream inStream = new BufferedInputStream(aInStream);
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -147,16 +146,14 @@ public class IOUtils {
     }
 
     /**
-     * Writes a file to an output stream. You're responsible for closing the
-     * <code>OutputStream</code>; the input stream is closed for you since just
-     * a <code>File</code> was passed in.
+     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input stream
+     * is closed for you since just a <code>File</code> was passed in.
      * 
      * @param aFile A file from which to read
      * @param aOutStream An output stream to which to write
      * @throws IOException If there is a problem reading or writing
      */
-    public static final void copyStream(File aFile, OutputStream aOutStream)
-            throws IOException {
+    public static final void copyStream(File aFile, OutputStream aOutStream) throws IOException {
         FileInputStream input = new FileInputStream(aFile);
         FileChannel channel = input.getChannel();
         byte[] buffer = new byte[256 * 1024];

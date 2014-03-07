@@ -36,18 +36,15 @@ public class PairtreeRoot extends File {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
 
-    private static final XMLResourceBundle BUNDLE =
-            (XMLResourceBundle) ResourceBundle.getBundle(
-                    "freelib-utils_messages", new XMLBundleControl());
+    private static final XMLResourceBundle BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(
+            "freelib-utils_messages", new XMLBundleControl());
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(PairtreeRoot.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeRoot.class);
 
     private String myPairtreePrefix;
 
     /**
-     * Creates a new Pairtree structure in the current directory. This will
-     * create the related version file too.
+     * Creates a new Pairtree structure in the current directory. This will create the related version file too.
      * 
      * @throws IOException If there is a problem creating the structure
      */
@@ -56,9 +53,8 @@ public class PairtreeRoot extends File {
     }
 
     /**
-     * Creates a new Pairtree structure, using a Pairtree prefix, in the current
-     * directory. This will create the related version and Pairtree prefix files
-     * too.
+     * Creates a new Pairtree structure, using a Pairtree prefix, in the current directory. This will create the related
+     * version and Pairtree prefix files too.
      * 
      * @throws IOException If there is a problem creating the structure
      */
@@ -67,8 +63,7 @@ public class PairtreeRoot extends File {
     }
 
     /**
-     * Creates a new Pairtree structure in the supplied directory. This will
-     * create the related version file too.
+     * Creates a new Pairtree structure in the supplied directory. This will create the related version file too.
      * 
      * @throws IOException If there is a problem creating the structure
      */
@@ -77,14 +72,12 @@ public class PairtreeRoot extends File {
     }
 
     /**
-     * Creates a new Pairtree structure, using a Pairtree prefix, in the
-     * supplied directory. This will create the related version and Pairtree
-     * prefix files too.
+     * Creates a new Pairtree structure, using a Pairtree prefix, in the supplied directory. This will create the
+     * related version and Pairtree prefix files too.
      * 
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot(File aParentDir, String aPairtreePrefix)
-            throws IOException {
+    public PairtreeRoot(File aParentDir, String aPairtreePrefix) throws IOException {
         super(aParentDir, PAIRTREE_ROOT);
 
         if (aPairtreePrefix != null) {
@@ -110,22 +103,20 @@ public class PairtreeRoot extends File {
     }
 
     /**
-     * Returns a directory in the Pairtree directory for the supplied name. File
-     * to be put into the structure can use this as a parent directory.
+     * Returns a directory in the Pairtree directory for the supplied name. File to be put into the structure can use
+     * this as a parent directory.
      * 
      * @param aName The name of the Pairtree object (the object's ID)
-     * @return A <code>PairtreeObject</code> (directory in the Pairtree
-     *         structure).
+     * @return A <code>PairtreeObject</code> (directory in the Pairtree structure).
      * @throws IOException
      */
     public PairtreeObject getObject(String aName) throws IOException {
-        return myPairtreePrefix == null ? new PairtreeObject(this, aName)
-                : new PairtreeObject(this, myPairtreePrefix, aName);
+        return myPairtreePrefix == null ? new PairtreeObject(this, aName) : new PairtreeObject(this, myPairtreePrefix,
+                aName);
     }
 
     /**
-     * Deletes the Pairtree structure, including all contained and related
-     * files.
+     * Deletes the Pairtree structure, including all contained and related files.
      */
     public boolean delete() {
         File prefixFile = new File(getParentFile(), PAIRTREE_PREFIX);
@@ -157,11 +148,7 @@ public class PairtreeRoot extends File {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result =
-                prime *
-                        result +
-                        ((myPairtreePrefix == null) ? 0 : myPairtreePrefix
-                                .hashCode());
+        result = prime * result + ((myPairtreePrefix == null) ? 0 : myPairtreePrefix.hashCode());
         return result;
     }
 
@@ -242,8 +229,7 @@ public class PairtreeRoot extends File {
      * @param aPtPrefix The prefix to write to the supplied file
      * @throws IOException If there is trouble writing to the file
      */
-    private void writePrefixFile(File aFile, String aPtPrefix)
-            throws IOException {
+    private void writePrefixFile(File aFile, String aPtPrefix) throws IOException {
         if (!aFile.exists()) {
             OutputStreamWriter writer = null;
 
@@ -261,8 +247,7 @@ public class PairtreeRoot extends File {
             String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
 
             if (!prefix.equals(aPtPrefix)) {
-                throw new IOException(BUNDLE.get("pt.bad_prefix", prefix,
-                        aPtPrefix));
+                throw new IOException(BUNDLE.get("pt.bad_prefix", prefix, aPtPrefix));
             }
         }
     }

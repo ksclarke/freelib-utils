@@ -9,8 +9,7 @@ import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
 /**
- * A {@link FilenameFilter} that allows filtering directory names based on
- * regular expressions.
+ * A {@link FilenameFilter} that allows filtering directory names based on regular expressions.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -28,17 +27,13 @@ public class RegexDirFilter implements FilenameFilter {
     }
 
     /**
-     * Determines whether the supplied {@link File} in the supplied directory
-     * should be included.
+     * Determines whether the supplied {@link File} in the supplied directory should be included.
      * 
-     * @param aDir The directory in which the {@link File} of the file name
-     *        lives
-     * @param aFilename A {@link File} name to compare against the regular
-     *        expression; it must be a directory
+     * @param aDir The directory in which the {@link File} of the file name lives
+     * @param aFilename A {@link File} name to compare against the regular expression; it must be a directory
      */
     public boolean accept(File aDir, String aFilename) {
-        return new File(aDir, aFilename).isDirectory() &&
-                myPattern.matcher(aFilename).matches();
+        return new File(aDir, aFilename).isDirectory() && myPattern.matcher(aFilename).matches();
     }
 
     /**

@@ -84,8 +84,7 @@ public class StringUtilsTest {
 
             while ((line = reader.readLine()) != null) {
                 if (line.length() > 79) {
-                    fail("Line <[ '" + line + "' ]> has a length of " +
-                            line.length() + " chars");
+                    fail("Line <[ '" + line + "' ]> has a length of " + line.length() + " chars");
                 }
             }
         } catch (IOException details) {
@@ -195,8 +194,7 @@ public class StringUtilsTest {
     @Test
     public void testAddLineNumbersString() {
         String original = "This is my content?\nYes!\n\nThis is my content?";
-        String expected =
-                "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
+        String expected = "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
 
         assertEquals(expected, StringUtils.addLineNumbers(original));
     }

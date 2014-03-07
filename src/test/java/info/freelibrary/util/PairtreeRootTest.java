@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PairtreeRootTest {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(PairtreeRootTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeRootTest.class);
 
     /**
      * Test method for {@link PairtreeRoot#PairtreeRoot()}.

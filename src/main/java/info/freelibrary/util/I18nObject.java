@@ -8,9 +8,8 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 /**
- * A generic object with baked-in I18N support. It wraps an
- * {@link XMLResourceBundle} and provides an easy way to get access to
- * internationalized strings.
+ * A generic object with baked-in I18N support. It wraps an {@link XMLResourceBundle} and provides an easy way to get
+ * access to internationalized strings.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -22,22 +21,16 @@ public abstract class I18nObject {
      * Generic constructor for the I18NObject.
      */
     public I18nObject() {
-        BUNDLE =
-                (XMLResourceBundle) ResourceBundle.getBundle("messages",
-                        new XMLBundleControl());
+        BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle("messages", new XMLBundleControl());
     }
 
     /**
-     * Constructor for an I18NObject that takes a {@link ResourceBundle} as an
-     * argument.
+     * Constructor for an I18NObject that takes a {@link ResourceBundle} as an argument.
      * 
-     * @param aBundleName The name of a {@link ResourceBundle} that gets lower
-     *        cased automatically
+     * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(String aBundleName) {
-        BUNDLE =
-                (XMLResourceBundle) ResourceBundle.getBundle(aBundleName
-                        .toLowerCase(), new XMLBundleControl());
+        BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(), new XMLBundleControl());
     }
 
     /**
@@ -51,34 +44,29 @@ public abstract class I18nObject {
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using a
-     * long as additional information.
+     * Gets the internationalized value for the supplied message key, using a long as additional information.
      * 
      * @param aMessage A message key
      * @param aLongDetail Additional details for the message
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, long aLongDetail) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Long
-                .toString(aLongDetail)));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Long.toString(aLongDetail)));
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using an
-     * int as additional information.
+     * Gets the internationalized value for the supplied message key, using an int as additional information.
      * 
      * @param aMessage A message key
      * @param aIntDetail Additional details for the message
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, int aIntDetail) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Integer
-                .toString(aIntDetail)));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, Integer.toString(aIntDetail)));
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using a
-     * string as additional information.
+     * Gets the internationalized value for the supplied message key, using a string as additional information.
      * 
      * @param aMessage A message key
      * @param aDetail Additional details for the message
@@ -89,8 +77,7 @@ public abstract class I18nObject {
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using a
-     * string array as additional information.
+     * Gets the internationalized value for the supplied message key, using a string array as additional information.
      * 
      * @param aMessage A message key
      * @param aDetailsArray Additional details for the message
@@ -101,34 +88,29 @@ public abstract class I18nObject {
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using an
-     * exception as additional information.
+     * Gets the internationalized value for the supplied message key, using an exception as additional information.
      * 
      * @param aMessage A message key
      * @param aException Additional details for the message
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, Exception aException) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aException
-                .getMessage()));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aException.getMessage()));
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using a
-     * file as additional information.
+     * Gets the internationalized value for the supplied message key, using a file as additional information.
      * 
      * @param aMessage A message key
      * @param aFile Additional details for the message
      * @return The internationalized message
      */
     protected String getI18n(String aMessage, File aFile) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aFile
-                .getAbsolutePath()));
+        return StringUtils.normalizeWS(BUNDLE.get(aMessage, aFile.getAbsolutePath()));
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using a
-     * file array as additional information.
+     * Gets the internationalized value for the supplied message key, using a file array as additional information.
      * 
      * @param aMessage A message key
      * @param aFileArray Additional details for the message
@@ -145,8 +127,7 @@ public abstract class I18nObject {
     }
 
     /**
-     * Gets the internationalized value for the supplied message key, using an
-     * object array as additional information.
+     * Gets the internationalized value for the supplied message key, using an object array as additional information.
      * 
      * @param aMessage A message key
      * @param aObjArray Additional details for the message
@@ -167,8 +148,7 @@ public abstract class I18nObject {
     }
 
     /**
-     * Returns true if this I18N object contains the requested I18N key; else,
-     * false.
+     * Returns true if this I18N object contains the requested I18N key; else, false.
      * 
      * @param aKey A key to check to see if it exists
      * @return True if the key exists; else, false

@@ -48,8 +48,7 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleStringLocaleStringClassLoaderBoolean() {
         try {
-            myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat",
-                    getClass().getClassLoader(), true);
+            myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
         } catch (Exception details) {
             fail(details.getMessage());
         }
@@ -61,8 +60,7 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleWithNullBundleName() {
         try {
-            myControl.newBundle(null, Locale.getDefault(), "aFormat",
-                    getClass().getClassLoader(), true);
+            myControl.newBundle(null, Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
             fail("Failed to throw expected NullPointerException");
         } catch (Exception details) {
             assertTrue(details instanceof NullPointerException);
@@ -75,8 +73,7 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleWithNullLocale() {
         try {
-            myControl.newBundle("aBaseName", null, "aFormat", getClass()
-                    .getClassLoader(), true);
+            myControl.newBundle("aBaseName", null, "aFormat", getClass().getClassLoader(), true);
             fail("Failed to throw expected NullPointerException");
         } catch (Exception details) {
             assertTrue(details instanceof NullPointerException);
@@ -100,8 +97,7 @@ public class XMLBundleControlTest {
     }
 
     /**
-     * Tests new bundle construction when a null is passed in as a
-     * <code>ClassLoader</code>.
+     * Tests new bundle construction when a null is passed in as a <code>ClassLoader</code>.
      */
     @Test
     public void newBundleWithNullClassLoader() {

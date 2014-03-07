@@ -9,8 +9,8 @@ public class LoggerFactory {
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
-     * By default, the resource bundle is "messages".
+     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
+     * "messages".
      * 
      * @param aClass A class to use for the logger name
      * @return A resource bundle aware logger
@@ -20,8 +20,8 @@ public class LoggerFactory {
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
-     * By default, the resource bundle is "messages".
+     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
+     * "messages".
      * 
      * @param aName A class to use for the logger name
      * @return A resource bundle aware logger

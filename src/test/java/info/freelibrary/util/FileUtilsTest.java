@@ -20,16 +20,14 @@ import org.slf4j.LoggerFactory;
  */
 public class FileUtilsTest {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory
-            .getLogger(FileUtilsTest.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FileUtilsTest.class);
 
     /**
      * Tests method for {@link FileUtils#getSize(File)}
      */
     @Test
     public void testGetSize() {
-        assertEquals(41787, FileUtils.getSize(new File(
-                "src/test/resources/test_folder")));
+        assertEquals(41787, FileUtils.getSize(new File("src/test/resources/test_folder")));
     }
 
     /**
@@ -41,8 +39,7 @@ public class FileUtilsTest {
     }
 
     /**
-     * Tests method for (@link
-     * {@link FileUtils#toElement(String, String, boolean)}
+     * Tests method for (@link {@link FileUtils#toElement(String, String, boolean)}
      */
     @Test
     public void testToElementStringStringBoolean() {
@@ -57,17 +54,13 @@ public class FileUtilsTest {
             Element dir2 = (Element) root.getChild(1);
             Element file1 = (Element) root.getChild(2);
 
-            if (!dir1.getLocalName().equals("dir") ||
-                    !dir1.getAttribute("path").getValue().endsWith(
-                            "test_folder")) {
+            if (!dir1.getLocalName().equals("dir") || !dir1.getAttribute("path").getValue().endsWith("test_folder")) {
                 fail("Failed to find expected 'test_folder'");
             } else if (!dir2.getLocalName().equals("dir") ||
-                    !dir2.getAttribute("path").getValue().endsWith(
-                            "test_folder2")) {
+                    !dir2.getAttribute("path").getValue().endsWith("test_folder2")) {
                 fail("Failed to find expected 'test_folder1'");
             } else if (!file1.getLocalName().equals("file") ||
-                    !file1.getAttribute("path").getValue().endsWith(
-                            "test_file1.txt")) {
+                    !file1.getAttribute("path").getValue().endsWith("test_file1.txt")) {
                 fail("Failed to find expected 'test_file1.txt'");
             }
         } catch (Exception details) {

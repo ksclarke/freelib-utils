@@ -9,9 +9,8 @@ import java.io.FilenameFilter;
 import java.util.Arrays;
 
 /**
- * A file name filter that checks the file extension to determine whether the
- * filter matches the file name or not. It can have a single or multiple file
- * extensions in the form: 'gif' or 'xml'.
+ * A file name filter that checks the file extension to determine whether the filter matches the file name or not. It
+ * can have a single or multiple file extensions in the form: 'gif' or 'xml'.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -21,22 +20,22 @@ public class FileExtFileFilter implements FilenameFilter {
     private String[] myExtensions;
 
     /**
-     * Constructor for a <code>FilenameFilter</code> that checks a single file
-     * extension against supplied file names, looking for matches.
+     * Constructor for a <code>FilenameFilter</code> that checks a single file extension against supplied file names,
+     * looking for matches.
      * 
-     * @param aFileExt A file extensions (minus the '.') against which we want
-     *        to compare
+     * @param aFileExt A file extensions (minus the '.') against which we want to compare
      */
     public FileExtFileFilter(String aFileExt) {
-        myExtensions = new String[] {"." + aFileExt};
+        myExtensions = new String[] {
+            "." + aFileExt
+        };
     }
 
     /**
-     * Constructor for a <code>FilenameFilter</code> that checks an array of
-     * file extensions against supplied file names, looking for matches.
+     * Constructor for a <code>FilenameFilter</code> that checks an array of file extensions against supplied file
+     * names, looking for matches.
      * 
-     * @param aFileExtList A list of file extensions (minus the '.') against
-     *        which we want to compare
+     * @param aFileExtList A list of file extensions (minus the '.') against which we want to compare
      */
     public FileExtFileFilter(String... aFileExtList) {
         myExtensions = new String[aFileExtList.length];
@@ -47,29 +46,24 @@ public class FileExtFileFilter implements FilenameFilter {
     }
 
     /**
-     * Returns a string representation of the filter which includes the file
-     * name extensions being used as filters.
+     * Returns a string representation of the filter which includes the file name extensions being used as filters.
      * 
-     * @return A string representation of the filter which includes the file
-     *         name extensions being used as filters.
+     * @return A string representation of the filter which includes the file name extensions being used as filters.
      */
     public String toString() {
         return Arrays.toString(myExtensions);
     }
 
     /**
-     * Returns true if the supplied file name and parent directory are a match
-     * for this <code>FilenameFilter</code>.
+     * Returns true if the supplied file name and parent directory are a match for this <code>FilenameFilter</code>.
      * 
      * @param aDir A parent directory for the supplied file name
      * @param aFileName The file name we want to check against our filter
-     * @return True if the filter matches the supplied parent and file name;
-     *         else, false
+     * @return True if the filter matches the supplied parent and file name; else, false
      */
     public boolean accept(File aDir, String aFileName) {
         for (String extension : myExtensions) {
-            if (new File(aDir, aFileName).isFile() &&
-                    aFileName.endsWith(extension)) {
+            if (new File(aDir, aFileName).isFile() && aFileName.endsWith(extension)) {
                 return true;
             }
         }
@@ -78,8 +72,7 @@ public class FileExtFileFilter implements FilenameFilter {
     }
 
     /**
-     * Returns whether or not the supplied file extension is one that this
-     * filter matches.
+     * Returns whether or not the supplied file extension is one that this filter matches.
      * 
      * @param aFileExt A file extension like: jpg, gif, jp2, txt, xml, etc.
      * @return True if this filter matches files with the supplied extension

@@ -29,8 +29,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * An XQuery extension wrapper of some HTTP utilities that throw exceptions.
- * Throwing Java exceptions isn't acceptable for an XQuery extension.
+ * An XQuery extension wrapper of some HTTP utilities that throw exceptions. Throwing Java exceptions isn't acceptable
+ * for an XQuery extension.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -50,8 +50,7 @@ public class Post {
      * @return An XML result of the POST
      * @throws IOException If there is trouble POSTing to the URL
      */
-    public static final Element post(URL aURL, Element aNode)
-            throws IOException {
+    public static final Element post(URL aURL, Element aNode) throws IOException {
         StringBuilder response = new StringBuilder();
         HttpURLConnection http = connect(aURL);
         int responseCode = write(aNode, http);
@@ -97,15 +96,13 @@ public class Post {
     }
 
     /**
-     * Connects to a remote resource represented by a URL and sets the
-     * connection method to POST.
+     * Connects to a remote resource represented by a URL and sets the connection method to POST.
      * 
      * @param aURL The URL representation of a remote resource
      * @return An active <code>HttpURLConnection</code>
      * @throws IOException If there was a problem making the connection
      */
-    private static final HttpURLConnection connect(URL aHttpURL)
-            throws IOException {
+    private static final HttpURLConnection connect(URL aHttpURL) throws IOException {
         HttpURLConnection http = (HttpURLConnection) aHttpURL.openConnection();
 
         // Set this to a POST
@@ -129,8 +126,7 @@ public class Post {
      * @return The status code of the write (whether it was successful)
      * @throws IOException If there is a problem writing to the remote resource
      */
-    private static final int write(Element aNode, HttpURLConnection aHttpConn)
-            throws IOException {
+    private static final int write(Element aNode, HttpURLConnection aHttpConn) throws IOException {
         BufferedWriter bWriter = null;
 
         try {

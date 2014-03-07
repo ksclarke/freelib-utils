@@ -25,11 +25,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JarClassLoader extends URLClassLoader {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(JarClassLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class);
 
-    private static final ResourceBundle RB = ResourceBundle.getBundle(
-            "Messages", new XMLBundleControl());
+    private static final ResourceBundle RB = ResourceBundle.getBundle("Messages", new XMLBundleControl());
 
     private static final String CLASSPATH = "java.class.path";
 
@@ -77,8 +75,7 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(List<URL> aListOfURLs, String aMainClassName)
-            throws Exception {
+    public JarClassLoader(List<URL> aListOfURLs, String aMainClassName) throws Exception {
         super(aListOfURLs.toArray(new URL[aListOfURLs.size()]));
 
         loadClass(aMainClassName).newInstance();
@@ -87,8 +84,7 @@ public class JarClassLoader extends URLClassLoader {
     /**
      * Loads the {@link Class} for the supplied class name.
      * 
-     * @throws ClassNotFoundException If the class for the supplied name can't
-     *         be found
+     * @throws ClassNotFoundException If the class for the supplied name can't be found
      */
     public Class<?> loadClass(String aName) throws ClassNotFoundException {
         Class<?> loadedClass = findLoadedClass(aName);

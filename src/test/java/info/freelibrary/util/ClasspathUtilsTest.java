@@ -29,8 +29,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getDirFiles()}.
+     * Test method for {@link ClasspathUtils#getDirFiles()}.
      */
     @Test
     public void testGetDirFiles() {
@@ -42,9 +41,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getDirs(java.io.FilenameFilter)}
-     * .
+     * Test method for {@link ClasspathUtils#getDirs(java.io.FilenameFilter)} .
      */
     @Test
     public void testGetDirsFilenameFilter() {
@@ -57,9 +54,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getDirFiles(java.io.FilenameFilter)}
-     * .
+     * Test method for {@link ClasspathUtils#getDirFiles(java.io.FilenameFilter)} .
      */
     @Test
     public void testGetDirFilesFilenameFilter() {
@@ -84,9 +79,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getJars(java.io.FilenameFilter)}
-     * .
+     * Test method for {@link ClasspathUtils#getJars(java.io.FilenameFilter)} .
      */
     @Test
     public void testGetJarsFilenameFilter() {
@@ -98,8 +91,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getJarFiles()}.
+     * Test method for {@link ClasspathUtils#getJarFiles()}.
      */
     @Test
     public void testGetJarFiles() {
@@ -115,9 +107,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#getJarFiles(java.io.FilenameFilter)}
-     * .
+     * Test method for {@link ClasspathUtils#getJarFiles(java.io.FilenameFilter)} .
      */
     @Test
     public void testGetJarFilesFilenameFilter() {
@@ -134,8 +124,7 @@ public class ClasspathUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link ClasspathUtils#findFirst(java.lang.String)}.
+     * Test method for {@link ClasspathUtils#findFirst(java.lang.String)}.
      */
     @Test
     public void testFindFirst() {

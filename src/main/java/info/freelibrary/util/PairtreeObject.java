@@ -24,16 +24,13 @@ public class PairtreeObject extends File {
      */
     private static final long serialVersionUID = 5022790117870380626L;
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(PairtreeObject.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeObject.class);
 
-    private static final XMLResourceBundle BUNDLE =
-            (XMLResourceBundle) ResourceBundle.getBundle(
-                    "freelib-utils_messages", new XMLBundleControl());
+    private static final XMLResourceBundle BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(
+            "freelib-utils_messages", new XMLBundleControl());
 
     /**
-     * Creates a new Pairtree object for the supplied name in the supplied
-     * Pairtree structure.
+     * Creates a new Pairtree object for the supplied name in the supplied Pairtree structure.
      * 
      * @param aRoot An existing Pairtree structure
      * @param aName The name of the Pairtree object
@@ -48,22 +45,20 @@ public class PairtreeObject extends File {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.debug(BUNDLE.get("pt.object_retrieved1", new String[] {
-                    getAbsolutePath(), aName}));
+                getAbsolutePath(), aName
+            }));
         }
     }
 
     /**
-     * Creates a new Pairtree object for the supplied name in the supplied
-     * Pairtree structure.
+     * Creates a new Pairtree object for the supplied name in the supplied Pairtree structure.
      * 
      * @param aRoot The root of the Pairtree structure
-     * @param aPrefix A Pairtree prefix to use when creating the directory
-     *        structure
+     * @param aPrefix A Pairtree prefix to use when creating the directory structure
      * @param aName The name of the Pairtree object to create
      * @throws IOException If there is a problem creating the object
      */
-    PairtreeObject(PairtreeRoot aRoot, String aPrefix, String aName)
-            throws IOException {
+    PairtreeObject(PairtreeRoot aRoot, String aPrefix, String aName) throws IOException {
         super(aRoot, PairtreeUtils.mapToPtPath(aPrefix, aName));
 
         if (!exists() && !mkdirs()) {
@@ -72,7 +67,8 @@ public class PairtreeObject extends File {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.debug(BUNDLE.get("pt.object_retrieved2", new String[] {
-                    getAbsolutePath(), aPrefix, aName}));
+                getAbsolutePath(), aPrefix, aName
+            }));
         }
     }
 

@@ -9,8 +9,7 @@ import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
 /**
- * A {@link FilenameFilter} that allows filtering file names based on regular
- * expressions.
+ * A {@link FilenameFilter} that allows filtering file names based on regular expressions.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -28,8 +27,7 @@ public class RegexFileFilter implements FilenameFilter {
     }
 
     /**
-     * Constructor for a regular expression {@link FilenameFilter} that creates
-     * a case insensitive.
+     * Constructor for a regular expression {@link FilenameFilter} that creates a case insensitive.
      * 
      * @param aPattern The regular expression for the filter
      */
@@ -42,17 +40,14 @@ public class RegexFileFilter implements FilenameFilter {
     }
 
     /**
-     * Determines whether the supplied {@link File} in the supplied directory
-     * should be included.
+     * Determines whether the supplied {@link File} in the supplied directory should be included.
      * 
-     * @param aDir The directory in which the {@link File} of the file name
-     *        lives
-     * @param aFilename A {@link File} name to compare against the regular
-     *        expression; it must be a file (not a directory)
+     * @param aDir The directory in which the {@link File} of the file name lives
+     * @param aFilename A {@link File} name to compare against the regular expression; it must be a file (not a
+     *        directory)
      */
     public boolean accept(File aDir, String aFilename) {
-        return new File(aDir, aFilename).isFile() &&
-                myPattern.matcher(aFilename).matches();
+        return new File(aDir, aFilename).isFile() && myPattern.matcher(aFilename).matches();
     }
 
 }

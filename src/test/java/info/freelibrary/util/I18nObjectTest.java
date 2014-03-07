@@ -19,8 +19,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nString() {
-        assertEquals("Retrieving pairtree_root directory at {}",
-                new I18nObjectWrapper().getI18n("pt.retrieving_root"));
+        assertEquals("Retrieving pairtree_root directory at {}", new I18nObjectWrapper().getI18n("pt.retrieving_root"));
     }
 
     /**

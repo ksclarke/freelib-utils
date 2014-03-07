@@ -26,12 +26,10 @@ public class ClasspathUtils {
 
     private static final String CLASSPATH = "java.class.path";
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(ClasspathUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class);
 
     /**
-     * Returns an String array of all the directory names in the system
-     * classpath
+     * Returns an String array of all the directory names in the system classpath
      * 
      * @return The names of directories from the system classpath
      */
@@ -42,8 +40,8 @@ public class ClasspathUtils {
             File file = new File(filename);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file
-                        .getAbsolutePath(), file.isDirectory() ? "yes" : "no");
+                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
+                        : "no");
             }
 
             if (file.isDirectory()) {
@@ -66,8 +64,8 @@ public class ClasspathUtils {
             File file = new File(filename);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file
-                        .getAbsolutePath(), file.isDirectory() ? "yes" : "no");
+                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
+                        : "no");
             }
 
             if (file.isDirectory()) {
@@ -79,11 +77,10 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an String array of all the directory names in the system
-     * classpath that match the supplied <code>FilenameFilter</code>
+     * Returns an String array of all the directory names in the system classpath that match the supplied
+     * <code>FilenameFilter</code>
      * 
-     * @return The names of directories from the system classpath that match the
-     *         supplied <code>FilenameFilter</code>
+     * @return The names of directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getDirs(FilenameFilter aFilter) {
         ArrayList<String> list = new ArrayList<String>();
@@ -91,8 +88,7 @@ public class ClasspathUtils {
         for (String filename : System.getProperty(CLASSPATH).split(":")) {
             File file = new File(filename);
 
-            if (aFilter.accept(file.getParentFile(), file.getName()) &&
-                    file.isDirectory()) {
+            if (aFilter.accept(file.getParentFile(), file.getName()) && file.isDirectory()) {
                 list.add(file.getAbsolutePath());
             }
         }
@@ -101,11 +97,10 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the directories in the system classpath that
-     * match the supplied <code>FilenameFilter</code>
+     * Returns an array of all the directories in the system classpath that match the supplied
+     * <code>FilenameFilter</code>
      * 
-     * @return The directories from the system classpath that match the supplied
-     *         <code>FilenameFilter</code>
+     * @return The directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static File[] getDirFiles(FilenameFilter aFilter) {
         ArrayList<File> list = new ArrayList<File>();
@@ -114,12 +109,11 @@ public class ClasspathUtils {
             File file = new File(filename);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file
-                        .getAbsolutePath(), file.isDirectory() ? "yes" : "no");
+                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
+                        : "no");
             }
 
-            if (aFilter.accept(file.getParentFile(), file.getName()) &&
-                    file.isDirectory()) {
+            if (aFilter.accept(file.getParentFile(), file.getName()) && file.isDirectory()) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("{} is a directory", file.getAbsolutePath());
                 }
@@ -132,8 +126,7 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an String array of all the names of the jars in the system
-     * classpath
+     * Returns an String array of all the names of the jars in the system classpath
      * 
      * @return The names of jars from the system classpath
      */
@@ -153,11 +146,10 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an String array of all the names of the jars in the system
-     * classpath that match the supplied <code>FilenameFilter</code>
+     * Returns an String array of all the names of the jars in the system classpath that match the supplied
+     * <code>FilenameFilter</code>
      * 
-     * @return The names of jars from the system classpath that match the
-     *         supplied <code>FilenameFilter</code>
+     * @return The names of jars from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getJars(FilenameFilter aFilter) {
         ArrayList<String> list = new ArrayList<String>();
@@ -197,14 +189,11 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the jar files in the system classpath that match
-     * the supplied <code>FilenameFilter</code>
+     * Returns an array of all the jar files in the system classpath that match the supplied <code>FilenameFilter</code>
      * 
-     * @return The jar files from the system classpath that match the supplied
-     *         <code>FilenameFilter</code>
+     * @return The jar files from the system classpath that match the supplied <code>FilenameFilter</code>
      */
-    public static JarFile[] getJarFiles(FilenameFilter aFilter)
-            throws IOException {
+    public static JarFile[] getJarFiles(FilenameFilter aFilter) throws IOException {
         ArrayList<JarFile> list = new ArrayList<JarFile>();
         FileExtFileFilter filter = new FileExtFileFilter("jar");
 
@@ -222,13 +211,12 @@ public class ClasspathUtils {
     }
 
     /**
-     * Finds the first instance of the supplied file name in the classpath (in
-     * either a directory or a jar file) and returns a {@link URL} for it.
+     * Finds the first instance of the supplied file name in the classpath (in either a directory or a jar file) and
+     * returns a {@link URL} for it.
      * 
      * @param aFilename The name of the file we want to read
      * @return The {@link URL} of the file we want to read
-     * @throws IOException If there is trouble reading from the file system or
-     *         jars
+     * @throws IOException If there is trouble reading from the file system or jars
      */
     public static URL findFirst(String aFilename) throws IOException {
         FileExtFileFilter filter = new FileExtFileFilter("jar");
@@ -271,8 +259,8 @@ public class ClasspathUtils {
     }
 
     /**
-     * Finds the first instance of the supplied file name in the classpath (in
-     * either a directory or jar file) and returns a URL for it.
+     * Finds the first instance of the supplied file name in the classpath (in either a directory or jar file) and
+     * returns a URL for it.
      * 
      * @param aFileName The name of the file we want to read
      * @return True if the file is found in the classpath; else, false

@@ -34,26 +34,23 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * An XQuery extension wrapper of some HTTP utilities that throw exceptions.
- * Throwing Java exceptions isn't acceptable for an XQuery extension.
+ * An XQuery extension wrapper of some HTTP utilities that throw exceptions. Throwing Java exceptions isn't acceptable
+ * for an XQuery extension.
  * 
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class Put {
 
-    private static final String XML_CONTENT_TYPE =
-            "application/xml; charset=utf-8";
+    private static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
 
-    private static final String XQ_MIME_TYPE =
-            "application/xquery xq xql xquery";
+    private static final String XQ_MIME_TYPE = "application/xquery xq xql xquery";
 
     private static final String EOL = System.getProperty("line.separator");
 
     private static final String CHARSET = "UTF-8";
 
     /**
-     * PUTs the file represented from the supplied file name to the supplied URL
-     * (in string form).
+     * PUTs the file represented from the supplied file name to the supplied URL (in string form).
      * 
      * @param aFileName The file name of the file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
@@ -61,14 +58,12 @@ public class Put {
      * @throws FileNotFoundException If the supplied file name doesn't exist
      * @throws IOException If there is trouble with the PUT
      */
-    public static Element put(String aFileName, String aURL)
-            throws FileNotFoundException, IOException {
+    public static Element put(String aFileName, String aURL) throws FileNotFoundException, IOException {
         return put(new File(aFileName), new URL(aURL));
     }
 
     /**
-     * PUTs the file represented from the supplied file name to the supplied
-     * {@link URL}.
+     * PUTs the file represented from the supplied file name to the supplied {@link URL}.
      * 
      * @param aFileName The file name of the file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
@@ -202,15 +197,13 @@ public class Put {
     }
 
     /**
-     * Connects to a remote resource represented by a URL and sets the
-     * connection method to POST.
+     * Connects to a remote resource represented by a URL and sets the connection method to POST.
      * 
      * @param aURL The URL representation of a remote resource
      * @return An active <code>HttpURLConnection</code>
      * @throws IOException If there was a problem making the connection
      */
-    private static HttpURLConnection connect(URL aURL, String aContentType)
-            throws IOException {
+    private static HttpURLConnection connect(URL aURL, String aContentType) throws IOException {
         HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
 
         // Set this to a PUT
@@ -234,8 +227,7 @@ public class Put {
      * @return The status code of the write (whether it was successful)
      * @throws IOException If there is a problem writing to the remote resource
      */
-    private static final int writeXML(Element aNode, HttpURLConnection aConx)
-            throws IOException {
+    private static final int writeXML(Element aNode, HttpURLConnection aConx) throws IOException {
         BufferedWriter bWriter = null;
 
         try {

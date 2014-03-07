@@ -46,9 +46,8 @@ public class XMLBundleControl extends ResourceBundle.Control {
      * @param aClassLoader A {@link ClassLoader} for the bundle
      * @param aReload Whether the bundle is to be reloaded
      */
-    public ResourceBundle newBundle(String aBaseName, Locale aLocale,
-            String aFormat, ClassLoader aClassLoader, boolean aReload)
-            throws IllegalAccessException, InstantiationException, IOException {
+    public ResourceBundle newBundle(String aBaseName, Locale aLocale, String aFormat, ClassLoader aClassLoader,
+            boolean aReload) throws IllegalAccessException, InstantiationException, IOException {
         ResourceBundle bundle = null;
 
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
@@ -70,8 +69,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
                     }
                 }
             } else {
-                InputStream bundleStream =
-                        aClassLoader.getResourceAsStream(resourceName);
+                InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName);
                 bundle = makeBundle(bundleStream);
             }
         }
@@ -82,14 +80,11 @@ public class XMLBundleControl extends ResourceBundle.Control {
     /**
      * Makes a {@link ResourceBundle} from the supplied {@link InputStream}.
      * 
-     * @param aInputStream An {@link InputStream} from which to build a
-     *        {@link ResourceBundle}
+     * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
      * @return A {@link ResourceBundle}
-     * @throws IOException If there is trouble building the
-     *         {@link ResourceBundle} from the supplied {@link InputStream}
+     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
      */
-    private ResourceBundle makeBundle(InputStream aInputStream)
-            throws IOException {
+    private ResourceBundle makeBundle(InputStream aInputStream) throws IOException {
         BufferedInputStream bufferedInputStream;
         ResourceBundle bundle;
 

@@ -30,31 +30,25 @@ public class BufferedFileWriter extends BufferedWriter {
     }
 
     /**
-     * Constructs a writer to the supplied file using the supplied character
-     * encoding.
+     * Constructs a writer to the supplied file using the supplied character encoding.
      * 
      * @param aFile A file to which to write
-     * @param aEncoding A character encoding to use to write to the supplied
-     *        file
+     * @param aEncoding A character encoding to use to write to the supplied file
      * @throws FileNotFoundException If the supplied file cannot be found
-     * @throws UnsupportedEncodingException If the supplied character encoding
-     *         isn't supported by the JVM
+     * @throws UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
      */
-    public BufferedFileWriter(File aFile, String aEncoding)
-            throws FileNotFoundException, UnsupportedEncodingException {
+    public BufferedFileWriter(File aFile, String aEncoding) throws FileNotFoundException, UnsupportedEncodingException {
         super(new OutputStreamWriter(new FileOutputStream(aFile), aEncoding));
     }
 
     /**
-     * Gets a writer that can write to the supplied file using the UTF-8
-     * charset.
+     * Gets a writer that can write to the supplied file using the UTF-8 charset.
      * 
      * @param aFile A file to which to write
      * @return A writer that writes to the supplied file
      * @throws FileNotFoundException If the supplied file cannot be found
      */
-    private static final Writer getWriter(File aFile)
-            throws FileNotFoundException {
+    private static final Writer getWriter(File aFile) throws FileNotFoundException {
         try {
             return new OutputStreamWriter(new FileOutputStream(aFile), "UTF-8");
         } catch (UnsupportedEncodingException details) {
