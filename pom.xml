@@ -119,25 +119,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${maven.checkstyle.version}</version>
-        <!-- below pulled from example in freelib-build-tools -->
         <dependencies>
           <!-- add the newer checkstyle with throwsIndent support -->
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
             <version>5.7</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>2.11</version>
-            <!-- remove the older checkstyle bundled with plugin -->
-            <exclusions>
-              <exclusion>
-                <groupId>com.puppycrawl.tools</groupId>
-                <artifactId>checkstyle</artifactId>
-              </exclusion>
-            </exclusions>
           </dependency>
         </dependencies>
         <configuration>
@@ -360,27 +347,6 @@
                 <consoleOutput>true</consoleOutput>
                 <configLocation>${basedir}/target/classes/checkstyle/checkstyle.xml</configLocation>
               </configuration>
-              <!-- below pulled from example in freelib-build-tools -->
-              <dependencies>
-                <!-- add the newer checkstyle with throwsIndent support -->
-                <dependency>
-                  <groupId>com.puppycrawl.tools</groupId>
-                  <artifactId>checkstyle</artifactId>
-                  <version>5.7</version>
-                </dependency>
-                <dependency>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-checkstyle-plugin</artifactId>
-                  <version>2.11</version>
-                  <!-- remove the older checkstyle bundled with plugin -->
-                  <exclusions>
-                    <exclusion>
-                      <groupId>com.puppycrawl.tools</groupId>
-                      <artifactId>checkstyle</artifactId>
-                    </exclusion>
-                  </exclusions>
-                </dependency>
-              </dependencies>
             </plugin>
             <!-- source code analyzer somewhat similar to findbugs -->
             <plugin>
