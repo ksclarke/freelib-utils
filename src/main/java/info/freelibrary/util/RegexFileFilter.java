@@ -22,7 +22,7 @@ public class RegexFileFilter implements FilenameFilter {
      * 
      * @param aPattern The regular expression for the filter
      */
-    public RegexFileFilter(String aPattern) {
+    public RegexFileFilter(final String aPattern) {
         this(aPattern, false);
     }
 
@@ -31,7 +31,7 @@ public class RegexFileFilter implements FilenameFilter {
      * 
      * @param aPattern The regular expression for the filter
      */
-    public RegexFileFilter(String aPattern, boolean aCaseInsensitivePattern) {
+    public RegexFileFilter(final String aPattern, final boolean aCaseInsensitivePattern) {
         if (aCaseInsensitivePattern) {
             myPattern = Pattern.compile(aPattern, Pattern.CASE_INSENSITIVE);
         } else {
@@ -46,8 +46,16 @@ public class RegexFileFilter implements FilenameFilter {
      * @param aFilename A {@link File} name to compare against the regular expression; it must be a file (not a
      *        directory)
      */
-    public boolean accept(File aDir, String aFilename) {
+    @Override
+    public boolean accept(final File aDir, final String aFilename) {
         return new File(aDir, aFilename).isFile() && myPattern.matcher(aFilename).matches();
     }
 
+    /**
+     * Returns a string version of the regular expression used as a filter.
+     */
+    @Override
+    public String toString() {
+        return myPattern.pattern();
+    }
 }

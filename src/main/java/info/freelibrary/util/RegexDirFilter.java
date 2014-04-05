@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
  */
 public class RegexDirFilter implements FilenameFilter {
 
-    private Pattern myPattern;
+    private final Pattern myPattern;
 
     /**
      * Constructor for a regular expression {@link FilenameFilter}.
      * 
      * @param aPattern The regular expression for the filter
      */
-    public RegexDirFilter(String aPattern) {
+    public RegexDirFilter(final String aPattern) {
         myPattern = Pattern.compile(aPattern);
     }
 
@@ -32,14 +32,16 @@ public class RegexDirFilter implements FilenameFilter {
      * @param aDir The directory in which the {@link File} of the file name lives
      * @param aFilename A {@link File} name to compare against the regular expression; it must be a directory
      */
-    public boolean accept(File aDir, String aFilename) {
+    @Override
+    public boolean accept(final File aDir, final String aFilename) {
         return new File(aDir, aFilename).isDirectory() && myPattern.matcher(aFilename).matches();
     }
 
     /**
-     * Returns a string version of the regex used as a filter.
+     * Returns a string version of the regular expression used as a filter.
      */
+    @Override
     public String toString() {
-        return myPattern.toString();
+        return myPattern.pattern();
     }
 }

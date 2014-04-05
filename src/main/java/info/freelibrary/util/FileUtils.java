@@ -33,7 +33,6 @@ import javax.xml.transform.TransformerException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -44,6 +43,8 @@ import org.w3c.dom.Element;
  */
 public class FileUtils {
 
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
+
     private static final String DIR_TYPE = "dir";
 
     private static final String FILE_TYPE = "file";
@@ -51,8 +52,6 @@ public class FileUtils {
     private static final String FILE_PATH = "path";
 
     private static final String MODIFIED = "modified";
-
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
@@ -71,7 +70,7 @@ public class FileUtils {
      * @return Am XML string representation of the file structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
-    public static String toXML(String aFilePath) throws FileNotFoundException, TransformerException {
+    public static String toXML(final String aFilePath) throws FileNotFoundException, TransformerException {
         return toXML(aFilePath, ".*");
     }
 
@@ -85,7 +84,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file does not exist
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Element toElement(String aFilePath) throws FileNotFoundException, ParserConfigurationException {
+    public static Element toElement(final String aFilePath) throws FileNotFoundException, ParserConfigurationException {
         return toElement(aFilePath, ".*");
     }
 
@@ -99,7 +98,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file does not exist
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Element toElement(String aFilePath, boolean aBool) throws FileNotFoundException,
+    public static Element toElement(final String aFilePath, final boolean aBool) throws FileNotFoundException,
             ParserConfigurationException {
         return toElement(aFilePath, ".*", aBool);
     }
@@ -114,7 +113,8 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file does not exist
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Document toDocument(String aFilePath) throws FileNotFoundException, ParserConfigurationException {
+    public static Document toDocument(final String aFilePath) throws FileNotFoundException,
+            ParserConfigurationException {
         return toDocument(aFilePath, ".*");
     }
 
@@ -127,7 +127,8 @@ public class FileUtils {
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
-    public static String toXML(String aFilePath, String aPattern) throws FileNotFoundException, TransformerException {
+    public static String toXML(final String aFilePath, final String aPattern) throws FileNotFoundException,
+            TransformerException {
         return toXML(aFilePath, aPattern, false);
     }
 
@@ -140,7 +141,7 @@ public class FileUtils {
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
-    public static String toXML(String aFilePath, boolean aDeepConversion) throws FileNotFoundException,
+    public static String toXML(final String aFilePath, final boolean aDeepConversion) throws FileNotFoundException,
             TransformerException {
         return toXML(aFilePath, ".*", aDeepConversion);
     }
@@ -155,9 +156,9 @@ public class FileUtils {
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
-    public static String toXML(String aFilePath, String aPattern, boolean aDeepTransformation)
+    public static String toXML(final String aFilePath, final String aPattern, final boolean aDeepTransformation)
             throws FileNotFoundException, TransformerException {
-        Element element = toElement(aFilePath, aPattern, aDeepTransformation);
+        final Element element = toElement(aFilePath, aPattern, aDeepTransformation);
         return DOMUtils.toXML(element);
     }
 
@@ -170,7 +171,7 @@ public class FileUtils {
      * @return An unmodifiable map representing the files in the file structure
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
      */
-    public static Map<String, List<String>> toHashMap(String aFilePath) throws FileNotFoundException {
+    public static Map<String, List<String>> toHashMap(final String aFilePath) throws FileNotFoundException {
         return toHashMap(aFilePath, null, (String[]) null);
     }
 
@@ -184,7 +185,8 @@ public class FileUtils {
      * @return An unmodifiable map representing the files in the file structure
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
      */
-    public static Map<String, List<String>> toHashMap(String aFilePath, String aPattern) throws FileNotFoundException {
+    public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern)
+            throws FileNotFoundException {
         return toHashMap(aFilePath, aPattern, (String[]) null);
     }
 
@@ -200,19 +202,19 @@ public class FileUtils {
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
      * @throws RuntimeException If a duplicate file path name is discovered
      */
-    public static Map<String, List<String>> toHashMap(String aFilePath, String aPattern, String... aIgnoreList)
-            throws RuntimeException, FileNotFoundException {
-        String filePattern = aPattern != null ? aPattern : ".*";
-        RegexFileFilter filter = new RegexFileFilter(filePattern);
-        Map<String, List<String>> fileMap = new HashMap<String, List<String>>();
-        File source = new File(aFilePath);
+    public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern,
+            final String... aIgnoreList) throws RuntimeException, FileNotFoundException {
+        final String filePattern = aPattern != null ? aPattern : ".*";
+        final RegexFileFilter filter = new RegexFileFilter(filePattern);
+        final Map<String, List<String>> fileMap = new HashMap<String, List<String>>();
+        final File source = new File(aFilePath);
 
-        for (File file : listFiles(source, filter, true, aIgnoreList)) {
-            String fileName = file.getName();
-            String filePath = file.getAbsolutePath();
+        for (final File file : listFiles(source, filter, true, aIgnoreList)) {
+            final String fileName = file.getName();
+            final String filePath = file.getAbsolutePath();
 
             if (fileMap.containsKey(fileName)) {
-                List<String> paths = fileMap.get(fileName);
+                final List<String> paths = fileMap.get(fileName);
 
                 if (!paths.contains(filePath)) {
                     paths.add(filePath);
@@ -220,7 +222,7 @@ public class FileUtils {
                     throw new RuntimeException("Duplicate file path name");
                 }
             } else {
-                ArrayList<String> pathList = new ArrayList<String>();
+                final ArrayList<String> pathList = new ArrayList<String>();
                 pathList.add(filePath);
                 fileMap.put(fileName, pathList);
             }
@@ -240,7 +242,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied directory isn't found
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Element toElement(String aFilePath, String aPattern) throws FileNotFoundException,
+    public static Element toElement(final String aFilePath, final String aPattern) throws FileNotFoundException,
             ParserConfigurationException {
         return toElement(aFilePath, aPattern, false);
     }
@@ -256,10 +258,10 @@ public class FileUtils {
      * @return An XML Element representation of the directory structure
      * @throws FileNotFoundException If the supplied directory isn't found
      */
-    public static Element toElement(String aFilePath, String aPattern, boolean aDeepTransformation)
+    public static Element toElement(final String aFilePath, final String aPattern, final boolean aDeepTransformation)
             throws FileNotFoundException {
-        RegexFileFilter filter = new RegexFileFilter(aPattern);
-        File file = new File(aFilePath);
+        final RegexFileFilter filter = new RegexFileFilter(aPattern);
+        final File file = new File(aFilePath);
 
         if (file.exists() && file.canRead()) {
             return add(file, null, filter, aDeepTransformation);
@@ -279,7 +281,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied directory isn't found
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Document toDocument(String aFilePath, String aPattern) throws FileNotFoundException,
+    public static Document toDocument(final String aFilePath, final String aPattern) throws FileNotFoundException,
             ParserConfigurationException {
         return toDocument(aFilePath, aPattern, false);
     }
@@ -296,10 +298,13 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied directory isn't found
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Document toDocument(String aFilePath, String aPattern, boolean aDeepConversion)
+    public static Document toDocument(final String aFilePath, final String aPattern, final boolean aDeepConversion)
             throws FileNotFoundException, ParserConfigurationException {
-        Element element = toElement(aFilePath, aPattern, aDeepConversion);
-        return element.getOwnerDocument();
+        final Element element = toElement(aFilePath, aPattern, aDeepConversion);
+        final Document document = element.getOwnerDocument();
+
+        document.appendChild(element);
+        return document;
     }
 
     /**
@@ -309,7 +314,7 @@ public class FileUtils {
      * @return A Java <code>File</code> for the supplied URL
      * @throws MalformedURLException If the supplied URL doesn't have a file protocol
      */
-    public static File toFile(URL aURL) throws MalformedURLException {
+    public static File toFile(final URL aURL) throws MalformedURLException {
         if (aURL.getProtocol().equals("file")) {
             return new File(aURL.toString().replace("file:", ""));
         }
@@ -325,7 +330,7 @@ public class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    public static File[] listFiles(File aDir, FilenameFilter aFilter) throws FileNotFoundException {
+    public static File[] listFiles(final File aDir, final FilenameFilter aFilter) throws FileNotFoundException {
         return listFiles(aDir, aFilter, false, (String[]) null);
     }
 
@@ -338,7 +343,7 @@ public class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    public static File[] listFiles(File aDir, FilenameFilter aFilter, boolean aDeepListing)
+    public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing)
             throws FileNotFoundException {
         return listFiles(aDir, aFilter, aDeepListing, (String[]) null);
     }
@@ -354,15 +359,15 @@ public class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    public static File[] listFiles(File aDir, FilenameFilter aFilter, boolean aDeepListing, String... aIgnoreList)
-            throws FileNotFoundException {
+    public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
+            final String... aIgnoreList) throws FileNotFoundException {
         if (!aDir.exists()) {
             throw new FileNotFoundException(aDir.getAbsolutePath());
         }
 
         if (aDir.isFile()) {
-            File parent = aDir.getParentFile();
-            boolean accept = aFilter.accept(parent, aDir.getName());
+            final File parent = aDir.getParentFile();
+            final boolean accept = aFilter.accept(parent, aDir.getName());
 
             return accept ? new File[] {
                 aDir
@@ -372,7 +377,7 @@ public class FileUtils {
         if (!aDeepListing) {
             return aDir.listFiles(aFilter);
         } else {
-            ArrayList<File> fileList = new ArrayList<File>();
+            final ArrayList<File> fileList = new ArrayList<File>();
             String[] ignoreList;
 
             if (aIgnoreList == null) {
@@ -381,8 +386,8 @@ public class FileUtils {
                 ignoreList = aIgnoreList;
             }
 
-            for (File file : aDir.listFiles()) {
-                String fileName = file.getName();
+            for (final File file : aDir.listFiles()) {
+                final String fileName = file.getName();
 
                 if (aFilter.accept(aDir, fileName)) {
                     if (LOGGER.isDebugEnabled()) {
@@ -397,7 +402,7 @@ public class FileUtils {
                         LOGGER.debug("Descending into: {}", file);
                     }
 
-                    File[] files = listFiles(file, aFilter, aDeepListing);
+                    final File[] files = listFiles(file, aFilter, aDeepListing);
                     fileList.addAll(Arrays.asList(files));
                 }
 
@@ -413,7 +418,7 @@ public class FileUtils {
      * @param aFile The file name
      * @return The file name without the extension
      */
-    public static String stripExt(File aFile) {
+    public static String stripExt(final File aFile) {
         return stripExt(aFile.getName());
     }
 
@@ -423,8 +428,8 @@ public class FileUtils {
      * @param aFileName The file name from which we want to strip the extension
      * @return The file name without the extension
      */
-    public static String stripExt(String aFileName) {
-        int index = aFileName.lastIndexOf('.');
+    public static String stripExt(final String aFileName) {
+        final int index = aFileName.lastIndexOf('.');
 
         if (index != -1) {
             return aFileName.substring(0, index);
@@ -439,14 +444,14 @@ public class FileUtils {
      * @param aFile A file or directory from which to calculate size
      * @return The calculated size of the supplied directory or file
      */
-    public static long getSize(File aFile) {
+    public static long getSize(final File aFile) {
         long size = 0;
 
         if (aFile != null && aFile.exists()) {
             size += aFile.length();
 
             if (aFile.isDirectory()) {
-                for (File file : aFile.listFiles()) {
+                for (final File file : aFile.listFiles()) {
                     size += getSize(file);
                 }
             }
@@ -460,17 +465,19 @@ public class FileUtils {
      * 
      * @param aDir A directory to delete
      */
-    public static boolean delete(File aDir) {
+    public static boolean delete(final File aDir) {
         if (aDir.exists()) {
-            File[] files = aDir.listFiles();
-
-            if (files != null) {
-                for (int index = 0; index < files.length; index++) {
-                    if (files[index].isDirectory()) {
-                        delete(files[index]);
-                    } else {
-                        if (!files[index].delete() && LOGGER.isWarnEnabled()) {
-                            LOGGER.warn("Unable to delete: " + files[index].getAbsolutePath());
+            for (final File file : aDir.listFiles()) {
+                if (file.isDirectory()) {
+                    if (!delete(file)) {
+                        if (LOGGER.isErrorEnabled()) {
+                            LOGGER.error("Unable to delete: " + file);
+                        }
+                    }
+                } else {
+                    if (!file.delete()) {
+                        if (LOGGER.isErrorEnabled()) {
+                            LOGGER.error("Unable to delete: " + file);
                         }
                     }
                 }
@@ -488,7 +495,7 @@ public class FileUtils {
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
-    public static void copy(File aFromFile, File aToFile) throws IOException {
+    public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException("Can't copy file to directory or directory to file");
         }
@@ -498,7 +505,7 @@ public class FileUtils {
                 throw new RuntimeException("Unable to create new directory: " + aToFile.getAbsolutePath());
             }
 
-            for (File file : aFromFile.listFiles()) {
+            for (final File file : aFromFile.listFiles()) {
                 copy(file, new File(aToFile, file.getName()));
             }
         } else {
@@ -512,7 +519,7 @@ public class FileUtils {
      * @param aByteCount A large number of bytes
      * @return A human readable size
      */
-    public static String sizeFromBytes(long aByteCount) {
+    public static String sizeFromBytes(final long aByteCount) {
         return sizeFromBytes(aByteCount, false);
     }
 
@@ -524,7 +531,7 @@ public class FileUtils {
      * @param aAbbreviatedLabel Whether the label should be abbreviated
      * @return A human readable size
      */
-    public static String sizeFromBytes(long aByteCount, boolean aAbbreviatedLabel) {
+    public static String sizeFromBytes(final long aByteCount, final boolean aAbbreviatedLabel) {
         long count;
 
         if ((count = aByteCount / 1073741824) > 0) {
@@ -547,21 +554,21 @@ public class FileUtils {
      * @throws NoSuchAlgorithmException If the supplied algorithm isn't supported
      * @throws IOException If there is trouble reading the file
      */
-    public static String hash(File aFile, String aAlgorithm) throws NoSuchAlgorithmException, IOException {
-        MessageDigest md = MessageDigest.getInstance(aAlgorithm);
-        FileInputStream inStream = new FileInputStream(aFile);
-        DigestInputStream mdStream = new DigestInputStream(inStream, md);
-        byte[] bytes = new byte[8192];
+    public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException, IOException {
+        final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
+        final FileInputStream inStream = new FileInputStream(aFile);
+        final DigestInputStream mdStream = new DigestInputStream(inStream, md);
+        final byte[] bytes = new byte[8192];
         int bytesRead = 0;
 
         while (bytesRead != -1) {
             bytesRead = mdStream.read(bytes);
         }
 
-        Formatter formatter = new Formatter();
+        final Formatter formatter = new Formatter();
         String hash;
 
-        for (byte bite : md.digest()) {
+        for (final byte bite : md.digest()) {
             formatter.format("%02x", bite);
         }
 
@@ -579,7 +586,7 @@ public class FileUtils {
      * @return The MIME-type name for the supplied file
      * @throws IOException
      */
-    public static String getMimeType(String aFileUrl) throws IOException {
+    public static String getMimeType(final String aFileUrl) throws IOException {
         return URLConnection.getFileNameMap().getContentTypeFor(aFileUrl);
     }
 
@@ -591,7 +598,7 @@ public class FileUtils {
      * @return True if the copy was successful; else, false
      * @throws IOException If there is a problem copying the file
      */
-    private static boolean copyFile(File aSourceFile, File aDestFile) throws IOException {
+    private static boolean copyFile(final File aSourceFile, final File aDestFile) throws IOException {
         FileOutputStream outputStream = null;
         FileInputStream inputStream = null;
         boolean success = true;
@@ -614,7 +621,7 @@ public class FileUtils {
                 outputStream = new FileOutputStream(aDestFile);
                 inputStream = new FileInputStream(aSourceFile);
 
-                FileChannel source = inputStream.getChannel();
+                final FileChannel source = inputStream.getChannel();
                 outputStream.getChannel().transferFrom(source, 0, source.size());
             } finally {
                 IOUtils.closeQuietly(outputStream);
@@ -641,8 +648,8 @@ public class FileUtils {
         return success;
     }
 
-    private static Element add(File aFile, Element aParent, RegexFileFilter aFilter, boolean aDeepAdd)
-            throws FileNotFoundException {
+    private static Element add(final File aFile, final Element aParent, final RegexFileFilter aFilter,
+            final boolean aDeepAdd) throws FileNotFoundException {
         Element element;
         String tagName;
 
@@ -654,11 +661,11 @@ public class FileUtils {
 
         if (aParent == null) {
             try {
-                DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-                Document doc = f.newDocumentBuilder().newDocument();
+                final DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+                final Document doc = f.newDocumentBuilder().newDocument();
 
                 element = doc.createElement(tagName);
-            } catch (ParserConfigurationException details) {
+            } catch (final ParserConfigurationException details) {
                 throw new RuntimeException(details);
             }
         } else {
@@ -670,21 +677,21 @@ public class FileUtils {
 
         if (aFile.isDirectory()) {
             if (aDeepAdd) {
-                for (File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
+                for (final File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
                     element.appendChild(add(dir, element, aFilter, aDeepAdd));
                 }
-            } else {
-                Document doc = element.getOwnerDocument();
+            } else if (aFilter.toString().equals(".*")) {
+                final Document doc = element.getOwnerDocument();
 
-                for (File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
-                    Element dirElem = doc.createElement(DIR_TYPE);
+                for (final File dir : listFiles(aFile, new RegexDirFilter(".*"))) {
+                    final Element dirElem = doc.createElement(DIR_TYPE);
 
                     element.appendChild(dirElem);
                     copyMetadata(dir, dirElem);
                 }
             }
 
-            for (File file : listFiles(aFile, aFilter)) {
+            for (final File file : listFiles(aFile, aFilter)) {
                 element.appendChild(add(file, element, aFilter, aDeepAdd));
             }
         }
@@ -698,10 +705,10 @@ public class FileUtils {
      * @param aFile A file to extract metadata from
      * @param aElement A destination element for the file metadata
      */
-    private static void copyMetadata(File aFile, Element aElement) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        StringBuilder permissions = new StringBuilder();
-        Date date = new Date(aFile.lastModified());
+    private static void copyMetadata(final File aFile, final Element aElement) {
+        final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        final StringBuilder permissions = new StringBuilder();
+        final Date date = new Date(aFile.lastModified());
 
         aElement.setAttribute(FILE_PATH, aFile.getAbsolutePath());
         aElement.setAttribute(MODIFIED, formatter.format(date));

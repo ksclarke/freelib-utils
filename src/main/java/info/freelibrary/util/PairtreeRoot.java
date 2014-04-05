@@ -4,12 +4,10 @@
 
 package info.freelibrary.util;
 
-import java.io.OutputStreamWriter;
-
-import java.io.FileOutputStream;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -58,7 +56,7 @@ public class PairtreeRoot extends File {
      * 
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot(String aPairtreePrefix) throws IOException {
+    public PairtreeRoot(final String aPairtreePrefix) throws IOException {
         this(new File("."), aPairtreePrefix);
     }
 
@@ -67,7 +65,7 @@ public class PairtreeRoot extends File {
      * 
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot(File aParentDir) throws IOException {
+    public PairtreeRoot(final File aParentDir) throws IOException {
         this(aParentDir, null);
     }
 
@@ -77,11 +75,11 @@ public class PairtreeRoot extends File {
      * 
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot(File aParentDir, String aPairtreePrefix) throws IOException {
+    public PairtreeRoot(final File aParentDir, final String aPairtreePrefix) throws IOException {
         super(aParentDir, PAIRTREE_ROOT);
 
         if (aPairtreePrefix != null) {
-            File prefixFile = new File(aParentDir, PAIRTREE_PREFIX);
+            final File prefixFile = new File(aParentDir, PAIRTREE_PREFIX);
 
             myPairtreePrefix = aPairtreePrefix;
             writePrefixFile(prefixFile, getPairtreePrefix());
@@ -110,7 +108,7 @@ public class PairtreeRoot extends File {
      * @return A <code>PairtreeObject</code> (directory in the Pairtree structure).
      * @throws IOException
      */
-    public PairtreeObject getObject(String aName) throws IOException {
+    public PairtreeObject getObject(final String aName) throws IOException {
         return myPairtreePrefix == null ? new PairtreeObject(this, aName) : new PairtreeObject(this, myPairtreePrefix,
                 aName);
     }
@@ -118,26 +116,43 @@ public class PairtreeRoot extends File {
     /**
      * Deletes the Pairtree structure, including all contained and related files.
      */
+    @Override
     public boolean delete() {
-        File prefixFile = new File(getParentFile(), PAIRTREE_PREFIX);
-        File ptVersion = new File(getParentFile(), getVersionFileName());
+        final File prefixFile = new File(getParentFile(), PAIRTREE_PREFIX);
+        final File ptVersion = new File(getParentFile(), getVersionFileName());
         boolean result = true;
 
-        if (prefixFile != null && !prefixFile.delete()) {
+        if (prefixFile.exists() && !prefixFile.delete()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Unable to delete pairtree prefix file");
+            }
+
             result = false;
         }
 
-        if (ptVersion != null && !ptVersion.delete()) {
+        if (ptVersion.exists() && !ptVersion.delete()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Unable to delete pairtree version file");
+            }
+
             result = false;
         }
 
-        for (File file : listFiles()) {
+        for (final File file : listFiles()) {
             if (!FileUtils.delete(file)) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Unable to delete " + file);
+                }
+
                 result = false;
             }
         }
 
         if (!super.delete()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Unable to delete pairtree directory");
+            }
+
             result = false;
         }
 
@@ -153,7 +168,7 @@ public class PairtreeRoot extends File {
     }
 
     @Override
-    public boolean equals(Object aObject) {
+    public boolean equals(final Object aObject) {
         if (this == aObject) {
             return true;
         }
@@ -166,7 +181,7 @@ public class PairtreeRoot extends File {
             return false;
         }
 
-        PairtreeRoot other = (PairtreeRoot) aObject;
+        final PairtreeRoot other = (PairtreeRoot) aObject;
 
         if (myPairtreePrefix == null) {
             if (other.myPairtreePrefix != null) {
@@ -203,12 +218,12 @@ public class PairtreeRoot extends File {
      * @param aFile A file to write the version information
      * @throws IOException If there is trouble writing to the file
      */
-    private void writeVersionFile(File aFile) throws IOException {
+    private void writeVersionFile(final File aFile) throws IOException {
         if (!aFile.exists()) {
             OutputStreamWriter writer = null;
 
             try {
-                FileOutputStream fileOut = new FileOutputStream(aFile);
+                final FileOutputStream fileOut = new FileOutputStream(aFile);
 
                 writer = new OutputStreamWriter(fileOut, DEFAULT_CHARSET);
                 writer.write(BUNDLE.get("pt.verfile.content1", PT_VERSION_NUM));
@@ -229,12 +244,12 @@ public class PairtreeRoot extends File {
      * @param aPtPrefix The prefix to write to the supplied file
      * @throws IOException If there is trouble writing to the file
      */
-    private void writePrefixFile(File aFile, String aPtPrefix) throws IOException {
+    private void writePrefixFile(final File aFile, final String aPtPrefix) throws IOException {
         if (!aFile.exists()) {
             OutputStreamWriter writer = null;
 
             try {
-                FileOutputStream fileOut = new FileOutputStream(aFile);
+                final FileOutputStream fileOut = new FileOutputStream(aFile);
 
                 writer = new OutputStreamWriter(fileOut, DEFAULT_CHARSET);
                 writer.write(aPtPrefix);
@@ -244,7 +259,7 @@ public class PairtreeRoot extends File {
                 IOUtils.closeQuietly(writer);
             }
         } else {
-            String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
+            final String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
 
             if (!prefix.equals(aPtPrefix)) {
                 throw new IOException(BUNDLE.get("pt.bad_prefix", prefix, aPtPrefix));
