@@ -42,22 +42,26 @@ public class PairtreeRoot extends File {
     private String myPairtreePrefix;
 
     /**
-     * Creates a new Pairtree structure in the current directory. This will create the related version file too.
+     * Creates a new Pairtree structure in the supplied directory. This will create the related version and prefix files
+     * too.
      * 
+     * @param aParentDirPath The parent directory into which to put the Pairtree structure
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot() throws IOException {
-        this(new File("."));
+    public PairtreeRoot(final String aParentDirPath) throws IOException {
+        this(new File(aParentDirPath));
     }
 
     /**
-     * Creates a new Pairtree structure, using a Pairtree prefix, in the current directory. This will create the related
-     * version and Pairtree prefix files too.
+     * Creates a new Pairtree structure, using a Pairtree prefix, in the supplied directory. This will create the
+     * related version and prefix files too.
      * 
+     * @param aParentDirPath The parent directory into which to put the Pairtree structure
+     * @param aPairtreePrefix The prefix for the Pairtree structure
      * @throws IOException If there is a problem creating the structure
      */
-    public PairtreeRoot(final String aPairtreePrefix) throws IOException {
-        this(new File("."), aPairtreePrefix);
+    public PairtreeRoot(final String aParentDirPath, final String aPairtreePrefix) throws IOException {
+        this(new File(aParentDirPath), aPairtreePrefix);
     }
 
     /**

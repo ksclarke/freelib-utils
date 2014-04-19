@@ -10,13 +10,14 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.junit.Test;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PairtreeRootTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeRootTest.class);
+
+    private static final String TMP_DIR_NAME = System.getProperty("java.io.tmpdir");
 
     /**
      * Test method for {@link PairtreeRoot#PairtreeRoot()}.
@@ -26,10 +27,10 @@ public class PairtreeRootTest {
         PairtreeRoot root = null;
 
         try {
-            root = new PairtreeRoot();
+            root = new PairtreeRoot(TMP_DIR_NAME);
             checkVersionFile(root.getParentFile());
             assertEquals(true, root.canWrite());
-        } catch (IOException details) {
+        } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
         } finally {
@@ -47,11 +48,11 @@ public class PairtreeRootTest {
         PairtreeRoot root = null;
 
         try {
-            root = new PairtreeRoot("myPrefix");
+            root = new PairtreeRoot(TMP_DIR_NAME, "myPrefix");
             checkVersionFile(root.getParentFile());
             checkPrefixFile(root.getParentFile());
             assertEquals(true, root.canWrite());
-        } catch (IOException details) {
+        } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
         } finally {
@@ -72,7 +73,7 @@ public class PairtreeRootTest {
             root = new PairtreeRoot(new File("src/test/resources"));
             checkVersionFile(root.getParentFile());
             assertEquals(true, root.canWrite());
-        } catch (IOException details) {
+        } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
         } finally {
@@ -94,30 +95,8 @@ public class PairtreeRootTest {
             checkVersionFile(root.getParentFile());
             checkPrefixFile(root.getParentFile());
             assertEquals(true, root.canWrite());
-        } catch (IOException details) {
+        } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
-            fail(details.getMessage());
-        } finally {
-            if (root != null) {
-                root.delete();
-            }
-        }
-    }
-
-    /**
-     * Test method for {@link PairtreeRoot#getObjectName()}.
-     */
-    @Test
-    public void testGetObjectName() {
-        PairtreeRoot root = null;
-
-        try {
-            root = new PairtreeRoot();
-        } catch (Exception details) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(details.getMessage(), details);
-            }
-
             fail(details.getMessage());
         } finally {
             if (root != null) {
@@ -131,18 +110,18 @@ public class PairtreeRootTest {
      * 
      * @param aPtDir A Pairtree directory
      */
-    private void checkVersionFile(File aPtDir) {
-        FilenameFilter filter = new RegexFileFilter("pairtree_version.*");
+    private void checkVersionFile(final File aPtDir) {
+        final FilenameFilter filter = new RegexFileFilter("pairtree_version.*");
 
         try {
-            File[] files = FileUtils.listFiles(aPtDir, filter);
+            final File[] files = FileUtils.listFiles(aPtDir, filter);
 
             assertEquals(files.length, 1);
 
-            for (File file : files) {
+            for (final File file : files) {
                 assertEquals(true, file.exists());
             }
-        } catch (FileNotFoundException details) {
+        } catch (final FileNotFoundException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
         }
@@ -153,7 +132,7 @@ public class PairtreeRootTest {
      * 
      * @param aPtDir A Pairtree directory
      */
-    private void checkPrefixFile(File aPtDir) {
+    private void checkPrefixFile(final File aPtDir) {
         assertEquals(true, new File(aPtDir, "pairtree_prefix").exists());
     }
 }
