@@ -51,16 +51,6 @@ public class FileUtilsTest {
         final File tf2_1 = new File(tf2, "test_file1.txt");
         final File tf0_1 = new File(tf0, "test_file1.txt");
 
-        tf0.setLastModified(new Date().getTime());
-        tf1.setLastModified(new Date().getTime());
-        tf1_1.setLastModified(new Date().getTime());
-        tf1_2.setLastModified(new Date().getTime());
-        tf2.setLastModified(new Date().getTime());
-        tf2_tf1.setLastModified(new Date().getTime());
-        tf2_tf1_1.setLastModified(new Date().getTime());
-        tf2_1.setLastModified(new Date().getTime());
-        tf0_1.setLastModified(new Date().getTime());
-
         final Element root = new Element("dir");
         root.addAttribute(new Attribute("path", tf0.getAbsolutePath()));
         root.addAttribute(new Attribute("modified", formatter.format(new Date(tf0.lastModified()))));
@@ -179,7 +169,7 @@ public class FileUtilsTest {
 
             found.appendChild(element);
 
-            if (!XMLUnit.compareXML(expected, found).identical()) {
+            if (!XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(element) + "]");
             }
         } catch (final Exception details) {
@@ -199,7 +189,7 @@ public class FileUtilsTest {
 
             found.appendChild(element);
 
-            if (!XMLUnit.compareXML(expected, found).identical()) {
+            if (!XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(element) + "]");
             }
         } catch (final Exception details) {
@@ -213,7 +203,7 @@ public class FileUtilsTest {
 
             found.appendChild(element);
 
-            if (XMLUnit.compareXML(expected, found).identical()) {
+            if (XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(element) + "]");
             }
         } catch (final Exception details) {
@@ -233,7 +223,7 @@ public class FileUtilsTest {
 
             found.appendChild(element);
 
-            if (!XMLUnit.compareXML(expected, found).identical()) {
+            if (!XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(element) + "]");
             }
         } catch (final Exception details) {
@@ -247,7 +237,7 @@ public class FileUtilsTest {
 
             found.appendChild(element);
 
-            if (XMLUnit.compareXML(expected, found).identical()) {
+            if (XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(element) + "]");
             }
         } catch (final Exception details) {
@@ -264,7 +254,7 @@ public class FileUtilsTest {
             final org.w3c.dom.Document expected = XMLUnit.buildControlDocument(stripLowerLevels().toXML());
             final org.w3c.dom.Document found = FileUtils.toDocument("src/test/resources/test_folder");
 
-            if (!XMLUnit.compareXML(expected, found).identical()) {
+            if (!XMLUnit.compareXML(expected, found).similar()) {
                 fail("[" + DOMUtils.toXML(expected) + "] vs. [" + DOMUtils.toXML(found) + "]");
             }
         } catch (final Exception details) {
