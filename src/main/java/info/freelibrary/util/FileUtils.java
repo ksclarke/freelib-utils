@@ -99,7 +99,7 @@ public class FileUtils {
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
     public static Element toElement(final String aFilePath, final boolean aBool) throws FileNotFoundException,
-            ParserConfigurationException {
+    ParserConfigurationException {
         return toElement(aFilePath, ".*", aBool);
     }
 
@@ -114,7 +114,7 @@ public class FileUtils {
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
     public static Document toDocument(final String aFilePath) throws FileNotFoundException,
-            ParserConfigurationException {
+    ParserConfigurationException {
         return toDocument(aFilePath, ".*");
     }
 
@@ -128,7 +128,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
     public static String toXML(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            TransformerException {
+    TransformerException {
         return toXML(aFilePath, aPattern, false);
     }
 
@@ -142,7 +142,7 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file or directory can not be found
      */
     public static String toXML(final String aFilePath, final boolean aDeepConversion) throws FileNotFoundException,
-            TransformerException {
+    TransformerException {
         return toXML(aFilePath, ".*", aDeepConversion);
     }
 
@@ -243,7 +243,7 @@ public class FileUtils {
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
     public static Element toElement(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            ParserConfigurationException {
+    ParserConfigurationException {
         return toElement(aFilePath, aPattern, false);
     }
 
@@ -282,7 +282,7 @@ public class FileUtils {
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
     public static Document toDocument(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            ParserConfigurationException {
+    ParserConfigurationException {
         return toDocument(aFilePath, aPattern, false);
     }
 
@@ -367,11 +367,14 @@ public class FileUtils {
 
         if (aDir.isFile()) {
             final File parent = aDir.getParentFile();
-            final boolean accept = aFilter.accept(parent, aDir.getName());
 
-            return accept ? new File[] {
-                aDir
-            } : new File[0];
+            if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
+                return new File[] {
+                    aDir
+                };
+            } else {
+                return new File[0];
+            }
         }
 
         if (!aDeepListing) {
@@ -466,7 +469,7 @@ public class FileUtils {
      * @param aDir A directory to delete
      */
     public static boolean delete(final File aDir) {
-        if (aDir.exists()) {
+        if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
                 if (file.isDirectory()) {
                     if (!delete(file)) {
@@ -482,6 +485,8 @@ public class FileUtils {
                     }
                 }
             }
+        } else if (LOGGER.isDebugEnabled() && aDir.listFiles() == null) {
+            LOGGER.debug("Trying to delete '{}' but there was a problem", aDir);
         }
 
         return aDir.delete();

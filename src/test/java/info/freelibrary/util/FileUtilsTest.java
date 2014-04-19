@@ -6,14 +6,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -128,17 +122,8 @@ public class FileUtilsTest {
      * Test method for {@link FileUtils#delete(File)}
      */
     @Test
-    public void testDelete() {
-        try {
-            final Set<PosixFilePermission> posixPerms = PosixFilePermissions.fromString("rwx------");
-            final FileAttribute<Set<PosixFilePermission>> fileAtts = PosixFilePermissions.asFileAttribute(posixPerms);
-            final File file = Files.createTempDirectory("", fileAtts).toFile();
-
-            file.deleteOnExit();
-            assertTrue(FileUtils.delete(file));
-        } catch (final IOException details) {
-            fail(details.getMessage());
-        }
+    public void testDeleteOfEmptyDir() {
+        assertTrue(FileUtils.delete(new File("target/test-classes/test_folder")));
     }
 
     /**
