@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -123,7 +124,17 @@ public class FileUtilsTest {
      */
     @Test
     public void testDeleteOfEmptyDir() {
-        assertTrue(FileUtils.delete(new File("target/test-classes/test_folder")));
+        final File dir = new File("target/test-classes/test_folder");
+
+        try {
+            if (!dir.exists()) {
+                FileUtils.copy(new File("src/test/resources/test_folder"), dir);
+            }
+        } catch (final IOException details) {
+            fail(details.getMessage());
+        }
+
+        assertTrue(FileUtils.delete(dir));
     }
 
     /**
