@@ -20,19 +20,19 @@ import nu.xom.tests.XOMTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link FileUtils} class.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">ksclarke@gmail.com</a>
  */
 public class FileUtilsTest {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FileUtilsTest.class);
-
     private static Document EXPECTED;
 
+    /**
+     * Sets up a directory structure used for testing.
+     */
     @BeforeClass
     public static void setUpBeforeClass() {
         final SimpleDateFormat formatter = new SimpleDateFormat(FileUtils.DATE_FORMAT);
@@ -340,7 +340,7 @@ public class FileUtilsTest {
 
     /**
      * Strips lower levels from an XML file structure.
-     * 
+     *
      * @return
      */
     private Document stripLowerLevels() {
