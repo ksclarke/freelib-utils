@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
 
 /**
  * Utilities for working with files.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class FileUtils {
@@ -65,7 +65,7 @@ public class FileUtils {
      * Creates a string of XML that describes the supplied file or directory (and, possibly, all its subdirectories).
      * Includes absolute path, last modified time, read/write permissions, etc. By default, it only descends one
      * directory.
-     * 
+     *
      * @param aFilePath A file system path to be turned into as XML
      * @return Am XML string representation of the file structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
@@ -78,7 +78,7 @@ public class FileUtils {
      * Creates an <code>Element</code> that describes the supplied file or directory (and, possibly, all its
      * subdirectories). Includes absolute path, last modified time, read/write permissions, etc. By default, it only
      * descends one directory.
-     * 
+     *
      * @param aFilePath A file system path to turn into XML
      * @return An element representation of the file structure
      * @throws FileNotFoundException If the supplied file does not exist
@@ -91,7 +91,7 @@ public class FileUtils {
     /**
      * Creates an <code>Element</code> that describes the supplied file or directory (and, possibly, all its
      * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
-     * 
+     *
      * @param aFilePath A file system path to turn into XML
      * @param aBool A boolean indicating whether the XML should contain more than one level
      * @return An element representation of the file structure
@@ -107,7 +107,7 @@ public class FileUtils {
      * Creates an <code>Document</code> that describes the supplied file or directory (and, possibly, all its
      * subdirectories). Includes absolute path, last modified time, read/write permissions, etc. By default, it only
      * descends one directory.
-     * 
+     *
      * @param aFilePath A file system path to turn into XML
      * @return A document representation of the file structure
      * @throws FileNotFoundException If the supplied file does not exist
@@ -121,7 +121,7 @@ public class FileUtils {
     /**
      * Creates a string of XML that describes the supplied file or directory (and all its subdirectories). Includes
      * absolute path, last modified time, read/write permissions, etc.
-     * 
+     *
      * @param aFilePath The file or directory to be returned as XML
      * @param aPattern A regular expression that file names must match
      * @return A string of XML describing the supplied file system path's structure
@@ -135,7 +135,7 @@ public class FileUtils {
     /**
      * Creates a string of XML that describes the supplied file or directory (and, optionally, all its subdirectories).
      * Includes absolute path, last modified time, read/write permissions, etc.
-     * 
+     *
      * @param aFilePath The file or directory to be returned as XML
      * @param aDeepConversion Whether the subdirectories are included
      * @return A string of XML describing the supplied file system path's structure
@@ -149,7 +149,7 @@ public class FileUtils {
     /**
      * Creates a string of XML that describes the supplied file or directory (and, optionally, all its subdirectories).
      * Includes absolute path, last modified time, read/write permissions, etc.
-     * 
+     *
      * @param aFilePath The file or directory to be returned as XML
      * @param aPattern A regular expression pattern to evaluate file matches against
      * @param aDeepTransformation Whether the subdirectories are included
@@ -166,7 +166,7 @@ public class FileUtils {
      * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
      * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
      * file name key. The map that is returned is unmodifiable.
-     * 
+     *
      * @param aFilePath The directory of which you'd like a file listing
      * @return An unmodifiable map representing the files in the file structure
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
@@ -179,7 +179,7 @@ public class FileUtils {
      * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
      * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
      * file name key. The map that is returned is unmodifiable.
-     * 
+     *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
      * @return An unmodifiable map representing the files in the file structure
@@ -194,7 +194,7 @@ public class FileUtils {
      * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
      * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
      * file name key. The map that is returned is unmodifiable.
-     * 
+     *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
      * @param aIgnoreList A list of directories into which we shouldn't descend
@@ -235,7 +235,7 @@ public class FileUtils {
      * Returns an XML Element representing the file structure found at the supplied file system path. Files included in
      * the representation will match the supplied regular expression pattern. This method doesn't descend through the
      * directory structure.
-     * 
+     *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
      * @return An XML Element representation of the directory structure
@@ -251,7 +251,7 @@ public class FileUtils {
      * Returns an XML Element representing the file structure found at the supplied file system path. Files included in
      * the representation will match the supplied regular expression pattern. This method doesn't descend through the
      * directory structure.
-     * 
+     *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
      * @param aDeepTransformation Whether the conversion should descend through subdirectories
@@ -274,7 +274,7 @@ public class FileUtils {
      * Returns an XML Document representing the file structure found at the supplied file system path. Files included in
      * the representation will match the supplied regular expression pattern. This method doesn't descend through the
      * directory structure.
-     * 
+     *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
      * @return An XML Document representation of the directory structure
@@ -290,7 +290,7 @@ public class FileUtils {
      * Returns an XML Document representing the file structure found at the supplied file system path. Files included in
      * the representation will match the supplied regular expression pattern. This method doesn't descend through the
      * directory structure.
-     * 
+     *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Document should match
      * @param aDeepConversion Whether the conversion should descend through subdirectories
@@ -309,7 +309,7 @@ public class FileUtils {
 
     /**
      * Returns a Java <code>File</code> for the supplied file-based URL.
-     * 
+     *
      * @param aURL A URL that has a file protocol
      * @return A Java <code>File</code> for the supplied URL
      * @throws MalformedURLException If the supplied URL doesn't have a file protocol
@@ -324,7 +324,7 @@ public class FileUtils {
 
     /**
      * An array of all the files in the supplied directory that match the supplied <code>FilenameFilter</code>.
-     * 
+     *
      * @param aDir A directory from which a file listing should be returned
      * @param aFilter A file name filter which returned files should match
      * @return An array of matching files
@@ -336,7 +336,7 @@ public class FileUtils {
 
     /**
      * An array of all the files in the supplied directory that match the supplied <code>FilenameFilter</code>.
-     * 
+     *
      * @param aDir A directory from which a file listing should be returned
      * @param aFilter A file name filter which returned files should match
      * @param aDeepListing Whether we should descend through subdirectories
@@ -351,7 +351,7 @@ public class FileUtils {
     /**
      * An array of all the files in the supplied directory that match the supplied <code>FilenameFilter</code>.
      * Directories that match the supplied ignore list will not be included in the result.
-     * 
+     *
      * @param aDir A directory from which a file listing should be returned
      * @param aFilter A file name filter which returned files should match
      * @param aDeepListing Whether we should descend through subdirectories
@@ -417,7 +417,7 @@ public class FileUtils {
 
     /**
      * Return a file name without the dot extension.
-     * 
+     *
      * @param aFile The file name
      * @return The file name without the extension
      */
@@ -427,7 +427,7 @@ public class FileUtils {
 
     /**
      * Return a file name without the dot extension.
-     * 
+     *
      * @param aFileName The file name from which we want to strip the extension
      * @return The file name without the extension
      */
@@ -443,7 +443,7 @@ public class FileUtils {
 
     /**
      * Gets the calculated size of a directory of files.
-     * 
+     *
      * @param aFile A file or directory from which to calculate size
      * @return The calculated size of the supplied directory or file
      */
@@ -465,7 +465,7 @@ public class FileUtils {
 
     /**
      * Deletes a directory and all its children.
-     * 
+     *
      * @param aDir A directory to delete
      */
     public static boolean delete(final File aDir) {
@@ -495,7 +495,7 @@ public class FileUtils {
     /**
      * Copies a file or directory from one place to another. This copies a file to a file or a directory to a directory.
      * It does not copy a file to a directory.
-     * 
+     *
      * @param aFromFile A file or directory source
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
@@ -520,7 +520,7 @@ public class FileUtils {
 
     /**
      * Returns a human readable size from a large number of bytes.
-     * 
+     *
      * @param aByteCount A large number of bytes
      * @return A human readable size
      */
@@ -531,7 +531,7 @@ public class FileUtils {
     /**
      * Returns a human readable size from a large number of bytes. You can specify that the human readable size use an
      * abbreviated label (e.g., GB or MB).
-     * 
+     *
      * @param aByteCount A large number of bytes
      * @param aAbbreviatedLabel Whether the label should be abbreviated
      * @return A human readable size
@@ -552,7 +552,7 @@ public class FileUtils {
 
     /**
      * Get a hash for a supplied file.
-     * 
+     *
      * @param aFile A file to get a hash for
      * @param aAlgorithm A hash algorithm supported by <code>MessageDigest</code>
      * @return A hash string
@@ -586,7 +586,7 @@ public class FileUtils {
 
     /**
      * Gets the MIME type of the supplied file URL. It gets MIME type from {@link URLConnection}'s file name map.
-     * 
+     *
      * @param aFileUrl A file-based URL
      * @return The MIME-type name for the supplied file
      * @throws IOException
@@ -597,7 +597,7 @@ public class FileUtils {
 
     /**
      * Copies a non-directory file from one location to another.
-     * 
+     *
      * @param aSourceFile A file to copy
      * @param aDestFile A destination location for the copied file
      * @return True if the copy was successful; else, false
@@ -696,7 +696,12 @@ public class FileUtils {
                 }
             }
 
-            for (final File file : listFiles(aFile, aFilter)) {
+            final File[] files = listFiles(aFile, aFilter);
+
+            // Provide some consistency in what's returned to make testing easier
+            Arrays.sort(files);
+
+            for (final File file : files) {
                 element.appendChild(add(file, element, aFilter, aDeepAdd));
             }
         }
@@ -706,7 +711,7 @@ public class FileUtils {
 
     /**
      * Copy file metadata into the supplied file element.
-     * 
+     *
      * @param aFile A file to extract metadata from
      * @param aElement A destination element for the file metadata
      */
