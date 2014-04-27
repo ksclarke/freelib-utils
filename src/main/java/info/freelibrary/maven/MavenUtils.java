@@ -101,6 +101,7 @@ public class MavenUtils {
             "org.apache.maven.plugin.dependency.fromConfiguration.UnpackMojo",
             "org.apache.maven.shared.filtering.DefaultMavenResourcesFiltering",
             "org.apache.maven.plugin.checkstyle.CheckstyleViolationCheckMojo",
+            "org.apache.maven.plugin.clean.CleanMojo",
             "org.apache.maven.tools.plugin.annotations.JavaAnnotationsMojoDescriptorExtractor",
             "org.apache.maven.plugin.failsafe.VerifyMojo", "org.apache.maven.DefaultMaven",
             "org.apache.maven.plugin.compiler.TestCompilerMojo", "org.apache.maven.plugins.enforcer.EnforceMojo",

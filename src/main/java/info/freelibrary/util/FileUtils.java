@@ -596,6 +596,37 @@ public class FileUtils {
     }
 
     /**
+     * Tests that the supplied directory exists and can be used according to the supplied permissions string (e.g.,
+     * 'rwx').
+     *
+     * @param aDirName A name of a directory on the file system
+     * @param aPermString A string representing the desired permissions of the directory
+     * @return True if the directory is okay to be used; else, false
+     */
+    public static boolean dirIsUseable(final String aDirName, final String aPermString) {
+        final File dir = new File(aDirName); // NullPointerException if null
+
+        if (!dir.exists() && !dir.mkdirs()) {
+            return false;
+        }
+
+        // NullPointerException if aPermString is null
+        if (aPermString.contains("r") && !dir.canRead()) {
+            return false;
+        }
+
+        if (aPermString.contains("w") && !dir.canWrite()) {
+            return false;
+        }
+
+        if (aPermString.contains("x") && !dir.canExecute()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Copies a non-directory file from one location to another.
      *
      * @param aSourceFile A file to copy
