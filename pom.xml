@@ -204,10 +204,8 @@
                 <!-- don't want to allow snapshots unless excluded -->
                 <!-- can be skipped by adding following to command line: -Denforcer.skip=true -->
                 <requireReleaseDeps>
-                  <message>Sorry, no dependency snapshots allowed! Skip this
-                    check by adding the following to the command
-                    line:
-                    -Denforcer.skip=true</message>
+                  <message>Sorry, no dependency snapshots allowed! Skip this check by adding the following to the
+                    command line: -Denforcer.skip=true</message>
                 </requireReleaseDeps>
               </rules>
               <fail>true</fail>
