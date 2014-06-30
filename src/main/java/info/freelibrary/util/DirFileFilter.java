@@ -20,7 +20,8 @@ public class DirFileFilter implements FilenameFilter {
      * @param aDir A directory in which to test the files
      * @param aFileName A file name in the directory
      */
-    public boolean accept(File aDir, String aFileName) {
+    @Override
+    public boolean accept(final File aDir, final String aFileName) {
         return new File(aDir, aFileName).isDirectory() ? true : false;
     }
 

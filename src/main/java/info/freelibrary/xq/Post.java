@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
 /**
  * An XQuery extension wrapper of some HTTP utilities that throw exceptions. Throwing Java exceptions isn't acceptable
  * for an XQuery extension.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class Post {
@@ -42,25 +42,28 @@ public class Post {
 
     private static final String CHARSET = "UTF-8";
 
+    private Post() {
+    }
+
     /**
      * POSTs the supplied XML element to the supplied URL.
-     * 
+     *
      * @param aURL A URL to which to POST the supplied XML element
      * @param aNode An XML element to POST to the supplied URL
      * @return An XML result of the POST
      * @throws IOException If there is trouble POSTing to the URL
      */
-    public static final Element post(URL aURL, Element aNode) throws IOException {
-        StringBuilder response = new StringBuilder();
-        HttpURLConnection http = connect(aURL);
-        int responseCode = write(aNode, http);
+    public static final Element post(final URL aURL, final Element aNode) throws IOException {
+        final StringBuilder response = new StringBuilder();
+        final HttpURLConnection http = connect(aURL);
+        final int responseCode = write(aNode, http);
 
         if (responseCode == 200) {
             BufferedReader bReader = null;
 
             try {
-                InputStream in = http.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in, CHARSET);
+                final InputStream in = http.getInputStream();
+                final InputStreamReader reader = new InputStreamReader(in, CHARSET);
                 String line;
 
                 bReader = new BufferedReader(reader);
@@ -78,32 +81,32 @@ public class Post {
         }
 
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-            StringReader reader = new StringReader(response.toString());
-            Document doc = docBuilder.parse(new InputSource(reader));
-            String codeAsText = Integer.toString(responseCode);
-            Element root = doc.getDocumentElement();
+            final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+            final StringReader reader = new StringReader(response.toString());
+            final Document doc = docBuilder.parse(new InputSource(reader));
+            final String codeAsText = Integer.toString(responseCode);
+            final Element root = doc.getDocumentElement();
 
             root.setAttribute("responseCode", codeAsText);
 
             return root;
-        } catch (ParserConfigurationException details) {
+        } catch (final ParserConfigurationException details) {
             throw new RuntimeException(details);
-        } catch (SAXException details) {
+        } catch (final SAXException details) {
             throw new RuntimeException(details);
         }
     }
 
     /**
      * Connects to a remote resource represented by a URL and sets the connection method to POST.
-     * 
+     *
      * @param aURL The URL representation of a remote resource
      * @return An active <code>HttpURLConnection</code>
      * @throws IOException If there was a problem making the connection
      */
-    private static final HttpURLConnection connect(URL aHttpURL) throws IOException {
-        HttpURLConnection http = (HttpURLConnection) aHttpURL.openConnection();
+    private static final HttpURLConnection connect(final URL aHttpURL) throws IOException {
+        final HttpURLConnection http = (HttpURLConnection) aHttpURL.openConnection();
 
         // Set this to a POST
         http.setDoInput(true);
@@ -120,22 +123,22 @@ public class Post {
 
     /**
      * Writes an XML element to an HTTP POST connection.
-     * 
+     *
      * @param aNode An XML element to write
      * @param aHTTPConn The HTTP connection to which we write the element
      * @return The status code of the write (whether it was successful)
      * @throws IOException If there is a problem writing to the remote resource
      */
-    private static final int write(Element aNode, HttpURLConnection aHttpConn) throws IOException {
+    private static final int write(final Element aNode, final HttpURLConnection aHttpConn) throws IOException {
         BufferedWriter bWriter = null;
 
         try {
-            OutputStream out = aHttpConn.getOutputStream();
-            OutputStreamWriter writer = new OutputStreamWriter(out, CHARSET);
+            final OutputStream out = aHttpConn.getOutputStream();
+            final OutputStreamWriter writer = new OutputStreamWriter(out, CHARSET);
 
             bWriter = new BufferedWriter(writer);
             bWriter.write(DOMUtils.toXML(aNode));
-        } catch (TransformerException details) {
+        } catch (final TransformerException details) {
             throw new IOException(details);
         } finally {
             IOUtils.closeQuietly(bWriter);

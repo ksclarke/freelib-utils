@@ -48,7 +48,7 @@ import java.util.List;
 
 /**
  * Utilities for working with Pairtrees.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class PairtreeUtils {
@@ -59,9 +59,12 @@ public class PairtreeUtils {
 
     private static int myShortyLength = 2;
 
+    private PairtreeUtils() {
+    }
+
     /**
      * Returns the Pairtree shorty length.
-     * 
+     *
      * @return The Pairtree shorty length
      */
     public static int getShortyLength() {
@@ -70,7 +73,7 @@ public class PairtreeUtils {
 
     /**
      * Sets the Pairtree shorty length
-     * 
+     *
      * @param aLength A length to set as the shorty length
      */
     public static void setShortyLength(final int aLength) {
@@ -79,7 +82,7 @@ public class PairtreeUtils {
 
     /**
      * Returns the separator character.
-     * 
+     *
      * @return The separator character
      */
     public static Character getSeparator() {
@@ -88,7 +91,7 @@ public class PairtreeUtils {
 
     /**
      * Sets the separator character.
-     * 
+     *
      * @param aSeparator The separator character
      */
     public static void setSeparator(final Character aSeparator) {
@@ -97,7 +100,7 @@ public class PairtreeUtils {
 
     /**
      * Maps the supplied ID to a Pairtree path.
-     * 
+     *
      * @param aID An ID to map to a Pairtree path
      * @return The Pairtree path for the supplied ID
      */
@@ -124,7 +127,7 @@ public class PairtreeUtils {
 
     /**
      * Maps the supplied ID to a Pairtree path using the supplied base path.
-     * 
+     *
      * @param aID An ID to map to a Pairtree path
      * @param aBasePath The base path to use in the mapping
      * @return The Pairtree path for the supplied ID
@@ -135,7 +138,7 @@ public class PairtreeUtils {
 
     /**
      * Maps the supplied ID to a Pairtree path using the supplied base path.
-     * 
+     *
      * @param aID An ID to map to a Pairtree path
      * @param aBasePath The base path to use in the mapping
      * @param aEncapsulatingDirName The name of the encapsulating directory
@@ -147,7 +150,7 @@ public class PairtreeUtils {
 
     /**
      * Maps the supplied base path to an ID using the supplied Pairtree path.
-     * 
+     *
      * @param aBasePath A base path to use for the mapping
      * @param aPtPath A Pairtree path to map to an ID
      * @return The ID that is a result of the mapping
@@ -160,7 +163,7 @@ public class PairtreeUtils {
 
     /**
      * Maps the supplied base path to an ID.
-     * 
+     *
      * @param aPtPath A Pairtree path to map to an ID
      * @return The ID that is a result of the mapping
      * @throws InvalidPtPathException If there is trouble mapping the path
@@ -186,7 +189,7 @@ public class PairtreeUtils {
 
     /**
      * Extracts the encapsulating directory from the supplied Pairtree path, using the supplied base path.
-     * 
+     *
      * @param aBasePath A base path for the Pairtree path
      * @param aPtPath The Pairtree path
      * @return The name of the encapsulating directory
@@ -200,7 +203,7 @@ public class PairtreeUtils {
 
     /**
      * Extracts the encapsulating directory from the supplied Pairtree path.
-     * 
+     *
      * @param aPtPath The Pairtree path from which to extract the encapsulating directory
      * @return The name of the encapsulating directory
      * @throws InvalidPtPathException If there is a problem extracting the encapsulating directory
@@ -254,7 +257,7 @@ public class PairtreeUtils {
 
     /**
      * Concatenates the Pairtree paths varargs.
-     * 
+     *
      * @param aPathsVarargs The Pairtree paths varargs
      * @return The concatenated Pairtree paths
      */
@@ -285,7 +288,7 @@ public class PairtreeUtils {
 
     /**
      * Removes the base path from the supplied Pairtree path.
-     * 
+     *
      * @param aBasePath A base path for a Pairtree path
      * @param aPtPath A Pairtree path
      * @return The Pairtree path without the base path
@@ -308,7 +311,7 @@ public class PairtreeUtils {
 
     /**
      * Cleans an ID for use in a Pairtree path.
-     * 
+     *
      * @param aID An idea to be cleaned
      * @return The cleaned ID for use in a Pairtree path
      */
@@ -359,7 +362,7 @@ public class PairtreeUtils {
 
     /**
      * Unclean the ID from the Pairtree path.
-     * 
+     *
      * @param aID A cleaned ID to unclean
      * @return The unclean ID
      */

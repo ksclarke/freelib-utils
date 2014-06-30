@@ -45,7 +45,7 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(String aMainClassName) throws Exception {
+    public JarClassLoader(final String aMainClassName) throws Exception {
         super(getJarURLs());
 
         if (LOGGER.isInfoEnabled()) {
@@ -62,7 +62,7 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(URL[] aURLs, String aMainClassName) throws Exception {
+    public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws Exception {
         super(aURLs);
 
         loadClass(aMainClassName).newInstance();
@@ -75,7 +75,7 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(List<URL> aListOfURLs, String aMainClassName) throws Exception {
+    public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws Exception {
         super(aListOfURLs.toArray(new URL[aListOfURLs.size()]));
 
         loadClass(aMainClassName).newInstance();
@@ -86,13 +86,14 @@ public class JarClassLoader extends URLClassLoader {
      * 
      * @throws ClassNotFoundException If the class for the supplied name can't be found
      */
-    public Class<?> loadClass(String aName) throws ClassNotFoundException {
+    @Override
+    public Class<?> loadClass(final String aName) throws ClassNotFoundException {
         Class<?> loadedClass = findLoadedClass(aName);
 
         if (loadedClass == null) {
             try {
                 loadedClass = findClass(aName);
-            } catch (ClassNotFoundException details) {
+            } catch (final ClassNotFoundException details) {
                 loadedClass = super.loadClass(aName);
             }
         }
@@ -107,17 +108,17 @@ public class JarClassLoader extends URLClassLoader {
      * @throws IOException If there is trouble reading the classpath
      */
     private static URL[] getJarURLs() throws IOException {
-        JarFile jarFile = new JarFile(MAIN_JAR);
-        Manifest manifest = jarFile.getManifest();
-        Attributes attributes = manifest.getMainAttributes();
-        String classpath = attributes.getValue("Class-Path");
-        StringTokenizer tokenizer = new StringTokenizer(classpath);
-        List<URL> urlList = new LinkedList<URL>();
+        final JarFile jarFile = new JarFile(MAIN_JAR);
+        final Manifest manifest = jarFile.getManifest();
+        final Attributes attributes = manifest.getMainAttributes();
+        final String classpath = attributes.getValue("Class-Path");
+        final StringTokenizer tokenizer = new StringTokenizer(classpath);
+        final List<URL> urlList = new LinkedList<URL>();
 
         urlList.add(new URL(JAR_URL_PROTOCOL + HOME + MAIN_JAR + "!/"));
 
         while (tokenizer.hasMoreTokens()) {
-            String jarPath = tokenizer.nextToken();
+            final String jarPath = tokenizer.nextToken();
             urlList.add(new URL(JAR_URL_PROTOCOL + PATH + jarPath + "!/"));
         }
 

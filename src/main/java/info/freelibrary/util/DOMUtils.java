@@ -32,20 +32,20 @@ public class DOMUtils {
      * @param aNode A W3C node
      * @return An XML string representation of the supplied node
      */
-    public static String toXML(Node aNode) throws TransformerException {
+    public static String toXML(final Node aNode) throws TransformerException {
         try {
-            TransformerFactory transFactory = TransformerFactory.newInstance();
-            Transformer transformer = transFactory.newTransformer();
-            StringWriter buffer = new StringWriter();
-            DOMSource domSource = new DOMSource(aNode);
-            StreamResult streamResult = new StreamResult(buffer);
-            String omitDeclaration = OutputKeys.OMIT_XML_DECLARATION;
+            final TransformerFactory transFactory = TransformerFactory.newInstance();
+            final Transformer transformer = transFactory.newTransformer();
+            final StringWriter buffer = new StringWriter();
+            final DOMSource domSource = new DOMSource(aNode);
+            final StreamResult streamResult = new StreamResult(buffer);
+            final String omitDeclaration = OutputKeys.OMIT_XML_DECLARATION;
 
             transformer.setOutputProperty(omitDeclaration, "yes");
             transformer.transform(domSource, streamResult);
 
             return buffer.toString();
-        } catch (TransformerConfigurationException details) {
+        } catch (final TransformerConfigurationException details) {
             throw new RuntimeException(details);
         }
     }

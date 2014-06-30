@@ -4,8 +4,6 @@
 
 package info.freelibrary.xq;
 
-import java.io.FileNotFoundException;
-
 import info.freelibrary.util.DOMUtils;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.StringUtils;
@@ -13,6 +11,7 @@ import info.freelibrary.util.StringUtils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,7 +35,7 @@ import org.xml.sax.SAXException;
 /**
  * An XQuery extension wrapper of some HTTP utilities that throw exceptions. Throwing Java exceptions isn't acceptable
  * for an XQuery extension.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class Put {
@@ -49,47 +48,50 @@ public class Put {
 
     private static final String CHARSET = "UTF-8";
 
+    private Put() {
+    }
+
     /**
      * PUTs the file represented from the supplied file name to the supplied URL (in string form).
-     * 
+     *
      * @param aFileName The file name of the file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
      * @return The XML response from the PUT
      * @throws FileNotFoundException If the supplied file name doesn't exist
      * @throws IOException If there is trouble with the PUT
      */
-    public static Element put(String aFileName, String aURL) throws FileNotFoundException, IOException {
+    public static Element put(final String aFileName, final String aURL) throws FileNotFoundException, IOException {
         return put(new File(aFileName), new URL(aURL));
     }
 
     /**
      * PUTs the file represented from the supplied file name to the supplied {@link URL}.
-     * 
+     *
      * @param aFileName The file name of the file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
      * @return The XML response from the PUT
      * @throws IOException If there is trouble with the PUT
      */
-    public static Element put(String aFileName, URL aURL) throws IOException {
+    public static Element put(final String aFileName, final URL aURL) throws IOException {
         return put(new File(aFileName), aURL);
     }
 
     /**
      * PUTs the supplied {@link File} to the supplied {@link URL}.
-     * 
+     *
      * @param aFile The file to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file
      * @return The XML response from the PUT
      * @throws IOException If there is trouble with the PUT
      */
-    public static Element put(File aFile, URL aURL) throws IOException {
-        MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+    public static Element put(final File aFile, final URL aURL) throws IOException {
+        final MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
         fileTypeMap.addMimeTypes(XQ_MIME_TYPE);
 
-        String contentType = fileTypeMap.getContentType(aFile);
-        HttpURLConnection http = connect(aURL, contentType);
-        StringBuilder response = new StringBuilder();
-        OutputStream out = http.getOutputStream();
+        final String contentType = fileTypeMap.getContentType(aFile);
+        final HttpURLConnection http = connect(aURL, contentType);
+        final StringBuilder response = new StringBuilder();
+        final OutputStream out = http.getOutputStream();
         BufferedWriter bWriter = null;
 
         try {
@@ -99,14 +101,14 @@ public class Put {
             IOUtils.closeQuietly(bWriter);
         }
 
-        int responseCode = http.getResponseCode();
-        String responseMessage = http.getResponseMessage();
+        final int responseCode = http.getResponseCode();
+        final String responseMessage = http.getResponseMessage();
 
         if (responseCode == 200) {
             BufferedReader bReader = null;
 
-            InputStream in = http.getInputStream();
-            InputStreamReader reader = new InputStreamReader(in, CHARSET);
+            final InputStream in = http.getInputStream();
+            final InputStreamReader reader = new InputStreamReader(in, CHARSET);
             String line;
 
             try {
@@ -125,43 +127,43 @@ public class Put {
         }
 
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-            StringReader reader = new StringReader(response.toString());
-            Document doc = docBuilder.parse(new InputSource(reader));
-            String codeAsText = Integer.toString(responseCode);
-            Element root = doc.getDocumentElement();
+            final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+            final StringReader reader = new StringReader(response.toString());
+            final Document doc = docBuilder.parse(new InputSource(reader));
+            final String codeAsText = Integer.toString(responseCode);
+            final Element root = doc.getDocumentElement();
 
             root.setAttribute("responseCode", codeAsText);
             root.setAttribute("responseMessage", responseMessage);
 
             return root;
-        } catch (ParserConfigurationException details) {
+        } catch (final ParserConfigurationException details) {
             throw new RuntimeException(details);
-        } catch (SAXException details) {
+        } catch (final SAXException details) {
             throw new RuntimeException(details);
         }
     }
 
     /**
      * PUTs the supplied XML element to the supplied {@link URL}.
-     * 
+     *
      * @param aElement The XML element to PUT to the supplied URL
      * @param aURL The place to PUT the supplied file name
      * @return The XML response from the PUT
      * @throws IOException If there is trouble with the PUT
      */
-    public static Element put(URL aURL, Element aElement) throws IOException {
-        HttpURLConnection http = connect(aURL, XML_CONTENT_TYPE);
-        StringBuilder response = new StringBuilder();
-        int responseCode = writeXML(aElement, http);
+    public static Element put(final URL aURL, final Element aElement) throws IOException {
+        final HttpURLConnection http = connect(aURL, XML_CONTENT_TYPE);
+        final StringBuilder response = new StringBuilder();
+        final int responseCode = writeXML(aElement, http);
 
         if (responseCode == 200) {
             BufferedReader bReader = null;
 
             try {
-                InputStream in = http.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in, CHARSET);
+                final InputStream in = http.getInputStream();
+                final InputStreamReader reader = new InputStreamReader(in, CHARSET);
                 String line;
 
                 bReader = new BufferedReader(reader);
@@ -179,32 +181,32 @@ public class Put {
         }
 
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-            StringReader reader = new StringReader(response.toString());
-            Document doc = docBuilder.parse(new InputSource(reader));
-            String codeAsText = Integer.toString(responseCode);
-            Element root = doc.getDocumentElement();
+            final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+            final StringReader reader = new StringReader(response.toString());
+            final Document doc = docBuilder.parse(new InputSource(reader));
+            final String codeAsText = Integer.toString(responseCode);
+            final Element root = doc.getDocumentElement();
 
             root.setAttribute("responseCode", codeAsText);
 
             return root;
-        } catch (ParserConfigurationException details) {
+        } catch (final ParserConfigurationException details) {
             throw new RuntimeException(details);
-        } catch (SAXException details) {
+        } catch (final SAXException details) {
             throw new RuntimeException(details);
         }
     }
 
     /**
      * Connects to a remote resource represented by a URL and sets the connection method to POST.
-     * 
+     *
      * @param aURL The URL representation of a remote resource
      * @return An active <code>HttpURLConnection</code>
      * @throws IOException If there was a problem making the connection
      */
-    private static HttpURLConnection connect(URL aURL, String aContentType) throws IOException {
-        HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
+    private static HttpURLConnection connect(final URL aURL, final String aContentType) throws IOException {
+        final HttpURLConnection http = (HttpURLConnection) aURL.openConnection();
 
         // Set this to a PUT
         http.setDoOutput(true);
@@ -221,21 +223,21 @@ public class Put {
 
     /**
      * Writes an XML element to an HTTP POST connection.
-     * 
+     *
      * @param aNode An XML element to write
      * @param aHTTPConn The HTTP connection to which we write the element
      * @return The status code of the write (whether it was successful)
      * @throws IOException If there is a problem writing to the remote resource
      */
-    private static final int writeXML(Element aNode, HttpURLConnection aConx) throws IOException {
+    private static final int writeXML(final Element aNode, final HttpURLConnection aConx) throws IOException {
         BufferedWriter bWriter = null;
 
         try {
-            OutputStream out = aConx.getOutputStream();
+            final OutputStream out = aConx.getOutputStream();
 
             bWriter = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
             bWriter.write(DOMUtils.toXML(aNode));
-        } catch (TransformerException details) {
+        } catch (final TransformerException details) {
             throw new IOException(details);
         } finally {
             IOUtils.closeQuietly(bWriter);
