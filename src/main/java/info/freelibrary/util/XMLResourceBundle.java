@@ -21,7 +21,7 @@ public class XMLResourceBundle extends ResourceBundle {
     /**
      * The properties set by the XML file.
      */
-    private Properties myProperties;
+    private final Properties myProperties;
 
     /**
      * Constructor that allows {@link ResourceBundle}s to be backed by XML files.
@@ -29,7 +29,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aInStream An XML {@link InputStream}
      * @throws IOException If there is trouble reading from the XML file
      */
-    XMLResourceBundle(InputStream aInStream) throws IOException {
+    XMLResourceBundle(final InputStream aInStream) throws IOException {
         myProperties = new Properties();
         myProperties.loadFromXML(aInStream);
     }
@@ -40,7 +40,8 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aKey The key from which to lookup the value
      * @return The value of the supplied property key
      */
-    protected Object handleGetObject(String aKey) {
+    @Override
+    protected Object handleGetObject(final String aKey) {
         return myProperties.getProperty(aKey);
     }
 
@@ -49,6 +50,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * 
      * @return An {@link Enumeration} of property keys.
      */
+    @Override
     public Enumeration<String> getKeys() {
         final Enumeration<?> enumeration = myProperties.elements();
 
@@ -59,6 +61,7 @@ public class XMLResourceBundle extends ResourceBundle {
              * 
              * @return True if the {@link Enumeration} has more elements; else, false.
              */
+            @Override
             public boolean hasMoreElements() {
                 return enumeration.hasMoreElements();
             }
@@ -68,6 +71,7 @@ public class XMLResourceBundle extends ResourceBundle {
              * 
              * @return The next element in the {@link Enumeration}
              */
+            @Override
             public String nextElement() {
                 return (String) enumeration.nextElement();
             }
@@ -81,7 +85,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aArray The string values to insert into the supplied message
      * @return A message with the supplied values integrated into it
      */
-    public String get(String aMessage, String... aArray) {
+    public String get(final String aMessage, final String... aArray) {
         return StringUtils.format(super.getString(aMessage), aArray);
     }
 
@@ -92,7 +96,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aDetail A string value to be included into the supplied message
      * @return A message with the supplied string value integrated into it
      */
-    public String get(String aMessage, String aDetail) {
+    public String get(final String aMessage, final String aDetail) {
         return StringUtils.format(super.getString(aMessage), aDetail);
     }
 
@@ -102,7 +106,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aMessage The key of the message to be returned
      * @return The value of the requested message
      */
-    public String get(String aMessage) {
+    public String get(final String aMessage) {
         return getString(aMessage);
     }
 
@@ -113,8 +117,8 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aFileArray An array of files, whose names should be integrated into the message value
      * @return The message value with the supplied file names integrated
      */
-    public String get(String aMessage, File... aFileArray) {
-        String[] strings = new String[aFileArray.length];
+    public String get(final String aMessage, final File... aFileArray) {
+        final String[] strings = new String[aFileArray.length];
 
         for (int index = 0; index < strings.length; index++) {
             strings[index] = aFileArray[index].getAbsolutePath();
@@ -130,7 +134,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aFile A file whose name should be integrated into the message value
      * @return The message value with the supplied file name integrated
      */
-    public String get(String aMessage, File aFile) {
+    public String get(final String aMessage, final File aFile) {
         return StringUtils.format(super.getString(aMessage), new String[] {
             aFile.getAbsolutePath()
         });
@@ -142,7 +146,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aFile A file whose name to be returned in the message
      * @return The message form of the supplied file name
      */
-    public String get(File aFile) {
+    public String get(final File aFile) {
         return getString(aFile.getAbsolutePath());
     }
 
@@ -153,8 +157,8 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aDetailsArray Additional details for the message
      * @return The value of the bundle message
      */
-    public String get(String aMessage, Object... aDetailsArray) {
-        String[] strings = new String[aDetailsArray.length];
+    public String get(final String aMessage, final Object... aDetailsArray) {
+        final String[] strings = new String[aDetailsArray.length];
 
         for (int index = 0; index < strings.length; index++) {
             strings[index] = aDetailsArray[index].toString();
@@ -170,7 +174,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aDetail Additional details for the message
      * @return The value of the bundle message
      */
-    public String get(String aMessage, Object aDetail) {
+    public String get(final String aMessage, final Object aDetail) {
         return StringUtils.format(super.getString(aMessage), new String[] {
             aDetail.toString()
         });
@@ -182,7 +186,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aObject A message key
      * @return The value of the bundle message
      */
-    public String get(Object aObject) {
+    public String get(final Object aObject) {
         return getString(aObject.toString());
     }
 
@@ -192,7 +196,8 @@ public class XMLResourceBundle extends ResourceBundle {
      * @param aKey The resource key for which to check in the bundle
      * @return True if key exists in the bundle; else, false
      */
-    public boolean containsKey(String aKey) {
+    @Override
+    public boolean containsKey(final String aKey) {
         return myProperties.containsKey(aKey);
     }
 }

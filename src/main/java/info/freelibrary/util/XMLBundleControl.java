@@ -16,20 +16,24 @@ import java.util.ResourceBundle;
 
 /**
  * A resource bundle control that supports the {@link XMLResourceBundle}.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class XMLBundleControl extends ResourceBundle.Control {
 
     private static final String FORMAT = "xml";
 
+    protected XMLBundleControl() {
+    }
+
     /**
      * Returns a list of formats supported for the supplied base name.
-     * 
+     *
      * @param aBaseName for which to get formats
      * @return A {@link List} of strings
      */
-    public List<String> getFormats(String aBaseName) {
+    @Override
+    public List<String> getFormats(final String aBaseName) {
         if (aBaseName == null) {
             throw new NullPointerException();
         }
@@ -39,28 +43,30 @@ public class XMLBundleControl extends ResourceBundle.Control {
 
     /**
      * Creates a new {@link ResourceBundle}.
-     * 
+     *
      * @param aBaseName A base name for the bundle
      * @param aLocale A locale for the bundle
      * @param aFormat A format for the bundle
      * @param aClassLoader A {@link ClassLoader} for the bundle
      * @param aReload Whether the bundle is to be reloaded
      */
-    public ResourceBundle newBundle(String aBaseName, Locale aLocale, String aFormat, ClassLoader aClassLoader,
-            boolean aReload) throws IllegalAccessException, InstantiationException, IOException {
+    @Override
+    public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
+            final ClassLoader aClassLoader, final boolean aReload) throws IllegalAccessException,
+            InstantiationException, IOException {
         ResourceBundle bundle = null;
 
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
         if (aFormat.equals(FORMAT)) {
-            String bundleName = toBundleName(aBaseName, aLocale);
-            String resourceName = toResourceName(bundleName, aFormat);
+            final String bundleName = toBundleName(aBaseName, aLocale);
+            final String resourceName = toResourceName(bundleName, aFormat);
 
             if (aReload) {
-                URL url = aClassLoader.getResource(resourceName);
+                final URL url = aClassLoader.getResource(resourceName);
 
                 if (url != null) {
-                    URLConnection connection = url.openConnection();
+                    final URLConnection connection = url.openConnection();
 
                     if (connection != null) {
                         // Disable caches to get fresh data for reloading.
@@ -69,7 +75,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
                     }
                 }
             } else {
-                InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName);
+                final InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName);
                 bundle = makeBundle(bundleStream);
             }
         }
@@ -79,12 +85,12 @@ public class XMLBundleControl extends ResourceBundle.Control {
 
     /**
      * Makes a {@link ResourceBundle} from the supplied {@link InputStream}.
-     * 
+     *
      * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
      * @return A {@link ResourceBundle}
      * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
      */
-    private ResourceBundle makeBundle(InputStream aInputStream) throws IOException {
+    private ResourceBundle makeBundle(final InputStream aInputStream) throws IOException {
         BufferedInputStream bufferedInputStream;
         ResourceBundle bundle;
 
@@ -97,11 +103,11 @@ public class XMLBundleControl extends ResourceBundle.Control {
 
     /**
      * Checks a varargs for nulls.
-     * 
+     *
      * @param aVarargs A varargs to check for nulls
      */
-    private void checkForNull(Object... aVarargs) {
-        for (Object arg : aVarargs) {
+    private void checkForNull(final Object... aVarargs) {
+        for (final Object arg : aVarargs) {
             if (arg == null) {
                 throw new NullPointerException();
             }

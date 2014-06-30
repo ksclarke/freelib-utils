@@ -10,14 +10,14 @@ import org.slf4j.Marker;
  */
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
-    private org.slf4j.Logger myLogger;
+    private final org.slf4j.Logger myLogger;
 
     /**
      * Creates a logger using the supplied class as the name.
      * 
      * @param aClass A class to use as the name of the logger
      */
-    Logger(org.slf4j.Logger aLogger) {
+    Logger(final org.slf4j.Logger aLogger) {
         super();
         myLogger = aLogger;
     }
@@ -27,13 +27,13 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * 
      * @param aClass A class to use as the name of the logger
      */
-    Logger(org.slf4j.Logger aLogger, String aBundleName) {
+    Logger(final org.slf4j.Logger aLogger, final String aBundleName) {
         super(aBundleName);
         myLogger = aLogger;
     }
 
     @Override
-    public void debug(String aMessage) {
+    public void debug(final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(getI18n(aMessage));
         } else {
@@ -42,7 +42,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(String aMessage, Object aDetail) {
+    public void debug(final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(getI18n(aMessage), aDetail);
         } else {
@@ -51,7 +51,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(String aMessage, Object... aVarargs) {
+    public void debug(final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(getI18n(aMessage), aVarargs);
         } else {
@@ -60,7 +60,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(String aMessage, Throwable aThrowable) {
+    public void debug(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(getI18n(aMessage), aThrowable);
         } else {
@@ -69,7 +69,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage) {
+    public void debug(final Marker aMarker, final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage));
         } else {
@@ -78,7 +78,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void debug(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -87,7 +87,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Object aDetail) {
+    public void debug(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage), aDetail);
         } else {
@@ -96,7 +96,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Object... aVarargs) {
+    public void debug(final Marker aMarker, final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage), aVarargs);
         } else {
@@ -105,7 +105,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Throwable aThrowable) {
+    public void debug(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage), aThrowable);
         } else {
@@ -114,7 +114,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void debug(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void debug(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.debug(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -123,7 +123,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage) {
+    public void error(final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage));
         } else {
@@ -132,7 +132,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage, Object aDetail) {
+    public void error(final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage), aDetail);
         } else {
@@ -141,7 +141,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage, Object... aVarargs) {
+    public void error(final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage), aVarargs);
         } else {
@@ -150,7 +150,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage, Throwable aThrowable) {
+    public void error(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage), aThrowable);
         } else {
@@ -159,7 +159,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage) {
+    public void error(final Marker aMarker, final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage));
         } else {
@@ -168,7 +168,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void error(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -177,7 +177,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Object aDetail) {
+    public void error(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage), aDetail);
         } else {
@@ -186,7 +186,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Object... aVarargs) {
+    public void error(final Marker aMarker, final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage), aVarargs);
         } else {
@@ -195,7 +195,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Throwable aThrowable) {
+    public void error(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage), aThrowable);
         } else {
@@ -204,7 +204,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void error(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void error(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -218,7 +218,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage) {
+    public void info(final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(getI18n(aMessage));
         } else {
@@ -227,7 +227,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage, Object aDetail) {
+    public void info(final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(getI18n(aMessage), aDetail);
         } else {
@@ -236,7 +236,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage, Object... aVarargs) {
+    public void info(final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(getI18n(aMessage), aVarargs);
         } else {
@@ -245,7 +245,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage, Throwable aThrowable) {
+    public void info(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(getI18n(aMessage), aThrowable);
         } else {
@@ -254,7 +254,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage) {
+    public void info(final Marker aMarker, final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage));
         } else {
@@ -263,7 +263,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void info(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -272,7 +272,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Object aDetail) {
+    public void info(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage), aDetail);
         } else {
@@ -281,7 +281,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Object... aVarargs) {
+    public void info(final Marker aMarker, final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage), aVarargs);
         } else {
@@ -290,7 +290,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Throwable aThrowable) {
+    public void info(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage), aThrowable);
         } else {
@@ -299,7 +299,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void info(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.info(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -313,7 +313,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public boolean isDebugEnabled(Marker aMarker) {
+    public boolean isDebugEnabled(final Marker aMarker) {
         return myLogger.isDebugEnabled(aMarker);
     }
 
@@ -323,7 +323,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public boolean isErrorEnabled(Marker aMarker) {
+    public boolean isErrorEnabled(final Marker aMarker) {
         return myLogger.isErrorEnabled(aMarker);
     }
 
@@ -333,7 +333,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public boolean isInfoEnabled(Marker aMarker) {
+    public boolean isInfoEnabled(final Marker aMarker) {
         return myLogger.isInfoEnabled(aMarker);
     }
 
@@ -343,7 +343,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public boolean isTraceEnabled(Marker aMarker) {
+    public boolean isTraceEnabled(final Marker aMarker) {
         return myLogger.isTraceEnabled(aMarker);
     }
 
@@ -353,12 +353,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public boolean isWarnEnabled(Marker aMarker) {
+    public boolean isWarnEnabled(final Marker aMarker) {
         return myLogger.isWarnEnabled(aMarker);
     }
 
     @Override
-    public void trace(String aMessage) {
+    public void trace(final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(getI18n(aMessage));
         } else {
@@ -367,7 +367,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String aMessage, Object aDetail) {
+    public void trace(final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(getI18n(aMessage), aDetail);
         } else {
@@ -376,7 +376,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String aMessage, Object... aVarargs) {
+    public void trace(final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(getI18n(aMessage), aVarargs);
         } else {
@@ -385,7 +385,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String aMessage, Throwable aThrowable) {
+    public void trace(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(getI18n(aMessage), aThrowable);
         } else {
@@ -394,7 +394,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage) {
+    public void trace(final Marker aMarker, final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage));
         } else {
@@ -403,7 +403,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void trace(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -412,7 +412,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Object aDetail) {
+    public void trace(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage), aDetail);
         } else {
@@ -421,7 +421,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Object... aVarargs) {
+    public void trace(final Marker aMarker, final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage), aVarargs);
         } else {
@@ -430,7 +430,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Throwable aThrowable) {
+    public void trace(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage), aThrowable);
         } else {
@@ -439,7 +439,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void trace(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.trace(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -448,7 +448,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage) {
+    public void warn(final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(getI18n(aMessage));
         } else {
@@ -457,7 +457,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage, Object aDetail) {
+    public void warn(final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(getI18n(aMessage), aDetail);
         } else {
@@ -466,7 +466,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage, Object... aVarargs) {
+    public void warn(final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(getI18n(aMessage), aVarargs);
         } else {
@@ -475,7 +475,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage, Throwable aThrowable) {
+    public void warn(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(getI18n(aMessage), aThrowable);
         } else {
@@ -484,7 +484,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage) {
+    public void warn(final Marker aMarker, final String aMessage) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage));
         } else {
@@ -493,7 +493,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void warn(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {
@@ -502,7 +502,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Object aDetail) {
+    public void warn(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage), aDetail);
         } else {
@@ -511,7 +511,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Object... aVarargs) {
+    public void warn(final Marker aMarker, final String aMessage, final Object... aVarargs) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage), aVarargs);
         } else {
@@ -520,7 +520,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Throwable aThrowable) {
+    public void warn(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage), aThrowable);
         } else {
@@ -529,7 +529,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker aMarker, String aMessage, Object a1stDetail, Object a2ndDetail) {
+    public void warn(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (hasI18nKey(aMessage)) {
             myLogger.warn(aMarker, getI18n(aMessage), a1stDetail, a2ndDetail);
         } else {

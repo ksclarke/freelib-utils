@@ -29,7 +29,7 @@ public abstract class I18nObject {
      * 
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
-    public I18nObject(String aBundleName) {
+    public I18nObject(final String aBundleName) {
         BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(), new XMLBundleControl());
     }
 
@@ -39,7 +39,7 @@ public abstract class I18nObject {
      * @param aMessage A message key
      * @return An internationalized value
      */
-    protected String getI18n(String aMessage) {
+    protected String getI18n(final String aMessage) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage));
     }
 
@@ -50,7 +50,7 @@ public abstract class I18nObject {
      * @param aLongDetail Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, long aLongDetail) {
+    protected String getI18n(final String aMessage, final long aLongDetail) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, Long.toString(aLongDetail)));
     }
 
@@ -61,7 +61,7 @@ public abstract class I18nObject {
      * @param aIntDetail Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, int aIntDetail) {
+    protected String getI18n(final String aMessage, final int aIntDetail) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, Integer.toString(aIntDetail)));
     }
 
@@ -72,7 +72,7 @@ public abstract class I18nObject {
      * @param aDetail Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, String aDetail) {
+    protected String getI18n(final String aMessage, final String aDetail) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, aDetail));
     }
 
@@ -83,7 +83,7 @@ public abstract class I18nObject {
      * @param aDetailsArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, String... aDetailsArray) {
+    protected String getI18n(final String aMessage, final String... aDetailsArray) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, aDetailsArray));
     }
 
@@ -94,7 +94,7 @@ public abstract class I18nObject {
      * @param aException Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, Exception aException) {
+    protected String getI18n(final String aMessage, final Exception aException) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, aException.getMessage()));
     }
 
@@ -105,7 +105,7 @@ public abstract class I18nObject {
      * @param aFile Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, File aFile) {
+    protected String getI18n(final String aMessage, final File aFile) {
         return StringUtils.normalizeWS(BUNDLE.get(aMessage, aFile.getAbsolutePath()));
     }
 
@@ -116,8 +116,8 @@ public abstract class I18nObject {
      * @param aFileArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, File... aFileArray) {
-        String[] fileNames = new String[aFileArray.length];
+    protected String getI18n(final String aMessage, final File... aFileArray) {
+        final String[] fileNames = new String[aFileArray.length];
 
         for (int index = 0; index < fileNames.length; index++) {
             fileNames[index] = aFileArray[index].getAbsolutePath();
@@ -133,8 +133,8 @@ public abstract class I18nObject {
      * @param aObjArray Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(String aMessage, Object... aObjArray) {
-        String[] strings = new String[aObjArray.length];
+    protected String getI18n(final String aMessage, final Object... aObjArray) {
+        final String[] strings = new String[aObjArray.length];
 
         for (int index = 0; index < aObjArray.length; index++) {
             if (aObjArray[index] instanceof File) {
@@ -153,7 +153,7 @@ public abstract class I18nObject {
      * @param aKey A key to check to see if it exists
      * @return True if the key exists; else, false
      */
-    protected boolean hasI18nKey(String aKey) {
+    protected boolean hasI18nKey(final String aKey) {
         return BUNDLE.containsKey(aKey);
     }
 }

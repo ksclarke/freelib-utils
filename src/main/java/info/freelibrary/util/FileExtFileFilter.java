@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class FileExtFileFilter implements FilenameFilter {
 
     // Extensions registered with this filter
-    private String[] myExtensions;
+    private final String[] myExtensions;
 
     /**
      * Constructor for a <code>FilenameFilter</code> that checks a single file extension against supplied file names,
@@ -25,7 +25,7 @@ public class FileExtFileFilter implements FilenameFilter {
      * 
      * @param aFileExt A file extensions (minus the '.') against which we want to compare
      */
-    public FileExtFileFilter(String aFileExt) {
+    public FileExtFileFilter(final String aFileExt) {
         myExtensions = new String[] {
             "." + aFileExt
         };
@@ -37,7 +37,7 @@ public class FileExtFileFilter implements FilenameFilter {
      * 
      * @param aFileExtList A list of file extensions (minus the '.') against which we want to compare
      */
-    public FileExtFileFilter(String... aFileExtList) {
+    public FileExtFileFilter(final String... aFileExtList) {
         myExtensions = new String[aFileExtList.length];
 
         for (int index = 0; index < aFileExtList.length; index++) {
@@ -50,6 +50,7 @@ public class FileExtFileFilter implements FilenameFilter {
      * 
      * @return A string representation of the filter which includes the file name extensions being used as filters.
      */
+    @Override
     public String toString() {
         return Arrays.toString(myExtensions);
     }
@@ -61,8 +62,9 @@ public class FileExtFileFilter implements FilenameFilter {
      * @param aFileName The file name we want to check against our filter
      * @return True if the filter matches the supplied parent and file name; else, false
      */
-    public boolean accept(File aDir, String aFileName) {
-        for (String extension : myExtensions) {
+    @Override
+    public boolean accept(final File aDir, final String aFileName) {
+        for (final String extension : myExtensions) {
             if (new File(aDir, aFileName).isFile() && aFileName.endsWith(extension)) {
                 return true;
             }
@@ -77,8 +79,8 @@ public class FileExtFileFilter implements FilenameFilter {
      * @param aFileExt A file extension like: jpg, gif, jp2, txt, xml, etc.
      * @return True if this filter matches files with the supplied extension
      */
-    public boolean filters(String aFileExt) {
-        for (String extension : myExtensions) {
+    public boolean filters(final String aFileExt) {
+        for (final String extension : myExtensions) {
             if (extension.equals("." + aFileExt)) {
                 return true;
             }

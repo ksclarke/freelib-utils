@@ -39,7 +39,7 @@ public final class PasswordUtils {
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
      */
-    public static String encrypt(String aText) throws IOException {
+    public static String encrypt(final String aText) throws IOException {
         return PasswordUtils.encrypt(aText, "");
     }
 
@@ -51,7 +51,7 @@ public final class PasswordUtils {
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
      */
-    public static String encrypt(String aText, String aSalt) throws NullPointerException, IOException {
+    public static String encrypt(final String aText, final String aSalt) throws NullPointerException, IOException {
         if (aText == null) {
             throw new NullPointerException("Text to encrypt is null");
         }
@@ -61,13 +61,13 @@ public final class PasswordUtils {
         }
 
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA");
-            String saltedText = aText + aSalt;
+            final MessageDigest digest = MessageDigest.getInstance("SHA");
+            final String saltedText = aText + aSalt;
             digest.update(saltedText.getBytes("UTF-8"));
             return Base64.encodeBytes(digest.digest());
-        } catch (NoSuchAlgorithmException details) {
+        } catch (final NoSuchAlgorithmException details) {
             throw new RuntimeException(details); // programming error
-        } catch (UnsupportedEncodingException details) {
+        } catch (final UnsupportedEncodingException details) {
             throw new RuntimeException(details); // programming error
         }
     }

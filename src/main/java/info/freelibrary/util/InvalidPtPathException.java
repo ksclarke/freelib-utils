@@ -21,7 +21,7 @@ public class InvalidPtPathException extends Exception {
      * 
      * @param aMessage
      */
-    public InvalidPtPathException(String aMessage) {
+    public InvalidPtPathException(final String aMessage) {
         super(aMessage);
     }
 
@@ -32,7 +32,7 @@ public class InvalidPtPathException extends Exception {
      * @param aMessage An exception message
      * @param aDetailsVarargs Additional details to insert into the message
      */
-    public InvalidPtPathException(String aMessage, String... aDetailsVarargs) {
+    public InvalidPtPathException(final String aMessage, final String... aDetailsVarargs) {
         super(StringUtils.format(aMessage, aDetailsVarargs));
     }
 
@@ -42,7 +42,7 @@ public class InvalidPtPathException extends Exception {
      * @param aMessage An exception message
      * @param aCause An upstream exception
      */
-    public InvalidPtPathException(String aMessage, Exception aCause) {
+    public InvalidPtPathException(final String aMessage, final Exception aCause) {
         super(aMessage, aCause);
     }
 
@@ -54,7 +54,7 @@ public class InvalidPtPathException extends Exception {
      * @param aCause An upstream exception
      * @param aDetailsVarargs Additional details to insert into the message
      */
-    public InvalidPtPathException(String aMessage, Exception aCause, String... aDetailsVarargs) {
+    public InvalidPtPathException(final String aMessage, final Exception aCause, final String... aDetailsVarargs) {
         super(StringUtils.format(aMessage, aDetailsVarargs), aCause);
     }
 }

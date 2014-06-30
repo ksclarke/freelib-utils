@@ -50,7 +50,7 @@ public final class Stopwatch {
      * 
      * @throws IllegalStateException if the stopwatch is not already running.
      */
-    public void stopAfter(int aSecondsCount) {
+    public void stopAfter(final int aSecondsCount) {
         int stopCount = aSecondsCount;
 
         if (!myTimerIsRunning) {
@@ -72,8 +72,8 @@ public final class Stopwatch {
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getSeconds() {
-        StringBuilder result = new StringBuilder();
-        long timeGap = myStop - myStart;
+        final StringBuilder result = new StringBuilder();
+        final long timeGap = myStop - myStart;
 
         result.append(timeGap / 1000);
         result.append(" secs, ");
@@ -95,7 +95,7 @@ public final class Stopwatch {
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getMilliseconds() {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         result.append(myStop - myStart);
         result.append(" msecs");
 
@@ -111,6 +111,7 @@ public final class Stopwatch {
      * 
      * @return Number of milliseconds elapsed in stopwatch
      */
+    @Override
     public String toString() {
         return "Stopwatch milliseconds elapsed: " + getMilliseconds();
     }

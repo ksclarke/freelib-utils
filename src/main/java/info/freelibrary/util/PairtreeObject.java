@@ -6,7 +6,6 @@ package info.freelibrary.util;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -36,7 +35,7 @@ public class PairtreeObject extends File {
      * @param aName The name of the Pairtree object
      * @throws IOException If there is a problem creating the Pairtree structure
      */
-    PairtreeObject(PairtreeRoot aRoot, String aName) throws IOException {
+    PairtreeObject(final PairtreeRoot aRoot, final String aName) throws IOException {
         super(aRoot, PairtreeUtils.mapToPtPath(aName));
 
         if (!exists() && !mkdirs()) {
@@ -58,7 +57,7 @@ public class PairtreeObject extends File {
      * @param aName The name of the Pairtree object to create
      * @throws IOException If there is a problem creating the object
      */
-    PairtreeObject(PairtreeRoot aRoot, String aPrefix, String aName) throws IOException {
+    PairtreeObject(final PairtreeRoot aRoot, final String aPrefix, final String aName) throws IOException {
         super(aRoot, PairtreeUtils.mapToPtPath(aPrefix, aName));
 
         if (!exists() && !mkdirs()) {
@@ -75,6 +74,7 @@ public class PairtreeObject extends File {
     /**
      * Returns a string representation of the Pairtree object.
      */
+    @Override
     public String toString() {
         return getAbsolutePath();
     }

@@ -23,6 +23,9 @@ public class MavenUtils {
 
     public static final int TRACE_LOG_LEVEL = LocationAwareLogger.TRACE_INT;
 
+    private MavenUtils() {
+    }
+
     /**
      * Set the log level of the supplied loggers to the supplied log level (defined as static ints in the
      * <code>MavenUtils</code> class).
