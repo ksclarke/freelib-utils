@@ -40,7 +40,7 @@
     </developer>
   </developers>
   <properties>
-    <freelib.build.tools.version>0.0.6</freelib.build.tools.version>
+    <freelib.build.tools.version>0.0.7</freelib.build.tools.version>
     <iharder.base64.version>2.3.8</iharder.base64.version>
     <commons.compress.version>1.5</commons.compress.version>
     <slf4j.version>1.7.5</slf4j.version>
@@ -48,7 +48,7 @@
     <junit.version>4.11</junit.version>
     <xom.version>1.2.5</xom.version>
     <xmlunit.version>1.5</xmlunit.version>
-    <maven.checkstyle.version>2.11</maven.checkstyle.version>
+    <maven.checkstyle.version>2.12.1</maven.checkstyle.version>
 
     <!-- used for finding the unpacked checkstyle-suppressions.xml file -->
     <!-- built-in for eclipse-cs tool so we make it work with maven too -->
@@ -140,7 +140,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.2</version>
+        <version>3.3</version>
         <executions>
           <execution>
             <id>default-descriptor</id>
@@ -163,14 +163,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${maven.checkstyle.version}</version>
-        <dependencies>
-          <!-- add the newer checkstyle with throwsIndent support -->
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>5.7</version>
-          </dependency>
-        </dependencies>
         <configuration>
           <consoleOutput>true</consoleOutput>
           <violationSeverity>warning</violationSeverity>
@@ -261,7 +253,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
+        <version>3.1</version>
         <configuration>
           <!-- need to specify this for the m2e plugin -->
           <source>1.7</source>
@@ -308,7 +300,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>2.6</version>
+              <version>2.7</version>
               <configuration>
                 <anonymousConnection>scm:git:git@github.com:ksclarke/freelib-utils.git</anonymousConnection>
                 <developerConnection>scm:git:git@github.com:ksclarke/freelib-utils.git</developerConnection>
@@ -330,7 +322,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-plugin</artifactId>
-              <version>2.16</version>
+              <version>2.17</version>
               <configuration>
                 <forkCount>3</forkCount>
                 <reuseForks>true</reuseForks>
@@ -340,7 +332,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-changes-plugin</artifactId>
-              <version>2.9</version>
+              <version>2.10</version>
               <reportSets>
                 <reportSet>
                   <reports>
@@ -359,7 +351,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>2.9</version>
+              <version>2.9.1</version>
               <reportSets>
                 <reportSet>
                   <id>default</id>
@@ -379,7 +371,7 @@
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>findbugs-maven-plugin</artifactId>
-              <version>2.5.2</version>
+              <version>2.5.4</version>
             </plugin>
             <!-- checkstyle here generates the plugin's reports -->
             <plugin>
@@ -395,7 +387,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-pmd-plugin</artifactId>
-              <version>3.0.1</version>
+              <version>3.1</version>
               <configuration>
                 <aggregate>true</aggregate>
                 <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
@@ -438,7 +430,7 @@
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>cobertura-maven-plugin</artifactId>
-              <version>2.5.2</version>
+              <version>2.6</version>
               <configuration>
                 <aggregate>true</aggregate>
                 <outputDirectory>${project.reporting.outputDirectory}/cobertura</outputDirectory>
@@ -451,12 +443,12 @@
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-markdown</artifactId>
-            <version>1.3</version>
+            <version>1.5</version>
           </dependency>
           <dependency>
             <groupId>lt.velykis.maven.skins</groupId>
             <artifactId>reflow-velocity-tools</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
           </dependency>
           <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -469,7 +461,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.16</version>
+        <version>2.17</version>
         <configuration>
           <argLine>-XX:-UseSplitVerifier</argLine>
         </configuration>
@@ -480,7 +472,7 @@
       <extension>
         <groupId>org.kuali.maven.wagons</groupId>
         <artifactId>maven-s3-wagon</artifactId>
-        <version>1.1.20</version>
+        <version>1.2.1</version>
       </extension>
     </extensions>
   </build>
