@@ -23,9 +23,6 @@ public class XMLBundleControl extends ResourceBundle.Control {
 
     private static final String FORMAT = "xml";
 
-    protected XMLBundleControl() {
-    }
-
     /**
      * Returns a list of formats supported for the supplied base name.
      *
