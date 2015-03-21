@@ -43,11 +43,11 @@ package info.freelibrary.util;
 
  */
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class PairtreeUtilsTest {
 
@@ -117,7 +117,7 @@ public class PairtreeUtilsTest {
 
     /**
      * Tests getting the encapsulating directory from the supplied Pairtree path.
-     * 
+     *
      * @throws InvalidPtPathException If the supplied path isn't a valid Pairtree path
      */
     @Test
@@ -143,7 +143,7 @@ public class PairtreeUtilsTest {
 
     /**
      * Tests extracting an ID from a supplied Pairtree path.
-     * 
+     *
      * @throws InvalidPtPathException If the supplied path isn't a valid Pairtree path.
      */
     @Test
@@ -174,7 +174,7 @@ public class PairtreeUtilsTest {
     /**
      * Tests that an invalid Pairtree path isn't accepted when requesting the encapsulating directory; it fails if an
      * exception isn't thrown.
-     * 
+     *
      * @throws InvalidPtPathException If the supplied path isn't a valid Pairtree path
      */
     @Test(expected = InvalidPtPathException.class)
@@ -185,12 +185,12 @@ public class PairtreeUtilsTest {
 
     /**
      * Tests mapping a Pairtree path to an ID, with ID encoding.
-     * 
+     *
      * @throws InvalidPtPathException If the supplied path isn't a valid Pairtree path
      */
     @Test
     public void testMapToIdWithIdEncoding() throws InvalidPtPathException {
-        String path = "ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1";
+        final String path = "ht/tp/+=/=n/2t/,i/nf/o=/ur/n+/nb/n+/se/+k/b+/re/po/s-/1";
 
         assertEquals("http://n2t.info/urn:nbn:se:kb:repos-1", PairtreeUtils.mapToID(path));
 

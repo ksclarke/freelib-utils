@@ -4,19 +4,23 @@
 
 package info.freelibrary.xq;
 
-import info.freelibrary.util.FileUtils;
-
 import java.io.FileNotFoundException;
 
 import org.w3c.dom.Element;
 
+import info.freelibrary.util.FileUtils;
+import info.freelibrary.util.Logger;
+import info.freelibrary.util.LoggerFactory;
+
 /**
  * An XQuery extension wrapper of some file utilities that throw exceptions. Throwing Java exceptions isn't acceptable
- * for an XQuery extension.
+ * for an XQuery extension that isn't implementing classes from a particular XQuery engine.
  *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class Files {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Files.class);
 
     private Files() {
     }
@@ -46,9 +50,15 @@ public class Files {
         try {
             return FileUtils.toElement(aDir, aPattern, aBool);
         } catch (final FileNotFoundException details) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("The expected directory ({}) does not exist", details);
+            }
             return null; // should be interpreted as an empty sequence
         } catch (final Exception details) {
-            throw new RuntimeException(details);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Encountered unexpected exception: {}", details.getMessage(), details);
+            }
+            return null; // should be interpreted as an empty sequence
         }
     };
 
@@ -73,9 +83,15 @@ public class Files {
         try {
             return FileUtils.toElement(aDir, aBool);
         } catch (final FileNotFoundException details) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("The expected directory ({}) does not exist", details);
+            }
             return null; // should be interpreted as an empty sequence
         } catch (final Exception details) {
-            throw new RuntimeException(details);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Encountered unexpected exception: {}", details.getMessage(), details);
+            }
+            return null; // should be interpreted as an empty sequence
         }
     };
 }

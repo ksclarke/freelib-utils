@@ -8,9 +8,9 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.util.MissingResourceException;
 
-import info.freelibrary.util.test.I18nObjectWrapper;
-
 import org.junit.Test;
+
+import info.freelibrary.util.test.I18nObjectWrapper;
 
 public class I18nObjectTest {
 
@@ -27,10 +27,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringException() {
-        String expectedMessage = "MY EXCEPTION";
-        Exception exception = new IOException(expectedMessage);
-        I18nObjectWrapper test = new I18nObjectWrapper();
-        String foundMessage = test.getI18n("test.my.exception", exception);
+        final String expectedMessage = "MY EXCEPTION";
+        final Exception exception = new IOException(expectedMessage);
+        final I18nObjectWrapper test = new I18nObjectWrapper();
+        final String foundMessage = test.getI18n("test.my.exception", exception);
 
         assertEquals(expectedMessage, foundMessage);
     }
@@ -68,7 +68,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18n(String, File)}.
+     * Test method for {@link I18nObject#getI18n(String, java.io.File)}.
      */
     @Test
     public void testGetI18nStringFile() {
@@ -84,7 +84,7 @@ public class I18nObjectTest {
     }
 
     /**
-     * Test method for {@link I18nObject#getI18n(String, ObjectArray)}.
+     * Test method for {@link I18nObject#getI18n(String, java.lang.ObjectArray)}.
      */
     @Test
     public void testGetI18nStringObjectArray() {
@@ -100,7 +100,7 @@ public class I18nObjectTest {
             new I18nObjectWrapper().getI18n("something.not.found");
 
             fail("Failed to throw MissingResourceException");
-        } catch (MissingResourceException details) {
+        } catch (final MissingResourceException details) {
             // this is expected
         }
     }
@@ -110,7 +110,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testHasI18nKey() {
-        I18nObjectWrapper i18nObj = new I18nObjectWrapper();
+        final I18nObjectWrapper i18nObj = new I18nObjectWrapper();
         assertTrue(i18nObj.hasI18nKey("test.i18n"));
         assertEquals("test i18n", i18nObj.getI18n("test.i18n"));
     }

@@ -5,14 +5,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Locale;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Locale;
-
 /**
  * Tests of the <code>XMLBundleControl</code> class.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class XMLBundleControlTest {
@@ -37,7 +37,7 @@ public class XMLBundleControlTest {
         try {
             myControl.getFormats(null).get(0);
             fail("Failed to throw expected NullPointerException");
-        } catch (Exception details) {
+        } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
     }
@@ -49,7 +49,7 @@ public class XMLBundleControlTest {
     public void newBundleStringLocaleStringClassLoaderBoolean() {
         try {
             myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
-        } catch (Exception details) {
+        } catch (final Exception details) {
             fail(details.getMessage());
         }
     }
@@ -62,7 +62,7 @@ public class XMLBundleControlTest {
         try {
             myControl.newBundle(null, Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
             fail("Failed to throw expected NullPointerException");
-        } catch (Exception details) {
+        } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
     }
@@ -75,7 +75,7 @@ public class XMLBundleControlTest {
         try {
             myControl.newBundle("aBaseName", null, "aFormat", getClass().getClassLoader(), true);
             fail("Failed to throw expected NullPointerException");
-        } catch (Exception details) {
+        } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
     }
@@ -86,12 +86,12 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleWithNullFormat() {
         try {
-            Locale locale = Locale.getDefault();
-            ClassLoader cl = getClass().getClassLoader();
+            final Locale locale = Locale.getDefault();
+            final ClassLoader cl = getClass().getClassLoader();
 
             myControl.newBundle("aBaseName", locale, null, cl, true);
             fail("Failed to throw expected NullPointerException");
-        } catch (Exception details) {
+        } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
     }
@@ -102,10 +102,10 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleWithNullClassLoader() {
         try {
-            Locale locale = Locale.getDefault();
+            final Locale locale = Locale.getDefault();
             myControl.newBundle("aBaseName", locale, "aFormat", null, true);
             fail("Failed to throw expected NullPointerException");
-        } catch (Exception details) {
+        } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
     }

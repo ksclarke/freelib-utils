@@ -1,8 +1,12 @@
 /**
- * 
+ *
  */
 
 package info.freelibrary.util;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,13 +16,9 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 /**
  * Tests of the {@link StringUtils} class.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class StringUtilsTest {
@@ -30,7 +30,7 @@ public class StringUtilsTest {
      */
     @Test
     public void trimToStringString() {
-        String assertion = StringUtils.trimTo(" original ", "default");
+        final String assertion = StringUtils.trimTo(" original ", "default");
 
         assertEquals("default", StringUtils.trimTo(null, "default"));
         assertEquals("default", StringUtils.trimTo("", "default"));
@@ -42,11 +42,11 @@ public class StringUtilsTest {
      */
     @Test
     public void formatMessageStringStringArray() {
-        String message = "This is the {} and the {}";
-        String[] values = new String[] {
+        final String message = "This is the {} and the {}";
+        final String[] values = new String[] {
             "first", "second"
         };
-        String result = StringUtils.format(message, values);
+        final String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
 
@@ -55,16 +55,16 @@ public class StringUtilsTest {
                 "first"
             });
             fail("Failed to notice more slots than values");
-        } catch (IndexOutOfBoundsException details) {
+        } catch (final IndexOutOfBoundsException details) {
         }
 
         try {
-            String[] array = new String[] {
+            final String[] array = new String[] {
                 "first", "second", "third"
             };
             StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
-        } catch (IndexOutOfBoundsException details) {
+        } catch (final IndexOutOfBoundsException details) {
         }
     }
 
@@ -73,13 +73,13 @@ public class StringUtilsTest {
      */
     @Test
     public void testFormatTo80CharsString() {
-        File testFile1 = new File("src/test/resources/80_char_test_1.txt");
+        final File testFile1 = new File("src/test/resources/80_char_test_1.txt");
 
         try {
-            String test1 = StringUtils.read(testFile1, CHARSET);
-            String formattedTest1 = StringUtils.toCharCount(test1, 80);
-            StringReader stringReader = new StringReader(formattedTest1);
-            BufferedReader reader = new BufferedReader(stringReader);
+            final String test1 = StringUtils.read(testFile1, CHARSET);
+            final String formattedTest1 = StringUtils.toCharCount(test1, 80);
+            final StringReader stringReader = new StringReader(formattedTest1);
+            final BufferedReader reader = new BufferedReader(stringReader);
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -87,7 +87,7 @@ public class StringUtilsTest {
                     fail("Line <[ '" + line + "' ]> has a length of " + line.length() + " chars");
                 }
             }
-        } catch (IOException details) {
+        } catch (final IOException details) {
             fail(details.getMessage());
         }
     }
@@ -107,16 +107,16 @@ public class StringUtilsTest {
      */
     @Test
     public void testReadFileString() {
-        File tmpFile = new File(getClass().getName());
-        String original = "This is my content?\nYes!";
+        final File tmpFile = new File(getClass().getName());
+        final String original = "This is my content?\nYes!";
 
         try {
-            FileWriter fileWriter = new FileWriter(tmpFile);
+            final FileWriter fileWriter = new FileWriter(tmpFile);
             fileWriter.write(original);
             fileWriter.close();
 
             assertEquals(original, StringUtils.read(tmpFile, CHARSET));
-        } catch (IOException details) {
+        } catch (final IOException details) {
             fail(details.getMessage());
         } finally {
             tmpFile.delete();
@@ -128,11 +128,11 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringObjectArrayChar() {
-        Integer i1 = new Integer(1);
-        Integer i2 = new Integer(21);
-        Integer i3 = new Integer(3);
+        final Integer i1 = new Integer(1);
+        final Integer i2 = new Integer(21);
+        final Integer i3 = new Integer(3);
 
-        Integer[] array = new Integer[] {
+        final Integer[] array = new Integer[] {
             i1, i2, i3
         };
         assertEquals("1~21~3", StringUtils.toString(array, '~'));
@@ -143,11 +143,11 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringCharVarargs() {
-        Integer i1 = new Integer(1);
-        Integer i2 = new Integer(21);
-        Integer i3 = new Integer(3);
+        final Integer i1 = new Integer(1);
+        final Integer i2 = new Integer(21);
+        final Integer i3 = new Integer(3);
 
-        Object[] array = new Object[] {
+        final Object[] array = new Object[] {
             i1, i2, i3
         };
 
@@ -175,7 +175,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testPadStartStringStringInt() {
-        String result = StringUtils.padStart("source", "!@", 3);
+        final String result = StringUtils.padStart("source", "!@", 3);
         assertEquals("!@!@!@source", result);
     }
 
@@ -184,7 +184,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testPadEndStringStringInt() {
-        String result = StringUtils.padEnd("source", "!@", 3);
+        final String result = StringUtils.padEnd("source", "!@", 3);
         assertEquals("source!@!@!@", result);
     }
 
@@ -193,8 +193,8 @@ public class StringUtilsTest {
      */
     @Test
     public void testAddLineNumbersString() {
-        String original = "This is my content?\nYes!\n\nThis is my content?";
-        String expected = "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
+        final String original = "This is my content?\nYes!\n\nThis is my content?";
+        final String expected = "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
 
         assertEquals(expected, StringUtils.addLineNumbers(original));
     }
@@ -204,10 +204,10 @@ public class StringUtilsTest {
      */
     @Test
     public void testParseIntRangeString() {
-        int[] iArray1 = new int[] {
+        final int[] iArray1 = new int[] {
             1111
         };
-        int[] iArray2 = new int[] {
+        final int[] iArray2 = new int[] {
             1000, 1001, 1002, 1003, 1004, 1005
         };
 
@@ -217,13 +217,13 @@ public class StringUtilsTest {
         try {
             StringUtils.parseIntRange("1001-1000");
             fail("Failed to catch inverted number range");
-        } catch (NumberFormatException details) {
+        } catch (final NumberFormatException details) {
         }
 
         try {
             StringUtils.parseIntRange("1000-");
             fail("Failed to catch single number range value");
-        } catch (NumberFormatException details) {
+        } catch (final NumberFormatException details) {
         }
     }
 }

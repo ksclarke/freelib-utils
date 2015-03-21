@@ -32,12 +32,11 @@ public class StringUtils {
      * Trims a string; if there is nothing left after the trimming, returns null. If the passed in object is not a
      * string, a cast exception will be thrown.
      *
-     * @param aStringObj The string to be trimmed
+     * @param aString The string to be trimmed
      * @return The trimmed string or null if string is empty
-     * @throws ClassCastException If the supplied object cannot be cast to a <code>String</code>
      */
-    public static String trimToNull(final Object aStringObj) {
-        return trimTo(aStringObj, null);
+    public static String trimToNull(final String aString) {
+        return trimTo(aString, null);
     }
 
     /**
@@ -45,18 +44,13 @@ public class StringUtils {
      * offer the method with the default value because most times a boolean with either exist or not (and in the case of
      * not a default should be specified).
      *
-     * @param aStringObj A boolean in string form
+     * @param aString A boolean in string form
      * @param aBool A default boolean value
      * @return The boolean representation of the string value or the default value
-     * @throws ClassCastException If the supplied object is not a string
      */
-    public static boolean trimToBool(final Object aStringObj, final boolean aBool) {
-        try {
-            final String boolString = trimTo(aStringObj, Boolean.toString(aBool));
-            return Boolean.parseBoolean(boolString);
-        } catch (final ClassCastException details) {
-            return aBool; // Report the failed attempt and keep on truckin'
-        }
+    public static boolean trimToBool(final String aString, final boolean aBool) {
+        final String boolString = trimTo(aString, Boolean.toString(aBool));
+        return Boolean.parseBoolean(boolString);
     }
 
     /**
@@ -64,15 +58,13 @@ public class StringUtils {
      *
      * @param aString The string to be trimmed
      * @return The trimmed string or the default value if string is empty
-     * @throws ClassCastException If the supplied <code>Object</code> can't be a <code>String</code>
      */
-    public static String trimTo(final Object aString, final String aDefault) {
+    public static String trimTo(final String aString, final String aDefault) {
         if (aString == null) {
             return aDefault;
         }
 
-        // Will throw ClassCastException if Object can't be cast to String
-        final String trimmed = ((String) aString).trim();
+        final String trimmed = aString.trim();
         return trimmed.length() == 0 ? aDefault : trimmed;
     }
 

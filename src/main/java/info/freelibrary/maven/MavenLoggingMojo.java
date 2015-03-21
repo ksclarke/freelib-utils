@@ -12,37 +12,36 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Sets the logging level for Maven builds to WARN instead of INFO. The only other way to do this is to configure the
- * logging level for all Maven builds in <code>${MAVEN_HOME}/conf/logging/simplelogger.properties</code> (which is not
- * so user-friendly for the beginning or average Maven user).
+ * Sets the logging level for Maven builds to ERROR instead of INFO. The only other way to do this is to configure the
+ * logging level for all Maven builds in <code>${MAVEN_HOME}/conf/logging/simplelogger.properties</code>.
  * <p/>
- * The plugin comes with defaults, but can also be configured like: <code>
-     <plugin>
-       <groupId>info.freelibrary</groupId>
-       <artifactId>freelib-utils</artifactId>
-       <version>${freelib.utils.version}</version>
-       <executions>
-         <execution>
-           <id>set-level</id>
-           <phase>validate</phase>
-           <configuration>
-             <myLevel>debug</myLevel>
-             <myExcludedLoggerNames>
-               <loggerName>org.apache.maven.cli.event.ExecutionEventLogger</loggerName>
-               <loggerName>org.apache.maven.tools.plugin.scanner.DefaultMojoScanner</loggerName>
-             </myExcludedLoggerNames>
-             <myIncludedLoggerNames>
-               <loggerName>org.apache.maven.cli.event.ExecutionEventLogger</loggerName>
-               <loggerName>org.apache.maven.tools.plugin.scanner.DefaultMojoScanner</loggerName>
-             </myIncludedLoggerNames>
-           </configuration>
-           <goals>
-             <goal>configure-logging</goal>
-           </goals>
-         </execution>
-       </executions>
-     </plugin>
- * </code>
+ * The plugin comes with defaults, but can also be configured like:
+ *
+ * <pre><code>
+     &lt;plugin&gt;
+       &lt;groupId&gt;info.freelibrary&lt;/groupId&gt;
+       &lt;artifactId&gt;freelib-utils&lt;/artifactId&gt;
+       &lt;version&gt;${freelib.utils.version}&lt;/version&gt;
+       &lt;executions&gt;
+         &lt;execution&gt;
+           &lt;id&gt;set-level&lt;/id&gt;
+           &lt;phase&gt;validate&lt;/phase&gt;
+           &lt;configuration&gt;
+             &lt;myLevel&gt;debug&lt;/myLevel&gt;
+             &lt;myExcludedLoggerNames&gt;
+               &lt;loggerName&gt;org.apache.maven.cli.event.ExecutionEventLogger&lt;/loggerName&gt;
+             &lt;/myExcludedLoggerNames&gt;
+             &lt;myIncludedLoggerNames&gt;
+               &lt;loggerName&gt;org.apache.maven.tools.plugin.scanner.DefaultMojoScanner&lt;/loggerName&gt;
+             &lt;/myIncludedLoggerNames&gt;
+           &lt;/configuration&gt;
+           &lt;goals&gt;
+             &lt;goal&gt;configure-logging&lt;/goal&gt;
+           &lt;/goals&gt;
+         &lt;/execution&gt;
+       &lt;/executions&gt;
+     &lt;/plugin&gt;
+ * </code></pre>
  *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */

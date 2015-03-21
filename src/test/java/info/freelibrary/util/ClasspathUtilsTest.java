@@ -1,17 +1,17 @@
 
 package info.freelibrary.util;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.jar.JarFile;
 
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
-
 /**
  * Tests the {@link ClasspathUtils} class.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
@@ -21,7 +21,7 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetDirs() {
-        for (String filename : ClasspathUtils.getDirs()) {
+        for (final String filename : ClasspathUtils.getDirs()) {
             if (!new File(filename).isDirectory()) {
                 fail(filename + " isn't a directory as expected");
             }
@@ -33,7 +33,7 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetDirFiles() {
-        for (File file : ClasspathUtils.getDirFiles()) {
+        for (final File file : ClasspathUtils.getDirFiles()) {
             if (!file.isDirectory()) {
                 fail(file.getAbsolutePath() + " isn't a directory as expected");
             }
@@ -45,8 +45,8 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetDirsFilenameFilter() {
-        RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
-        int count = ClasspathUtils.getDirs(filter).length;
+        final RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
+        final int count = ClasspathUtils.getDirs(filter).length;
 
         if (count != 1) {
             fail("Expected to find 1 matches for regex but found " + count);
@@ -58,8 +58,8 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetDirFilesFilenameFilter() {
-        RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
-        int count = ClasspathUtils.getDirFiles(filter).length;
+        final RegexDirFilter filter = new RegexDirFilter("(.*)t-classes");
+        final int count = ClasspathUtils.getDirFiles(filter).length;
 
         if (count != 1) {
             fail("Expected to find 1 matches for regex but found " + count);
@@ -71,7 +71,7 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetJars() {
-        for (String jarName : ClasspathUtils.getJars()) {
+        for (final String jarName : ClasspathUtils.getJars()) {
             if (!jarName.endsWith(".jar")) {
                 fail(jarName + " doesn't have a .jar extension as expected");
             }
@@ -83,7 +83,7 @@ public class ClasspathUtilsTest {
      */
     @Test
     public void testGetJarsFilenameFilter() {
-        RegexFileFilter filter = new RegexFileFilter("^junit(.*)$");
+        final RegexFileFilter filter = new RegexFileFilter("^junit(.*)$");
 
         if (ClasspathUtils.getJars(filter).length != 1) {
             fail("Should have found one and only one junit jar file");
@@ -96,12 +96,12 @@ public class ClasspathUtilsTest {
     @Test
     public void testGetJarFiles() {
         try {
-            for (JarFile jarFile : ClasspathUtils.getJarFiles()) {
+            for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
                 if (!jarFile.getName().endsWith(".jar")) {
                     fail(jarFile.getName() + " is not a jar file");
                 }
             }
-        } catch (IOException details) {
+        } catch (final IOException details) {
             fail(details.getMessage());
         }
     }
@@ -112,13 +112,13 @@ public class ClasspathUtilsTest {
     @Test
     public void testGetJarFilesFilenameFilter() {
         try {
-            RegexFileFilter filter = new RegexFileFilter("^junit(.*)$");
-            JarFile[] jars = ClasspathUtils.getJarFiles(filter);
+            final RegexFileFilter filter = new RegexFileFilter("^junit(.*)$");
+            final JarFile[] jars = ClasspathUtils.getJarFiles(filter);
 
             if (jars.length < 1) {
                 fail("Failed to find junit jar file using regexp filter");
             }
-        } catch (IOException details) {
+        } catch (final IOException details) {
             fail(details.getMessage());
         }
     }
@@ -148,7 +148,7 @@ public class ClasspathUtilsTest {
             if (!ClasspathUtils.find("META-INF/MANIFEST.MF")) {
                 fail("Didn't find META-INF/MANIFEST.MF like it should");
             }
-        } catch (IOException details) {
+        } catch (final IOException details) {
             fail(details.getMessage());
         }
     }

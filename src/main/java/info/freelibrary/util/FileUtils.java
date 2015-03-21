@@ -366,8 +366,6 @@ public class FileUtils {
         }
 
         if (aDir.isFile()) {
-            final File parent = aDir.getParentFile();
-
             if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
                 return new File[] {
                     aDir
