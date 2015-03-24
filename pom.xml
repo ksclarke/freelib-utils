@@ -43,15 +43,11 @@
     </developer>
   </developers>
 
-  <prerequisites>
-    <maven>3.2.2</maven>
-  </prerequisites>
-
   <properties>
     <!-- Project specific dependencies -->
     <iharder.base64.version>2.3.8</iharder.base64.version>
     <commons.compress.version>1.5</commons.compress.version>
-    <slf4j.simple.version>1.7.10</slf4j.simple.version>
+    <slf4j.simple.logger.version>1.7.10</slf4j.simple.logger.version>
 
     <!-- Project settings -->
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -76,7 +72,9 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.simple.version}</version>
+      <version>${slf4j.simple.logger.version}</version>
+      <!-- Only needed by Maven, which will provide it -->
+      <scope>provided</scope>
     </dependency>
     <!-- Below dependencies are only used for testing -->
     <dependency>

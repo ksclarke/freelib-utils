@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.impl.SimpleLogger;
 import org.slf4j.spi.LocationAwareLogger;
 
 public class MavenUtils {
@@ -49,6 +48,7 @@ public class MavenUtils {
     public static final void setLogLevels(final int aLogLevel, final String[] aLoggerList,
             final String[] aExcludesList, final String[] aIncludesList) {
         final ArrayList<String> loggerList = new ArrayList<String>(Arrays.asList(aLoggerList));
+        final Class<? extends Logger> simpleLogger = LoggerFactory.getLogger("org.slf4j.impl.SimpleLogger").getClass();
 
         if (aIncludesList != null) {
             loggerList.addAll(Arrays.asList(aIncludesList));
@@ -71,9 +71,9 @@ public class MavenUtils {
             }
 
             final Logger loggerObject = LoggerFactory.getLogger(loggerName);
-            final Class<?> loggerClass = loggerObject.getClass();
+            final Class<? extends Logger> loggerClass = loggerObject.getClass();
 
-            if (loggerClass.getName().equals(SimpleLogger.class.getName())) {
+            if (simpleLogger.equals(loggerClass)) {
                 try {
                     final Field field = loggerClass.getDeclaredField("currentLogLevel");
 
