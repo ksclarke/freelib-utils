@@ -40,10 +40,6 @@
     </developer>
   </developers>
 
-  <prerequisites>
-    <maven>3.2.2</maven>
-  </prerequisites>
-
   <properties>
     <!-- Project specific dependencies -->
     <iharder.base64.version>2.3.8</iharder.base64.version>
