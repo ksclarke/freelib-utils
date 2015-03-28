@@ -23,7 +23,10 @@ public class XMLBundleControl extends ResourceBundle.Control {
 
     private static final String FORMAT = "xml";
 
-    protected XMLBundleControl() {
+    /**
+     * Creates a new <code>XMLBundleControl</code>.
+     */
+    public XMLBundleControl() {
     }
 
     /**
