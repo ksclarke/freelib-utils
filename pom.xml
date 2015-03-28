@@ -28,10 +28,6 @@
     <url>https://github.com/ksclarke/freelib-utils/issues</url>
   </issueManagement>
 
-  <organization>
-    <name>FreeLibrary</name>
-    <url>http://freelibrary.info</url>
-  </organization>
   <developers>
     <developer>
       <email>ksclarke@gmail.com</email>
@@ -43,6 +39,10 @@
       <timezone>America/New_York</timezone>
     </developer>
   </developers>
+
+  <prerequisites>
+    <maven>3.2.2</maven>
+  </prerequisites>
 
   <properties>
     <!-- Project specific dependencies -->
