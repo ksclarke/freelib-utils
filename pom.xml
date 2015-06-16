@@ -75,10 +75,6 @@
     </dependency>
     <!-- Below dependencies are only used for testing -->
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
@@ -125,12 +121,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <classpathDependencyExcludes>
-            <!-- SimpleLogger is used by Maven plugin but we're not testing that with Surefire so use Logback -->
-            <classpathDependencyExclude>org.slf4j:slf4j-simple</classpathDependencyExclude>
-          </classpathDependencyExcludes>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>br.com.ingenieux</groupId>
@@ -151,7 +141,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
   </parent>
 
 </project>

@@ -5,7 +5,7 @@ import org.slf4j.Marker;
 
 /**
  * Create a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class Logger extends I18nObject implements org.slf4j.Logger {
@@ -14,17 +14,17 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
     /**
      * Creates a logger using the supplied class as the name.
-     * 
+     *
      * @param aClass A class to use as the name of the logger
      */
     Logger(final org.slf4j.Logger aLogger) {
-        super();
+        super(aLogger.getName());
         myLogger = aLogger;
     }
 
     /**
      * Creates a logger using the supplied class as the name.
-     * 
+     *
      * @param aClass A class to use as the name of the logger
      */
     Logger(final org.slf4j.Logger aLogger, final String aBundleName) {

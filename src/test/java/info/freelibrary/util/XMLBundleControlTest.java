@@ -17,6 +17,10 @@ import org.junit.Test;
  */
 public class XMLBundleControlTest {
 
+    private static final String BUNDLE_NAME = "test_freelib-utils_messages";
+
+    private static final String XML_FORMAT = "xml";
+
     private XMLBundleControl myControl;
 
     /**
@@ -32,9 +36,11 @@ public class XMLBundleControlTest {
      */
     @Test
     public void testGetFormatsString() {
-        assertEquals("xml", myControl.getFormats("yada").get(0));
+        // The only format XMLBundleControl returns is "xml"
+        assertEquals(XML_FORMAT, myControl.getFormats("yada").get(0));
 
         try {
+            // If we request a null though we should get an exception
             myControl.getFormats(null).get(0);
             fail("Failed to throw expected NullPointerException");
         } catch (final Exception details) {
@@ -47,8 +53,12 @@ public class XMLBundleControlTest {
      */
     @Test
     public void newBundleStringLocaleStringClassLoaderBoolean() {
+        final ClassLoader classLoader = getClass().getClassLoader();
+
         try {
-            myControl.newBundle("aBaseName", Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
+            if (myControl.newBundle(BUNDLE_NAME, Locale.US, XML_FORMAT, classLoader, true) == null) {
+                fail("Failed to get the en_US message bundle");
+            }
         } catch (final Exception details) {
             fail(details.getMessage());
         }
@@ -59,8 +69,10 @@ public class XMLBundleControlTest {
      */
     @Test
     public void newBundleWithNullBundleName() {
+        final ClassLoader classLoader = getClass().getClassLoader();
+
         try {
-            myControl.newBundle(null, Locale.getDefault(), "aFormat", getClass().getClassLoader(), true);
+            myControl.newBundle(null, Locale.US, XML_FORMAT, classLoader, true);
             fail("Failed to throw expected NullPointerException");
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
@@ -72,8 +84,10 @@ public class XMLBundleControlTest {
      */
     @Test
     public void newBundleWithNullLocale() {
+        final ClassLoader classLoader = getClass().getClassLoader();
+
         try {
-            myControl.newBundle("aBaseName", null, "aFormat", getClass().getClassLoader(), true);
+            myControl.newBundle(BUNDLE_NAME, null, XML_FORMAT, classLoader, true);
             fail("Failed to throw expected NullPointerException");
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
@@ -85,11 +99,10 @@ public class XMLBundleControlTest {
      */
     @Test
     public void newBundleWithNullFormat() {
-        try {
-            final Locale locale = Locale.getDefault();
-            final ClassLoader cl = getClass().getClassLoader();
+        final ClassLoader classLoader = getClass().getClassLoader();
 
-            myControl.newBundle("aBaseName", locale, null, cl, true);
+        try {
+            myControl.newBundle(BUNDLE_NAME, Locale.US, null, classLoader, true);
             fail("Failed to throw expected NullPointerException");
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
@@ -102,8 +115,7 @@ public class XMLBundleControlTest {
     @Test
     public void newBundleWithNullClassLoader() {
         try {
-            final Locale locale = Locale.getDefault();
-            myControl.newBundle("aBaseName", locale, "aFormat", null, true);
+            myControl.newBundle(BUNDLE_NAME, Locale.US, XML_FORMAT, null, true);
             fail("Failed to throw expected NullPointerException");
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);

@@ -6,20 +6,35 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import info.freelibrary.util.test.I18nObjectWrapper;
 
 public class I18nObjectTest {
 
+    private static final Locale myLocale = Locale.getDefault();
+
+    @Before
+    public void beforeTests() {
+        Locale.setDefault(Locale.US);
+    }
+
+    @After
+    public void afterTests() {
+        Locale.setDefault(myLocale);
+    }
+
     /**
      * Test method for {@link I18nObject#getI18n(String)}.
      */
     @Test
     public void testGetI18nString() {
-        assertEquals("Retrieving pairtree_root directory at {}", new I18nObjectWrapper().getI18n("pt.retrieving_root"));
+        assertEquals("one", new I18nObjectWrapper().getI18n("test.one"));
     }
 
     /**
@@ -27,12 +42,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringException() {
-        final String expectedMessage = "MY EXCEPTION";
-        final Exception exception = new IOException(expectedMessage);
-        final I18nObjectWrapper test = new I18nObjectWrapper();
-        final String foundMessage = test.getI18n("test.my.exception", exception);
+        final String expected = "one";
+        final String found = new I18nObjectWrapper().getI18n("test.value.one", new IOException(expected));
 
-        assertEquals(expectedMessage, foundMessage);
+        assertEquals(expected, found);
     }
 
     /**
@@ -111,7 +124,7 @@ public class I18nObjectTest {
     @Test
     public void testHasI18nKey() {
         final I18nObjectWrapper i18nObj = new I18nObjectWrapper();
-        assertTrue(i18nObj.hasI18nKey("test.i18n"));
-        assertEquals("test i18n", i18nObj.getI18n("test.i18n"));
+        assertTrue(i18nObj.hasI18nKey("test.one"));
+        assertEquals("one", i18nObj.getI18n("test.one"));
     }
 }

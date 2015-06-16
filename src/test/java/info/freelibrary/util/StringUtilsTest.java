@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -121,6 +123,21 @@ public class StringUtilsTest {
         } finally {
             tmpFile.delete();
         }
+    }
+
+    /**
+     * Tests {@link StringUtils#joinKeys(Map, char)}.
+     */
+    @Test
+    public void toKeysString() {
+        final Map<String, String> map = new TreeMap<String, String>();
+
+        map.put("one", "two");
+        map.put("three", "four");
+        map.put("five", "six");
+
+        // This is only consistent because we're using a sorted map
+        assertEquals("five one three", StringUtils.joinKeys(map, ' '));
     }
 
     /**

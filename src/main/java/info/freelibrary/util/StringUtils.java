@@ -364,6 +364,28 @@ public class StringUtils {
     }
 
     /**
+     * Turns the keys in a map into a character delimited string. The order is only consistent if the map is sorted.
+     *
+     * @param aMap The map from which to pull the keys
+     * @param aSeparator The character separator for the construction of the string
+     * @return A string constructed from the keys in the map
+     */
+    public static String joinKeys(final Map<String, ?> aMap, final char aSeparator) {
+        final Iterator<String> iterator = aMap.keySet().iterator();
+        final StringBuilder buffer = new StringBuilder();
+
+        int length;
+
+        while (iterator.hasNext()) {
+            buffer.append(iterator.next()).append(aSeparator);
+        }
+
+        length = buffer.length() - 1;
+
+        return buffer.charAt(length) == aSeparator ? buffer.substring(0, length) : buffer.toString();
+    }
+
+    /**
      * Provides a toString() method for maps that have string keys and string array values. The regular map toString()
      * works fine for string keys and string values but, since a string array doesn't have a toString(), the map's
      * toString() method doesn't produce a useful output. This fixes that.
