@@ -19,7 +19,14 @@ public abstract class I18nObject {
     private final XMLResourceBundle BUNDLE;
 
     /**
-     * Constructor for an I18NObject that takes a {@link ResourceBundle} name as an argument. The name should be
+     * Empty constructor for an I18nObject.
+     */
+    I18nObject() {
+        BUNDLE = null;
+    }
+
+    /**
+     * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
      * something specific to the package that's extending the <code>I18nObject</code>... for instance:
      * <code>freelib-utils_messages</code> or <code>freelib-djatoka_messages</code>.
      *
@@ -150,6 +157,6 @@ public abstract class I18nObject {
      * @return True if the key exists; else, false
      */
     protected boolean hasI18nKey(final String aMessageKey) {
-        return BUNDLE.containsKey(aMessageKey);
+        return BUNDLE != null && BUNDLE.containsKey(aMessageKey);
     }
 }

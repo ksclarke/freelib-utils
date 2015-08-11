@@ -18,7 +18,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aClass A class to use as the name of the logger
      */
     Logger(final org.slf4j.Logger aLogger) {
-        super(aLogger.getName());
+        super();
         myLogger = aLogger;
     }
 
