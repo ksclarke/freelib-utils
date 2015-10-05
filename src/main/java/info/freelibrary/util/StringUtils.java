@@ -371,6 +371,10 @@ public class StringUtils {
      * @return A string constructed from the keys in the map
      */
     public static String joinKeys(final Map<String, ?> aMap, final char aSeparator) {
+        if (aMap.isEmpty()) {
+            return "";
+        }
+
         final Iterator<String> iterator = aMap.keySet().iterator();
         final StringBuilder buffer = new StringBuilder();
 
@@ -400,11 +404,11 @@ public class StringUtils {
 
         while (setIter.hasNext()) {
             final Entry<String, String[]> entry = setIter.next();
-            final String[] values = entry.getValue();
+            final Object[] values = entry.getValue();
 
             buffer.append(entry.getKey()).append('=');
 
-            for (final String value : values) {
+            for (final Object value : values) {
                 buffer.append('{').append(value).append('}');
             }
 

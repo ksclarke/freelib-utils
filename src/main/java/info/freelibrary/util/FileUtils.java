@@ -4,6 +4,16 @@
 
 package info.freelibrary.util;
 
+import static java.nio.file.attribute.PosixFilePermission.GROUP_EXECUTE;
+import static java.nio.file.attribute.PosixFilePermission.GROUP_READ;
+import static java.nio.file.attribute.PosixFilePermission.GROUP_WRITE;
+import static java.nio.file.attribute.PosixFilePermission.OTHERS_EXECUTE;
+import static java.nio.file.attribute.PosixFilePermission.OTHERS_READ;
+import static java.nio.file.attribute.PosixFilePermission.OTHERS_WRITE;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_EXECUTE;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_WRITE;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.FileChannel;
+import java.nio.file.attribute.PosixFilePermission;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,10 +33,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -440,6 +453,22 @@ public class FileUtils {
     }
 
     /**
+     * Returns a file extension (as delimited by a period).
+     *
+     * @param aFileName A file name from which to get the extension
+     * @return The extension or an empty string if the file doesn't have an extension
+     */
+    public static String getExt(final String aFileName) {
+        final int index = aFileName.lastIndexOf('.');
+
+        if (index != -1) {
+            return aFileName.substring(index + 1, aFileName.length());
+        }
+
+        return "";
+    }
+
+    /**
      * Gets the calculated size of a directory of files.
      *
      * @param aFile A file or directory from which to calculate size
@@ -622,6 +651,106 @@ public class FileUtils {
         }
 
         return true;
+    }
+
+    /**
+     * Converts an file permissions mode integer to a PosixFilePermission set.
+     *
+     * @param aMode An integer permissions mode.
+     * @return A PosixFilePermission set
+     */
+    public static Set<PosixFilePermission> convertToPermissionsSet(final int aMode) {
+        final Set<PosixFilePermission> result = EnumSet.noneOf(PosixFilePermission.class);
+
+        if (isSet(aMode, 0400)) {
+            result.add(OWNER_READ);
+        }
+
+        if (isSet(aMode, 0200)) {
+            result.add(OWNER_WRITE);
+        }
+
+        if (isSet(aMode, 0100)) {
+            result.add(OWNER_EXECUTE);
+        }
+
+        if (isSet(aMode, 040)) {
+            result.add(GROUP_READ);
+        }
+
+        if (isSet(aMode, 020)) {
+            result.add(GROUP_WRITE);
+        }
+
+        if (isSet(aMode, 010)) {
+            result.add(GROUP_EXECUTE);
+        }
+
+        if (isSet(aMode, 04)) {
+            result.add(OTHERS_READ);
+        }
+
+        if (isSet(aMode, 02)) {
+            result.add(OTHERS_WRITE);
+        }
+
+        if (isSet(aMode, 01)) {
+            result.add(OTHERS_EXECUTE);
+        }
+
+        return result;
+    }
+
+    /**
+     * Convert a PosixFilePermission set to an integer permissions mode.
+     *
+     * @param aPermSet A PosixFilePermission set
+     * @return A permissions mode integer
+     */
+    public static int convertToInt(final Set<PosixFilePermission> aPermSet) {
+        int result = 0;
+
+        if (aPermSet.contains(OWNER_READ)) {
+            result = result | 0400;
+        }
+
+        if (aPermSet.contains(OWNER_WRITE)) {
+            result = result | 0200;
+        }
+
+        if (aPermSet.contains(OWNER_EXECUTE)) {
+            result = result | 0100;
+        }
+
+        if (aPermSet.contains(GROUP_READ)) {
+            result = result | 040;
+        }
+
+        if (aPermSet.contains(GROUP_WRITE)) {
+            result = result | 020;
+        }
+
+        if (aPermSet.contains(GROUP_EXECUTE)) {
+            result = result | 010;
+        }
+
+        if (aPermSet.contains(OTHERS_READ)) {
+            result = result | 04;
+        }
+
+        if (aPermSet.contains(OTHERS_WRITE)) {
+            result = result | 02;
+        }
+
+        if (aPermSet.contains(OTHERS_EXECUTE)) {
+            result = result | 01;
+        }
+
+        return result;
+    }
+
+    private static boolean isSet(final int mode, final int testbit) {
+        return (mode & testbit) == testbit;
     }
 
     /**

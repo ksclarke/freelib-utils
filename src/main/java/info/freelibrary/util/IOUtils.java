@@ -170,4 +170,28 @@ public class IOUtils {
             input.close();
         }
     }
+
+    /**
+     * Reads an InputStream into a byte array.
+     *
+     * @param aInputStream The input stream from which to read
+     * @return The array of bytes
+     * @throws IOException If there is trouble reading from the input stream
+     */
+    public static final byte[] readBytes(final InputStream aInputStream) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final byte[] buffer = new byte[4096];
+        int read = 0;
+
+        while (read != -1) {
+            read = aInputStream.read(buffer);
+
+            if (read > 0) {
+                baos.write(buffer, 0, read);
+            }
+        }
+
+        closeQuietly(aInputStream);
+        return baos.toByteArray();
+    }
 }

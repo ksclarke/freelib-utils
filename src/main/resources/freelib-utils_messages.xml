@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-    <entry key="jarClassLoader.init">Initiating JarClassLoader with {}</entry>
+  <entry key="message-class-name">info.freelibrary.util.MessageCodes</entry>
+  <entry key="MSG-001">Initiating JarClassLoader with {}</entry>
+  <entry key="MSG-002">Native library file for {} wasn't found</entry>
 
-    <!-- Pairtree related logging messages -->
-    <entry key="pt.retrieving_root">Retrieving pairtree_root directory at {}</entry>
-    <entry key="pt.cant_mkdirs">Can't create directory: {}</entry>
-    <entry key="pt.using_prefix">Using Pairtree prefix: {}</entry>
-    <entry key="pt.object_retrieved1">Pairtree Object retrieved: {} ({})</entry>
-    <entry key="pt.object_retrieved2">Pairtree Object retrieved: {} ({} | {})</entry>
-    <entry key="pt.bad_prefix">Trying to write wrong Pairtree prefix ({} vs. {})</entry>
-    <entry key="pt.verfile.content1">This directory conforms to Pairtree Version {}. Updated spec:</entry>
-    <entry key="pt.verfile.content2">http://www.cdlib.org/inside/diglib/pairtree/pairtreespec.html</entry>
+  <!-- Maven plugin related messages -->
+  <entry key="MVN-MSG-001">No message files were supplied so no code classes were created</entry>
+  <entry key="MVN-MSG-002">ResourceBundle&apos;s &quot;{}&quot; key not found</entry>
+  <entry key="MVN-MSG-003">Codes class ({}) cannot be created because package directory ({}) does not exist and cannot be
+    created</entry>
 
-    <entry key="test.my.exception">{}</entry>
-    <entry key="test.i18n">test i18n</entry>
+  <!-- Pairtree related logging messages -->
+  <entry key="PT-MSG-001">Retrieving pairtree_root directory at {}</entry>
+  <entry key="PT-MSG-002">Can&apos;t create directory: {}</entry>
+  <entry key="PT-MSG-003">Using Pairtree prefix: {}</entry>
+  <entry key="PT-MSG-004">Pairtree Object retrieved: {} ({})</entry>
+  <entry key="PT-MSG-005">Pairtree Object retrieved: {} ({} | {})</entry>
+  <entry key="PT-MSG-006">Trying to write wrong Pairtree prefix ({} vs. {})</entry>
+  <entry key="PT-MSG-007">This directory conforms to Pairtree Version {}. Updated spec:</entry>
+  <entry key="PT-MSG-008">https://tools.ietf.org/id/draft-kunze-pairtree-01.txt</entry>
 </properties>

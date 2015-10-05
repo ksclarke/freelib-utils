@@ -105,7 +105,9 @@ public class PairtreeUtils {
      * @return The Pairtree path for the supplied ID
      */
     public static String mapToPtPath(final String aID) {
-        assert aID != null;
+        if (aID == null) {
+            throw new NullPointerException("Pairtree ID may not be null");
+        }
 
         final String encodedID = encodeID(aID);
         final List<String> shorties = new ArrayList<String>();
@@ -145,7 +147,16 @@ public class PairtreeUtils {
      * @return The Pairtree path for the supplied ID
      */
     public static String mapToPtPath(final String aBasePath, final String aID, final String aEncapsulatingDirName) {
-        return concat(aBasePath, mapToPtPath(aID), aEncapsulatingDirName);
+        if (aID == null) {
+            throw new NullPointerException("Pairtree path ID may not be null");
+        }
+
+        if (aEncapsulatingDirName == null) {
+            return concat(aBasePath, mapToPtPath(aID));
+        }
+
+        // If aBasePath is null, the concat method just ignores it
+        return concat(aBasePath, mapToPtPath(aID), encodeID(aEncapsulatingDirName));
     }
 
     /**
@@ -209,7 +220,9 @@ public class PairtreeUtils {
      * @throws InvalidPtPathException If there is a problem extracting the encapsulating directory
      */
     public static String getEncapsulatingDir(final String aPtPath) throws InvalidPtPathException {
-        assert aPtPath != null;
+        if (aPtPath == null) {
+            throw new NullPointerException("Pairtree path may not be null");
+        }
 
         // Walk the Pairtree path looking for first non-shorty
         final String[] pPathParts = aPtPath.split("\\" + mySeparator);
@@ -245,14 +258,14 @@ public class PairtreeUtils {
         if (nextToLastPart.length() == myShortyLength) {
             // If last has length > shorty length then encapsulating directory
             if (lastPart.length() > myShortyLength) {
-                return lastPart;
+                return decodeID(lastPart);
             } else { // Else no encapsulating directory
                 return null;
             }
         }
 
         // Else last is encapsulating directory
-        return lastPart;
+        return decodeID(lastPart);
     }
 
     /**
@@ -287,6 +300,29 @@ public class PairtreeUtils {
     }
 
     /**
+     * Removes the supplied Pairtree prefix from the supplied ID.
+     *
+     * @param aPrefix A Pairtree prefix
+     * @param aID An ID
+     * @return The ID without the Pairtree prefix prepended to it
+     */
+    public static String removePrefix(final String aPrefix, final String aID) {
+        if (aPrefix == null) {
+            throw new NullPointerException("Pairtree prefix may not be null");
+        }
+
+        if (aID == null) {
+            throw new NullPointerException("Pairtree ID may not be null");
+        }
+
+        if (aID.indexOf(aPrefix) == 0) {
+            return aID.substring(aPrefix.length());
+        }
+
+        return aID;
+    }
+
+    /**
      * Removes the base path from the supplied Pairtree path.
      *
      * @param aBasePath A base path for a Pairtree path
@@ -294,8 +330,14 @@ public class PairtreeUtils {
      * @return The Pairtree path without the base path
      */
     public static String removeBasePath(final String aBasePath, final String aPtPath) {
-        assert aBasePath != null;
-        assert aPtPath != null;
+        if (aBasePath == null) {
+            throw new NullPointerException("Base path may not be null");
+        }
+
+        if (aPtPath == null) {
+            throw new NullPointerException("Pairtree path may not be null");
+        }
+
         String newPath = aPtPath;
 
         if (aPtPath.startsWith(aBasePath)) {
@@ -316,7 +358,10 @@ public class PairtreeUtils {
      * @return The cleaned ID for use in a Pairtree path
      */
     public static String encodeID(final String aID) {
-        assert aID != null;
+        if (aID == null) {
+            throw new NullPointerException("Pairtree ID may not be null");
+        }
+
         byte[] bytes; // First pass
 
         try {
@@ -393,4 +438,30 @@ public class PairtreeUtils {
 
         return idBuf.toString();
     }
+
+    /**
+     * Check whether a Pairtree path exists or not.
+     *
+     * @param aRoot The Pairtree root
+     * @param aID The path's ID
+     * @return True if the Pairtree path exists; else, false
+     */
+    public boolean pathExists(final PairtreeRoot aRoot, final String aID) {
+        final String id = removePrefix(aRoot.getPairtreePrefix(), aID);
+        return new File(aRoot, PairtreeUtils.mapToPtPath(null, id, id)).exists();
+    }
+
+    /**
+     * Check whether a Pairtree object exists or not. Assumes objects use an encapsulating directory created from
+     * encoding the ID.
+     *
+     * @param aRoot The Pairtree root
+     * @param aID The object ID
+     * @return True if the Pairtree object exists; else, false
+     */
+    public boolean objExists(final PairtreeRoot aRoot, final String aID) {
+        final String id = removePrefix(aRoot.getPairtreePrefix(), aID);
+        return new File(aRoot, PairtreeUtils.mapToPtPath("", aID, aID)).exists();
+    }
+
 }

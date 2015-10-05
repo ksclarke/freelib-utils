@@ -4,25 +4,22 @@
 
 package info.freelibrary.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 
 /**
  * The root of the Pairtree structure.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class PairtreeRoot extends File {
 
     public static final String PT_VERSION_NUM = "0.1";
-
-    private static final String LINE_SEP = System.getProperty("line.separator");
 
     private static final long serialVersionUID = 148951612898582350L;
 
@@ -34,17 +31,14 @@ public class PairtreeRoot extends File {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
 
-    private static final XMLResourceBundle BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(
-            "freelib-utils_messages", new XMLBundleControl());
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeRoot.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeRoot.class, Constants.FREELIB_UTIL_MESSAGES);
 
     private String myPairtreePrefix;
 
     /**
      * Creates a new Pairtree structure in the supplied directory. This will create the related version and prefix files
      * too.
-     * 
+     *
      * @param aParentDirPath The parent directory into which to put the Pairtree structure
      * @throws IOException If there is a problem creating the structure
      */
@@ -55,7 +49,7 @@ public class PairtreeRoot extends File {
     /**
      * Creates a new Pairtree structure, using a Pairtree prefix, in the supplied directory. This will create the
      * related version and prefix files too.
-     * 
+     *
      * @param aParentDirPath The parent directory into which to put the Pairtree structure
      * @param aPairtreePrefix The prefix for the Pairtree structure
      * @throws IOException If there is a problem creating the structure
@@ -66,7 +60,7 @@ public class PairtreeRoot extends File {
 
     /**
      * Creates a new Pairtree structure in the supplied directory. This will create the related version file too.
-     * 
+     *
      * @throws IOException If there is a problem creating the structure
      */
     public PairtreeRoot(final File aParentDir) throws IOException {
@@ -76,7 +70,7 @@ public class PairtreeRoot extends File {
     /**
      * Creates a new Pairtree structure, using a Pairtree prefix, in the supplied directory. This will create the
      * related version and Pairtree prefix files too.
-     * 
+     *
      * @throws IOException If there is a problem creating the structure
      */
     public PairtreeRoot(final File aParentDir, final String aPairtreePrefix) throws IOException {
@@ -90,15 +84,15 @@ public class PairtreeRoot extends File {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(BUNDLE.get("pt.retrieving_root", aParentDir));
+            LOGGER.debug(MessageCodes.PT_MSG_001, aParentDir);
 
             if (aPairtreePrefix != null) {
-                LOGGER.debug(BUNDLE.get("pt.using_prefix", myPairtreePrefix));
+                LOGGER.debug(MessageCodes.PT_MSG_003, myPairtreePrefix);
             }
         }
 
         if (!exists() && !mkdirs()) {
-            throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
+            throw new IOException(LOGGER.getMessage(MessageCodes.PT_MSG_002, this));
         }
 
         writeVersionFile(new File(aParentDir, getVersionFileName()));
@@ -107,12 +101,11 @@ public class PairtreeRoot extends File {
     /**
      * Returns a directory in the Pairtree directory for the supplied name. File to be put into the structure can use
      * this as a parent directory.
-     * 
+     *
      * @param aName The name of the Pairtree object (the object's ID)
      * @return A <code>PairtreeObject</code> (directory in the Pairtree structure).
-     * @throws IOException
      */
-    public PairtreeObject getObject(final String aName) throws IOException {
+    public PairtreeObject getObject(final String aName) {
         return myPairtreePrefix == null ? new PairtreeObject(this, aName) : new PairtreeObject(this, myPairtreePrefix,
                 aName);
     }
@@ -200,40 +193,41 @@ public class PairtreeRoot extends File {
 
     /**
      * Returns the Pairtree prefix.
-     * 
+     *
      * @return The Pairtree prefix
      */
-    private String getPairtreePrefix() {
+    public String getPairtreePrefix() {
         return myPairtreePrefix;
     }
 
     /**
      * Gets the name of the Pairtree version file.
-     * 
+     *
      * @return The name of the Pairtree version file
      */
-    private String getVersionFileName() {
+    public String getVersionFileName() {
         return PAIRTREE_VERSION + PT_VERSION_NUM.replace('.', '_');
     }
 
     /**
      * Writes the version information to the supplied file.
-     * 
+     *
      * @param aFile A file to write the version information
      * @throws IOException If there is trouble writing to the file
      */
     private void writeVersionFile(final File aFile) throws IOException {
         if (!aFile.exists()) {
-            OutputStreamWriter writer = null;
+            BufferedWriter writer = null;
 
             try {
                 final FileOutputStream fileOut = new FileOutputStream(aFile);
+                final CharsetEncoder encoder = Charset.forName(DEFAULT_CHARSET).newEncoder();
 
-                writer = new OutputStreamWriter(fileOut, DEFAULT_CHARSET);
-                writer.write(BUNDLE.get("pt.verfile.content1", PT_VERSION_NUM));
-                writer.write(LINE_SEP);
-                writer.write(BUNDLE.get("pt.verfile.content2"));
-                writer.write(LINE_SEP);
+                writer = new BufferedWriter(new OutputStreamWriter(fileOut, encoder));
+                writer.write(LOGGER.getMessage(MessageCodes.PT_MSG_007, PT_VERSION_NUM));
+                writer.newLine();
+                writer.write(LOGGER.getMessage(MessageCodes.PT_MSG_008));
+                writer.newLine();
                 writer.close();
             } finally {
                 IOUtils.closeQuietly(writer);
@@ -243,21 +237,22 @@ public class PairtreeRoot extends File {
 
     /**
      * Writes the supplied prefix information to the supplied file.
-     * 
+     *
      * @param aFile A file to write the prefix information
      * @param aPtPrefix The prefix to write to the supplied file
      * @throws IOException If there is trouble writing to the file
      */
     private void writePrefixFile(final File aFile, final String aPtPrefix) throws IOException {
         if (!aFile.exists()) {
-            OutputStreamWriter writer = null;
+            BufferedWriter writer = null;
 
             try {
                 final FileOutputStream fileOut = new FileOutputStream(aFile);
+                final CharsetEncoder encoder = Charset.forName(DEFAULT_CHARSET).newEncoder();
 
-                writer = new OutputStreamWriter(fileOut, DEFAULT_CHARSET);
+                writer = new BufferedWriter(new OutputStreamWriter(fileOut, encoder));
                 writer.write(aPtPrefix);
-                writer.write(LINE_SEP);
+                writer.newLine();
                 writer.close();
             } finally {
                 IOUtils.closeQuietly(writer);
@@ -266,7 +261,7 @@ public class PairtreeRoot extends File {
             final String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
 
             if (!prefix.equals(aPtPrefix)) {
-                throw new IOException(BUNDLE.get("pt.bad_prefix", prefix, aPtPrefix));
+                throw new IOException(LOGGER.getMessage(MessageCodes.PT_MSG_006, prefix, aPtPrefix));
             }
         }
     }
