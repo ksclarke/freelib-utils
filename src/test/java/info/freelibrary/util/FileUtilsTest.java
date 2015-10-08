@@ -10,16 +10,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.tests.XOMTestCase;
-
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * Tests for the {@link FileUtils} class.
@@ -108,7 +108,7 @@ public class FileUtilsTest {
      */
     @Test
     public void testGetSize() {
-        assertEquals(41787, FileUtils.getSize(new File("src/test/resources/test_folder")));
+        assertEquals(25403, FileUtils.getSize(new File("src/test/resources/test_folder")));
     }
 
     /**

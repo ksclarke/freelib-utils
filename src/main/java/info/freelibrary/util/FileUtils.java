@@ -478,12 +478,12 @@ public class FileUtils {
         long size = 0;
 
         if (aFile != null && aFile.exists()) {
-            size += aFile.length();
-
             if (aFile.isDirectory()) {
                 for (final File file : aFile.listFiles()) {
                     size += getSize(file);
                 }
+            } else {
+                size += aFile.length();
             }
         }
 
