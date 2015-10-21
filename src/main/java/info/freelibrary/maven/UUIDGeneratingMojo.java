@@ -40,8 +40,8 @@ public class UUIDGeneratingMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         final String uuid = myString == null ? UUID.randomUUID().toString() : UUID.fromString(myString).toString();
 
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Setting a UUID property ({} = {}) for use in the Maven build", myName, uuid);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Setting a UUID property ({} = {}) for use in the Maven build", myName, uuid);
         }
 
         myProject.getProperties().setProperty(myName, uuid);
