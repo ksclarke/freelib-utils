@@ -524,6 +524,16 @@ public class StringUtils {
     }
 
     /**
+     * Upcases a string.
+     *
+     * @param aString A string to upcase
+     * @return The upcased string
+     */
+    public static String upcase(final String aString) {
+        return aString.substring(0, 1).toUpperCase() + aString.substring(1);
+    }
+
+    /**
      * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes "First",
      * "2" becomes "Second", etc.
      *
