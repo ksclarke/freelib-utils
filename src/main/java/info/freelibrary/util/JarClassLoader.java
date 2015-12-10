@@ -4,6 +4,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_001;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -50,7 +52,7 @@ public class JarClassLoader extends URLClassLoader {
         super(getJarURLs());
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(RB.getString(MessageCodes.MSG_001), aMainClassName);
+            LOGGER.info(RB.getString(UTIL_MESSAGE_001), aMainClassName);
         }
 
         loadClass(aMainClassName).newInstance();

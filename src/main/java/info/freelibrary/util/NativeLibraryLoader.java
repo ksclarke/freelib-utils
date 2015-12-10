@@ -1,6 +1,9 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
+import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_002;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,8 +21,7 @@ import java.util.jar.JarFile;
  */
 public class NativeLibraryLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class,
-            Constants.FREELIB_UTIL_MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, FREELIB_UTIL_MESSAGES);
 
     public static enum Architecture {
         UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
@@ -55,7 +57,7 @@ public class NativeLibraryLoader {
             final URL url = ClasspathUtils.findFirst(libFileName);
 
             if (url == null) {
-                throw new FileNotFoundException(LOGGER.getMessage(MessageCodes.MSG_002, aNativeLibrary));
+                throw new FileNotFoundException(LOGGER.getMessage(UTIL_MESSAGE_002, aNativeLibrary));
             }
 
             final JarFile jarFile = new JarFile(url.getFile());

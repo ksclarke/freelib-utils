@@ -1,6 +1,11 @@
 
 package info.freelibrary.maven;
 
+import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
+import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_001;
+import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_002;
+import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_003;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -22,18 +27,28 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import info.freelibrary.util.Constants;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
 import info.freelibrary.util.LoggerFactory;
-import info.freelibrary.util.MessageCodes;
 
+/**
+ * I18nCodesMojo is a Maven mojo that can generate a <code>MessageCodes</code> class from which I18N message codes can
+ * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is the
+ * code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
+ * <p>
+ * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.6.0-SNAPSHOT:generate-codes
+ * -Dmessage-files=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
+ * appropriate). Usually, though, the plugin would just be configured to run with the resources Maven lifecycle.
+ * </p>
+ *
+ * @author Kevin S. Clarke <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
+ */
 @Mojo(name = "generate-codes", defaultPhase = LifecyclePhase.VALIDATE)
 public class I18nCodesMojo extends AbstractMojo {
 
     private static final String MESSAGE_CLASS_NAME = "message-class-name";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nCodesMojo.class, Constants.FREELIB_UTIL_MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nCodesMojo.class, FREELIB_UTIL_MESSAGES);
 
     /**
      * The Maven project directory.
@@ -68,14 +83,13 @@ public class I18nCodesMojo extends AbstractMojo {
                         final String[] packageParts = Arrays.copyOfRange(nameParts, 0, classNameIndex);
                         final String packageName = StringUtils.join(packageParts, ".");
                         final JavaInterfaceSource java = Roaster.create(JavaInterfaceSource.class);
-                        final File packageDirectory =
-                                new File(srcFolderName + File.separatorChar +
-                                        packageName.replace('.', File.separatorChar));
+                        final File packageDirectory = new File(srcFolderName + File.separatorChar + packageName.replace(
+                                '.', File.separatorChar));
 
                         // Make sure the package directory already exists
                         if (!packageDirectory.exists() && !packageDirectory.mkdirs()) {
-                            throw new MojoExecutionException(LOGGER.getMessage(MessageCodes.MVN_MSG_003,
-                                    packageDirectory, className));
+                            throw new MojoExecutionException(LOGGER.getMessage(MVN_MESSAGE_003, packageDirectory,
+                                    className));
                         }
 
                         // Cycle through all the entries in the supplied messages file, creating fields
@@ -109,7 +123,7 @@ public class I18nCodesMojo extends AbstractMojo {
                         javaWriter.write(java.toString());
                         javaWriter.close();
                     } else if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn(MessageCodes.MVN_MSG_002, MESSAGE_CLASS_NAME);
+                        LOGGER.warn(MVN_MESSAGE_002, MESSAGE_CLASS_NAME);
                     }
                 } catch (final IOException details) {
                     if (LOGGER.isErrorEnabled()) {
@@ -120,7 +134,7 @@ public class I18nCodesMojo extends AbstractMojo {
                 }
             }
         } else if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn(MessageCodes.MVN_MSG_001);
+            LOGGER.warn(MVN_MESSAGE_001);
         }
     }
 

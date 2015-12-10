@@ -4,6 +4,12 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.MessageCodes.PT_MESSAGE_002;
+import static info.freelibrary.util.MessageCodes.PT_MESSAGE_006;
+import static info.freelibrary.util.MessageCodes.PT_MESSAGE_007;
+import static info.freelibrary.util.MessageCodes.PT_MESSAGE_008;
+import static info.freelibrary.util.MessageCodes.PT_MESSAGE_009;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,15 +90,17 @@ public class PairtreeRoot extends File {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(MessageCodes.PT_MSG_001, aParentDir);
+            LOGGER.debug(MessageCodes.PT_MESSAGE_001, aParentDir);
 
             if (aPairtreePrefix != null) {
-                LOGGER.debug(MessageCodes.PT_MSG_003, myPairtreePrefix);
+                LOGGER.debug(MessageCodes.PT_MESSAGE_003, myPairtreePrefix);
             }
         }
 
-        if (!exists() && !mkdirs()) {
-            throw new IOException(LOGGER.getMessage(MessageCodes.PT_MSG_002, this));
+        if (exists() && !canRead()) {
+            throw new IOException(LOGGER.getMessage(PT_MESSAGE_009, this));
+        } else if (!exists() && !mkdirs()) {
+            throw new IOException(LOGGER.getMessage(PT_MESSAGE_002, this));
         }
 
         writeVersionFile(new File(aParentDir, getVersionFileName()));
@@ -224,9 +232,9 @@ public class PairtreeRoot extends File {
                 final CharsetEncoder encoder = Charset.forName(DEFAULT_CHARSET).newEncoder();
 
                 writer = new BufferedWriter(new OutputStreamWriter(fileOut, encoder));
-                writer.write(LOGGER.getMessage(MessageCodes.PT_MSG_007, PT_VERSION_NUM));
+                writer.write(LOGGER.getMessage(PT_MESSAGE_007, PT_VERSION_NUM));
                 writer.newLine();
-                writer.write(LOGGER.getMessage(MessageCodes.PT_MSG_008));
+                writer.write(LOGGER.getMessage(PT_MESSAGE_008));
                 writer.newLine();
                 writer.close();
             } finally {
@@ -261,7 +269,7 @@ public class PairtreeRoot extends File {
             final String prefix = StringUtils.read(aFile, DEFAULT_CHARSET);
 
             if (!prefix.equals(aPtPrefix)) {
-                throw new IOException(LOGGER.getMessage(MessageCodes.PT_MSG_006, prefix, aPtPrefix));
+                throw new IOException(LOGGER.getMessage(PT_MESSAGE_006, prefix, aPtPrefix));
             }
         }
     }
