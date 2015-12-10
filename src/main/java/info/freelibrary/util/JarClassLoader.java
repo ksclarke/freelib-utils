@@ -95,6 +95,7 @@ public class JarClassLoader extends URLClassLoader {
             try {
                 loadedClass = findClass(aName);
             } catch (final ClassNotFoundException details) {
+                LOGGER.debug("Class for {} not found... trying super class", aName);
                 loadedClass = super.loadClass(aName);
             }
         }
