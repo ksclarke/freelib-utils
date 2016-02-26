@@ -56,8 +56,11 @@ public class I18nCodesMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     protected MavenProject myProject;
 
-    @Parameter(alias = "message-files", property = "message-files")
+    @Parameter(alias = "messageFiles", property = "messageFiles")
     private List<String> myPropertyFiles;
+
+    @Parameter(alias = "generatedSourcesDirectory", property = "generatedSourcesDirectory")
+    private File myGeneratedSrcDir;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -73,7 +76,8 @@ public class I18nCodesMojo extends AbstractMojo {
                     properties.loadFromXML(inStream);
 
                     final String fullClassName = properties.getProperty(MESSAGE_CLASS_NAME);
-                    final String srcFolderName = myProject.getBuild().getSourceDirectory();
+                    final String srcFolderName = myGeneratedSrcDir == null ? myProject.getBuild().getSourceDirectory()
+                            : myGeneratedSrcDir.getAbsolutePath();
 
                     if (fullClassName != null) {
                         final Iterator<String> messageIterator = properties.stringPropertyNames().iterator();
@@ -117,7 +121,6 @@ public class I18nCodesMojo extends AbstractMojo {
 
                         // Name our Java file and add a constructor
                         java.setPackage(packageName).setName(className);
-                        // java.addMethod().setPrivate().setConstructor(true).setBody("super();");
 
                         // Lastly, write our generated Java class out to the file system
                         javaWriter.write(java.toString());
