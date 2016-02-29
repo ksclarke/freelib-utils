@@ -378,13 +378,11 @@ public class StringUtils {
         final Iterator<String> iterator = aMap.keySet().iterator();
         final StringBuilder buffer = new StringBuilder();
 
-        int length;
-
         while (iterator.hasNext()) {
             buffer.append(iterator.next()).append(aSeparator);
         }
 
-        length = buffer.length() - 1;
+        final int length = buffer.length() - 1;
 
         return buffer.charAt(length) == aSeparator ? buffer.substring(0, length) : buffer.toString();
     }
@@ -433,15 +431,16 @@ public class StringUtils {
         final String eol = System.getProperty("line.separator");
         final String[] lines = aMessage.split(eol);
         final StringBuilder buffer = new StringBuilder();
+
         int lineCount = 1; // Error messages start with line 1
-        int length;
 
         for (final String line : lines) {
             buffer.append(lineCount++).append(' ').append(line);
             buffer.append(eol);
         }
 
-        length = buffer.length();
+        final int length = buffer.length();
+
         buffer.delete(length - eol.length(), length);
 
         return buffer.toString();
@@ -477,7 +476,7 @@ public class StringUtils {
      */
     public static int[] parseIntRange(final String aIntRange) {
         final String[] range = aIntRange.split("-");
-        int[] ints;
+        final int[] ints;
 
         if (range.length == 1) {
             ints = new int[range.length];

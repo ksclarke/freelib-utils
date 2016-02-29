@@ -154,7 +154,7 @@ public abstract class I18nException extends Exception {
      */
     private static String format(final Locale aLocale, final String aBundleName, final String aMessageKey,
             final Object... aVarargs) {
-        XMLResourceBundle bundle;
+        final XMLResourceBundle bundle;
 
         if (aBundleName == null) {
             throw new NullPointerException("Exception ResourceBundle name may not be null");

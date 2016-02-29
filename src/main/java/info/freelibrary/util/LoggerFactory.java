@@ -50,7 +50,7 @@ public class LoggerFactory {
      */
     public static final Logger getLogger(final String aName, final String aBundleName) {
         final ILoggerFactory factory = org.slf4j.LoggerFactory.getILoggerFactory();
-        Logger logger;
+        final Logger logger;
 
         if (aBundleName != null) {
             logger = new Logger(factory.getLogger(aName), aBundleName);

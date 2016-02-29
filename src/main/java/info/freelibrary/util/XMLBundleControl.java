@@ -56,7 +56,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
     @Override
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
             final ClassLoader aClassLoader, final boolean aReload) throws IllegalAccessException,
-            InstantiationException, IOException {
+                    InstantiationException, IOException {
         ResourceBundle bundle = null;
 
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
@@ -94,11 +94,9 @@ public class XMLBundleControl extends ResourceBundle.Control {
      * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
      */
     private ResourceBundle makeBundle(final InputStream aInputStream) throws IOException {
-        BufferedInputStream bufferedInputStream;
-        ResourceBundle bundle;
+        final BufferedInputStream bufferedInputStream = new BufferedInputStream(aInputStream);
+        final ResourceBundle bundle = new XMLResourceBundle(bufferedInputStream);
 
-        bufferedInputStream = new BufferedInputStream(aInputStream);
-        bundle = new XMLResourceBundle(bufferedInputStream);
         bufferedInputStream.close();
 
         return bundle;

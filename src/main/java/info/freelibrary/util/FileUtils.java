@@ -392,7 +392,7 @@ public class FileUtils {
             return aDir.listFiles(aFilter);
         } else {
             final ArrayList<File> fileList = new ArrayList<File>();
-            String[] ignoreList;
+            final String[] ignoreList;
 
             if (aIgnoreList == null) {
                 ignoreList = new String[0];
@@ -598,14 +598,15 @@ public class FileUtils {
         }
 
         final Formatter formatter = new Formatter();
-        String hash;
 
         for (final byte bite : md.digest()) {
             formatter.format("%02x", bite);
         }
 
         IOUtils.closeQuietly(mdStream);
-        hash = formatter.toString();
+
+        final String hash = formatter.toString();
+
         formatter.close();
 
         return hash;
@@ -813,8 +814,8 @@ public class FileUtils {
 
     private static Element add(final File aFile, final Element aParent, final RegexFileFilter aFilter,
             final boolean aDeepAdd) throws FileNotFoundException {
-        Element element;
-        String tagName;
+        final Element element;
+        final String tagName;
 
         if (aFile.isDirectory()) {
             tagName = DIR_TYPE;

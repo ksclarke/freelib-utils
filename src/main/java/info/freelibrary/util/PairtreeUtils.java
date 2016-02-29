@@ -284,7 +284,7 @@ public class PairtreeUtils {
 
         for (int i = 0; i < aPathsVarargs.length; i++) {
             if (aPathsVarargs[i] != null) {
-                int length;
+                final int length;
 
                 if (lastChar != null && !mySeparator.equals(lastChar)) {
                     pathBuf.append(mySeparator);
@@ -362,7 +362,7 @@ public class PairtreeUtils {
             throw new NullPointerException("Pairtree ID may not be null");
         }
 
-        byte[] bytes; // First pass
+        final byte[] bytes; // First pass
 
         try {
             bytes = aID.getBytes("utf-8");
