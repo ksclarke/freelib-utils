@@ -5,70 +5,39 @@
 package info.freelibrary.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * An object in the Pairtree structure.
- * 
+ * A representation of an encapsulated object in the Pairtree structure.
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class PairtreeObject extends File {
 
     /**
-     * The <code>serialVersionUID</code> for a <code>PairtreeFile</code>.
+     * The <code>serialVersionUID</code> for a <code>PairtreeObject</code>.
      */
-    private static final long serialVersionUID = 5022790117870380626L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PairtreeObject.class);
-
-    private static final XMLResourceBundle BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(
-            "freelib-utils_messages", new XMLBundleControl());
+    private static final long serialVersionUID = -1952619495973020687L;
 
     /**
      * Creates a new Pairtree object for the supplied name in the supplied Pairtree structure.
-     * 
+     *
      * @param aRoot An existing Pairtree structure
-     * @param aName The name of the Pairtree object
-     * @throws IOException If there is a problem creating the Pairtree structure
+     * @param aID The name of the Pairtree object
      */
-    PairtreeObject(final PairtreeRoot aRoot, final String aName) throws IOException {
-        super(aRoot, PairtreeUtils.mapToPtPath(aName));
-
-        if (!exists() && !mkdirs()) {
-            throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
-        }
-
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.debug(BUNDLE.get("pt.object_retrieved1", new String[] {
-                getAbsolutePath(), aName
-            }));
-        }
+    PairtreeObject(final PairtreeRoot aRoot, final String aID) {
+        super(aRoot, PairtreeUtils.mapToPtPath(null, aID, aID));
     }
 
     /**
      * Creates a new Pairtree object for the supplied name in the supplied Pairtree structure.
-     * 
+     *
      * @param aRoot The root of the Pairtree structure
      * @param aPrefix A Pairtree prefix to use when creating the directory structure
-     * @param aName The name of the Pairtree object to create
-     * @throws IOException If there is a problem creating the object
+     * @param aID The name of the Pairtree object to create
      */
-    PairtreeObject(final PairtreeRoot aRoot, final String aPrefix, final String aName) throws IOException {
-        super(aRoot, PairtreeUtils.mapToPtPath(aPrefix, aName));
-
-        if (!exists() && !mkdirs()) {
-            throw new IOException(BUNDLE.get("pt.cant_mkdirs", this));
-        }
-
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.debug(BUNDLE.get("pt.object_retrieved2", new String[] {
-                getAbsolutePath(), aPrefix, aName
-            }));
-        }
+    PairtreeObject(final PairtreeRoot aRoot, final String aPrefix, final String aID) {
+        super(aRoot, PairtreeUtils.mapToPtPath(null, PairtreeUtils.removePrefix(aPrefix, aID), PairtreeUtils
+                .removePrefix(aPrefix, aID)));
     }
 
     /**

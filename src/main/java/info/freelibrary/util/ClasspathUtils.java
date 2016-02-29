@@ -215,44 +215,52 @@ public class ClasspathUtils {
      * Finds the first instance of the supplied file name in the classpath (in either a directory or a jar file) and
      * returns a {@link URL} for it.
      *
-     * @param aFilename The name of the file we want to read
+     * @param aFileName The name of the file we want to read
      * @return The {@link URL} of the file we want to read
      * @throws IOException If there is trouble reading from the file system or jars
      */
-    public static URL findFirst(final String aFilename) throws IOException {
+    public static URL findFirst(final String aFileName) throws IOException {
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
         for (final String cpEntry : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(cpEntry);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking {} for {}", cpEntry, aFilename);
+                LOGGER.debug("Checking {} for {}", cpEntry, aFileName);
             }
 
             if (file.isDirectory()) {
-                final File target = new File(file, aFilename);
+                final File target = new File(file, aFileName);
 
                 if (target.exists()) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Found {} in {}", aFilename, cpEntry);
+                        LOGGER.debug("Found {} in {}", aFileName, cpEntry);
                     }
 
                     return target.toURI().toURL();
                 }
             } else if (filter.accept(file.getParentFile(), file.getName())) {
                 final JarFile jarFile = new JarFile(file);
-                final JarEntry jarEntry = jarFile.getJarEntry(aFilename);
+                final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
 
                 if (jarEntry != null && jarEntry.getSize() > 0) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Found {} in {}", aFilename, cpEntry);
+                        LOGGER.debug("Found {} in {}", aFileName, cpEntry);
                     }
 
                     jarFile.close();
                     return file.toURI().toURL();
+                } else if (LOGGER.isDebugEnabled()) {
+                    if (jarEntry != null) {
+                        LOGGER.debug("Jar entry {} did not match search pattern", jarEntry.getName());
+                    } else {
+                        LOGGER.debug("Could not get {} from jar file", aFileName);
+                    }
                 }
 
                 jarFile.close();
+            } else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Did not check {} because not a directory or jar file", file);
             }
         }
 

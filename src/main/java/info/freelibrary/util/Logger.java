@@ -4,7 +4,7 @@ package info.freelibrary.util;
 import org.slf4j.Marker;
 
 /**
- * Create a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
+ * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
@@ -18,7 +18,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aClass A class to use as the name of the logger
      */
     Logger(final org.slf4j.Logger aLogger) {
-        super(aLogger.getName());
+        super();
         myLogger = aLogger;
     }
 
@@ -153,6 +153,35 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final String aMessage, final Throwable aThrowable) {
         if (hasI18nKey(aMessage)) {
             myLogger.error(getI18n(aMessage), aThrowable);
+        } else {
+            myLogger.error(aMessage, aThrowable);
+        }
+    }
+
+    /**
+     * A convenience method that uses an argument pattern with Throwable first.
+     *
+     * @param aThrowable A throwable exception
+     * @param aMessage A message with information about the exception
+     */
+    public void error(final Throwable aThrowable, final String aMessage) {
+        if (hasI18nKey(aMessage)) {
+            myLogger.error(getI18n(aMessage), aThrowable);
+        } else {
+            myLogger.error(aMessage, aThrowable);
+        }
+    }
+
+    /**
+     * A convenience method that uses an argument pattern with Throwable first.
+     *
+     * @param aThrowable A throwable exception
+     * @param aMessage A message with information about the exception
+     * @param aVarargs Additional details about the exception being thrown
+     */
+    public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
+        if (hasI18nKey(aMessage)) {
+            myLogger.error(getI18n(aMessage, aVarargs), aThrowable);
         } else {
             myLogger.error(aMessage, aThrowable);
         }
@@ -537,4 +566,30 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    /**
+     * Gets a message from the logger's backing resource bundle if what's passed in is a message key; if it's not then
+     * what's passed in is, itself, returned. If what's passed in is the same thing as what's returned, any additional
+     * details passed in are ignored.
+     *
+     * @param aMessage A message to check against the backing resource bundle
+     * @param aObjArray An array of additional details
+     * @return A message value (potentially from the backing resource bundle)
+     */
+    public String getMessage(final String aMessage, final Object... aObjArray) {
+        if (hasI18nKey(aMessage)) {
+            return getI18n(aMessage, aObjArray);
+        } else {
+            return aMessage;
+        }
+    }
+
+    /**
+     * Gets the internal logger that this logger decorates. This allows casting it to the actual logging implementation
+     * so that native methods, etc., can be called.
+     *
+     * @return An underlying logger
+     */
+    public org.slf4j.Logger getLoggerImpl() {
+        return myLogger;
+    }
 }

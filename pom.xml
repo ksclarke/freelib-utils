@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>freelib-utils</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>0.5.1-SNAPSHOT</version>
+  <version>0.6.0-SNAPSHOT</version>
   <name>FreeLibrary Utilities</name>
   <description>A small collection of utility classes used by other FreeLibrary projects</description>
   <url>http://projects.freelibrary.info/freelib-utils</url>
@@ -41,6 +42,7 @@
 
   <properties>
     <!-- Project specific dependencies -->
+    <roaster.version>2.15.0.Final</roaster.version>
     <iharder.base64.version>2.3.8</iharder.base64.version>
     <commons.compress.version>1.5</commons.compress.version>
     <slf4j.simple.logger.version>1.7.10</slf4j.simple.logger.version>
@@ -76,14 +78,17 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>xom</groupId>
       <artifactId>xom</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
+      <scope>test</scope>
     </dependency>
     <!-- Below here are the dependencies for our Maven mojos -->
     <dependency>
@@ -97,6 +102,16 @@
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.roaster</groupId>
+      <artifactId>roaster-api</artifactId>
+      <version>${roaster.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.roaster</groupId>
+      <artifactId>roaster-jdt</artifactId>
+      <version>${roaster.version}</version>
     </dependency>
   </dependencies>
 
@@ -125,6 +140,10 @@
         <groupId>br.com.ingenieux</groupId>
         <artifactId>jbake-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
@@ -140,7 +159,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.0.9</version>
+    <version>0.1.0</version>
   </parent>
 
 </project>

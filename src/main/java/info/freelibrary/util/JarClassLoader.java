@@ -4,6 +4,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_001;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -20,14 +22,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A {@link URLClassLoader} for Jar files.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class JarClassLoader extends URLClassLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class);
 
-    private static final ResourceBundle RB = ResourceBundle.getBundle("Messages", new XMLBundleControl());
+    private static final ResourceBundle RB = ResourceBundle.getBundle(Constants.FREELIB_UTIL_MESSAGES,
+            new XMLBundleControl());
 
     private static final String CLASSPATH = "java.class.path";
 
@@ -41,7 +44,7 @@ public class JarClassLoader extends URLClassLoader {
 
     /**
      * Constructor for a Jar ClassLoader.
-     * 
+     *
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
@@ -49,7 +52,7 @@ public class JarClassLoader extends URLClassLoader {
         super(getJarURLs());
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(RB.getString("jarClassLoader.init"), aMainClassName);
+            LOGGER.info(RB.getString(UTIL_MESSAGE_001), aMainClassName);
         }
 
         loadClass(aMainClassName).newInstance();
@@ -57,7 +60,7 @@ public class JarClassLoader extends URLClassLoader {
 
     /**
      * Constructor for a {@link ClassLoader} for Jar files.
-     * 
+     *
      * @param aURLs An array of URLs to search
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
@@ -70,7 +73,7 @@ public class JarClassLoader extends URLClassLoader {
 
     /**
      * Constructor for a {@link ClassLoader} for Jar files.
-     * 
+     *
      * @param aListOfURLs A {@link List} of URLs to search
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
@@ -83,7 +86,7 @@ public class JarClassLoader extends URLClassLoader {
 
     /**
      * Loads the {@link Class} for the supplied class name.
-     * 
+     *
      * @throws ClassNotFoundException If the class for the supplied name can't be found
      */
     @Override
@@ -94,6 +97,7 @@ public class JarClassLoader extends URLClassLoader {
             try {
                 loadedClass = findClass(aName);
             } catch (final ClassNotFoundException details) {
+                LOGGER.trace("Class for {} not found... trying super class", aName, details);
                 loadedClass = super.loadClass(aName);
             }
         }
@@ -103,7 +107,7 @@ public class JarClassLoader extends URLClassLoader {
 
     /**
      * Gets a list of jar files in the classpath.
-     * 
+     *
      * @return An array of {@link URL}s found in the classpath
      * @throws IOException If there is trouble reading the classpath
      */
