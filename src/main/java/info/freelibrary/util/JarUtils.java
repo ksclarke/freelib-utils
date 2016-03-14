@@ -5,9 +5,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 /**
  * A small collection of {@link java.util.Jar} file utilities.
@@ -16,7 +22,56 @@ import java.util.jar.JarFile;
  */
 public class JarUtils {
 
+    private static final String MAIN_JAR = System.getProperty("java.class.path");
+
+    private static final String PATH = System.getProperty("user.home") + "/";
+
+    private static final String HOME = System.getProperty("user.dir") + "/";
+
+    private static final String JAR_URL_PROTOCOL = "jar:file://";
+
     private JarUtils() {
+    }
+
+    /**
+     * Gets a list of jar files in the classpath (this includes jars in jars, one level deep).
+     *
+     * @return An array of {@link URL}s found in the classpath
+     * @throws IOException If there is trouble reading the classpath
+     */
+    public static URL[] getJarURLs() throws IOException {
+        final List<URL> urlList = new LinkedList<URL>();
+
+        for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
+            final Manifest manifest = jarFile.getManifest();
+            final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + "!/");
+
+            urlList.add(jarURL);
+
+            if (manifest != null) {
+                final Attributes attributes = manifest.getMainAttributes();
+
+                if (attributes != null) {
+                    final String classpath = attributes.getValue("Class-Path");
+
+                    if (classpath != null) {
+                        final StringTokenizer tokenizer = new StringTokenizer(classpath);
+
+                        while (tokenizer.hasMoreTokens()) {
+                            final String jarPath = tokenizer.nextToken();
+
+                            if (jarPath.endsWith(".jar")) {
+                                urlList.add(new URL(jarURL.toExternalForm() + jarPath));
+                            }
+                        }
+                    }
+                }
+            }
+
+            jarFile.close();
+        }
+
+        return urlList.toArray(new URL[urlList.size()]);
     }
 
     /**

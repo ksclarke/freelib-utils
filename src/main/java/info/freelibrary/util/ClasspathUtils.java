@@ -135,7 +135,7 @@ public class ClasspathUtils {
         final ArrayList<String> list = new ArrayList<String>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
-        for (final String part : System.getProperty(CLASSPATH).split(":")) {
+        for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
 
             if (filter.accept(file.getParentFile(), file.getName())) {
@@ -156,7 +156,7 @@ public class ClasspathUtils {
         final ArrayList<String> list = new ArrayList<String>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
-        for (final String part : System.getProperty(CLASSPATH).split(":")) {
+        for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
             final File parent = file.getParentFile();
             final String name = file.getName();
@@ -178,7 +178,7 @@ public class ClasspathUtils {
         final ArrayList<JarFile> list = new ArrayList<JarFile>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
-        for (final String part : System.getProperty(CLASSPATH).split(":")) {
+        for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
 
             if (filter.accept(file.getParentFile(), file.getName())) {
@@ -198,7 +198,7 @@ public class ClasspathUtils {
         final ArrayList<JarFile> list = new ArrayList<JarFile>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
-        for (final String part : System.getProperty(CLASSPATH).split(":")) {
+        for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
             final File parent = file.getParentFile();
             final String name = file.getName();
@@ -222,7 +222,7 @@ public class ClasspathUtils {
     public static URL findFirst(final String aFileName) throws IOException {
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
-        for (final String cpEntry : System.getProperty(CLASSPATH).split(":")) {
+        for (final String cpEntry : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(cpEntry);
 
             if (LOGGER.isDebugEnabled()) {

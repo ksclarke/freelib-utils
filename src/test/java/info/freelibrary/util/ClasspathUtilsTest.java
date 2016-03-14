@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests the {@link ClasspathUtils} class.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
 
@@ -135,8 +135,8 @@ public class ClasspathUtilsTest {
             }
 
             // Looking for a class file that is buried in a dir structure
-            if (!ClasspathUtils.find("info/freelibrary/xq/Put.class")) {
-                fail("Didn't find expected info/freelibrary/xq/Put.class");
+            if (!ClasspathUtils.find("info/freelibrary/util/StringUtils.class")) {
+                fail("Didn't find expected info/freelibrary/util/StringUtils.class");
             }
 
             // Looking for something that doesn't exist

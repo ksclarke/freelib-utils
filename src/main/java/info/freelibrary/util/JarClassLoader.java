@@ -6,16 +6,10 @@ package info.freelibrary.util;
 
 import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_001;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,16 +26,6 @@ public class JarClassLoader extends URLClassLoader {
     private static final ResourceBundle RB = ResourceBundle.getBundle(Constants.FREELIB_UTIL_MESSAGES,
             new XMLBundleControl());
 
-    private static final String CLASSPATH = "java.class.path";
-
-    private static final String MAIN_JAR = System.getProperty(CLASSPATH);
-
-    private static final String PATH = System.getProperty("user.home") + "/";
-
-    private static final String HOME = System.getProperty("user.dir") + "/";
-
-    private static final String JAR_URL_PROTOCOL = "jar:file://";
-
     /**
      * Constructor for a Jar ClassLoader.
      *
@@ -49,10 +33,10 @@ public class JarClassLoader extends URLClassLoader {
      * @throws Exception If there is trouble locating the main class
      */
     public JarClassLoader(final String aMainClassName) throws Exception {
-        super(getJarURLs());
+        super(JarUtils.getJarURLs());
 
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(RB.getString(UTIL_MESSAGE_001), aMainClassName);
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(RB.getString(UTIL_MESSAGE_001), aMainClassName);
         }
 
         loadClass(aMainClassName).newInstance();
@@ -103,30 +87,5 @@ public class JarClassLoader extends URLClassLoader {
         }
 
         return loadedClass;
-    }
-
-    /**
-     * Gets a list of jar files in the classpath.
-     *
-     * @return An array of {@link URL}s found in the classpath
-     * @throws IOException If there is trouble reading the classpath
-     */
-    private static URL[] getJarURLs() throws IOException {
-        final JarFile jarFile = new JarFile(MAIN_JAR);
-        final Manifest manifest = jarFile.getManifest();
-        final Attributes attributes = manifest.getMainAttributes();
-        final String classpath = attributes.getValue("Class-Path");
-        final StringTokenizer tokenizer = new StringTokenizer(classpath);
-        final List<URL> urlList = new LinkedList<URL>();
-
-        urlList.add(new URL(JAR_URL_PROTOCOL + HOME + MAIN_JAR + "!/"));
-
-        while (tokenizer.hasMoreTokens()) {
-            final String jarPath = tokenizer.nextToken();
-            urlList.add(new URL(JAR_URL_PROTOCOL + PATH + jarPath + "!/"));
-        }
-
-        jarFile.close();
-        return urlList.toArray(new URL[urlList.size()]);
     }
 }
