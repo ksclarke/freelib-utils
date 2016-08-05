@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,24 +20,27 @@ public class PairtreeRootTest {
 
     private static final String TMP_DIR_NAME = System.getProperty("java.io.tmpdir");
 
+    private PairtreeRoot myRoot;
+
+    @After
+    public void afterTest() {
+        if (myRoot != null) {
+            FileUtils.delete(myRoot);
+        }
+    }
+
     /**
      * Test method for {@link PairtreeRoot#PairtreeRoot()}.
      */
     @Test
     public void testPairtreeRoot() {
-        PairtreeRoot root = null;
-
         try {
-            root = new PairtreeRoot(TMP_DIR_NAME);
-            checkVersionFile(root.getParentFile());
-            assertEquals(true, root.canWrite());
+            myRoot = new PairtreeRoot(TMP_DIR_NAME);
+            checkVersionFile(myRoot.getParentFile());
+            assertEquals(true, myRoot.canWrite());
         } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
-        } finally {
-            if (root != null) {
-                root.delete();
-            }
         }
     }
 
@@ -45,20 +49,14 @@ public class PairtreeRootTest {
      */
     @Test
     public void testPairtreeRootString() {
-        PairtreeRoot root = null;
-
         try {
-            root = new PairtreeRoot(TMP_DIR_NAME, "myPrefix");
-            checkVersionFile(root.getParentFile());
-            checkPrefixFile(root.getParentFile());
-            assertEquals(true, root.canWrite());
+            myRoot = new PairtreeRoot(TMP_DIR_NAME, "myPrefix");
+            checkVersionFile(myRoot.getParentFile());
+            checkPrefixFile(myRoot.getParentFile());
+            assertEquals(true, myRoot.canWrite());
         } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
-        } finally {
-            if (root != null) {
-                root.delete();
-            }
         }
     }
 
@@ -67,19 +65,13 @@ public class PairtreeRootTest {
      */
     @Test
     public void testPairtreeRootFile() {
-        PairtreeRoot root = null;
-
         try {
-            root = new PairtreeRoot(new File("src/test/resources"));
-            checkVersionFile(root.getParentFile());
-            assertEquals(true, root.canWrite());
+            myRoot = new PairtreeRoot(new File(TMP_DIR_NAME));
+            checkVersionFile(myRoot.getParentFile());
+            assertEquals(true, myRoot.canWrite());
         } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
-        } finally {
-            if (root != null) {
-                root.delete();
-            }
         }
     }
 
@@ -88,26 +80,20 @@ public class PairtreeRootTest {
      */
     @Test
     public void testPairtreeRootFileString() {
-        PairtreeRoot root = null;
-
         try {
-            root = new PairtreeRoot(new File("src/test/resources"), "myPrefix");
-            checkVersionFile(root.getParentFile());
-            checkPrefixFile(root.getParentFile());
-            assertEquals(true, root.canWrite());
+            myRoot = new PairtreeRoot(new File(TMP_DIR_NAME), "myPrefix");
+            checkVersionFile(myRoot.getParentFile());
+            checkPrefixFile(myRoot.getParentFile());
+            assertEquals(true, myRoot.canWrite());
         } catch (final IOException details) {
             LOGGER.error(details.getMessage(), details);
             fail(details.getMessage());
-        } finally {
-            if (root != null) {
-                root.delete();
-            }
         }
     }
 
     /**
      * Checks the Pairtree version file in the supplied directory.
-     * 
+     *
      * @param aPtDir A Pairtree directory
      */
     private void checkVersionFile(final File aPtDir) {
@@ -129,10 +115,13 @@ public class PairtreeRootTest {
 
     /**
      * Checks that the Pairtree prefix file exists in the supplied directory.
-     * 
+     *
      * @param aPtDir A Pairtree directory
      */
     private void checkPrefixFile(final File aPtDir) {
-        assertEquals(true, new File(aPtDir, "pairtree_prefix").exists());
+        final File prefixFile = new File(aPtDir, "pairtree_prefix");
+
+        prefixFile.deleteOnExit();
+        assertEquals(true, prefixFile.exists());
     }
 }

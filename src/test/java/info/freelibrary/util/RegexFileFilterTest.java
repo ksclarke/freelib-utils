@@ -21,11 +21,12 @@ public class RegexFileFilterTest {
         try {
             tmpFile = File.createTempFile("totes", "");
             filter = new RegexFileFilter("^" + tmpFile.getName() + "$");
+            tmpFile.deleteOnExit();
 
             if (!filter.accept(tmpFile.getParentFile(), tmpFile.getName())) {
                 fail("Failed to match supplied file name");
             }
-        } catch (Exception details) {
+        } catch (final Exception details) {
             fail(details.getMessage());
         }
     }
@@ -43,11 +44,12 @@ public class RegexFileFilterTest {
             file = File.createTempFile("totes", "");
             pattern = "^" + file.getName().toUpperCase() + "$";
             filter = new RegexFileFilter(pattern, true);
+            file.deleteOnExit();
 
             if (!filter.accept(file.getParentFile(), file.getName())) {
                 fail("Failed to match supplied file name");
             }
-        } catch (Exception details) {
+        } catch (final Exception details) {
             fail(details.getMessage());
         }
     }

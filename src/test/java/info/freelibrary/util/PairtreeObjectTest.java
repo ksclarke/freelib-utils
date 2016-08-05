@@ -5,9 +5,21 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class PairtreeObjectTest {
+
+    private static final String TMP_DIR_NAME = System.getProperty("java.io.tmpdir");
+
+    private PairtreeRoot myRoot;
+
+    @After
+    public void afterTest() {
+        if (myRoot != null) {
+            FileUtils.delete(myRoot);
+        }
+    }
 
     /**
      * Tests whether PairtreeObject creation without a Pairtree prefix works. Usually PairtreeObjects are not created
@@ -17,26 +29,21 @@ public class PairtreeObjectTest {
      */
     @Test
     public void testPairtreeObjectPairtreeRootString() throws IOException {
-        final PairtreeRoot root = new PairtreeRoot("/tmp", "prefix/");
-        final PairtreeObject ptObj = new PairtreeObject(root, "prefix/id");
-
-        assertEquals("prefix=id", ptObj.getName());
+        myRoot = new PairtreeRoot(TMP_DIR_NAME, "prefix/");
+        assertEquals("prefix=id", new PairtreeObject(myRoot, "prefix/id").getName());
     }
 
     @Test
     public void testPairtreeObjectPairtreeRootStringString() throws IOException {
-        final PairtreeRoot root = new PairtreeRoot("/tmp", "prefix/");
-        final PairtreeObject ptObj = new PairtreeObject(root, root.getPairtreePrefix(), "prefix/id");
-
-        assertEquals("id", ptObj.getName());
+        myRoot = new PairtreeRoot(TMP_DIR_NAME, "prefix/");
+        assertEquals("id", new PairtreeObject(myRoot, myRoot.getPairtreePrefix(), "prefix/id").getName());
     }
 
     @Test
     public void testToString() throws IOException {
-        final PairtreeRoot root = new PairtreeRoot("/tmp", "prefix/");
-        final PairtreeObject ptObj = new PairtreeObject(root, root.getPairtreePrefix(), "prefix/id");
-
-        assertEquals("/tmp/pairtree_root/id/id", ptObj.toString());
+        myRoot = new PairtreeRoot(TMP_DIR_NAME, "prefix/");
+        assertEquals("/tmp/pairtree_root/id/id", new PairtreeObject(myRoot, myRoot.getPairtreePrefix(), "prefix/id")
+                .toString());
     }
 
 }

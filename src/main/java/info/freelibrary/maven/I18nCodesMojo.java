@@ -33,8 +33,8 @@ import info.freelibrary.util.LoggerFactory;
 
 /**
  * I18nCodesMojo is a Maven mojo that can generate a <code>MessageCodes</code> class from which I18N message codes can
- * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is the
- * code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
+ * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is
+ * the code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
  * <p>
  * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.6.0-SNAPSHOT:generate-codes
  * -Dmessage-files=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
@@ -87,8 +87,8 @@ public class I18nCodesMojo extends AbstractMojo {
                         final String[] packageParts = Arrays.copyOfRange(nameParts, 0, classNameIndex);
                         final String packageName = StringUtils.join(packageParts, ".");
                         final JavaInterfaceSource java = Roaster.create(JavaInterfaceSource.class);
-                        final File packageDirectory = new File(srcFolderName + File.separatorChar + packageName.replace(
-                                '.', File.separatorChar));
+                        final File packageDirectory = new File(srcFolderName + File.separatorChar + packageName
+                                .replace('.', File.separatorChar));
 
                         // Make sure the package directory already exists
                         if (!packageDirectory.exists() && !packageDirectory.mkdirs()) {

@@ -17,20 +17,17 @@ import org.junit.Test;
 
 public class ZipUtilsTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtilsTest.class);
-
     private final File myTmpDir = new File(System.getProperty("java.io.tmpdir"));
 
     private final Set<String> myFiles = new HashSet<String>();
 
     @Before
     public void beforeTest() {
-        final String[] files =
-                new String[] {
-                    "/test_folder/test_folder2/test_file1.txt", "/test_folder/test_folder2/test_folder/test_file1.txt",
-                    "/test_folder/test_file1.txt", "/test_folder/test_folder/test_file1.txt",
-                    "/test_folder/test_folder/test_file2.txt"
-                };
+        final String[] files = new String[] {
+            "/test_folder/test_folder2/test_file1.txt", "/test_folder/test_folder2/test_folder/test_file1.txt",
+            "/test_folder/test_file1.txt", "/test_folder/test_folder/test_file1.txt",
+            "/test_folder/test_folder/test_file2.txt"
+        };
 
         for (final String file : files) {
             myFiles.add(file);
@@ -44,6 +41,8 @@ public class ZipUtilsTest {
         final File dir = new File(testDir, "test_folder");
         final ZipInputStream zipStream;
 
+        zipFile.deleteOnExit();
+
         ZipEntry zipEntry;
         ZipUtils.zip(dir, zipFile);
 
@@ -52,8 +51,8 @@ public class ZipUtilsTest {
         while ((zipEntry = zipStream.getNextEntry()) != null) {
             final String name = zipEntry.getName();
 
-            if (!myFiles.remove(zipEntry.getName())) {
-                fail("Found an unexpected zip entry: " + zipEntry.getName());
+            if (!myFiles.remove(name)) {
+                fail("Found an unexpected zip entry: " + name);
             }
         }
 
@@ -72,6 +71,8 @@ public class ZipUtilsTest {
         final File other = new File(testDir, "80_char_test_1.txt");
         final ZipInputStream zipStream;
 
+        zipFile.deleteOnExit();
+
         ZipEntry zipEntry;
         ZipUtils.zip(dir, zipFile, other);
 
@@ -81,8 +82,8 @@ public class ZipUtilsTest {
         while ((zipEntry = zipStream.getNextEntry()) != null) {
             final String name = zipEntry.getName();
 
-            if (!myFiles.remove(zipEntry.getName())) {
-                fail("Found an unexpected zip entry: " + zipEntry.getName());
+            if (!myFiles.remove(name)) {
+                fail("Found an unexpected zip entry: " + name);
             }
         }
 
@@ -101,6 +102,8 @@ public class ZipUtilsTest {
         final File other = new File(testDir, "80_char_test_1.txt");
         final ZipInputStream zipStream;
 
+        zipFile.deleteOnExit();
+
         ZipEntry zipEntry;
         ZipUtils.zip(dir, zipFile, new FileExtFileFilter("txt"), other);
 
@@ -110,8 +113,8 @@ public class ZipUtilsTest {
         while ((zipEntry = zipStream.getNextEntry()) != null) {
             final String name = zipEntry.getName();
 
-            if (!myFiles.remove(zipEntry.getName())) {
-                fail("Found an unexpected zip entry: " + zipEntry.getName());
+            if (!myFiles.remove(name)) {
+                fail("Found an unexpected zip entry: " + name);
             }
         }
 

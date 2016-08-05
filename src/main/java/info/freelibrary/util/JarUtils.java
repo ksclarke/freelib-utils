@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -21,12 +23,6 @@ import java.util.jar.Manifest;
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class JarUtils {
-
-    private static final String MAIN_JAR = System.getProperty("java.class.path");
-
-    private static final String PATH = System.getProperty("user.home") + "/";
-
-    private static final String HOME = System.getProperty("user.dir") + "/";
 
     private static final String JAR_URL_PROTOCOL = "jar:file://";
 
@@ -77,6 +73,30 @@ public class JarUtils {
     /**
      * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
      *
+     * @param aJarFilePath A path to a Jar file from which to extract
+     * @param aFilePath The Jar file path of the file to extract
+     * @param aDestDir The destination directory into which the file should be extracted
+     * @throws IOException If there is an exception thrown while reading or writing the file
+     */
+    public static final void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
+            throws IOException {
+        File file;
+
+        try {
+            // Opening the URL connection just parses location, it doesn't really "open" in the I/O sense
+            final JarURLConnection connection = (JarURLConnection) new URL(aJarFilePath).openConnection();
+
+            file = new File(connection.getJarFileURL().getFile());
+        } catch (final MalformedURLException details) {
+            file = new File(aJarFilePath);
+        }
+
+        extract(file, aFilePath, aDestDir);
+    }
+
+    /**
+     * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
+     *
      * @param aJarFile A Jar file from which to extract
      * @param aFilePath The Jar file path of the file to extract
      * @param aDestDir The destination directory into which the file should be extracted
@@ -84,8 +104,20 @@ public class JarUtils {
      */
     public static final void extract(final File aJarFile, final String aFilePath, final File aDestDir)
             throws IOException {
-        final JarFile jarFile = new JarFile(aJarFile);
-        final Enumeration<JarEntry> entries = jarFile.entries();
+        extract(new JarFile(aJarFile), aFilePath, aDestDir);
+    }
+
+    /**
+     * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
+     *
+     * @param aJarFile A Jar file from which to extract
+     * @param aFilePath The Jar file path of the file to extract
+     * @param aDestDir The destination directory into which the file should be extracted
+     * @throws IOException If there is an exception thrown while reading or writing the file
+     */
+    public static final void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir)
+            throws IOException {
+        final Enumeration<JarEntry> entries = aJarFile.entries();
 
         try {
             while (entries.hasMoreElements()) {
@@ -100,7 +132,7 @@ public class JarUtils {
                         throw new IOException("Unable to create directory structure for: " + file);
                     }
 
-                    final InputStream inputStream = jarFile.getInputStream(entry);
+                    final InputStream inputStream = aJarFile.getInputStream(entry);
                     final FileOutputStream outputStream = new FileOutputStream(file);
 
                     IOUtils.copyStream(inputStream, outputStream);
@@ -109,7 +141,7 @@ public class JarUtils {
                 }
             }
         } finally {
-            jarFile.close();
+            aJarFile.close();
         }
     }
 }
