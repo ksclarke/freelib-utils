@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ProcessWatcher extends Thread {
 
-    private final List<ProcessListener> myListeners = new ArrayList<ProcessListener>();
+    private final List<ProcessListener> myListeners = new ArrayList<>();
 
     private final Process myProcess;
 

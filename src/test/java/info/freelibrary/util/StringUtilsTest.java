@@ -6,6 +6,8 @@ package info.freelibrary.util;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
@@ -105,6 +107,17 @@ public class StringUtilsTest {
     }
 
     /**
+     * Tests {@link StringUtils#isEmpty(String)}.
+     */
+    @Test
+    public void testIsEmpty() {
+        assertTrue(StringUtils.isEmpty(""));
+        assertTrue(StringUtils.isEmpty(null));
+        assertTrue(StringUtils.isEmpty("   "));
+        assertFalse(StringUtils.isEmpty(" a "));
+    }
+
+    /**
      * Tests {@link StringUtils#read(File, String)}.
      */
     @Test
@@ -130,7 +143,7 @@ public class StringUtilsTest {
      */
     @Test
     public void toKeysString() {
-        final Map<String, String> map = new TreeMap<String, String>();
+        final Map<String, String> map = new TreeMap<>();
 
         map.put("one", "two");
         map.put("three", "four");

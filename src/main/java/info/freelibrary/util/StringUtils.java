@@ -315,7 +315,7 @@ public class StringUtils {
      * @return A string array without empty or null strings
      */
     public static String[] trim(final String... aStringArray) {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
 
         for (final String string : aStringArray) {
             if (string != null && !string.equals("")) {
@@ -324,6 +324,27 @@ public class StringUtils {
         }
 
         return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * Returns true if the supplied string is null, empty, or contains nothing but whitespace.
+     *
+     * @param aString
+     * @return
+     */
+    public static boolean isEmpty(final String aString) {
+        boolean result = true;
+
+        if (aString != null) {
+            for (int index = 0; index < aString.length(); index++) {
+                if (!Character.isWhitespace(aString.charAt(index))) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
