@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Sets the logging level for Maven builds to ERROR instead of INFO. The only other way to do this is to configure the
  * logging level for all Maven builds in <code>${MAVEN_HOME}/conf/logging/simplelogger.properties</code>.
- * <p/>
- * The plugin comes with defaults, but can also be configured like:
- *
- * <pre><code>
+ * <p>
+ * The plugin comes with defaults, but can also be configured like: <pre><code>
      &lt;plugin&gt;
        &lt;groupId&gt;info.freelibrary&lt;/groupId&gt;
        &lt;artifactId&gt;freelib-utils&lt;/artifactId&gt;

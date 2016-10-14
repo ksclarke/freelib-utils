@@ -82,6 +82,7 @@ public class FileUtils {
      * @param aFilePath A file system path to be turned into as XML
      * @return Am XML string representation of the file structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
+     * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final String aFilePath) throws FileNotFoundException, TransformerException {
         return toXML(aFilePath, ".*");
@@ -139,6 +140,7 @@ public class FileUtils {
      * @param aPattern A regular expression that file names must match
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
+     * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final String aFilePath, final String aPattern) throws FileNotFoundException,
             TransformerException {
@@ -153,6 +155,7 @@ public class FileUtils {
      * @param aDeepConversion Whether the subdirectories are included
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
+     * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final String aFilePath, final boolean aDeepConversion) throws FileNotFoundException,
             TransformerException {
@@ -168,6 +171,7 @@ public class FileUtils {
      * @param aDeepTransformation Whether the subdirectories are included
      * @return A string of XML describing the supplied file system path's structure
      * @throws FileNotFoundException If the supplied file or directory can not be found
+     * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final String aFilePath, final String aPattern, final boolean aDeepTransformation)
             throws FileNotFoundException, TransformerException {
@@ -219,7 +223,7 @@ public class FileUtils {
             final String... aIgnoreList) throws RuntimeException, FileNotFoundException {
         final String filePattern = aPattern != null ? aPattern : ".*";
         final RegexFileFilter filter = new RegexFileFilter(filePattern);
-        final Map<String, List<String>> fileMap = new HashMap<String, List<String>>();
+        final Map<String, List<String>> fileMap = new HashMap<>();
         final File source = new File(aFilePath);
 
         for (final File file : listFiles(source, filter, true, aIgnoreList)) {
@@ -235,7 +239,7 @@ public class FileUtils {
                     throw new RuntimeException("Duplicate file path name");
                 }
             } else {
-                final ArrayList<String> pathList = new ArrayList<String>();
+                final ArrayList<String> pathList = new ArrayList<>();
                 pathList.add(filePath);
                 fileMap.put(fileName, pathList);
             }
@@ -391,7 +395,7 @@ public class FileUtils {
         if (!aDeepListing) {
             return aDir.listFiles(aFilter);
         } else {
-            final ArrayList<File> fileList = new ArrayList<File>();
+            final ArrayList<File> fileList = new ArrayList<>();
             final String[] ignoreList;
 
             if (aIgnoreList == null) {
@@ -494,6 +498,7 @@ public class FileUtils {
      * Deletes a directory and all its children.
      *
      * @param aDir A directory to delete
+     * @return True if file was successfully deleted; else, false
      */
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
@@ -617,7 +622,7 @@ public class FileUtils {
      *
      * @param aFileUrl A file-based URL
      * @return The MIME-type name for the supplied file
-     * @throws IOException
+     * @throws IOException If there is trouble reading the MIME type
      */
     public static String getMimeType(final String aFileUrl) throws IOException {
         return URLConnection.getFileNameMap().getContentTypeFor(aFileUrl);

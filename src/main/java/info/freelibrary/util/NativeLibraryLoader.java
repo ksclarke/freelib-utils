@@ -45,7 +45,7 @@ public class NativeLibraryLoader {
      * Loads a native library from the classpath.
      *
      * @param aNativeLibrary A native library to load from the classpath
-     * @throws IOException
+     * @throws IOException If there is trouble reading from the Jar file or file system
      */
     public static void load(final String aNativeLibrary) throws IOException {
         final String libFileName = getPlatformLibraryName(aNativeLibrary);
@@ -142,7 +142,7 @@ public class NativeLibraryLoader {
                 bits = 64;
             }
 
-            processor = (32 == bits) ? Processor.INTEL_32 : Processor.INTEL_64;
+            processor = 32 == bits ? Processor.INTEL_32 : Processor.INTEL_64;
         }
 
         if (LOGGER.isDebugEnabled()) {

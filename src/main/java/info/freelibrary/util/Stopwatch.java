@@ -6,7 +6,7 @@ package info.freelibrary.util;
 
 /**
  * Allows timing of the execution of any block of code.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public final class Stopwatch {
@@ -19,7 +19,7 @@ public final class Stopwatch {
 
     /**
      * Start the stopwatch.
-     * 
+     *
      * @throws IllegalStateException if the stopwatch is already running.
      */
     public void start() {
@@ -33,7 +33,7 @@ public final class Stopwatch {
 
     /**
      * Stop the stopwatch.
-     * 
+     *
      * @throws IllegalStateException if the stopwatch is not already running.
      */
     public void stop() {
@@ -47,7 +47,8 @@ public final class Stopwatch {
 
     /**
      * Stop the stopwatch (as soon as possible) after a certain number of seconds.
-     * 
+     *
+     * @param aSecondsCount A number of seconds after which to stop the stopwatch
      * @throws IllegalStateException if the stopwatch is not already running.
      */
     public void stopAfter(final int aSecondsCount) {
@@ -67,7 +68,7 @@ public final class Stopwatch {
 
     /**
      * Express the "reading" on the stopwatch in seconds.
-     * 
+     *
      * @return Time elapsed in stopwatch in seconds
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
@@ -90,7 +91,7 @@ public final class Stopwatch {
 
     /**
      * Express the "reading" on the stopwatch in milliseconds.
-     * 
+     *
      * @return Time elapsed in stopwatch in milliseconds
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
@@ -108,7 +109,7 @@ public final class Stopwatch {
 
     /**
      * Returns a string representation of the time elapsed in milliseconds.
-     * 
+     *
      * @return Number of milliseconds elapsed in stopwatch
      */
     @Override

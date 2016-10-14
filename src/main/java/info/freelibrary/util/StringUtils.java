@@ -57,6 +57,7 @@ public class StringUtils {
      * Trims a string; if there is nothing left after the trimming, returns whatever the default value passed in is.
      *
      * @param aString The string to be trimmed
+     * @param aDefault A default string to return if a null string is passed in
      * @return The trimmed string or the default value if string is empty
      */
     public static String trimTo(final String aString, final String aDefault) {
@@ -329,8 +330,8 @@ public class StringUtils {
     /**
      * Returns true if the supplied string is null, empty, or contains nothing but whitespace.
      *
-     * @param aString
-     * @return
+     * @param aString A string to test to see if it is null, empty or contains nothing but whitespace
+     * @return True if the supplied string is empty; else, false
      */
     public static boolean isEmpty(final String aString) {
         boolean result = true;

@@ -18,7 +18,7 @@ import org.w3c.dom.Node;
 
 /**
  * Utilities for working with W3C DOMs.
- * 
+ *
  * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
  */
 public class DOMUtils {
@@ -28,9 +28,10 @@ public class DOMUtils {
 
     /**
      * Returns an XML string representation of the supplied node.
-     * 
+     *
      * @param aNode A W3C node
      * @return An XML string representation of the supplied node
+     * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final Node aNode) throws TransformerException {
         try {

@@ -35,7 +35,7 @@ public class ClasspathUtils {
      * @return The names of directories from the system classpath
      */
     public static String[] getDirs() {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
@@ -59,7 +59,7 @@ public class ClasspathUtils {
      * @return The directories from the system classpath
      */
     public static File[] getDirFiles() {
-        final ArrayList<File> list = new ArrayList<File>();
+        final ArrayList<File> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
@@ -81,10 +81,11 @@ public class ClasspathUtils {
      * Returns an String array of all the directory names in the system classpath that match the supplied
      * <code>FilenameFilter</code>
      *
+     * @param aFilter A filter to use while retrieving directories
      * @return The names of directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getDirs(final FilenameFilter aFilter) {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
@@ -101,10 +102,11 @@ public class ClasspathUtils {
      * Returns an array of all the directories in the system classpath that match the supplied
      * <code>FilenameFilter</code>
      *
+     * @param aFilter A filter to use while retrieving directories
      * @return The directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static File[] getDirFiles(final FilenameFilter aFilter) {
-        final ArrayList<File> list = new ArrayList<File>();
+        final ArrayList<File> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
@@ -132,7 +134,7 @@ public class ClasspathUtils {
      * @return The names of jars from the system classpath
      */
     public static String[] getJars() {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -150,10 +152,11 @@ public class ClasspathUtils {
      * Returns an String array of all the names of the jars in the system classpath that match the supplied
      * <code>FilenameFilter</code>
      *
+     * @param aFilter A file name filter to use while retrieving Jar files
      * @return The names of jars from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getJars(final FilenameFilter aFilter) {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -173,9 +176,10 @@ public class ClasspathUtils {
      * Returns an array of all the jar files in the system classpath
      *
      * @return The jar files from the system classpath
+     * @throws IOException If there is trouble reading the file system while looking for Jar files
      */
     public static JarFile[] getJarFiles() throws IOException {
-        final ArrayList<JarFile> list = new ArrayList<JarFile>();
+        final ArrayList<JarFile> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -192,10 +196,12 @@ public class ClasspathUtils {
     /**
      * Returns an array of all the jar files in the system classpath that match the supplied <code>FilenameFilter</code>
      *
+     * @param aFilter A file name filter to use while retrieving Jar files
      * @return The jar files from the system classpath that match the supplied <code>FilenameFilter</code>
+     * @throws IOException If there is trouble reading the file system while looking for Jar files
      */
     public static JarFile[] getJarFiles(final FilenameFilter aFilter) throws IOException {
-        final ArrayList<JarFile> list = new ArrayList<JarFile>();
+        final ArrayList<JarFile> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter("jar");
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {

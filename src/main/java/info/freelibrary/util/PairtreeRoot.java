@@ -67,6 +67,7 @@ public class PairtreeRoot extends File {
     /**
      * Creates a new Pairtree structure in the supplied directory. This will create the related version file too.
      *
+     * @param aParentDir A parent directory in which to create the Pairtree
      * @throws IOException If there is a problem creating the structure
      */
     public PairtreeRoot(final File aParentDir) throws IOException {
@@ -77,6 +78,8 @@ public class PairtreeRoot extends File {
      * Creates a new Pairtree structure, using a Pairtree prefix, in the supplied directory. This will create the
      * related version and Pairtree prefix files too.
      *
+     * @param aParentDir A parent directory in which the Pairtree resides
+     * @param aPairtreePrefix A prefix for the Pairtree
      * @throws IOException If there is a problem creating the structure
      */
     public PairtreeRoot(final File aParentDir, final String aPairtreePrefix) throws IOException {
@@ -168,7 +171,7 @@ public class PairtreeRoot extends File {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((myPairtreePrefix == null) ? 0 : myPairtreePrefix.hashCode());
+        result = prime * result + (myPairtreePrefix == null ? 0 : myPairtreePrefix.hashCode());
         return result;
     }
 

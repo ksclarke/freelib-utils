@@ -18,7 +18,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 /**
- * A small collection of {@link java.util.Jar} file utilities.
+ * A small collection of Jar file utilities.
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
@@ -36,7 +36,7 @@ public class JarUtils {
      * @throws IOException If there is trouble reading the classpath
      */
     public static URL[] getJarURLs() throws IOException {
-        final List<URL> urlList = new LinkedList<URL>();
+        final List<URL> urlList = new LinkedList<>();
 
         for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
             final Manifest manifest = jarFile.getManifest();
@@ -71,7 +71,7 @@ public class JarUtils {
     }
 
     /**
-     * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
+     * Extract a particular path from a supplied Jar file to a supplied {@link java.io.File} location.
      *
      * @param aJarFilePath A path to a Jar file from which to extract
      * @param aFilePath The Jar file path of the file to extract
@@ -95,7 +95,7 @@ public class JarUtils {
     }
 
     /**
-     * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
+     * Extract a particular path from a supplied Jar file to a supplied {@link java.io.File} location.
      *
      * @param aJarFile A Jar file from which to extract
      * @param aFilePath The Jar file path of the file to extract
@@ -108,7 +108,7 @@ public class JarUtils {
     }
 
     /**
-     * Extract a particular path from a supplied {@link java.util.Jar} file to a supplied {@link java.io.File} location.
+     * Extract a particular path from a supplied Jar file to a supplied {@link java.io.File} location.
      *
      * @param aJarFile A Jar file from which to extract
      * @param aFilePath The Jar file path of the file to extract

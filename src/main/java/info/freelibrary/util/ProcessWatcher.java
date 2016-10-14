@@ -20,6 +20,7 @@ public class ProcessWatcher extends Thread {
      * Creates a watcher for a {@link Process} started by the supplied {@link ProcessBuilder}.
      *
      * @param aProcessBuilder A builder that will spawn the process to watch
+     * @throws IOException If there is trouble starting the process
      */
     public ProcessWatcher(final ProcessBuilder aProcessBuilder) throws IOException {
         myProcess = aProcessBuilder.start();
@@ -45,6 +46,7 @@ public class ProcessWatcher extends Thread {
      * Add a {@link info.freelibrary.util.ProcessListener} to this watcher.
      *
      * @param aListener A process listener to add to this watcher
+     * @return The process watcher to which the listener has been attached
      */
     public ProcessWatcher addListener(final ProcessListener aListener) {
         myListeners.add(aListener);
@@ -55,6 +57,7 @@ public class ProcessWatcher extends Thread {
      * Remove a {@link info.freelibrary.util.ProcessListener} to this watcher.
      *
      * @param aListener A process listener to remove from this watcher
+     * @return The process watcher to which the listener has been attached
      */
     public ProcessWatcher removeListener(final ProcessListener aListener) {
         myListeners.remove(aListener);
