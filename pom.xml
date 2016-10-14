@@ -42,6 +42,7 @@
   <properties>
     <!-- Project specific dependencies -->
     <oshi.version>2.3</oshi.version>
+    <xom.version>1.2.10</xom.version>
     <roaster.version>2.15.0.Final</roaster.version>
     <iharder.base64.version>2.3.8</iharder.base64.version>
     <commons.compress.version>1.11</commons.compress.version>
@@ -86,8 +87,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>xom</groupId>
+      <groupId>com.io7m.xom</groupId>
       <artifactId>xom</artifactId>
+      <version>${xom.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -126,10 +128,6 @@
         <artifactId>maven-javadoc-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
       <plugin>
@@ -164,7 +162,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.1.2</version>
+    <version>0.1.8</version>
   </parent>
 
 </project>
