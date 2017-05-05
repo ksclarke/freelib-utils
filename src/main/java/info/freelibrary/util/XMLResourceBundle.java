@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A {@link ResourceBundle} that uses a XML file as its source.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class XMLResourceBundle extends ResourceBundle {
 

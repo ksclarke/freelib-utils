@@ -52,7 +52,7 @@ import org.w3c.dom.Element;
 /**
  * Utilities for working with files.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class FileUtils {
 

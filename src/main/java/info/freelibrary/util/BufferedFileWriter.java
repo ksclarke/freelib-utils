@@ -15,7 +15,7 @@ import java.io.Writer;
 /**
  * A {@link BufferedWriter} that writes to a file.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class BufferedFileWriter extends BufferedWriter {
 

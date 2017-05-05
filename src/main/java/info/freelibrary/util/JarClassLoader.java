@@ -4,8 +4,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_001;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
@@ -17,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A {@link URLClassLoader} for Jar files.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class JarClassLoader extends URLClassLoader {
 
@@ -36,7 +34,7 @@ public class JarClassLoader extends URLClassLoader {
         super(JarUtils.getJarURLs());
 
         if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace(RB.getString(UTIL_MESSAGE_001), aMainClassName);
+            LOGGER.trace(RB.getString(MessageCodes.UTIL_001), aMainClassName);
         }
 
         loadClass(aMainClassName).newInstance();

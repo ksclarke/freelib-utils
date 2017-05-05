@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Provides a few convenience methods for working with strings.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class StringUtils {
 
@@ -368,7 +368,7 @@ public class StringUtils {
      * @return A concatenation of the supplied objects' string representations
      */
     public static String toString(final Object[] aObjArray, final char aPadChar) {
-        if (aObjArray.length == 0) {
+        if (aObjArray == null || aObjArray.length == 0) {
             return "";
         }
 
@@ -379,7 +379,7 @@ public class StringUtils {
         final StringBuilder buffer = new StringBuilder();
 
         for (final Object obj : aObjArray) {
-            buffer.append(obj.toString()).append(aPadChar);
+            buffer.append(obj).append(aPadChar);
         }
 
         return buffer.deleteCharAt(buffer.length() - 1).toString();

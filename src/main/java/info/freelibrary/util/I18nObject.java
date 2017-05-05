@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * provides an easy way to get access to internationalized strings. It doesn't support dynamically passed in locales,
  * but just the one that the system is configured to use as its default locale.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public abstract class I18nObject {
 

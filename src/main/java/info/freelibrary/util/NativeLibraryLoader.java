@@ -2,7 +2,6 @@
 package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
-import static info.freelibrary.util.MessageCodes.UTIL_MESSAGE_002;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,7 +16,7 @@ import java.util.jar.JarFile;
 /**
  * Utility class to load a native library that lives in the current classpath.
  *
- * @author Kevin S. Clarke (<a href="mailto:ksclarke@gmail.com">ksclarke@gmail.com</a>)
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class NativeLibraryLoader {
 
@@ -57,7 +56,7 @@ public class NativeLibraryLoader {
             final URL url = ClasspathUtils.findFirst(libFileName);
 
             if (url == null) {
-                throw new FileNotFoundException(LOGGER.getMessage(UTIL_MESSAGE_002, aNativeLibrary));
+                throw new FileNotFoundException(LOGGER.getMessage(MessageCodes.UTIL_002, aNativeLibrary));
             }
 
             final JarFile jarFile = new JarFile(url.getFile());

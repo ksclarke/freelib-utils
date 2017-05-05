@@ -7,7 +7,7 @@ package info.freelibrary.util;
 /**
  * Allows timing of the execution of any block of code.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class Stopwatch {
 

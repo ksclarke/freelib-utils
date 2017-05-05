@@ -3,6 +3,11 @@ package info.freelibrary.util;
 
 import org.slf4j.ILoggerFactory;
 
+/**
+ * A facade for SLF4J's {@link org.slf4j.LoggerFactory}
+ *
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ */
 public class LoggerFactory {
 
     private LoggerFactory() {

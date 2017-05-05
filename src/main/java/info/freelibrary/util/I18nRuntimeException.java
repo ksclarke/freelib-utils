@@ -4,6 +4,9 @@ package info.freelibrary.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ */
 public abstract class I18nRuntimeException extends RuntimeException {
 
     /**

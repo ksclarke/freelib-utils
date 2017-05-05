@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * A {@link FilenameFilter} that allows filtering file names based on regular expressions.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class RegexFileFilter implements FilenameFilter {
 

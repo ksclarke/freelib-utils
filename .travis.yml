@@ -3,12 +3,23 @@ language: java
 jdk:
 - oraclejdk8
 
+env:
+  global:
+    - secure: "kVeWVyb63Sog3uFooqxWmArjlfCeVq0Se/odmb25jkbabuv/aHCLWQrlG0sFokXIGG8hN952R3GE//98KRd5wGCHdR6BuW8HglOiSpUtx4eFQD549EpXVnk1X7wdzEqzDLPn5ibhrhtRpVAB+ydco9H/wPzox0W3OcW/45QZz5w="
+    - secure: "ip8uNb8zEfBTscKw5KmOnmBloajBEmNnMeS8D+fq6UNrIGXlESdrQHdlUejZ0wJQWJoaAyt5//WmB2FywKcWwbLN7qZmBGyJ+FMZAsW+LYTC1PgGNhGi2jqv5KDF+wIcHw7FA9loUACCzNbLsdRx5GMozKYve/61vgRUS7cYIDk="
+
 script: mvn install
+
+after_success: mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
+
+cache:
+  directories:
+  - $HOME/.m2
 
 notifications:
   email:
     recipients:
-    - ksclarke@gmail.com
+    - ksclarke@ksclarke.io
     on_failure: change
     on_success: never
   irc:

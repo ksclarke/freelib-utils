@@ -8,7 +8,7 @@ This project is a small collection of convenience and utility classes, mostly us
 
 <script>
 xmlhttp=new XMLHttpRequest();
-xmlhttp.open("GET", "http://freelibrary.info/mvnlookup.php?project=freelib-utils", false);
+xmlhttp.open("GET", "https://55rkvqxzlf.execute-api.us-east-1.amazonaws.com/maven?q=freelib-utils", false);
 xmlhttp.send();
 $version = xmlhttp.responseText;
 </script>

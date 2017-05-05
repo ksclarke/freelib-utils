@@ -19,7 +19,7 @@ import org.w3c.dom.Node;
 /**
  * Utilities for working with W3C DOMs.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class DOMUtils {
 

@@ -15,8 +15,8 @@ import net.iharder.Base64;
 
 /**
  * Utilities for use with password creation.
- * 
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ *
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class PasswordUtils {
 
@@ -25,7 +25,7 @@ public final class PasswordUtils {
 
     /**
      * Generates a salt for working with passwords.
-     * 
+     *
      * @return A salt
      */
     public static String generateSalt() {
@@ -34,7 +34,7 @@ public final class PasswordUtils {
 
     /**
      * Encrypts the supplied text.
-     * 
+     *
      * @param aText The text to be encrypted
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
@@ -45,7 +45,7 @@ public final class PasswordUtils {
 
     /**
      * Encrypts the supplied text using the supplied salt.
-     * 
+     *
      * @param aText The text to be encrypted
      * @param aSalt The salt to use in the encryption
      * @return The encrypted password

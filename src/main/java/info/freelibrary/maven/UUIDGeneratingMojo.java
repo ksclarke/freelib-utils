@@ -13,6 +13,9 @@ import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ */
 @Mojo(name = "set-uuid-property", defaultPhase = LifecyclePhase.VALIDATE)
 public class UUIDGeneratingMojo extends AbstractMojo {
 
