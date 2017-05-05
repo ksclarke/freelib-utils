@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
+/**
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ */
 public class MavenUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MavenUtils.class);
@@ -45,9 +48,9 @@ public class MavenUtils {
      * @param aExcludesList A list of names of loggers to exclude from the reset
      * @param aIncludesList A list of names of additional loggers to include in the reset
      */
-    public static final void setLogLevels(final int aLogLevel, final String[] aLoggerList,
-            final String[] aExcludesList, final String[] aIncludesList) {
-        final ArrayList<String> loggerList = new ArrayList<String>(Arrays.asList(aLoggerList));
+    public static final void setLogLevels(final int aLogLevel, final String[] aLoggerList, final String[] aExcludesList,
+            final String[] aIncludesList) {
+        final ArrayList<String> loggerList = new ArrayList<>(Arrays.asList(aLoggerList));
         final Class<? extends Logger> simpleLogger = LoggerFactory.getLogger("org.slf4j.impl.SimpleLogger").getClass();
 
         if (aIncludesList != null) {
@@ -58,8 +61,8 @@ public class MavenUtils {
             if (aExcludesList != null) {
                 boolean skip = false;
 
-                for (int index = 0; index < aExcludesList.length; index++) {
-                    if (loggerName.equals(aExcludesList[index])) {
+                for (final String element : aExcludesList) {
+                    if (loggerName.equals(element)) {
                         skip = true;
                         break;
                     }
@@ -98,8 +101,7 @@ public class MavenUtils {
      * @return A list of names of loggers used by a standard Maven build
      */
     public static final String[] getMavenLoggers() {
-        return new String[] {
-            "org.apache.maven.cli.event.ExecutionEventLogger",
+        return new String[] { "org.apache.maven.cli.event.ExecutionEventLogger",
             "org.apache.maven.tools.plugin.scanner.DefaultMojoScanner",
             "org.apache.maven.plugin.plugin.DescriptorGeneratorMojo",
             "org.apache.maven.plugin.dependency.fromConfiguration.UnpackMojo",
@@ -110,8 +112,7 @@ public class MavenUtils {
             "org.apache.maven.plugin.failsafe.VerifyMojo", "org.apache.maven.DefaultMaven",
             "org.apache.maven.plugin.compiler.TestCompilerMojo", "org.apache.maven.plugins.enforcer.EnforceMojo",
             "org.apache.maven.plugin.compiler.CompilerMojo", "org.codehaus.plexus.archiver.jar.JarArchiver",
-            "org.apache.maven.plugin.surefire.SurefirePlugin", "org.apache.maven.plugin.failsafe.IntegrationTestMojo"
-        };
+            "org.apache.maven.plugin.surefire.SurefirePlugin", "org.apache.maven.plugin.failsafe.IntegrationTestMojo" };
     }
 
     /**

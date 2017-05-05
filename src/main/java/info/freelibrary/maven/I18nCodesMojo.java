@@ -2,9 +2,6 @@
 package info.freelibrary.maven;
 
 import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
-import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_001;
-import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_002;
-import static info.freelibrary.util.MessageCodes.MVN_MESSAGE_003;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,20 +27,21 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
 import info.freelibrary.util.LoggerFactory;
+import info.freelibrary.util.MessageCodes;
 
 /**
  * I18nCodesMojo is a Maven mojo that can generate a <code>MessageCodes</code> class from which I18N message codes can
- * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is
- * the code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
+ * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is the
+ * code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
  * <p>
- * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.6.0-SNAPSHOT:generate-codes
- * -Dmessage-files=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
- * appropriate). Usually, though, the plugin would just be configured to run with the resources Maven lifecycle.
+ * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.7.2-SNAPSHOT:generate-codes
+ * -DmessageFiles=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
+ * appropriate). Usually, though, the plugin would just be configured to run with the process-sources Maven lifecycle.
  * </p>
  *
- * @author Kevin S. Clarke <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-@Mojo(name = "generate-codes", defaultPhase = LifecyclePhase.VALIDATE)
+@Mojo(name = "generate-codes", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class I18nCodesMojo extends AbstractMojo {
 
     private static final String MESSAGE_CLASS_NAME = "message-class-name";
@@ -59,7 +57,8 @@ public class I18nCodesMojo extends AbstractMojo {
     @Parameter(alias = "messageFiles", property = "messageFiles")
     private List<String> myPropertyFiles;
 
-    @Parameter(alias = "generatedSourcesDirectory", property = "generatedSourcesDirectory")
+    @Parameter(alias = "generatedSourcesDirectory", property = "generatedSourcesDirectory",
+            defaultValue = "${project.basedir}/src/main/generated")
     private File myGeneratedSrcDir;
 
     @Override
@@ -87,13 +86,13 @@ public class I18nCodesMojo extends AbstractMojo {
                         final String[] packageParts = Arrays.copyOfRange(nameParts, 0, classNameIndex);
                         final String packageName = StringUtils.join(packageParts, ".");
                         final JavaInterfaceSource java = Roaster.create(JavaInterfaceSource.class);
-                        final File packageDirectory = new File(srcFolderName + File.separatorChar + packageName
-                                .replace('.', File.separatorChar));
+                        final File packageDirectory = new File(srcFolderName + File.separatorChar + packageName.replace(
+                                '.', File.separatorChar));
 
                         // Make sure the package directory already exists
                         if (!packageDirectory.exists() && !packageDirectory.mkdirs()) {
-                            throw new MojoExecutionException(LOGGER.getMessage(MVN_MESSAGE_003, packageDirectory,
-                                    className));
+                            throw new MojoExecutionException(LOGGER.getMessage(MessageCodes.MVN_003,
+                                    packageDirectory, className));
                         }
 
                         // Cycle through all the entries in the supplied messages file, creating fields
@@ -116,6 +115,10 @@ public class I18nCodesMojo extends AbstractMojo {
                         final File javaFile = new File(packageDirectory, className + ".java");
                         final FileWriter javaWriter = new FileWriter(javaFile);
 
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Writing MessageCodes Java source file: {}", javaFile);
+                        }
+
                         // Let's tell Checkstyle to ignore the generated code (if it's so configured)
                         java.getJavaDoc().setFullText("BEGIN GENERATED CODE");
 
@@ -126,7 +129,7 @@ public class I18nCodesMojo extends AbstractMojo {
                         javaWriter.write(java.toString());
                         javaWriter.close();
                     } else if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn(MVN_MESSAGE_002, MESSAGE_CLASS_NAME);
+                        LOGGER.warn(MessageCodes.MVN_002, MESSAGE_CLASS_NAME);
                     }
                 } catch (final IOException details) {
                     if (LOGGER.isErrorEnabled()) {
@@ -137,7 +140,7 @@ public class I18nCodesMojo extends AbstractMojo {
                 }
             }
         } else if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn(MVN_MESSAGE_001);
+            LOGGER.warn(MessageCodes.MVN_001);
         }
     }
 

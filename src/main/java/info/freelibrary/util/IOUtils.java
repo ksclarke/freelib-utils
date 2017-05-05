@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Utilities for working with IO streams.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class IOUtils {
 

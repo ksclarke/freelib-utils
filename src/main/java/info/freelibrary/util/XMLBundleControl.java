@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * A resource bundle control that supports the {@link XMLResourceBundle}.
  *
- * @author <a href="mailto:ksclarke@gmail.com">Kevin S. Clarke</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class XMLBundleControl extends ResourceBundle.Control {
 

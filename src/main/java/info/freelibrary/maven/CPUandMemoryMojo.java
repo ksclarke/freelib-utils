@@ -1,6 +1,7 @@
 
 package info.freelibrary.maven;
 
+import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
 import static info.freelibrary.util.FileUtils.sizeFromBytes;
 
 import java.util.Properties;
@@ -12,8 +13,10 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import info.freelibrary.util.Logger;
+import info.freelibrary.util.LoggerFactory;
+import info.freelibrary.util.MessageCodes;
 
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
@@ -22,6 +25,11 @@ import oshi.hardware.HardwareAbstractionLayer;
 /**
  * Sets Maven project properties with values for system.cores, system.free.memory, and system.total.memory; memory
  * values are set with unit of measurement appended (e.g., 200m, 3g, 5000k).
+ * <p>
+ * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.7.2-SNAPSHOT:set-cpumem-properties` (supplying
+ * whatever version is appropriate). Usually, though, the plugin would just be configured to run as a part of the Maven
+ * lifecycle.
+ * </p>
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
@@ -34,7 +42,7 @@ public class CPUandMemoryMojo extends AbstractMojo {
 
     public static final String SYSTEM_TOTAL_MEMORY = "system.total.memory";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class, FREELIB_UTIL_MESSAGES);
 
     /**
      * The Maven project directory.
@@ -54,6 +62,11 @@ public class CPUandMemoryMojo extends AbstractMojo {
 
         properties.setProperty(SYSTEM_FREE_MEMORY, sizeToString(memory.getAvailable()));
         properties.setProperty(SYSTEM_TOTAL_MEMORY, sizeToString(memory.getTotal()));
+
+        LOGGER.info(MessageCodes.MVN_004, properties.getProperty(SYSTEM_FREE_MEMORY));
+        LOGGER.info(MessageCodes.MVN_005, properties.getProperty(SYSTEM_TOTAL_MEMORY));
+        LOGGER.info(MessageCodes.MVN_006, properties.getProperty(SYSTEM_CORES));
+
     }
 
     /**
