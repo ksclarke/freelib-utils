@@ -73,4 +73,8 @@ public interface MessageCodes {
 	 * Message: Using Pairtree prefix: {}
 	 */
 	public static final String PT_003 = "PT-003";
+	/**
+	 * Message: Getting a percentage of system's free memory: {}
+	 */
+	public static final String MVN_007 = "MVN-007";
 }

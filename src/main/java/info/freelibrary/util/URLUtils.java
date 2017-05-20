@@ -1,9 +1,13 @@
+
 package info.freelibrary.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Scanner;
 
 /**
  * Utilities to assist with working with URLs.
@@ -66,5 +70,21 @@ public final class URLUtils {
         }
 
         return new File(path3);
+    }
+
+    /**
+     * Returns the contents of the supplied URL as a string.
+     *
+     * @param aURL A URL
+     * @return The contents of the supplied URL as a string
+     * @throws MalformedURLException If the supplied URL is malformed
+     * @throws IOException If there is a problem reading the URL's contents
+     */
+    public static String urlToString(final URL aURL) throws MalformedURLException, IOException {
+        final Scanner scanner = new Scanner(aURL.openStream(), "UTF-8");
+        final String string = scanner.useDelimiter("\\A").next();
+
+        scanner.close();
+        return string;
     }
 }

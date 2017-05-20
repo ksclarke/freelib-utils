@@ -13,6 +13,7 @@
   <entry key="MVN-004">Set system.free.memory property to: {}</entry>
   <entry key="MVN-005">Set system.total.memory property to: {}</entry>
   <entry key="MVN-006">Set system.cores property to: {}</entry>
+  <entry key="MVN-007">Getting a percentage of system's free memory: {} of {}</entry>
 
   <!-- Pairtree related logging messages -->
   <entry key="PT-001">Retrieving pairtree_root directory at {}</entry>
