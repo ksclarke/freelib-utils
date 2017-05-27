@@ -84,10 +84,7 @@ public class ZipUtils {
             final ZipOutputStream aZipStream) throws IOException {
         for (final File inFile : aSourceDir.listFiles()) {
             if (inFile.isDirectory()) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Adding files in {} to zip file", inFile);
-                }
-
+                LOGGER.debug(MessageCodes.UTIL_027, inFile);
                 dirToZip(inFile, aRootDir, aFilter, aZipStream);
             } else if (aFilter.accept(inFile.getParentFile(), inFile.getName())) {
                 final String relativePath = aSourceDir.getAbsolutePath().replace(aRootDir, "");

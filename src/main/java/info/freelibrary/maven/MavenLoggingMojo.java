@@ -11,6 +11,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.freelibrary.util.MessageCodes;
+
 /**
  * Sets the logging level for Maven builds to ERROR instead of INFO. The only other way to do this is to configure the
  * logging level for all Maven builds in <code>${MAVEN_HOME}/conf/logging/simplelogger.properties</code>.
@@ -70,8 +72,8 @@ public class MavenLoggingMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         final int level = MavenUtils.getLevelIntCode(myLevel);
 
-        if (LOGGER.isWarnEnabled() && level == 0) {
-            LOGGER.warn("Supplied log level '{}' was unknown, setting level to 'ERROR'", myLevel);
+        if (level == 0) {
+            LOGGER.warn(MessageCodes.MVN_009, myLevel);
         }
 
         MavenUtils.setLogLevels(level == 0 ? MavenUtils.ERROR_LOG_LEVEL : level, MavenUtils.getMavenLoggers());

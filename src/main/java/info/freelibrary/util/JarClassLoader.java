@@ -4,13 +4,11 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.MESSAGES;
+
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A {@link URLClassLoader} for Jar files.
@@ -19,10 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JarClassLoader extends URLClassLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class);
-
-    private static final ResourceBundle RB = ResourceBundle.getBundle(Constants.FREELIB_UTIL_MESSAGES,
-            new XMLBundleControl());
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, MESSAGES);
 
     /**
      * Constructor for a Jar ClassLoader.
@@ -33,10 +28,7 @@ public class JarClassLoader extends URLClassLoader {
     public JarClassLoader(final String aMainClassName) throws Exception {
         super(JarUtils.getJarURLs());
 
-        if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace(RB.getString(MessageCodes.UTIL_001), aMainClassName);
-        }
-
+        LOGGER.debug(MessageCodes.UTIL_001, aMainClassName);
         loadClass(aMainClassName).newInstance();
     }
 

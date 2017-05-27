@@ -5,17 +5,149 @@ package info.freelibrary.util;
 public interface MessageCodes {
 
 	/**
-	 * Message: Can't create directory: {}
+	 * Message: Constructing exception message using supplied locale: {}
 	 */
-	public static final String PT_002 = "PT-002";
+	public static final String UTIL_019 = "UTIL-019";
+	/**
+	 * Message: Exception message key may not be null
+	 */
+	public static final String UTIL_018 = "UTIL-018";
+	/**
+	 * Message: Constructing exception message using bundle name: {}
+	 */
+	public static final String UTIL_017 = "UTIL-017";
+	/**
+	 * Message: Exception ResourceBundle name may not be null
+	 */
+	public static final String UTIL_016 = "UTIL-016";
+	/**
+	 * Message: Unable to delete: {}
+	 */
+	public static final String UTIL_015 = "UTIL-015";
+	/**
+	 * Message: Failed to create: {}
+	 */
+	public static final String UTIL_014 = "UTIL-014";
+	/**
+	 * Message: Trying to delete '{}' but there was a problem
+	 */
+	public static final String UTIL_013 = "UTIL-013";
+	/**
+	 * Message: Unable to delete: {}
+	 */
+	public static final String UTIL_012 = "UTIL-012";
+	/**
+	 * Message: Descending into: {}
+	 */
+	public static final String UTIL_011 = "UTIL-011";
+	/**
+	 * Message: Matched file: {}
+	 */
+	public static final String UTIL_010 = "UTIL-010";
+	/**
+	 * Message: Did not check {} because not a directory or jar file
+	 */
+	public static final String UTIL_009 = "UTIL-009";
+	/**
+	 * Message: Could not get {} from jar file
+	 */
+	public static final String UTIL_008 = "UTIL-008";
+	/**
+	 * Message: Jar entry {} did not match search pattern
+	 */
+	public static final String UTIL_007 = "UTIL-007";
+	/**
+	 * Message: Found {} in {}
+	 */
+	public static final String UTIL_006 = "UTIL-006";
+	/**
+	 * Message: Checking {} for {}
+	 */
+	public static final String UTIL_005 = "UTIL-005";
+	/**
+	 * Message: {} is a directory
+	 */
+	public static final String UTIL_004 = "UTIL-004";
+	/**
+	 * Message: Checking to see if {} is a directory ({})
+	 */
+	public static final String UTIL_003 = "UTIL-003";
+	/**
+	 * Message: Native library file for {} wasn't found
+	 */
+	public static final String UTIL_002 = "UTIL-002";
+	/**
+	 * Message: Initiating JarClassLoader with {}
+	 */
+	public static final String UTIL_001 = "UTIL-001";
+	/**
+	 * Message: Writing MessageCodes Java source file: {}
+	 */
+	public static final String DBG_001 = "DBG-001";
+	/**
+	 * Message: Setting a UUID property ({} = {}) for use in the Maven build
+	 */
+	public static final String MVN_013 = "MVN-013";
+	/**
+	 * Message: '{}' logging level is now set to: {}
+	 */
+	public static final String MVN_012 = "MVN-012";
+	/**
+	 * Message: Has the Maven logger changed?
+	 */
+	public static final String MVN_011 = "MVN-011";
+	/**
+	 * Message: Supplied logger '{}' isn't a org.slf4j.impl.SimpleLogger
+	 */
+	public static final String MVN_010 = "MVN-010";
+	/**
+	 * Message: Adding files in '{}' to zip file
+	 */
+	public static final String UTIL_027 = "UTIL-027";
+	/**
+	 * Message: Formatting '{}' with: {}
+	 */
+	public static final String UTIL_026 = "UTIL-026";
+	/**
+	 * Message: Requested library name: {}
+	 */
+	public static final String UTIL_025 = "UTIL-025";
+	/**
+	 * Message: Processor is {} and os.arch is: {}
+	 */
+	public static final String UTIL_024 = "UTIL-024";
+	/**
+	 * Message: Architecture is {} and os.name is: {}
+	 */
+	public static final String UTIL_023 = "UTIL-023";
+	/**
+	 * Message: Constructing exception message using bundle name: {}
+	 */
+	public static final String UTIL_022 = "UTIL-022";
+	/**
+	 * Message: Formatting exception message for '{}'
+	 */
+	public static final String UTIL_021 = "UTIL-021";
+	/**
+	 * Message: Formatting exception message for '{}' using: {} [{}]
+	 */
+	public static final String UTIL_020 = "UTIL-020";
+	/**
+	 * Message: Supplied log level '{}' was unknown, setting level to 'ERROR'
+	 */
+	public static final String MVN_009 = "MVN-009";
+	/**
+	 * Message: BEGIN GENERATED CODE
+	 */
+	public static final String MVN_008 = "MVN-008";
+	/**
+	 * Message: Getting a percentage of system's free memory: {} of {}
+	 */
+	public static final String MVN_007 = "MVN-007";
 	/**
 	 * Message: Set system.cores property to: {}
 	 */
 	public static final String MVN_006 = "MVN-006";
-	/**
-	 * Message: Retrieving pairtree_root directory at {}
-	 */
-	public static final String PT_001 = "PT-001";
 	/**
 	 * Message: Set system.total.memory property to: {}
 	 */
@@ -37,44 +169,4 @@ public interface MessageCodes {
 	 * Message: No message files were supplied so no code classes were created
 	 */
 	public static final String MVN_001 = "MVN-001";
-	/**
-	 * Message: Native library file for {} wasn't found
-	 */
-	public static final String UTIL_002 = "UTIL-002";
-	/**
-	 * Message: Initiating JarClassLoader with {}
-	 */
-	public static final String UTIL_001 = "UTIL-001";
-	/**
-	 * Message: Directory exists but can't be read: {}
-	 */
-	public static final String PT_009 = "PT-009";
-	/**
-	 * Message: https://tools.ietf.org/id/draft-kunze-pairtree-01.txt
-	 */
-	public static final String PT_008 = "PT-008";
-	/**
-	 * Message: This directory conforms to Pairtree Version {}. Updated spec:
-	 */
-	public static final String PT_007 = "PT-007";
-	/**
-	 * Message: Trying to write wrong Pairtree prefix ({} vs. {})
-	 */
-	public static final String PT_006 = "PT-006";
-	/**
-	 * Message: Pairtree Object retrieved: {} ({} | {})
-	 */
-	public static final String PT_005 = "PT-005";
-	/**
-	 * Message: Pairtree Object retrieved: {} ({})
-	 */
-	public static final String PT_004 = "PT-004";
-	/**
-	 * Message: Using Pairtree prefix: {}
-	 */
-	public static final String PT_003 = "PT-003";
-	/**
-	 * Message: Getting a percentage of system's free memory: {}
-	 */
-	public static final String MVN_007 = "MVN-007";
 }

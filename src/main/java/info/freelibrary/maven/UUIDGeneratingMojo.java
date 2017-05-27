@@ -13,6 +13,8 @@ import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.freelibrary.util.MessageCodes;
+
 /**
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
@@ -43,10 +45,7 @@ public class UUIDGeneratingMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         final String uuid = myString == null ? UUID.randomUUID().toString() : UUID.fromString(myString).toString();
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Setting a UUID property ({} = {}) for use in the Maven build", myName, uuid);
-        }
-
+        LOGGER.debug(MessageCodes.MVN_013, myName, uuid);
         myProject.getProperties().setProperty(myName, uuid);
     }
 

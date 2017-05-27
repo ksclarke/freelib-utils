@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
+import info.freelibrary.util.MessageCodes;
+
 /**
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
@@ -84,13 +86,13 @@ public class MavenUtils {
                     field.setInt(loggerObject, aLogLevel);
 
                     if (loggerObject.isDebugEnabled()) {
-                        LOGGER.debug("'{}' logging level is now set to: {}", loggerName, getLevelName(aLogLevel));
+                        LOGGER.debug(MessageCodes.MVN_012, loggerName, getLevelName(aLogLevel));
                     }
                 } catch (NoSuchFieldException | IllegalAccessException details) {
-                    LOGGER.error("Has the Maven logger changed?", details);
+                    LOGGER.error(MessageCodes.MVN_011, details);
                 }
-            } else if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Supplied logger '{}' isn't a org.slf4j.impl.SimpleLogger", loggerName);
+            } else {
+                LOGGER.warn(MessageCodes.MVN_010, loggerName);
             }
         }
     }

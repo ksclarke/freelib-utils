@@ -40,10 +40,7 @@ public class ClasspathUtils {
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
-                        : "no");
-            }
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
 
             if (file.isDirectory()) {
                 list.add(file.getAbsolutePath());
@@ -64,10 +61,7 @@ public class ClasspathUtils {
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
-                        : "no");
-            }
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
 
             if (file.isDirectory()) {
                 list.add(file);
@@ -111,16 +105,10 @@ public class ClasspathUtils {
         for (final String filename : System.getProperty(CLASSPATH).split(":")) {
             final File file = new File(filename);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking to see if {} is a dir ({})", file.getAbsolutePath(), file.isDirectory() ? "yes"
-                        : "no");
-            }
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
 
             if (aFilter.accept(file.getParentFile(), file.getName()) && file.isDirectory()) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("{} is a directory", file.getAbsolutePath());
-                }
-
+                LOGGER.debug(MessageCodes.UTIL_004, file.getAbsolutePath());
                 list.add(file);
             }
         }
@@ -231,18 +219,13 @@ public class ClasspathUtils {
         for (final String cpEntry : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(cpEntry);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Checking {} for {}", cpEntry, aFileName);
-            }
+            LOGGER.debug(MessageCodes.UTIL_005, cpEntry, aFileName);
 
             if (file.isDirectory()) {
                 final File target = new File(file, aFileName);
 
                 if (target.exists()) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Found {} in {}", aFileName, cpEntry);
-                    }
-
+                    LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
                     return target.toURI().toURL();
                 }
             } else if (filter.accept(file.getParentFile(), file.getName())) {
@@ -250,23 +233,20 @@ public class ClasspathUtils {
                 final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
 
                 if (jarEntry != null && jarEntry.getSize() > 0) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Found {} in {}", aFileName, cpEntry);
-                    }
-
+                    LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
                     jarFile.close();
                     return file.toURI().toURL();
-                } else if (LOGGER.isDebugEnabled()) {
+                } else {
                     if (jarEntry != null) {
-                        LOGGER.debug("Jar entry {} did not match search pattern", jarEntry.getName());
+                        LOGGER.debug(MessageCodes.UTIL_007, jarEntry.getName());
                     } else {
-                        LOGGER.debug("Could not get {} from jar file", aFileName);
+                        LOGGER.debug(MessageCodes.UTIL_008, aFileName);
                     }
                 }
 
                 jarFile.close();
-            } else if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Did not check {} because not a directory or jar file", file);
+            } else {
+                LOGGER.debug(MessageCodes.UTIL_009, file);
             }
         }
 

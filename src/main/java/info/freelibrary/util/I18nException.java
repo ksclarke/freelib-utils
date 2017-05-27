@@ -162,37 +162,27 @@ public abstract class I18nException extends Exception {
         final XMLResourceBundle bundle;
 
         if (aBundleName == null) {
-            throw new NullPointerException("Exception ResourceBundle name may not be null");
-        } else if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Constructing exception message using bundle name: {}", aBundleName);
+            throw new NullPointerException(MessageCodes.UTIL_016);
+        } else {
+            LOGGER.debug(MessageCodes.UTIL_017, aBundleName);
         }
 
         if (aMessageKey == null) {
-            throw new NullPointerException("Exception message key may not be null");
+            throw new NullPointerException(MessageCodes.UTIL_018);
         }
 
         if (aLocale != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Constructing exception message using supplied locale: {}", aLocale.toString());
-            }
-
+            LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new XMLBundleControl());
         } else {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
         }
 
         if (aVarargs != null && aVarargs.length > 0) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Formatting exception message for '{}' using: {} [{}]", aMessageKey, aVarargs, aVarargs
-                        .getClass().getSimpleName());
-            }
-
+            LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
             return bundle.get(aMessageKey, aVarargs);
         } else {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Formatting exception message for '{}'", aMessageKey);
-            }
-
+            LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
             return bundle.get(aMessageKey);
         }
     }

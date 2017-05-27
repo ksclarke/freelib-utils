@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+  <!-- Define message codes class name -->
   <entry key="message-class-name">info.freelibrary.util.MessageCodes</entry>
+  
+  <!-- General utility messages -->
   <entry key="UTIL-001">Initiating JarClassLoader with {}</entry>
   <entry key="UTIL-002">Native library file for {} wasn't found</entry>
+  <entry key="UTIL-003">Checking to see if {} is a directory ({})</entry>
+  <entry key="UTIL-004">{} is a directory</entry>
+  <entry key="UTIL-005">Checking {} for {}</entry>
+  <entry key="UTIL-006">Found {} in {}</entry>
+  <entry key="UTIL-007">Jar entry {} did not match search pattern</entry>
+  <entry key="UTIL-008">Could not get {} from jar file</entry>
+  <entry key="UTIL-009">Did not check {} because not a directory or jar file</entry>
+  <entry key="UTIL-010">Matched file: {}</entry>
+  <entry key="UTIL-011">Descending into: {}</entry>
+  <entry key="UTIL-012">Unable to delete: {}</entry>
+  <entry key="UTIL-013">Trying to delete '{}' but there was a problem</entry>
+  <entry key="UTIL-014">Failed to create: {}</entry>
+  <entry key="UTIL-015">Unable to delete: {}</entry>
+  <entry key="UTIL-016">Exception ResourceBundle name may not be null</entry>
+  <entry key="UTIL-017">Constructing exception message using bundle name: {}</entry>
+  <entry key="UTIL-018">Exception message key may not be null</entry>
+  <entry key="UTIL-019">Constructing exception message using supplied locale: {}</entry>
+  <entry key="UTIL-020">Formatting exception message for '{}' using: {} [{}]</entry>
+  <entry key="UTIL-021">Formatting exception message for '{}'</entry>
+  <entry key="UTIL-022">Constructing exception message using bundle name: {}</entry>
+  <entry key="UTIL-023">Architecture is {} and os.name is: {}</entry>
+  <entry key="UTIL-024">Processor is {} and os.arch is: {}</entry>
+  <entry key="UTIL-025">Requested library name: {}</entry>
+  <entry key="UTIL-026">Formatting '{}' with: {}</entry>
+  <entry key="UTIL-027">Adding files in '{}' to zip file</entry>
 
   <!-- Maven plugin related messages -->
   <entry key="MVN-001">No message files were supplied so no code classes were created</entry>
@@ -14,15 +42,13 @@
   <entry key="MVN-005">Set system.total.memory property to: {}</entry>
   <entry key="MVN-006">Set system.cores property to: {}</entry>
   <entry key="MVN-007">Getting a percentage of system's free memory: {} of {}</entry>
+  <entry key="MVN-008">BEGIN GENERATED CODE</entry>
+  <entry key="MVN-009">Supplied log level '{}' was unknown, setting level to 'ERROR'</entry>
+  <entry key="MVN-010">Supplied logger '{}' isn't a org.slf4j.impl.SimpleLogger</entry>
+  <entry key="MVN-011">Has the Maven logger changed?</entry>
+  <entry key="MVN-012">'{}' logging level is now set to: {}</entry>
+  <entry key="MVN-013">Setting a UUID property ({} = {}) for use in the Maven build</entry>
 
-  <!-- Pairtree related logging messages -->
-  <entry key="PT-001">Retrieving pairtree_root directory at {}</entry>
-  <entry key="PT-002">Can&apos;t create directory: {}</entry>
-  <entry key="PT-003">Using Pairtree prefix: {}</entry>
-  <entry key="PT-004">Pairtree Object retrieved: {} ({})</entry>
-  <entry key="PT-005">Pairtree Object retrieved: {} ({} | {})</entry>
-  <entry key="PT-006">Trying to write wrong Pairtree prefix ({} vs. {})</entry>
-  <entry key="PT-007">This directory conforms to Pairtree Version {}. Updated spec:</entry>
-  <entry key="PT-008">https://tools.ietf.org/id/draft-kunze-pairtree-01.txt</entry>
-  <entry key="PT-009">Directory exists but can&apos;t be read: {}</entry>
+  <!--  Debugging messages -->
+  <entry key="DBG-001">Writing MessageCodes Java source file: {}</entry>
 </properties>

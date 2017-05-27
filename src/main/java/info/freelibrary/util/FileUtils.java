@@ -384,9 +384,7 @@ public class FileUtils {
 
         if (aDir.isFile()) {
             if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
-                return new File[] {
-                    aDir
-                };
+                return new File[] { aDir };
             } else {
                 return new File[0];
             }
@@ -408,19 +406,15 @@ public class FileUtils {
                 final String fileName = file.getName();
 
                 if (aFilter.accept(aDir, fileName)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Match file: {}", file);
-                    }
-
+                    LOGGER.debug(MessageCodes.UTIL_010, file);
                     fileList.add(file);
                 }
 
                 if (file.isDirectory() && Arrays.binarySearch(ignoreList, fileName) < 0) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Descending into: {}", file);
-                    }
+                    final File[] files;
 
-                    final File[] files = listFiles(file, aFilter, aDeepListing);
+                    LOGGER.debug(MessageCodes.UTIL_011, file);
+                    files = listFiles(file, aFilter, aDeepListing);
                     fileList.addAll(Arrays.asList(files));
                 }
 
@@ -505,20 +499,16 @@ public class FileUtils {
             for (final File file : aDir.listFiles()) {
                 if (file.isDirectory()) {
                     if (!delete(file)) {
-                        if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Unable to delete: " + file);
-                        }
+                        LOGGER.error(MessageCodes.UTIL_012, file);
                     }
                 } else {
                     if (!file.delete()) {
-                        if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Unable to delete: " + file);
-                        }
+                        LOGGER.error(MessageCodes.UTIL_012, file);
                     }
                 }
             }
         } else if (LOGGER.isDebugEnabled() && aDir.listFiles() == null) {
-            LOGGER.debug("Trying to delete '{}' but there was a problem", aDir);
+            LOGGER.debug(MessageCodes.UTIL_013, aDir);
         }
 
         return aDir.delete();
@@ -778,19 +768,17 @@ public class FileUtils {
         }
 
         if (success && !aDestFile.createNewFile()) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Failed to create: " + aDestFile.getAbsolutePath());
-            }
-
+            LOGGER.warn(MessageCodes.UTIL_014, aDestFile.getAbsolutePath());
             success = false;
         }
 
         if (success) {
             try {
+                final FileChannel source;
+
                 outputStream = new FileOutputStream(aDestFile);
                 inputStream = new FileInputStream(aSourceFile);
-
-                final FileChannel source = inputStream.getChannel();
+                source = inputStream.getChannel();
                 outputStream.getChannel().transferFrom(source, 0, source.size());
             } finally {
                 IOUtils.closeQuietly(outputStream);
@@ -811,7 +799,7 @@ public class FileUtils {
         }
 
         if (!success && !aDestFile.delete() && LOGGER.isWarnEnabled()) {
-            LOGGER.warn("Unable to delete: " + aDestFile.getAbsolutePath());
+            LOGGER.warn(MessageCodes.UTIL_015, aDestFile);
         }
 
         return success;
