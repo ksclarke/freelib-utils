@@ -24,7 +24,7 @@ import nu.xom.tests.XOMTestCase;
 /**
  * Tests for the {@link FileUtils} class.
  *
- * @author <a href="mailto:ksclarke@gmail.com">ksclarke@gmail.com</a>
+ * @author <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
  */
 public class FileUtilsTest {
 

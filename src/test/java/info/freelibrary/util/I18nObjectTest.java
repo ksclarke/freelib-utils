@@ -5,9 +5,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,6 +20,10 @@ import info.freelibrary.util.test.I18nObjectWrapper;
 public class I18nObjectTest {
 
     private static final Locale myLocale = Locale.getDefault();
+
+    private static final String VALUE_ONE = "test.value.one";
+
+    private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
     @Before
     public void beforeTests() {
@@ -43,7 +49,7 @@ public class I18nObjectTest {
     @Test
     public void testGetI18nStringException() {
         final String expected = "one";
-        final String found = new I18nObjectWrapper().getI18n("test.value.one", new IOException(expected));
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new IOException(expected));
 
         assertEquals(expected, found);
     }
@@ -53,7 +59,9 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringLong() {
-        // fail("Not yet implemented");
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, 100L);
+
+        assertEquals(100L, Long.parseLong(found));
     }
 
     /**
@@ -61,7 +69,9 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringInt() {
-        // fail("Not yet implemented");
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, 100);
+
+        assertEquals(100, Integer.parseInt(found));
     }
 
     /**
@@ -69,7 +79,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringString() {
-        // fail("Not yet implemented");
+        final String expected = "one";
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, expected);
+
+        assertEquals(expected, found);
     }
 
     /**
@@ -77,7 +90,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringStringArray() {
-        // fail("Not yet implemented");
+        final String expected = "one";
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new String[] { expected });
+
+        assertEquals(expected, found);
     }
 
     /**
@@ -85,7 +101,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringFile() {
-        // fail("Not yet implemented");
+        final File expected = new File(TMP_DIR, UUID.randomUUID().toString());
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, expected);
+
+        assertEquals(expected.getAbsolutePath(), found);
     }
 
     /**
@@ -93,7 +112,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringFileArray() {
-        // fail("Not yet implemented");
+        final File expected = new File(TMP_DIR, UUID.randomUUID().toString());
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new File[] { expected });
+
+        assertEquals(expected.getAbsolutePath(), found);
     }
 
     /**
@@ -101,7 +123,10 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringObjectArray() {
-        // fail("Not yet implemented");
+        final File expected = new File(TMP_DIR, UUID.randomUUID().toString());
+        final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new Object[] { expected });
+
+        assertEquals(expected.getAbsolutePath(), found);
     }
 
     /**

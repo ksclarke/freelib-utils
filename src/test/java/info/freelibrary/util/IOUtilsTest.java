@@ -29,62 +29,102 @@ public class IOUtilsTest {
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
     @Test
-    public void testCloseQuietlyReader() throws IOException {
-        IOUtils.closeQuietly(new FileReader(TXT_FILE));
+    public void testCloseQuietlyReader() {
+        try {
+            IOUtils.closeQuietly(new FileReader(TXT_FILE));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyWriter() throws IOException {
-        IOUtils.closeQuietly(new FileWriter(new File(TMP_DIR, UUID.randomUUID().toString())));
+    public void testCloseQuietlyWriter() {
+        try {
+            IOUtils.closeQuietly(new FileWriter(new File(TMP_DIR, UUID.randomUUID().toString())));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyInputStream() throws IOException {
-        IOUtils.closeQuietly(new FileInputStream(BIN_FILE));
+    public void testCloseQuietlyInputStream() {
+        try {
+            IOUtils.closeQuietly(new FileInputStream(BIN_FILE));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyImageInputStream() throws IOException {
-        IOUtils.closeQuietly(new FileImageInputStream(BIN_FILE));
+    public void testCloseQuietlyImageInputStream() {
+        try {
+            IOUtils.closeQuietly(new FileImageInputStream(BIN_FILE));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyImageOutputStream() throws IOException {
-        IOUtils.closeQuietly(new FileImageOutputStream(new File(TMP_DIR, UUID.randomUUID().toString())));
+    public void testCloseQuietlyImageOutputStream() {
+        try {
+            IOUtils.closeQuietly(new FileImageOutputStream(new File(TMP_DIR, UUID.randomUUID().toString())));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyOutputStream() throws IOException {
-        IOUtils.closeQuietly(new FileOutputStream(new File(TMP_DIR, UUID.randomUUID().toString())));
+    public void testCloseQuietlyOutputStream() {
+        try {
+            IOUtils.closeQuietly(new FileOutputStream(new File(TMP_DIR, UUID.randomUUID().toString())));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCloseQuietlyJarFile() throws IOException {
-        IOUtils.closeQuietly(new JarFile(JAR_FILE));
+    public void testCloseQuietlyJarFile() {
+        try {
+            IOUtils.closeQuietly(new JarFile(JAR_FILE));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
     @Test
-    public void testCopyStreamInputStreamOutputStream() throws IOException {
+    public void testCopyStreamInputStreamOutputStream() {
         final ByteArrayInputStream baInStream = new ByteArrayInputStream("yes".getBytes());
         final ByteArrayOutputStream baOutStream = new ByteArrayOutputStream();
 
-        IOUtils.copyStream(baInStream, baOutStream);
+        try {
+            IOUtils.copyStream(baInStream, baOutStream);
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
 
         Assert.assertEquals("yes", new String(baOutStream.toByteArray()));
     }
 
     @Test
-    public void testCopyStreamFileOutputStream() throws IOException {
+    public void testCopyStreamFileOutputStream() {
         final ByteArrayOutputStream baOutStream = new ByteArrayOutputStream();
 
-        IOUtils.copyStream(TXT_FILE, baOutStream);
+        try {
+            IOUtils.copyStream(TXT_FILE, baOutStream);
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
 
         Assert.assertEquals("Lorem ipsum", new String(baOutStream.toByteArray()).substring(0, 11));
     }
 
     @Test
-    public void testReadBytes() throws IOException {
-        Assert.assertEquals("yes", new String(IOUtils.readBytes(new ByteArrayInputStream("yes".getBytes()))));
+    public void testReadBytes() {
+        try {
+            Assert.assertEquals("yes", new String(IOUtils.readBytes(new ByteArrayInputStream("yes".getBytes()))));
+        } catch (final IOException details) {
+            Assert.fail(details.getMessage());
+        }
     }
 
 }

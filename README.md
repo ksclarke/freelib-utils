@@ -17,6 +17,6 @@ GNU Lesser General Public License, Version 3.0 (or any later version)
 
 ### Contact
 
-If you have questions about freelib-utils feel free to contact me: Kevin S. Clarke (ksclarke@gmail.com).
+If you have questions about freelib-utils feel free to contact me: Kevin S. Clarke (ksclarke@ksclarke.io).
 
 If you encounter a problem or have a feature to suggest, submit it to the [issue queue](https://github.com/ksclarke/freelib-utils/issues "GitHub Issue Queue").

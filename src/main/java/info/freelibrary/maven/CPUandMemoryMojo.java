@@ -68,7 +68,7 @@ public class CPUandMemoryMojo extends AbstractMojo {
 
         properties.setProperty(SYSTEM_CORES, Integer.toString(cores));
 
-        if (!myFreeMemPercent.equals("1")) {
+        if (!"1".equals(myFreeMemPercent)) {
             LOGGER.info(MessageCodes.MVN_007, myFreeMemPercent, sizeToString(freeMemory));
         }
 

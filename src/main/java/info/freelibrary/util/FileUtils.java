@@ -627,26 +627,19 @@ public class FileUtils {
      * @return True if the directory is okay to be used; else, false
      */
     public static boolean dirIsUseable(final String aDirName, final String aPermString) {
-        final File dir = new File(aDirName); // NullPointerException if null
+        final File dir = new File(aDirName);
 
         if (!dir.exists() && !dir.mkdirs()) {
             return false;
+        } else if ("r".contains(aPermString)) {
+            return dir.canRead();
+        } else if ("w".contains(aPermString)) {
+            return dir.canWrite();
+        } else if ("x".contains(aPermString)) {
+            return dir.canExecute();
+        } else {
+            return true;
         }
-
-        // NullPointerException if aPermString is null
-        if (aPermString.contains("r") && !dir.canRead()) {
-            return false;
-        }
-
-        if (aPermString.contains("w") && !dir.canWrite()) {
-            return false;
-        }
-
-        if (aPermString.contains("x") && !dir.canExecute()) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

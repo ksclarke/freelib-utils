@@ -149,15 +149,15 @@ public class MavenUtils {
     public static final int getLevelIntCode(final String aLogLevelName) {
         final String levelName = aLogLevelName.trim().toLowerCase();
 
-        if (levelName.equals("error")) {
+        if ("error".equals(levelName)) {
             return ERROR_LOG_LEVEL;
-        } else if (levelName.equals("warn")) {
+        } else if ("warn".equals(levelName)) {
             return WARN_LOG_LEVEL;
-        } else if (levelName.equals("info")) {
+        } else if ("info".equals(levelName)) {
             return INFO_LOG_LEVEL;
-        } else if (levelName.equals("debug")) {
+        } else if ("debug".equals(levelName)) {
             return DEBUG_LOG_LEVEL;
-        } else if (levelName.equals("trace")) {
+        } else if ("trace".equals(levelName)) {
             return TRACE_LOG_LEVEL;
         } else {
             return 0;
