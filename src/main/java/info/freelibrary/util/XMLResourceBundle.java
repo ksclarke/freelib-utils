@@ -124,17 +124,14 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The message value with the supplied file names integrated
      */
     public String get(final String aMessage, final File... aFileArray) {
-        final String[] strings = new String[aFileArray.length];
+        final String[] details = new String[aFileArray.length];
 
-        for (int index = 0; index < strings.length; index++) {
-            strings[index] = aFileArray[index].getAbsolutePath();
+        for (int index = 0; index < details.length; index++) {
+            details[index] = aFileArray[index].getAbsolutePath();
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Formatting '{}' with: {}", aMessage, strings);
-        }
-
-        return StringUtils.format(super.getString(aMessage), strings);
+        LOGGER.debug(MessageCodes.UTIL_026, aMessage, details);
+        return StringUtils.format(super.getString(aMessage), details);
     }
 
     /**
@@ -145,9 +142,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The message value with the supplied file name integrated
      */
     public String get(final String aMessage, final File aFile) {
-        return StringUtils.format(super.getString(aMessage), new String[] {
-            aFile.getAbsolutePath()
-        });
+        return StringUtils.format(super.getString(aMessage), new String[] { aFile.getAbsolutePath() });
     }
 
     /**
@@ -168,17 +163,14 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The value of the bundle message
      */
     public String get(final String aMessage, final Object... aDetailsArray) {
-        final String[] strings = new String[aDetailsArray.length];
+        final String[] details = new String[aDetailsArray.length];
 
-        for (int index = 0; index < strings.length; index++) {
-            strings[index] = aDetailsArray[index].toString();
+        for (int index = 0; index < details.length; index++) {
+            details[index] = aDetailsArray[index].toString();
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Formatting '{}' with: {}", aMessage, strings);
-        }
-
-        return StringUtils.format(super.getString(aMessage), strings);
+        LOGGER.debug(MessageCodes.UTIL_026, aMessage, details);
+        return StringUtils.format(super.getString(aMessage), details);
     }
 
     /**
@@ -189,9 +181,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The value of the bundle message
      */
     public String get(final String aMessage, final Object aDetail) {
-        return StringUtils.format(super.getString(aMessage), new String[] {
-            aDetail.toString()
-        });
+        return StringUtils.format(super.getString(aMessage), new String[] { aDetail.toString() });
     }
 
     /**

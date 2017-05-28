@@ -1,7 +1,7 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
+import static info.freelibrary.util.Constants.MESSAGES;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -20,7 +20,7 @@ import java.util.jar.JarFile;
  */
 public class NativeLibraryLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, FREELIB_UTIL_MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MESSAGES);
 
     public static enum Architecture {
         UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
@@ -115,11 +115,7 @@ public class NativeLibraryLoader {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Architecture is {} and os.name is {}", myArchitecture, System.getProperty("os.name")
-                    .toLowerCase());
-        }
-
+        LOGGER.debug(MessageCodes.UTIL_023, myArchitecture, System.getProperty("os.name").toLowerCase());
         return myArchitecture;
     }
 
@@ -144,10 +140,7 @@ public class NativeLibraryLoader {
             processor = 32 == bits ? Processor.INTEL_32 : Processor.INTEL_64;
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Processor is {} and os.arch is {}", processor, System.getProperty("os.arch").toLowerCase());
-        }
-
+        LOGGER.debug(MessageCodes.UTIL_024, processor, System.getProperty("os.arch").toLowerCase());
         return processor;
     }
 
@@ -176,10 +169,7 @@ public class NativeLibraryLoader {
                 break;
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Requested library name {}", libName);
-        }
-
+        LOGGER.debug(MessageCodes.UTIL_025, libName);
         return libName;
     }
 }

@@ -22,13 +22,15 @@ public final class Stopwatch {
      *
      * @throws IllegalStateException if the stopwatch is already running.
      */
-    public void start() {
+    public Stopwatch start() {
         if (myTimerIsRunning) {
             throw new IllegalStateException("Must stop before calling start again.");
         }
 
         myStart = System.currentTimeMillis();
         myTimerIsRunning = true;
+
+        return this;
     }
 
     /**
@@ -36,13 +38,15 @@ public final class Stopwatch {
      *
      * @throws IllegalStateException if the stopwatch is not already running.
      */
-    public void stop() {
+    public Stopwatch stop() {
         if (!myTimerIsRunning) {
             throw new IllegalStateException("Cannot stop if not currently running.");
         }
 
         myStop = System.currentTimeMillis();
         myTimerIsRunning = false;
+
+        return this;
     }
 
     /**
@@ -51,7 +55,7 @@ public final class Stopwatch {
      * @param aSecondsCount A number of seconds after which to stop the stopwatch
      * @throws IllegalStateException if the stopwatch is not already running.
      */
-    public void stopAfter(final int aSecondsCount) {
+    public Stopwatch stopAfter(final int aSecondsCount) {
         int stopCount = aSecondsCount;
 
         if (!myTimerIsRunning) {
@@ -64,6 +68,8 @@ public final class Stopwatch {
 
         myStop = System.currentTimeMillis();
         myTimerIsRunning = false;
+
+        return this;
     }
 
     /**

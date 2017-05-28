@@ -1,7 +1,7 @@
 
 package info.freelibrary.maven;
 
-import static info.freelibrary.util.Constants.FREELIB_UTIL_MESSAGES;
+import static info.freelibrary.util.Constants.MESSAGES;
 import static info.freelibrary.util.FileUtils.sizeFromBytes;
 
 import java.util.Properties;
@@ -26,8 +26,8 @@ import oshi.hardware.HardwareAbstractionLayer;
  * Sets Maven project properties with values for system.cores, system.free.memory, and system.total.memory; memory
  * values are set with unit of measurement appended (e.g., 200m, 3g, 5000k).
  * <p>
- * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.7.2-SNAPSHOT:set-cpumem-properties` (supplying
- * whatever version is appropriate). Usually, though, the plugin would just be configured to run as a part of the Maven
+ * To manually run the plugin: `mvn info.freelibrary:freelib-utils:[VERSION]:set-cpumem-properties` (supplying whatever
+ * version is appropriate). Usually, though, the plugin would just be configured to run as a part of the Maven
  * lifecycle.
  * </p>
  *
@@ -42,13 +42,19 @@ public class CPUandMemoryMojo extends AbstractMojo {
 
     public static final String SYSTEM_TOTAL_MEMORY = "system.total.memory";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class, FREELIB_UTIL_MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class, MESSAGES);
 
     /**
      * The Maven project directory.
      */
     @Parameter(defaultValue = "${project}")
     protected MavenProject myProject;
+
+    /**
+     * A percentage of the total memory to return instead of the total.
+     */
+    @Parameter(alias = "free-mem-percent", property = "free-mem-percent", defaultValue = "1")
+    private String myFreeMemPercent;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -57,10 +63,16 @@ public class CPUandMemoryMojo extends AbstractMojo {
         final SystemInfo si = new SystemInfo();
         final HardwareAbstractionLayer hal = si.getHardware();
         final GlobalMemory memory = hal.getMemory();
+        final double freeMemPercent = Double.parseDouble(myFreeMemPercent);
+        final long freeMemory = memory.getAvailable();
 
         properties.setProperty(SYSTEM_CORES, Integer.toString(cores));
 
-        properties.setProperty(SYSTEM_FREE_MEMORY, sizeToString(memory.getAvailable()));
+        if (!"1".equals(myFreeMemPercent)) {
+            LOGGER.info(MessageCodes.MVN_007, myFreeMemPercent, sizeToString(freeMemory));
+        }
+
+        properties.setProperty(SYSTEM_FREE_MEMORY, sizeToString((long) (freeMemory * freeMemPercent)));
         properties.setProperty(SYSTEM_TOTAL_MEMORY, sizeToString(memory.getTotal()));
 
         LOGGER.info(MessageCodes.MVN_004, properties.getProperty(SYSTEM_FREE_MEMORY));

@@ -18,6 +18,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.jar.JarFile;
 
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +46,7 @@ public class IOUtils {
             try {
                 aReader.close();
             } catch (final IOException details) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error(details.getMessage(), details);
-                }
+                LOGGER.error(details.getMessage(), details);
             }
         }
     }
@@ -60,9 +61,7 @@ public class IOUtils {
             try {
                 aWriter.close();
             } catch (final IOException details) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error(details.getMessage(), details);
-                }
+                LOGGER.error(details.getMessage(), details);
             }
         }
     }
@@ -77,9 +76,37 @@ public class IOUtils {
             try {
                 aInputStream.close();
             } catch (final IOException details) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error(details.getMessage(), details);
-                }
+                LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Closes an image input stream, catching and logging any exceptions
+     *
+     * @param aImageInputStream A supplied image input stream to close
+     */
+    public static final void closeQuietly(final ImageInputStream aImageInputStream) {
+        if (aImageInputStream != null) {
+            try {
+                aImageInputStream.close();
+            } catch (final IOException details) {
+                LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Closes an image output stream, catching and logging any exceptions.
+     *
+     * @param aImageOutputStream A supplied image output stream to close
+     */
+    public static final void closeQuietly(final ImageOutputStream aImageOutputStream) {
+        if (aImageOutputStream != null) {
+            try {
+                aImageOutputStream.close();
+            } catch (final IOException details) {
+                LOGGER.error(details.getMessage(), details);
             }
         }
     }
@@ -94,9 +121,7 @@ public class IOUtils {
             try {
                 aOutputStream.close();
             } catch (final IOException details) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error(details.getMessage(), details);
-                }
+                LOGGER.error(details.getMessage(), details);
             }
         }
     }
@@ -111,9 +136,7 @@ public class IOUtils {
             try {
                 aJarFile.close();
             } catch (final IOException details) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error(details.getMessage(), details);
-                }
+                LOGGER.error(details.getMessage(), details);
             }
         }
     }
