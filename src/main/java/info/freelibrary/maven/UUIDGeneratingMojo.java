@@ -1,6 +1,8 @@
 
 package info.freelibrary.maven;
 
+import static info.freelibrary.util.Constants.MESSAGES;
+
 import java.util.UUID;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -10,9 +12,9 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import info.freelibrary.util.Logger;
+import info.freelibrary.util.LoggerFactory;
 import info.freelibrary.util.MessageCodes;
 
 /**
@@ -21,7 +23,7 @@ import info.freelibrary.util.MessageCodes;
 @Mojo(name = "set-uuid-property", defaultPhase = LifecyclePhase.VALIDATE)
 public class UUIDGeneratingMojo extends AbstractMojo {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UUIDGeneratingMojo.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UUIDGeneratingMojo.class, MESSAGES);
 
     /**
      * The Maven project directory.

@@ -1,6 +1,8 @@
 
 package info.freelibrary.maven;
 
+import static info.freelibrary.util.Constants.MESSAGES;
+
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -8,9 +10,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import info.freelibrary.util.Logger;
+import info.freelibrary.util.LoggerFactory;
 import info.freelibrary.util.MessageCodes;
 
 /**
@@ -48,7 +50,7 @@ import info.freelibrary.util.MessageCodes;
 @Mojo(name = "configure-logging")
 public class MavenLoggingMojo extends AbstractMojo {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MavenLoggingMojo.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MavenLoggingMojo.class, MESSAGES);
 
     /**
      * A list of names of loggers to be excluded from the log level adjustment.
