@@ -20,7 +20,7 @@ import info.freelibrary.util.MessageCodes;
 /**
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-@Mojo(name = "set-uuid-property", defaultPhase = LifecyclePhase.VALIDATE)
+@Mojo(name = "set-uuid-property", defaultPhase = LifecyclePhase.INITIALIZE)
 public class UUIDGeneratingMojo extends AbstractMojo {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UUIDGeneratingMojo.class, MESSAGES);

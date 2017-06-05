@@ -157,6 +157,6 @@ public abstract class I18nObject {
      * @return True if the key exists; else, false
      */
     protected boolean hasI18nKey(final String aMessageKey) {
-        return BUNDLE != null && BUNDLE.containsKey(aMessageKey);
+        return BUNDLE != null && aMessageKey != null && BUNDLE.containsKey(aMessageKey);
     }
 }

@@ -33,7 +33,7 @@ import oshi.hardware.HardwareAbstractionLayer;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-@Mojo(name = "set-cpumem-properties", defaultPhase = LifecyclePhase.VALIDATE)
+@Mojo(name = "set-cpumem-properties", defaultPhase = LifecyclePhase.INITIALIZE)
 public class CPUandMemoryMojo extends AbstractMojo {
 
     public static final String SYSTEM_CORES = "system.cores";
