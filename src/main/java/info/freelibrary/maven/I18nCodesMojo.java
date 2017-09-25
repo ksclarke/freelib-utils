@@ -22,7 +22,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.StringUtils;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
@@ -31,8 +31,8 @@ import info.freelibrary.util.MessageCodes;
 
 /**
  * I18nCodesMojo is a Maven mojo that can generate a <code>MessageCodes</code> class from which I18N message codes can
- * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is the
- * code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
+ * be referenced. The codes are then used to retrieve textual messages from resource bundles. The benefit of this is
+ * the code can be generic, but the actual text from the pre-configured message file will be displayed in the IDE.
  * <p>
  * To manually run the plugin: `mvn info.freelibrary:freelib-utils:0.8.0:generate-codes
  * -DmessageFiles=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
@@ -85,9 +85,11 @@ public class I18nCodesMojo extends AbstractMojo {
                         final String className = nameParts[classNameIndex];
                         final String[] packageParts = Arrays.copyOfRange(nameParts, 0, classNameIndex);
                         final String packageName = StringUtils.join(packageParts, ".");
-                        final JavaInterfaceSource java = Roaster.create(JavaInterfaceSource.class);
+                        final JavaClassSource source = Roaster.create(JavaClassSource.class);
                         final File packageDir = new File(srcFolderName + File.separatorChar + packageName.replace('.',
                                 File.separatorChar));
+
+                        source.setFinal(true).setPublic();
 
                         // Make sure the package directory already exists
                         if (!packageDir.exists() && !packageDir.mkdirs()) {
@@ -103,13 +105,16 @@ public class I18nCodesMojo extends AbstractMojo {
                             if (!key.equals(MESSAGE_CLASS_NAME)) {
                                 final String normalizedKey = key.replaceAll("[\\.-]", "_");
                                 final String value = properties.getProperty(key);
-                                final FieldSource<JavaInterfaceSource> field = java.addField();
+                                final FieldSource<JavaClassSource> field = source.addField();
 
                                 field.setName(normalizedKey).setStringInitializer(key);
                                 field.setType("String").setPublic().setStatic(true).setFinal(true);
                                 field.getJavaDoc().setFullText("Message: " + value);
                             }
                         }
+
+                        // Add private constructor
+                        source.addMethod().setPrivate().setConstructor(true).setBody("super();");
 
                         // Create our new message codes class in the requested package directory
                         final File javaFile = new File(packageDir, className + ".java");
@@ -118,13 +123,13 @@ public class I18nCodesMojo extends AbstractMojo {
                         LOGGER.debug(MessageCodes.DBG_001, javaFile);
 
                         // Let's tell Checkstyle to ignore the generated code (if it's so configured)
-                        java.getJavaDoc().setFullText(MessageCodes.MVN_008);
+                        source.getJavaDoc().setFullText(LOGGER.getMessage(MessageCodes.MVN_008));
 
                         // Name our Java file and add a constructor
-                        java.setPackage(packageName).setName(className);
+                        source.setPackage(packageName).setName(className);
 
                         // Lastly, write our generated Java class out to the file system
-                        javaWriter.write(java.toString());
+                        javaWriter.write(source.toString());
                         javaWriter.close();
                     } else {
                         LOGGER.warn(MessageCodes.MVN_002, MESSAGE_CLASS_NAME);
