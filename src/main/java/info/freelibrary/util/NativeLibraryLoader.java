@@ -1,7 +1,7 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.MESSAGES;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,15 +18,21 @@ import java.util.jar.JarFile;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class NativeLibraryLoader {
+public final class NativeLibraryLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, BUNDLE_NAME);
 
-    public static enum Architecture {
+    private static final String OS_NAME = "os.name";
+
+    private static final String OS_ARCH = "os.arch";
+
+    private static final String LIB_PREFIX = "lib";
+
+    public enum Architecture {
         UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
     };
 
-    private static enum Processor {
+    private enum Processor {
         UNKNOWN, INTEL_32, INTEL_64, PPC, ARM
     };
 
@@ -52,7 +58,7 @@ public class NativeLibraryLoader {
         final File libFile = new File(tmpDir, libFileName);
 
         // Check to see whether it already exists before we go creating it again?
-        if (!libFile.exists() || libFile.length() == 0) {
+        if (!libFile.exists() || (libFile.length() == 0)) {
             final URL url = ClasspathUtils.findFirst(libFileName);
 
             if (url == null) {
@@ -70,7 +76,7 @@ public class NativeLibraryLoader {
             IOUtils.closeQuietly(jarFile);
         }
 
-        if (libFile.exists() && libFile.length() > 0) {
+        if (libFile.exists() && (libFile.length() > 0)) {
             System.load(libFile.getAbsolutePath());
         } else {
             throw new IOException("Problem creating libfile");
@@ -87,9 +93,9 @@ public class NativeLibraryLoader {
             final Processor processor = getProcessor();
 
             if (Processor.UNKNOWN != processor) {
-                final String name = System.getProperty("os.name").toLowerCase();
+                final String name = System.getProperty(OS_NAME).toLowerCase();
 
-                if (name.indexOf("nix") >= 0 || name.indexOf("nux") >= 0) {
+                if ((name.indexOf("nix") >= 0) || (name.indexOf("nux") >= 0)) {
                     if (Processor.INTEL_32 == processor) {
                         myArchitecture = Architecture.LINUX_32;
                     } else if (Processor.INTEL_64 == processor) {
@@ -115,7 +121,7 @@ public class NativeLibraryLoader {
             }
         }
 
-        LOGGER.debug(MessageCodes.UTIL_023, myArchitecture, System.getProperty("os.name").toLowerCase());
+        LOGGER.debug(MessageCodes.UTIL_023, myArchitecture, System.getProperty(OS_NAME).toLowerCase());
         return myArchitecture;
     }
 
@@ -124,13 +130,13 @@ public class NativeLibraryLoader {
         int bits;
 
         // Note that this is actually the architecture of the installed JVM.
-        final String arch = System.getProperty("os.arch").toLowerCase();
+        final String arch = System.getProperty(OS_ARCH).toLowerCase();
 
         if (arch.indexOf("arm") >= 0) {
             processor = Processor.ARM;
         } else if (arch.indexOf("ppc") >= 0) {
             processor = Processor.PPC;
-        } else if (arch.indexOf("86") >= 0 || arch.indexOf("amd") >= 0) {
+        } else if ((arch.indexOf("86") >= 0) || (arch.indexOf("amd") >= 0)) {
             bits = 32;
 
             if (arch.indexOf("64") >= 0) {
@@ -140,7 +146,7 @@ public class NativeLibraryLoader {
             processor = 32 == bits ? Processor.INTEL_32 : Processor.INTEL_64;
         }
 
-        LOGGER.debug(MessageCodes.UTIL_024, processor, System.getProperty("os.arch").toLowerCase());
+        LOGGER.debug(MessageCodes.UTIL_024, processor, System.getProperty(OS_ARCH).toLowerCase());
         return processor;
     }
 
@@ -157,7 +163,7 @@ public class NativeLibraryLoader {
             case LINUX_32:
             case LINUX_64:
             case LINUX_ARM:
-                libName = "lib" + aLibraryName + ".so";
+                libName = LIB_PREFIX + aLibraryName + ".so";
                 break;
             case WINDOWS_32:
             case WINDOWS_64:
@@ -165,11 +171,14 @@ public class NativeLibraryLoader {
                 break;
             case OSX_32:
             case OSX_64:
-                libName = "lib" + aLibraryName + ".dylib";
+                libName = LIB_PREFIX + aLibraryName + ".dylib";
                 break;
+            default:
+                LOGGER.warn("Unexpected architecture value: {}", getArchitecture());
         }
 
         LOGGER.debug(MessageCodes.UTIL_025, libName);
         return libName;
     }
+
 }

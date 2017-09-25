@@ -1,2 +1,2 @@
 # Target really should be in ~/.gitignore, but adding here for the convenience of others
-target/
+/target/

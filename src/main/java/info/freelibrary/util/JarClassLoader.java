@@ -4,7 +4,7 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.MESSAGES;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class JarClassLoader extends URLClassLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, BUNDLE_NAME);
 
     /**
      * Constructor for a Jar ClassLoader.

@@ -1,7 +1,7 @@
 
 package info.freelibrary.maven;
 
-import static info.freelibrary.util.Constants.MESSAGES;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +46,7 @@ public class I18nCodesMojo extends AbstractMojo {
 
     private static final String MESSAGE_CLASS_NAME = "message-class-name";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nCodesMojo.class, MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nCodesMojo.class, BUNDLE_NAME);
 
     /**
      * The Maven project directory.

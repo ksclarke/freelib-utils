@@ -8,7 +8,7 @@ import org.slf4j.ILoggerFactory;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class LoggerFactory {
+public final class LoggerFactory {
 
     private LoggerFactory() {
     }
@@ -20,7 +20,7 @@ public class LoggerFactory {
      * @param aClass A class to use for the logger name
      * @return A resource bundle aware logger
      */
-    public static final Logger getLogger(final Class<?> aClass) {
+    public static Logger getLogger(final Class<?> aClass) {
         return getLogger(aClass.getName(), null);
     }
 
@@ -31,7 +31,7 @@ public class LoggerFactory {
      * @param aName A class to use for the logger name
      * @return A resource bundle aware logger
      */
-    public static final Logger getLogger(final String aName) {
+    public static Logger getLogger(final String aName) {
         return getLogger(aName, null);
     }
 
@@ -42,7 +42,7 @@ public class LoggerFactory {
      * @param aBundleName The name of the resource bundle to use
      * @return A resource bundle aware logger
      */
-    public static final Logger getLogger(final Class<?> aClass, final String aBundleName) {
+    public static Logger getLogger(final Class<?> aClass, final String aBundleName) {
         return getLogger(aClass.getName(), aBundleName);
     }
 
@@ -53,7 +53,7 @@ public class LoggerFactory {
      * @param aBundleName The name of the resource bundle to use
      * @return A resource bundle aware logger
      */
-    public static final Logger getLogger(final String aName, final String aBundleName) {
+    public static Logger getLogger(final String aName, final String aBundleName) {
         final ILoggerFactory factory = org.slf4j.LoggerFactory.getILoggerFactory();
         final Logger logger;
 
@@ -65,4 +65,5 @@ public class LoggerFactory {
 
         return logger;
     }
+
 }

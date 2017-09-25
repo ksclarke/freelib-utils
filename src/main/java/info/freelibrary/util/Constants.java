@@ -6,7 +6,11 @@ package info.freelibrary.util;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public interface Constants {
+public final class Constants {
 
-    public static final String MESSAGES = "freelib-utils_messages";
+    public static final String BUNDLE_NAME = "freelib-utils_messages";
+
+    private Constants() {
+    }
+
 }

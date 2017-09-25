@@ -16,13 +16,13 @@ import java.util.ResourceBundle;
  */
 public abstract class I18nObject {
 
-    private final XMLResourceBundle BUNDLE;
+    private final XMLResourceBundle myBundle;
 
     /**
      * Empty constructor for an I18nObject.
      */
     I18nObject() {
-        BUNDLE = null;
+        myBundle = null;
     }
 
     /**
@@ -33,7 +33,7 @@ public abstract class I18nObject {
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(final String aBundleName) {
-        BUNDLE = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(), new XMLBundleControl());
+        myBundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(), new XMLBundleControl());
     }
 
     /**
@@ -43,7 +43,7 @@ public abstract class I18nObject {
      * @return An internationalized value
      */
     protected String getI18n(final String aMessageKey) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey));
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final long aLongDetail) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, Long.toString(aLongDetail)));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, Long.toString(aLongDetail)));
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final int aIntDetail) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, Integer.toString(aIntDetail)));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, Integer.toString(aIntDetail)));
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final String aDetail) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, aDetail));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, aDetail));
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final String... aDetailsArray) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, aDetailsArray));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, aDetailsArray));
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final Exception aException) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, aException.getMessage()));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, aException.getMessage()));
     }
 
     /**
@@ -109,7 +109,7 @@ public abstract class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final File aFile) {
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, aFile.getAbsolutePath()));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, aFile.getAbsolutePath()));
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class I18nObject {
             fileNames[index] = aFileArray[index].getAbsolutePath();
         }
 
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, fileNames));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, fileNames));
     }
 
     /**
@@ -147,7 +147,7 @@ public abstract class I18nObject {
             }
         }
 
-        return StringUtils.normalizeWS(BUNDLE.get(aMessageKey, strings));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, strings));
     }
 
     /**
@@ -157,6 +157,7 @@ public abstract class I18nObject {
      * @return True if the key exists; else, false
      */
     protected boolean hasI18nKey(final String aMessageKey) {
-        return BUNDLE != null && aMessageKey != null && BUNDLE.containsKey(aMessageKey);
+        return (myBundle != null) && (aMessageKey != null) && myBundle.containsKey(aMessageKey);
     }
+
 }

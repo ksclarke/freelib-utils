@@ -14,9 +14,7 @@ import info.freelibrary.util.MessageCodes;
 /**
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class MavenUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MavenUtils.class);
+public final class MavenUtils {
 
     public static final int ERROR_LOG_LEVEL = LocationAwareLogger.ERROR_INT;
 
@@ -28,6 +26,8 @@ public class MavenUtils {
 
     public static final int TRACE_LOG_LEVEL = LocationAwareLogger.TRACE_INT;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MavenUtils.class);
+
     private MavenUtils() {
     }
 
@@ -38,7 +38,7 @@ public class MavenUtils {
      * @param aLogLevel A log level to set in the supplied loggers
      * @param aLoggerList A list of names of loggers that need their levels adjusted
      */
-    public static final void setLogLevels(final int aLogLevel, final String... aLoggerList) {
+    public static void setLogLevels(final int aLogLevel, final String... aLoggerList) {
         setLogLevels(aLogLevel, aLoggerList, null, null);
     }
 
@@ -50,10 +50,11 @@ public class MavenUtils {
      * @param aExcludesList A list of names of loggers to exclude from the reset
      * @param aIncludesList A list of names of additional loggers to include in the reset
      */
-    public static final void setLogLevels(final int aLogLevel, final String[] aLoggerList, final String[] aExcludesList,
+    public static void setLogLevels(final int aLogLevel, final String[] aLoggerList, final String[] aExcludesList,
             final String[] aIncludesList) {
         final ArrayList<String> loggerList = new ArrayList<>(Arrays.asList(aLoggerList));
-        final Class<? extends Logger> simpleLogger = LoggerFactory.getLogger("org.slf4j.impl.SimpleLogger").getClass();
+        final Class<? extends Logger> simpleLogger = LoggerFactory.getLogger("org.slf4j.impl.SimpleLogger")
+                .getClass();
 
         if (aIncludesList != null) {
             loggerList.addAll(Arrays.asList(aIncludesList));
@@ -102,7 +103,7 @@ public class MavenUtils {
      *
      * @return A list of names of loggers used by a standard Maven build
      */
-    public static final String[] getMavenLoggers() {
+    public static String[] getMavenLoggers() {
         return new String[] { "org.apache.maven.cli.event.ExecutionEventLogger",
             "org.apache.maven.tools.plugin.scanner.DefaultMojoScanner",
             "org.apache.maven.plugin.plugin.DescriptorGeneratorMojo",
@@ -114,7 +115,8 @@ public class MavenUtils {
             "org.apache.maven.plugin.failsafe.VerifyMojo", "org.apache.maven.DefaultMaven",
             "org.apache.maven.plugin.compiler.TestCompilerMojo", "org.apache.maven.plugins.enforcer.EnforceMojo",
             "org.apache.maven.plugin.compiler.CompilerMojo", "org.codehaus.plexus.archiver.jar.JarArchiver",
-            "org.apache.maven.plugin.surefire.SurefirePlugin", "org.apache.maven.plugin.failsafe.IntegrationTestMojo" };
+            "org.apache.maven.plugin.surefire.SurefirePlugin",
+            "org.apache.maven.plugin.failsafe.IntegrationTestMojo" };
     }
 
     /**
@@ -123,7 +125,7 @@ public class MavenUtils {
      * @param aLogLevel The int value of a log level
      * @return The human-friendly name value of a log level
      */
-    public static final String getLevelName(final int aLogLevel) {
+    public static String getLevelName(final int aLogLevel) {
         switch (aLogLevel) {
             case ERROR_LOG_LEVEL:
                 return "ERROR";
@@ -146,7 +148,7 @@ public class MavenUtils {
      * @param aLogLevelName The name (error, warn, info, debug, or trace) of a logging level
      * @return The int code of the supplied level or zero if the supplied name doesn't correspond to a known level
      */
-    public static final int getLevelIntCode(final String aLogLevelName) {
+    public static int getLevelIntCode(final String aLogLevelName) {
         final String levelName = aLogLevelName.trim().toLowerCase();
 
         if ("error".equals(levelName)) {
@@ -163,4 +165,5 @@ public class MavenUtils {
             return 0;
         }
     }
+
 }

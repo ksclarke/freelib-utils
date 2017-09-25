@@ -1,7 +1,7 @@
 
 package info.freelibrary.maven;
 
-import static info.freelibrary.util.Constants.MESSAGES;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ import info.freelibrary.util.MessageCodes;
 @Mojo(name = "configure-logging")
 public class MavenLoggingMojo extends AbstractMojo {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MavenLoggingMojo.class, MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MavenLoggingMojo.class, BUNDLE_NAME);
 
     /**
      * A list of names of loggers to be excluded from the log level adjustment.

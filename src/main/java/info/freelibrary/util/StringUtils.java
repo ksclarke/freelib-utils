@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
@@ -21,9 +22,13 @@ import java.util.Set;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class StringUtils {
+public final class StringUtils {
 
-    public static final String UTF_8 = "UTF-8";
+    private static final String EOL = System.getProperty("line.separator");
+
+    private static final String RANGE_DELIMETER = "-";
+
+    private static final String DOUBLE_SPACE = "  ";
 
     private StringUtils() {
     }
@@ -40,9 +45,9 @@ public class StringUtils {
     }
 
     /**
-     * Trims a string object down into a boolean and has the ability to define what the default value should be. We only
-     * offer the method with the default value because most times a boolean with either exist or not (and in the case of
-     * not a default should be specified).
+     * Trims a string object down into a boolean and has the ability to define what the default value should be. We
+     * only offer the method with the default value because most times a boolean with either exist or not (and in the
+     * case of not a default should be specified).
      *
      * @param aString A boolean in string form
      * @param aBool A default boolean value
@@ -83,8 +88,8 @@ public class StringUtils {
 
     /**
      * Takes a <code>String</code> in the form "This is {} text {}" and replaces the <code>{}</code>s with values from
-     * the supplied <code>String[]</code>. The number of curly braces should be the same as the number of strings in the
-     * string array.
+     * the supplied <code>String[]</code>. The number of curly braces should be the same as the number of strings in
+     * the string array.
      *
      * @param aMessage A string that contains curly braces in the form <code>{}</code>
      * @param aDetails Strings that should be put in place of the curly braces in the message string.
@@ -107,7 +112,7 @@ public class StringUtils {
         final String[] parts = aMessage.split("\\{\\}");
         final StringBuilder builder = new StringBuilder();
 
-        if (count == 1 && parts.length == 0) {
+        if ((count == 1) && (parts.length == 0)) {
             builder.append(aDetails[0]);
         } else {
             for (int index = 0; index < parts.length; index++) {
@@ -214,11 +219,11 @@ public class StringUtils {
                 if ((count += 1) < aCount) {
                     builder.append(' ');
                 } else {
-                    builder.append("\r\n  ");
+                    builder.append(EOL).append(DOUBLE_SPACE);
                     count = 2;
                 }
             } else {
-                builder.append("\r\n  ").append(word);
+                builder.append(EOL).append(DOUBLE_SPACE).append(word);
                 count = word.length() + 2; // two spaces at start of line
             }
         }
@@ -285,7 +290,7 @@ public class StringUtils {
     public static String read(final File aFile, final Charset aCharset) throws IOException {
         String string = new String(readBytes(aFile), aCharset);
 
-        if (string.endsWith(System.getProperty("line.separator"))) {
+        if (string.endsWith(EOL)) {
             string = string.substring(0, string.length() - 1);
         }
 
@@ -300,9 +305,9 @@ public class StringUtils {
      * @throws IOException If the supplied file could not be read
      */
     public static String read(final File aFile) throws IOException {
-        String string = new String(readBytes(aFile), UTF_8);
+        String string = new String(readBytes(aFile), StandardCharsets.UTF_8.name());
 
-        if (string.endsWith(System.getProperty("line.separator"))) {
+        if (string.endsWith(EOL)) {
             string = string.substring(0, string.length() - 1);
         }
 
@@ -319,7 +324,7 @@ public class StringUtils {
         final ArrayList<String> list = new ArrayList<>();
 
         for (final String string : aStringArray) {
-            if (string != null && !string.equals("")) {
+            if ((string != null) && !"".equals(string)) {
                 list.add(string);
             }
         }
@@ -368,7 +373,7 @@ public class StringUtils {
      * @return A concatenation of the supplied objects' string representations
      */
     public static String toString(final Object[] aObjArray, final char aPadChar) {
-        if (aObjArray == null || aObjArray.length == 0) {
+        if ((aObjArray == null) || (aObjArray.length == 0)) {
             return "";
         }
 
@@ -435,7 +440,7 @@ public class StringUtils {
             buffer.append('&');
         }
 
-        if (buffer.length() > 0 && buffer.charAt(buffer.length() - 1) == '&') {
+        if ((buffer.length() > 0) && (buffer.charAt(buffer.length() - 1) == '&')) {
             buffer.deleteCharAt(buffer.length() - 1);
         }
 
@@ -450,20 +455,19 @@ public class StringUtils {
      * @return The supplied text with line numbers at the first of each line
      */
     public static String addLineNumbers(final String aMessage) {
-        final String eol = System.getProperty("line.separator");
-        final String[] lines = aMessage.split(eol);
         final StringBuilder buffer = new StringBuilder();
+        final String[] lines = aMessage.split(EOL);
 
         int lineCount = 1; // Error messages start with line 1
 
         for (final String line : lines) {
             buffer.append(lineCount++).append(' ').append(line);
-            buffer.append(eol);
+            buffer.append(EOL);
         }
 
         final int length = buffer.length();
 
-        buffer.delete(length - eol.length(), length);
+        buffer.delete(length - EOL.length(), length);
 
         return buffer.toString();
     }
@@ -497,7 +501,7 @@ public class StringUtils {
      * @return An int array with the expanded values of the string representation
      */
     public static int[] parseIntRange(final String aIntRange) {
-        final String[] range = aIntRange.split("-");
+        final String[] range = aIntRange.split(RANGE_DELIMETER);
         final int[] ints;
 
         if (range.length == 1) {
@@ -516,7 +520,7 @@ public class StringUtils {
                     ints[position++] = index;
                 }
             } else {
-                throw new NumberFormatException("Inverted number range: " + start + "-" + end);
+                throw new NumberFormatException("Inverted number range: " + start + RANGE_DELIMETER + end);
             }
         }
 
@@ -524,8 +528,8 @@ public class StringUtils {
     }
 
     /**
-     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1" becomes
-     * "first", "2" becomes "second", etc.
+     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1"
+     * becomes "first", "2" becomes "second", etc.
      *
      * @param aInt An int to convert into a string
      * @return The string form of the supplied int
@@ -555,8 +559,8 @@ public class StringUtils {
     }
 
     /**
-     * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes "First",
-     * "2" becomes "Second", etc.
+     * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes
+     * "First", "2" becomes "Second", etc.
      *
      * @param aInt An int to convert into a string
      * @return The string form of the supplied int
@@ -607,4 +611,5 @@ public class StringUtils {
                 throw new UnsupportedOperationException("Don't have a string value for " + aInt);
         }
     }
+
 }

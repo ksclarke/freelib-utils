@@ -1,6 +1,6 @@
 package info.freelibrary.util;
 /**
- * BEGIN GENERATED CODE
+ * MVN-008
  */
 public interface MessageCodes {
 
@@ -80,6 +80,10 @@ public interface MessageCodes {
 	 * Message: Initiating JarClassLoader with {}
 	 */
 	public static final String UTIL_001 = "UTIL-001";
+	/**
+	 * Message: Decoded '{}' to '{}'
+	 */
+	public static final String DBG_002 = "DBG-002";
 	/**
 	 * Message: Writing MessageCodes Java source file: {}
 	 */

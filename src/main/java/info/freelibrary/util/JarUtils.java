@@ -22,7 +22,7 @@ import java.util.jar.Manifest;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class JarUtils {
+public final class JarUtils {
 
     private static final String JAR_URL_PROTOCOL = "jar:file://";
 
@@ -78,7 +78,7 @@ public class JarUtils {
      * @param aDestDir The destination directory into which the file should be extracted
      * @throws IOException If there is an exception thrown while reading or writing the file
      */
-    public static final void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
+    public static void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
             throws IOException {
         File file;
 
@@ -102,8 +102,7 @@ public class JarUtils {
      * @param aDestDir The destination directory into which the file should be extracted
      * @throws IOException If there is an exception thrown while reading or writing the file
      */
-    public static final void extract(final File aJarFile, final String aFilePath, final File aDestDir)
-            throws IOException {
+    public static void extract(final File aJarFile, final String aFilePath, final File aDestDir) throws IOException {
         extract(new JarFile(aJarFile), aFilePath, aDestDir);
     }
 
@@ -115,7 +114,7 @@ public class JarUtils {
      * @param aDestDir The destination directory into which the file should be extracted
      * @throws IOException If there is an exception thrown while reading or writing the file
      */
-    public static final void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir)
+    public static void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir)
             throws IOException {
         final Enumeration<JarEntry> entries = aJarFile.entries();
 

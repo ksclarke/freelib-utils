@@ -1,7 +1,7 @@
 
 package info.freelibrary.maven;
 
-import static info.freelibrary.util.Constants.MESSAGES;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 import static info.freelibrary.util.FileUtils.sizeFromBytes;
 
 import java.util.Properties;
@@ -42,7 +42,7 @@ public class CPUandMemoryMojo extends AbstractMojo {
 
     public static final String SYSTEM_TOTAL_MEMORY = "system.total.memory";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class, MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CPUandMemoryMojo.class, BUNDLE_NAME);
 
     /**
      * The Maven project directory.

@@ -49,7 +49,7 @@ public class BufferedFileReader extends BufferedReader {
      * @return A {#link Reader} that will read using the UTF-8 charset
      * @throws FileNotFoundException If the supplied file couldn't be found
      */
-    private static final Reader getReader(final File aFile) throws FileNotFoundException {
+    private static Reader getReader(final File aFile) throws FileNotFoundException {
         try {
             return new InputStreamReader(new FileInputStream(aFile), "UTF-8");
         } catch (final UnsupportedEncodingException details) {

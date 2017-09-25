@@ -13,6 +13,6 @@ public interface ProcessListener {
      *
      * @param aProcess The process to listener to
      */
-    public void processFinished(Process aProcess);
+    void processFinished(Process aProcess);
 
 }

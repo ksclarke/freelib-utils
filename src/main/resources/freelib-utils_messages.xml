@@ -4,6 +4,9 @@
   <!-- Define message codes class name -->
   <entry key="message-class-name">info.freelibrary.util.MessageCodes</entry>
   
+  <!-- To process file: -->
+  <!-- mvn info.freelibrary:freelib-utils:generate-codes -DmessageFiles=`ls src/main/resources/*_messages.xml` -->
+  
   <!-- General utility messages -->
   <entry key="UTIL-001">Initiating JarClassLoader with {}</entry>
   <entry key="UTIL-002">Native library file for {} wasn't found</entry>
@@ -51,4 +54,5 @@
 
   <!--  Debugging messages -->
   <entry key="DBG-001">Writing MessageCodes Java source file: {}</entry>
+  <entry key="DBG-002">Decoded '{}' to '{}'</entry>
 </properties>

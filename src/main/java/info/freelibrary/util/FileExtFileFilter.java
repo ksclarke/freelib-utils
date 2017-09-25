@@ -16,6 +16,8 @@ import java.util.Arrays;
  */
 public class FileExtFileFilter implements FilenameFilter {
 
+    private static final String DOT = ".";
+
     // Extensions registered with this filter
     private final String[] myExtensions;
 
@@ -26,9 +28,7 @@ public class FileExtFileFilter implements FilenameFilter {
      * @param aFileExt A file extensions (minus the '.') against which we want to compare
      */
     public FileExtFileFilter(final String aFileExt) {
-        myExtensions = new String[] {
-            normalizeExt(aFileExt)
-        };
+        myExtensions = new String[] { normalizeExt(aFileExt) };
     }
 
     /**
@@ -92,7 +92,7 @@ public class FileExtFileFilter implements FilenameFilter {
     }
 
     private String normalizeExt(final String aFileExt) {
-        return "." + (aFileExt.startsWith(".") ? aFileExt.substring(1) : aFileExt);
+        return DOT + (aFileExt.startsWith(DOT) ? aFileExt.substring(1) : aFileExt);
     }
 
 }

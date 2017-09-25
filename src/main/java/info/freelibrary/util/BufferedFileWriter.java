@@ -17,7 +17,7 @@ import java.io.Writer;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class BufferedFileWriter extends BufferedWriter {
+public final class BufferedFileWriter extends BufferedWriter {
 
     /**
      * Constructs a writer to the supplied file using a UTF-8 charset.
@@ -49,11 +49,12 @@ public class BufferedFileWriter extends BufferedWriter {
      * @return A writer that writes to the supplied file
      * @throws FileNotFoundException If the supplied file cannot be found
      */
-    private static final Writer getWriter(final File aFile) throws FileNotFoundException {
+    private static Writer getWriter(final File aFile) throws FileNotFoundException {
         try {
             return new OutputStreamWriter(new FileOutputStream(aFile), "UTF-8");
         } catch (final UnsupportedEncodingException details) {
             throw new RuntimeException(details); // UTF-8 is always supported
         }
     }
+
 }

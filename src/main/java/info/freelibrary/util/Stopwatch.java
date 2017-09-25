@@ -86,10 +86,10 @@ public final class Stopwatch {
         result.append(" secs, ");
 
         result.append(timeGap % 1000);
-        result.append(" msecs");
+        result.append(" msecs ");
 
         if (myTimerIsRunning) {
-            throw new IllegalStateException("Must stop first.");
+            throw new IllegalStateException("Must stop first");
         }
 
         return result.toString();

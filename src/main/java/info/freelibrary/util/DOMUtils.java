@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class DOMUtils {
+public final class DOMUtils {
 
     private DOMUtils() {
     }

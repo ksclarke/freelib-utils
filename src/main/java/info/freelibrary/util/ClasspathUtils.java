@@ -20,9 +20,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class ClasspathUtils {
+public final class ClasspathUtils {
 
     private static final String CLASSPATH = "java.class.path";
+
+    private static final String YES = "yes";
+
+    private static final String NO = "no";
+
+    private static final String DELIMETER = ":";
+
+    private static final String JAR_EXT = "jar";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class);
 
@@ -37,10 +45,10 @@ public class ClasspathUtils {
     public static String[] getDirs() {
         final ArrayList<String> list = new ArrayList<>();
 
-        for (final String filename : System.getProperty(CLASSPATH).split(":")) {
+        for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
 
-            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? YES : NO);
 
             if (file.isDirectory()) {
                 list.add(file.getAbsolutePath());
@@ -58,10 +66,10 @@ public class ClasspathUtils {
     public static File[] getDirFiles() {
         final ArrayList<File> list = new ArrayList<>();
 
-        for (final String filename : System.getProperty(CLASSPATH).split(":")) {
+        for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
 
-            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? YES : NO);
 
             if (file.isDirectory()) {
                 list.add(file);
@@ -81,7 +89,7 @@ public class ClasspathUtils {
     public static String[] getDirs(final FilenameFilter aFilter) {
         final ArrayList<String> list = new ArrayList<>();
 
-        for (final String filename : System.getProperty(CLASSPATH).split(":")) {
+        for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
 
             if (aFilter.accept(file.getParentFile(), file.getName()) && file.isDirectory()) {
@@ -102,10 +110,10 @@ public class ClasspathUtils {
     public static File[] getDirFiles(final FilenameFilter aFilter) {
         final ArrayList<File> list = new ArrayList<>();
 
-        for (final String filename : System.getProperty(CLASSPATH).split(":")) {
+        for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
 
-            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? "yes" : "no");
+            LOGGER.debug(MessageCodes.UTIL_003, file, file.isDirectory() ? YES : NO);
 
             if (aFilter.accept(file.getParentFile(), file.getName()) && file.isDirectory()) {
                 LOGGER.debug(MessageCodes.UTIL_004, file.getAbsolutePath());
@@ -123,7 +131,7 @@ public class ClasspathUtils {
      */
     public static String[] getJars() {
         final ArrayList<String> list = new ArrayList<>();
-        final FileExtFileFilter filter = new FileExtFileFilter("jar");
+        final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
@@ -145,7 +153,7 @@ public class ClasspathUtils {
      */
     public static String[] getJars(final FilenameFilter aFilter) {
         final ArrayList<String> list = new ArrayList<>();
-        final FileExtFileFilter filter = new FileExtFileFilter("jar");
+        final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
@@ -168,7 +176,7 @@ public class ClasspathUtils {
      */
     public static JarFile[] getJarFiles() throws IOException {
         final ArrayList<JarFile> list = new ArrayList<>();
-        final FileExtFileFilter filter = new FileExtFileFilter("jar");
+        final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
@@ -182,7 +190,8 @@ public class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the jar files in the system classpath that match the supplied <code>FilenameFilter</code>
+     * Returns an array of all the jar files in the system classpath that match the supplied
+     * <code>FilenameFilter</code>
      *
      * @param aFilter A file name filter to use while retrieving Jar files
      * @return The jar files from the system classpath that match the supplied <code>FilenameFilter</code>
@@ -190,7 +199,7 @@ public class ClasspathUtils {
      */
     public static JarFile[] getJarFiles(final FilenameFilter aFilter) throws IOException {
         final ArrayList<JarFile> list = new ArrayList<>();
-        final FileExtFileFilter filter = new FileExtFileFilter("jar");
+        final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(part);
@@ -214,7 +223,7 @@ public class ClasspathUtils {
      * @throws IOException If there is trouble reading from the file system or jars
      */
     public static URL findFirst(final String aFileName) throws IOException {
-        final FileExtFileFilter filter = new FileExtFileFilter("jar");
+        final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String cpEntry : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
             final File file = new File(cpEntry);
@@ -232,7 +241,7 @@ public class ClasspathUtils {
                 final JarFile jarFile = new JarFile(file);
                 final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
 
-                if (jarEntry != null && jarEntry.getSize() > 0) {
+                if ((jarEntry != null) && (jarEntry.getSize() > 0)) {
                     LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
                     jarFile.close();
                     return file.toURI().toURL();

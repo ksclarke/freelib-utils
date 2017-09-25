@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class IOUtils {
+public final class IOUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
@@ -41,7 +41,7 @@ public class IOUtils {
      *
      * @param aReader A supplied reader to close
      */
-    public static final void closeQuietly(final Reader aReader) {
+    public static void closeQuietly(final Reader aReader) {
         if (aReader != null) {
             try {
                 aReader.close();
@@ -56,7 +56,7 @@ public class IOUtils {
      *
      * @param aWriter A supplied writer to close
      */
-    public static final void closeQuietly(final Writer aWriter) {
+    public static void closeQuietly(final Writer aWriter) {
         if (aWriter != null) {
             try {
                 aWriter.close();
@@ -71,7 +71,7 @@ public class IOUtils {
      *
      * @param aInputStream A supplied input stream to close
      */
-    public static final void closeQuietly(final InputStream aInputStream) {
+    public static void closeQuietly(final InputStream aInputStream) {
         if (aInputStream != null) {
             try {
                 aInputStream.close();
@@ -86,7 +86,7 @@ public class IOUtils {
      *
      * @param aImageInputStream A supplied image input stream to close
      */
-    public static final void closeQuietly(final ImageInputStream aImageInputStream) {
+    public static void closeQuietly(final ImageInputStream aImageInputStream) {
         if (aImageInputStream != null) {
             try {
                 aImageInputStream.close();
@@ -101,7 +101,7 @@ public class IOUtils {
      *
      * @param aImageOutputStream A supplied image output stream to close
      */
-    public static final void closeQuietly(final ImageOutputStream aImageOutputStream) {
+    public static void closeQuietly(final ImageOutputStream aImageOutputStream) {
         if (aImageOutputStream != null) {
             try {
                 aImageOutputStream.close();
@@ -116,7 +116,7 @@ public class IOUtils {
      *
      * @param aOutputStream A supplied output stream to close
      */
-    public static final void closeQuietly(final OutputStream aOutputStream) {
+    public static void closeQuietly(final OutputStream aOutputStream) {
         if (aOutputStream != null) {
             try {
                 aOutputStream.close();
@@ -131,7 +131,7 @@ public class IOUtils {
      *
      * @param aJarFile A supplied {@link JarFile} to close
      */
-    public static final void closeQuietly(final JarFile aJarFile) {
+    public static void closeQuietly(final JarFile aJarFile) {
         if (aJarFile != null) {
             try {
                 aJarFile.close();
@@ -142,14 +142,14 @@ public class IOUtils {
     }
 
     /**
-     * Writes from an input stream to an output stream; you're responsible for closing the <code>InputStream</code> and
-     * <code>OutputStream</code>.
+     * Writes from an input stream to an output stream; you're responsible for closing the <code>InputStream</code>
+     * and <code>OutputStream</code>.
      *
      * @param aInStream The stream from which to read
      * @param aOutStream The stream from which to write
      * @throws IOException If there is trouble reading or writing
      */
-    public static final void copyStream(final InputStream aInStream, final OutputStream aOutStream) throws IOException {
+    public static void copyStream(final InputStream aInStream, final OutputStream aOutStream) throws IOException {
         final BufferedOutputStream outStream = new BufferedOutputStream(aOutStream);
         final BufferedInputStream inStream = new BufferedInputStream(aInStream);
         final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -171,14 +171,14 @@ public class IOUtils {
     }
 
     /**
-     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input stream
-     * is closed for you since just a <code>File</code> was passed in.
+     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input
+     * stream is closed for you since just a <code>File</code> was passed in.
      *
      * @param aFile A file from which to read
      * @param aOutStream An output stream to which to write
      * @throws IOException If there is a problem reading or writing
      */
-    public static final void copyStream(final File aFile, final OutputStream aOutStream) throws IOException {
+    public static void copyStream(final File aFile, final OutputStream aOutStream) throws IOException {
         final FileInputStream input = new FileInputStream(aFile);
         final FileChannel channel = input.getChannel();
         final byte[] buffer = new byte[256 * 1024];
@@ -201,7 +201,7 @@ public class IOUtils {
      * @return The array of bytes
      * @throws IOException If there is trouble reading from the input stream
      */
-    public static final byte[] readBytes(final InputStream aInputStream) throws IOException {
+    public static byte[] readBytes(final InputStream aInputStream) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final byte[] buffer = new byte[4096];
         int read = 0;
@@ -217,4 +217,5 @@ public class IOUtils {
         closeQuietly(aInputStream);
         return baos.toByteArray();
     }
+
 }

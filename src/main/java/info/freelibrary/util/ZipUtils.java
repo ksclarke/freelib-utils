@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,9 +17,11 @@ import java.util.zip.ZipOutputStream;
  *
  * @author Kevin S. Clarke <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
  */
-public class ZipUtils {
+public final class ZipUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtils.class, BUNDLE_NAME);
+
+    private static final String WILDCARD = ".*";
 
     private ZipUtils() {
     }
@@ -32,7 +36,7 @@ public class ZipUtils {
      */
     public static void zip(final File aFileSystemDir, final File aOutputZipFile) throws FileNotFoundException,
             IOException {
-        zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(".*"));
+        zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(WILDCARD));
     }
 
     /**
@@ -46,7 +50,7 @@ public class ZipUtils {
      */
     public static void zip(final File aFileSystemDir, final File aOutputZipFile, final File... aIncludesFileList)
             throws FileNotFoundException, IOException {
-        zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(".*"), aIncludesFileList);
+        zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(WILDCARD), aIncludesFileList);
     }
 
     /**

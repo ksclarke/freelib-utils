@@ -54,7 +54,7 @@ import org.w3c.dom.Element;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class FileUtils {
+public final class FileUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
 
@@ -65,6 +65,10 @@ public class FileUtils {
     private static final String FILE_PATH = "path";
 
     private static final String MODIFIED = "modified";
+
+    private static final String WILDCARD = ".*";
+
+    private static final char DOT = '.';
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
@@ -85,7 +89,7 @@ public class FileUtils {
      * @throws TransformerException If there is trouble with the XSL transformation
      */
     public static String toXML(final String aFilePath) throws FileNotFoundException, TransformerException {
-        return toXML(aFilePath, ".*");
+        return toXML(aFilePath, WILDCARD);
     }
 
     /**
@@ -98,8 +102,9 @@ public class FileUtils {
      * @throws FileNotFoundException If the supplied file does not exist
      * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
      */
-    public static Element toElement(final String aFilePath) throws FileNotFoundException, ParserConfigurationException {
-        return toElement(aFilePath, ".*");
+    public static Element toElement(final String aFilePath) throws FileNotFoundException,
+            ParserConfigurationException {
+        return toElement(aFilePath, WILDCARD);
     }
 
     /**
@@ -114,7 +119,7 @@ public class FileUtils {
      */
     public static Element toElement(final String aFilePath, final boolean aBool) throws FileNotFoundException,
             ParserConfigurationException {
-        return toElement(aFilePath, ".*", aBool);
+        return toElement(aFilePath, WILDCARD, aBool);
     }
 
     /**
@@ -129,7 +134,7 @@ public class FileUtils {
      */
     public static Document toDocument(final String aFilePath) throws FileNotFoundException,
             ParserConfigurationException {
-        return toDocument(aFilePath, ".*");
+        return toDocument(aFilePath, WILDCARD);
     }
 
     /**
@@ -148,8 +153,8 @@ public class FileUtils {
     }
 
     /**
-     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its subdirectories).
-     * Includes absolute path, last modified time, read/write permissions, etc.
+     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its
+     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
      *
      * @param aFilePath The file or directory to be returned as XML
      * @param aDeepConversion Whether the subdirectories are included
@@ -159,12 +164,12 @@ public class FileUtils {
      */
     public static String toXML(final String aFilePath, final boolean aDeepConversion) throws FileNotFoundException,
             TransformerException {
-        return toXML(aFilePath, ".*", aDeepConversion);
+        return toXML(aFilePath, WILDCARD, aDeepConversion);
     }
 
     /**
-     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its subdirectories).
-     * Includes absolute path, last modified time, read/write permissions, etc.
+     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its
+     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
      *
      * @param aFilePath The file or directory to be returned as XML
      * @param aPattern A regular expression pattern to evaluate file matches against
@@ -180,9 +185,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
-     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
-     * file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
+     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
+     * that file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @return An unmodifiable map representing the files in the file structure
@@ -193,9 +198,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
-     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
-     * file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
+     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
+     * that file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
@@ -208,9 +213,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
-     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
-     * file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
+     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
+     * that file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
@@ -220,8 +225,8 @@ public class FileUtils {
      * @throws RuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern,
-            final String... aIgnoreList) throws RuntimeException, FileNotFoundException {
-        final String filePattern = aPattern != null ? aPattern : ".*";
+            final String... aIgnoreList) throws FileNotFoundException {
+        final String filePattern = aPattern != null ? aPattern : WILDCARD;
         final RegexFileFilter filter = new RegexFileFilter(filePattern);
         final Map<String, List<String>> fileMap = new HashMap<>();
         final File source = new File(aFilePath);
@@ -249,9 +254,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns an XML Element representing the file structure found at the supplied file system path. Files included in
-     * the representation will match the supplied regular expression pattern. This method doesn't descend through the
-     * directory structure.
+     * Returns an XML Element representing the file structure found at the supplied file system path. Files included
+     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
+     * the directory structure.
      *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
@@ -265,9 +270,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns an XML Element representing the file structure found at the supplied file system path. Files included in
-     * the representation will match the supplied regular expression pattern. This method doesn't descend through the
-     * directory structure.
+     * Returns an XML Element representing the file structure found at the supplied file system path. Files included
+     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
+     * the directory structure.
      *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
@@ -288,9 +293,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns an XML Document representing the file structure found at the supplied file system path. Files included in
-     * the representation will match the supplied regular expression pattern. This method doesn't descend through the
-     * directory structure.
+     * Returns an XML Document representing the file structure found at the supplied file system path. Files included
+     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
+     * the directory structure.
      *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Element should match
@@ -304,9 +309,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns an XML Document representing the file structure found at the supplied file system path. Files included in
-     * the representation will match the supplied regular expression pattern. This method doesn't descend through the
-     * directory structure.
+     * Returns an XML Document representing the file structure found at the supplied file system path. Files included
+     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
+     * the directory structure.
      *
      * @param aFilePath The directory from which the structural representation should be built
      * @param aPattern A regular expression pattern which files included in the Document should match
@@ -332,7 +337,7 @@ public class FileUtils {
      * @throws MalformedURLException If the supplied URL doesn't have a file protocol
      */
     public static File toFile(final URL aURL) throws MalformedURLException {
-        if (aURL.getProtocol().equals("file")) {
+        if (aURL.getProtocol().equals(FILE_TYPE)) {
             return new File(aURL.toString().replace("file:", ""));
         }
 
@@ -410,7 +415,7 @@ public class FileUtils {
                     fileList.add(file);
                 }
 
-                if (file.isDirectory() && Arrays.binarySearch(ignoreList, fileName) < 0) {
+                if (file.isDirectory() && (Arrays.binarySearch(ignoreList, fileName) < 0)) {
                     final File[] files;
 
                     LOGGER.debug(MessageCodes.UTIL_011, file);
@@ -441,7 +446,7 @@ public class FileUtils {
      * @return The file name without the extension
      */
     public static String stripExt(final String aFileName) {
-        final int index = aFileName.lastIndexOf('.');
+        final int index = aFileName.lastIndexOf(DOT);
 
         if (index != -1) {
             return aFileName.substring(0, index);
@@ -457,7 +462,7 @@ public class FileUtils {
      * @return The extension or an empty string if the file doesn't have an extension
      */
     public static String getExt(final String aFileName) {
-        final int index = aFileName.lastIndexOf('.');
+        final int index = aFileName.lastIndexOf(DOT);
 
         if (index != -1) {
             return aFileName.substring(index + 1, aFileName.length());
@@ -475,7 +480,7 @@ public class FileUtils {
     public static long getSize(final File aFile) {
         long size = 0;
 
-        if (aFile != null && aFile.exists()) {
+        if ((aFile != null) && aFile.exists()) {
             if (aFile.isDirectory()) {
                 for (final File file : aFile.listFiles()) {
                     size += getSize(file);
@@ -495,7 +500,7 @@ public class FileUtils {
      * @return True if file was successfully deleted; else, false
      */
     public static boolean delete(final File aDir) {
-        if (aDir.exists() && aDir.listFiles() != null) {
+        if (aDir.exists() && (aDir.listFiles() != null)) {
             for (final File file : aDir.listFiles()) {
                 if (file.isDirectory()) {
                     if (!delete(file)) {
@@ -507,7 +512,7 @@ public class FileUtils {
                     }
                 }
             }
-        } else if (LOGGER.isDebugEnabled() && aDir.listFiles() == null) {
+        } else if (LOGGER.isDebugEnabled() && (aDir.listFiles() == null)) {
             LOGGER.debug(MessageCodes.UTIL_013, aDir);
         }
 
@@ -515,15 +520,15 @@ public class FileUtils {
     }
 
     /**
-     * Copies a file or directory from one place to another. This copies a file to a file or a directory to a directory.
-     * It does not copy a file to a directory.
+     * Copies a file or directory from one place to another. This copies a file to a file or a directory to a
+     * directory. It does not copy a file to a directory.
      *
      * @param aFromFile A file or directory source
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
-        if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
+        if ((aFromFile.isDirectory() && aToFile.isFile()) || (aFromFile.isFile() && aToFile.isDirectory())) {
             throw new IOException("Can't copy file to directory or directory to file");
         }
 
@@ -581,7 +586,8 @@ public class FileUtils {
      * @throws NoSuchAlgorithmException If the supplied algorithm isn't supported
      * @throws IOException If there is trouble reading the file
      */
-    public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException, IOException {
+    public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException,
+            IOException {
         final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
         final FileInputStream inStream = new FileInputStream(aFile);
         final DigestInputStream mdStream = new DigestInputStream(inStream, md);
@@ -738,8 +744,8 @@ public class FileUtils {
         return result;
     }
 
-    private static boolean isSet(final int mode, final int testbit) {
-        return (mode & testbit) == testbit;
+    private static boolean isSet(final int aMode, final int aTestbit) {
+        return (aMode & aTestbit) == aTestbit;
     }
 
     /**
@@ -827,16 +833,16 @@ public class FileUtils {
 
         if (aFile.isDirectory()) {
             if (aDeepAdd) {
-                final File[] dirs = listFiles(aFile, new RegexDirFilter(".*"));
+                final File[] dirs = listFiles(aFile, new RegexDirFilter(WILDCARD));
 
                 Arrays.sort(dirs); // Consistency to make testing easier
 
                 for (final File dir : dirs) {
                     element.appendChild(add(dir, element, aFilter, aDeepAdd));
                 }
-            } else if (aFilter.toString().equals(".*")) {
+            } else if (aFilter.toString().equals(WILDCARD)) {
                 final Document doc = element.getOwnerDocument();
-                final File[] dirs = listFiles(aFile, new RegexDirFilter(".*"));
+                final File[] dirs = listFiles(aFile, new RegexDirFilter(WILDCARD));
 
                 Arrays.sort(dirs); // Consistency to make testing easier
 
