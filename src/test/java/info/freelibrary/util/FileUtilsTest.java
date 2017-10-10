@@ -126,21 +126,21 @@ public class FileUtilsTest {
     public void testToHashMapFilePath() throws IOException {
         final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder");
 
-        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")), map.toString());
     }
 
     @Test
     public void testToHashMapFilePathPatternAll() throws IOException {
         final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*");
 
-        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")), map.toString());
     }
 
     @Test
     public void testToHashMapFilePathPatternTxt() throws IOException {
         final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*\\.txt");
 
-        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")), map.toString());
     }
 
     @Test(expected = FileNotFoundException.class)
@@ -155,7 +155,7 @@ public class FileUtilsTest {
 
     @Test
     public void testToFileURL() throws MalformedURLException {
-        final String path = new File("src/test/resources/test_folder-map.txt").getAbsolutePath();
+        final String path = new File("target/test-classes/test_folder-map.txt").getAbsolutePath();
         final URL url = new URL("file://" + path);
         final File testFile = FileUtils.toFile(url);
 
@@ -169,13 +169,13 @@ public class FileUtilsTest {
 
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTarget() throws FileNotFoundException {
-        assertEquals(1, FileUtils.listFiles(new File("src/test/resources/test_folder-map.txt"), new RegexFileFilter(
+        assertEquals(1, FileUtils.listFiles(new File("target/test-classes/test_folder-map.txt"), new RegexFileFilter(
                 ".*"), false, new String[] {}).length);
     }
 
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTargetJpg() throws FileNotFoundException {
-        assertEquals(0, FileUtils.listFiles(new File("src/test/resources/test_folder-map.txt"), new RegexFileFilter(
+        assertEquals(0, FileUtils.listFiles(new File("target/test-classes/test_folder-map.txt"), new RegexFileFilter(
                 ".*\\.jpg"), false, new String[] {}).length);
     }
 
@@ -188,7 +188,7 @@ public class FileUtilsTest {
 
     @Test
     public void testStripExtFile() {
-        assertEquals("test_folder-map", FileUtils.stripExt(new File("src/test/resources/test_folder-map.txt")));
+        assertEquals("test_folder-map", FileUtils.stripExt(new File("target/test-classes/test_folder-map.txt")));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class FileUtilsTest {
 
     @Test
     public void testGetExtString() {
-        assertEquals("txt", FileUtils.getExt("src/test/resources/test_folder-map.txt"));
+        assertEquals("txt", FileUtils.getExt("target/test-classes/test_folder-map.txt"));
     }
 
     @Test
