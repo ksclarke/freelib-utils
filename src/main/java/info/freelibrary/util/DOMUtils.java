@@ -47,7 +47,7 @@ public final class DOMUtils {
 
             return buffer.toString();
         } catch (final TransformerConfigurationException details) {
-            throw new RuntimeException(details);
+            throw new I18nRuntimeException(details);
         }
     }
 

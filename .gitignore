@@ -1,2 +1,8 @@
 # Target really should be in ~/.gitignore, but adding here for the convenience of others
-/target/
+target/
+
+# By product of using PMD in Eclipse
+.eclipse-pmd
+
+# These are unpacked by the build
+src/main/tools

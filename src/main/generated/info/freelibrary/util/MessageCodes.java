@@ -2,7 +2,7 @@ package info.freelibrary.util;
 /**
  * BEGIN GENERATED CODE
  */
-final public class MessageCodes {
+public interface MessageCodes {
 
 	/**
 	 * Message: Constructing exception message using supplied locale: {}
@@ -29,21 +29,49 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_014 = "UTIL-014";
 	/**
+	 * Message: Don't have a string value for: {}
+	 */
+	public static final String UTIL_046 = "UTIL-046";
+	/**
 	 * Message: Trying to delete '{}' but there was a problem
 	 */
 	public static final String UTIL_013 = "UTIL-013";
+	/**
+	 * Message: Inverted number range: {}{}{}
+	 */
+	public static final String UTIL_045 = "UTIL-045";
 	/**
 	 * Message: Unable to delete: {}
 	 */
 	public static final String UTIL_012 = "UTIL-012";
 	/**
+	 * Message: Failed to read whole file: {}
+	 */
+	public static final String UTIL_044 = "UTIL-044";
+	/**
 	 * Message: Descending into: {}
 	 */
 	public static final String UTIL_011 = "UTIL-011";
 	/**
+	 * Message: Different number of slots and values: {} and {}
+	 */
+	public static final String UTIL_043 = "UTIL-043";
+	/**
 	 * Message: Matched file: {}
 	 */
 	public static final String UTIL_010 = "UTIL-010";
+	/**
+	 * Message: Must stop first
+	 */
+	public static final String UTIL_042 = "UTIL-042";
+	/**
+	 * Message: Cannot stop if not currently running
+	 */
+	public static final String UTIL_041 = "UTIL-041";
+	/**
+	 * Message: Must stop before calling start again
+	 */
+	public static final String UTIL_040 = "UTIL-040";
 	/**
 	 * Message: Did not check {} because not a directory or jar file
 	 */
@@ -57,29 +85,69 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_007 = "UTIL-007";
 	/**
+	 * Message: Problem creating libfile: {}
+	 */
+	public static final String UTIL_039 = "UTIL-039";
+	/**
 	 * Message: Found {} in {}
 	 */
 	public static final String UTIL_006 = "UTIL-006";
+	/**
+	 * Message: Unable to create directory structure for: {}
+	 */
+	public static final String UTIL_038 = "UTIL-038";
 	/**
 	 * Message: Checking {} for {}
 	 */
 	public static final String UTIL_005 = "UTIL-005";
 	/**
+	 * Message: Can't copy file to directory or directory to file: {} -> {}
+	 */
+	public static final String UTIL_037 = "UTIL-037";
+	/**
 	 * Message: {} is a directory
 	 */
 	public static final String UTIL_004 = "UTIL-004";
+	/**
+	 * Message: Not a file URL: {}
+	 */
+	public static final String UTIL_036 = "UTIL-036";
 	/**
 	 * Message: Checking to see if {} is a directory ({})
 	 */
 	public static final String UTIL_003 = "UTIL-003";
 	/**
+	 * Message: Unable to create new directory: {}
+	 */
+	public static final String UTIL_035 = "UTIL-035";
+	/**
 	 * Message: Native library file for {} wasn't found
 	 */
 	public static final String UTIL_002 = "UTIL-002";
 	/**
+	 * Message: Duplicate file path name
+	 */
+	public static final String UTIL_034 = "UTIL-034";
+	/**
 	 * Message: Initiating JarClassLoader with {}
 	 */
 	public static final String UTIL_001 = "UTIL-001";
+	/**
+	 * Message: A supplied varargs value may not be null
+	 */
+	public static final String UTIL_033 = "UTIL-033";
+	/**
+	 * Message: A base name for formats may not be null
+	 */
+	public static final String UTIL_032 = "UTIL-032";
+	/**
+	 * Message: Supplied URL may not be null
+	 */
+	public static final String UTIL_031 = "UTIL-031";
+	/**
+	 * Message: Supplied URL is not a file URL
+	 */
+	public static final String UTIL_030 = "UTIL-030";
 	/**
 	 * Message: Decoded '{}' to '{}'
 	 */
@@ -104,6 +172,14 @@ final public class MessageCodes {
 	 * Message: Supplied logger '{}' isn't a org.slf4j.impl.SimpleLogger
 	 */
 	public static final String MVN_010 = "MVN-010";
+	/**
+	 * Message: Could not decode the URL to UTF-8 format
+	 */
+	public static final String UTIL_029 = "UTIL-029";
+	/**
+	 * Message: Unsupported encoding: {}
+	 */
+	public static final String UTIL_028 = "UTIL-028";
 	/**
 	 * Message: Adding files in '{}' to zip file
 	 */
@@ -173,8 +249,4 @@ final public class MessageCodes {
 	 * Message: No message files were supplied so no code classes were created
 	 */
 	public static final String MVN_001 = "MVN-001";
-
-	private MessageCodes() {
-		super();
-	}
 }

@@ -12,6 +12,7 @@ import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -31,10 +32,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     @Override
     public List<String> getFormats(final String aBaseName) {
-        if (aBaseName == null) {
-            throw new NullPointerException();
-        }
-
+        Objects.requireNonNull(aBaseName);
         return Arrays.asList(FORMAT);
     }
 
@@ -50,7 +48,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
     @Override
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
             final ClassLoader aClassLoader, final boolean aReload) throws IllegalAccessException,
-                    InstantiationException, IOException {
+            InstantiationException, IOException {
         ResourceBundle bundle = null;
 
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
@@ -65,11 +63,8 @@ public class XMLBundleControl extends ResourceBundle.Control {
                 if (url != null) {
                     final URLConnection connection = url.openConnection();
 
-                    if (connection != null) {
-                        // Disable caches to get fresh data for reloading.
-                        connection.setUseCaches(false);
-                        bundle = makeBundle(connection.getInputStream());
-                    }
+                    connection.setUseCaches(false);
+                    bundle = makeBundle(connection.getInputStream());
                 }
             } else {
                 final InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName);
@@ -85,7 +80,8 @@ public class XMLBundleControl extends ResourceBundle.Control {
      *
      * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
      * @return A {@link ResourceBundle}
-     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
+     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied
+     *         {@link InputStream}
      */
     private ResourceBundle makeBundle(final InputStream aInputStream) throws IOException {
         final BufferedInputStream bufferedInputStream = new BufferedInputStream(aInputStream);
@@ -103,9 +99,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     private void checkForNull(final Object... aVarargs) {
         for (final Object arg : aVarargs) {
-            if (arg == null) {
-                throw new NullPointerException();
-            }
+            Objects.requireNonNull(arg);
         }
     }
 }

@@ -6,9 +6,17 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
@@ -27,6 +35,8 @@ import nu.xom.tests.XOMTestCase;
  * @author <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
  */
 public class FileUtilsTest {
+
+    private final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
     private static Document EXPECTED;
 
@@ -101,6 +111,132 @@ public class FileUtilsTest {
         tFolder2.appendChild(tFolder2File1);
         root.appendChild(tFolder2);
         root.appendChild(tFolder0File1);
+    }
+
+    @Test
+    public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        final Constructor<FileUtils> constructor = FileUtils.class.getDeclaredConstructor();
+        assertTrue("Constructor should be private", Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
+
+    @Test
+    public void testToHashMapFilePath() throws IOException {
+        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder");
+
+        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+    }
+
+    @Test
+    public void testToHashMapFilePathPatternAll() throws IOException {
+        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*");
+
+        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+    }
+
+    @Test
+    public void testToHashMapFilePathPatternTxt() throws IOException {
+        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*\\.txt");
+
+        assertEquals(StringUtils.read(new File("src/test/resources/test_folder-map.txt")), map.toString());
+    }
+
+    @Test(expected = FileNotFoundException.class)
+    public void testToElementStringStringBooleanBad() throws FileNotFoundException {
+        FileUtils.toElement("not_found", ".*", true);
+    }
+
+    @Test(expected = MalformedURLException.class)
+    public void testToFileURLBad() throws MalformedURLException {
+        FileUtils.toFile(new URL("http://example.org"));
+    }
+
+    @Test
+    public void testToFileURL() throws MalformedURLException {
+        final String path = new File("src/test/resources/test_folder-map.txt").getAbsolutePath();
+        final URL url = new URL("file://" + path);
+        final File testFile = FileUtils.toFile(url);
+
+        assertTrue("Failed to test: " + url, testFile.exists());
+    }
+
+    @Test(expected = FileNotFoundException.class)
+    public void testListFilesFileFilenameFilterBooleanString() throws FileNotFoundException {
+        FileUtils.listFiles(new File("doesnotexist"), new RegexFileFilter(".*"), true, new String[] {});
+    }
+
+    @Test
+    public void testListFilesFileFilenameFilterBooleanStringFileTarget() throws FileNotFoundException {
+        assertEquals(1, FileUtils.listFiles(new File("src/test/resources/test_folder-map.txt"), new RegexFileFilter(
+                ".*"), false, new String[] {}).length);
+    }
+
+    @Test
+    public void testListFilesFileFilenameFilterBooleanStringFileTargetJpg() throws FileNotFoundException {
+        assertEquals(0, FileUtils.listFiles(new File("src/test/resources/test_folder-map.txt"), new RegexFileFilter(
+                ".*\\.jpg"), false, new String[] {}).length);
+    }
+
+    @Test
+    public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
+        final File file = new File("src/test/resources/test_folder");
+        assertEquals(3, FileUtils.listFiles(file, new RegexFileFilter(".*\\.txt"), true, new String[] {
+            "test_folder" }).length);
+    }
+
+    @Test
+    public void testStripExtFile() {
+        assertEquals("test_folder-map", FileUtils.stripExt(new File("src/test/resources/test_folder-map.txt")));
+    }
+
+    @Test
+    public void testStripExtFileNoDot() {
+        assertEquals("test_file", FileUtils.stripExt(new File("src/test/resources/test_file")));
+    }
+
+    @Test
+    public void testGetExtString() {
+        assertEquals("txt", FileUtils.getExt("src/test/resources/test_folder-map.txt"));
+    }
+
+    @Test
+    public void testGetExtStringNoExt() {
+        assertEquals("", FileUtils.getExt("src/test/resources/test_file"));
+    }
+
+    @Test
+    public void testGetSizeEmpty() {
+        assertEquals(0, FileUtils.getSize(new File("doesnotexist")));
+    }
+
+    @Test
+    public void testGetSizeNull() {
+        assertEquals(0, FileUtils.getSize((File) null));
+    }
+
+    @Test
+    public void testCopyFileFile() throws IOException {
+        final File oldFile = new File("src/test/resources/test_file");
+        final File newFile = new File(TMP_DIR, oldFile.getName());
+
+        FileUtils.copy(oldFile, newFile);
+
+        assertTrue(newFile.exists());
+    }
+
+    @Test
+    public void testCopyFileDir() throws IOException {
+        final File oldDir = new File("src/test/resources/test_folder");
+        final File newDir = new File(TMP_DIR, oldDir.getName());
+
+        FileUtils.copy(oldDir, newDir);
+    }
+
+    @Test(expected = IOException.class)
+    public void testCopyFileFileDir() throws IOException {
+        FileUtils.copy(new File("src/test/resources/test_file"), TMP_DIR);
     }
 
     /**
@@ -264,7 +400,8 @@ public class FileUtilsTest {
     @Test
     public void testToXMLStringString() {
         try {
-            final Document found = new Builder().build(FileUtils.toXML("src/test/resources/test_folder", ".*txt"), "");
+            final Document found = new Builder().build(FileUtils.toXML("src/test/resources/test_folder", ".*txt"),
+                    "");
             final Document expected = getShallowFilePatternDocument();
 
             XOMTestCase.assertEquals("[" + expected.toXML() + "] vs. [" + found.toXML() + "]", expected, found);

@@ -8,6 +8,7 @@ import org.slf4j.Marker;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount" })
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
     private final org.slf4j.Logger myLogger;
@@ -220,9 +221,17 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             }
         } else {
             if (aThrowable != null) {
-                myLogger.error(aMessage, aThrowable);
+                if (aVarargs.length == 0) {
+                    myLogger.error(aMessage, aThrowable);
+                } else {
+                    myLogger.error(StringUtils.format(aMessage, aVarargs), aThrowable);
+                }
             } else {
-                myLogger.error(aMessage);
+                if (aVarargs.length == 0) {
+                    myLogger.error(aMessage);
+                } else {
+                    myLogger.error(aMessage, aVarargs);
+                }
             }
         }
     }
@@ -674,8 +683,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public String getMessage(final String aMessage, final Object... aObjArray) {
         if (hasI18nKey(aMessage)) {
             return getI18n(aMessage, aObjArray);
-        } else {
+        } else if (aObjArray.length == 0) {
             return aMessage;
+        } else {
+            return StringUtils.format(aMessage, aObjArray);
         }
     }
 

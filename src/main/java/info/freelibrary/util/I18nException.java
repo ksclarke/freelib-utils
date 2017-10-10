@@ -1,25 +1,25 @@
 
 package info.freelibrary.util;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * An internationalizable exception.
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public abstract class I18nException extends Exception {
+public class I18nException extends Exception {
 
     /**
      * The <code>serialVersionUID</code> for the <code>I18nException</code>.
      */
     private static final long serialVersionUID = 1137212885016281357L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nException.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nException.class, BUNDLE_NAME);
 
     /**
      * Constructs a new <code>I18nException</code>.
@@ -133,7 +133,7 @@ public abstract class I18nException extends Exception {
      */
     public I18nException(final Throwable aCause, final Locale aLocale, final String aBundleName,
             final String aMessageKey, final Object... aVarargs) {
-        super(format(aBundleName, aMessageKey, aVarargs), aCause);
+        super(format(aLocale, aBundleName, aMessageKey, aVarargs), aCause);
     }
 
     /**
@@ -159,17 +159,11 @@ public abstract class I18nException extends Exception {
      */
     private static String format(final Locale aLocale, final String aBundleName, final String aMessageKey,
             final Object... aVarargs) {
+        Objects.requireNonNull(aBundleName, LOGGER.getI18n(MessageCodes.UTIL_016));
+        Objects.requireNonNull(aMessageKey, LOGGER.getI18n(MessageCodes.UTIL_018));
+        LOGGER.debug(MessageCodes.UTIL_017, aBundleName);
+
         final XMLResourceBundle bundle;
-
-        if (aBundleName == null) {
-            throw new NullPointerException(MessageCodes.UTIL_016);
-        } else {
-            LOGGER.debug(MessageCodes.UTIL_017, aBundleName);
-        }
-
-        if (aMessageKey == null) {
-            throw new NullPointerException(MessageCodes.UTIL_018);
-        }
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
@@ -178,7 +172,7 @@ public abstract class I18nException extends Exception {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
         }
 
-        if (aVarargs != null && aVarargs.length > 0) {
+        if ((aVarargs != null) && (aVarargs.length > 0)) {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
             return bundle.get(aMessageKey, aVarargs);
         } else {

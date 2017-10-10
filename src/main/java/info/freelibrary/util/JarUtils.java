@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +25,8 @@ import java.util.jar.Manifest;
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class JarUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarUtils.class, BUNDLE_NAME);
 
     private static final String JAR_URL_PROTOCOL = "jar:file://";
 
@@ -128,7 +132,7 @@ public final class JarUtils {
                     final File parent = file.getParentFile();
 
                     if (!parent.exists() && !parent.mkdirs()) {
-                        throw new IOException("Unable to create directory structure for: " + file);
+                        throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_038, file));
                     }
 
                     final InputStream inputStream = aJarFile.getInputStream(entry);

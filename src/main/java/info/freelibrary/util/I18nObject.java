@@ -5,6 +5,7 @@
 package info.freelibrary.util;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public abstract class I18nObject {
+public class I18nObject {
 
     private final XMLResourceBundle myBundle;
 
@@ -33,7 +34,8 @@ public abstract class I18nObject {
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(final String aBundleName) {
-        myBundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(), new XMLBundleControl());
+        myBundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
+                new XMLBundleControl());
     }
 
     /**

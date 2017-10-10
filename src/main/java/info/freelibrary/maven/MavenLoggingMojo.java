@@ -3,8 +3,6 @@ package info.freelibrary.maven;
 
 import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
-import java.util.List;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -51,18 +49,6 @@ import info.freelibrary.util.MessageCodes;
 public class MavenLoggingMojo extends AbstractMojo {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MavenLoggingMojo.class, BUNDLE_NAME);
-
-    /**
-     * A list of names of loggers to be excluded from the log level adjustment.
-     */
-    @Parameter
-    private List<String> myExcludedLoggerNames;
-
-    /**
-     * A list of names of loggers to be included in the log level adjustment.
-     */
-    @Parameter
-    private List<String> myIncludedLoggerNames;
 
     /**
      * The log level to reset the Maven loggers too.

@@ -35,6 +35,25 @@
   <entry key="UTIL-025">Requested library name: {}</entry>
   <entry key="UTIL-026">Formatting '{}' with: {}</entry>
   <entry key="UTIL-027">Adding files in '{}' to zip file</entry>
+  <entry key="UTIL-028">Unsupported encoding: {}</entry>
+  <entry key="UTIL-029">Could not decode the URL to UTF-8 format</entry>
+  <entry key="UTIL-030">Supplied URL is not a file URL</entry>
+  <entry key="UTIL-031">Supplied URL may not be null</entry>
+  <entry key="UTIL-032">A base name for formats may not be null</entry>
+  <entry key="UTIL-033">A supplied varargs value may not be null</entry>
+  <entry key="UTIL-034">Duplicate file path name</entry>
+  <entry key="UTIL-035">Unable to create new directory: {}</entry>
+  <entry key="UTIL-036">Not a file URL: {}</entry>
+  <entry key="UTIL-037">Can't copy file to directory or directory to file: {} -> {}</entry>
+  <entry key="UTIL-038">Unable to create directory structure for: {}</entry>
+  <entry key="UTIL-039">Problem creating libfile: {}</entry>
+  <entry key="UTIL-040">Must stop before calling start again</entry>
+  <entry key="UTIL-041">Cannot stop if not currently running</entry>
+  <entry key="UTIL-042">Must stop first</entry>
+  <entry key="UTIL-043">Different number of slots and values: {} and {}</entry>
+  <entry key="UTIL-044">Failed to read whole file: {}</entry>
+  <entry key="UTIL-045">Inverted number range: {}{}{}</entry>
+  <entry key="UTIL-046">Don't have a string value for: {}</entry>
 
   <!-- Maven plugin related messages -->
   <entry key="MVN-001">No message files were supplied so no code classes were created</entry>

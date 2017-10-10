@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A {@link BufferedWriter} that writes to a file.
@@ -38,7 +38,7 @@ public final class BufferedFileWriter extends BufferedWriter {
      * @throws UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
      */
     public BufferedFileWriter(final File aFile, final String aEncoding) throws FileNotFoundException,
-            UnsupportedEncodingException {
+            java.io.UnsupportedEncodingException {
         super(new OutputStreamWriter(new FileOutputStream(aFile), aEncoding));
     }
 
@@ -51,9 +51,9 @@ public final class BufferedFileWriter extends BufferedWriter {
      */
     private static Writer getWriter(final File aFile) throws FileNotFoundException {
         try {
-            return new OutputStreamWriter(new FileOutputStream(aFile), "UTF-8");
-        } catch (final UnsupportedEncodingException details) {
-            throw new RuntimeException(details); // UTF-8 is always supported
+            return new OutputStreamWriter(new FileOutputStream(aFile), StandardCharsets.UTF_8.name());
+        } catch (final java.io.UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingException(details, StandardCharsets.UTF_8.name());
         }
     }
 

@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A {@link BufferedReader} that reads from a file.
@@ -38,7 +38,7 @@ public class BufferedFileReader extends BufferedReader {
      * @throws UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     public BufferedFileReader(final File aFile, final String aEncoding) throws FileNotFoundException,
-            UnsupportedEncodingException {
+            java.io.UnsupportedEncodingException {
         super(new InputStreamReader(new FileInputStream(aFile), aEncoding));
     }
 
@@ -51,9 +51,10 @@ public class BufferedFileReader extends BufferedReader {
      */
     private static Reader getReader(final File aFile) throws FileNotFoundException {
         try {
-            return new InputStreamReader(new FileInputStream(aFile), "UTF-8");
-        } catch (final UnsupportedEncodingException details) {
-            throw new RuntimeException(details); // UTF-8 is always supported
+            return new InputStreamReader(new FileInputStream(aFile), StandardCharsets.UTF_8.name());
+        } catch (final java.io.UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingException(details, StandardCharsets.UTF_8.name());
         }
     }
+
 }

@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Locale;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -79,7 +80,7 @@ public final class NativeLibraryLoader {
         if (libFile.exists() && (libFile.length() > 0)) {
             System.load(libFile.getAbsolutePath());
         } else {
-            throw new IOException("Problem creating libfile");
+            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_039, libFile));
         }
     }
 
@@ -93,7 +94,7 @@ public final class NativeLibraryLoader {
             final Processor processor = getProcessor();
 
             if (Processor.UNKNOWN != processor) {
-                final String name = System.getProperty(OS_NAME).toLowerCase();
+                final String name = System.getProperty(OS_NAME).toLowerCase(Locale.US);
 
                 if ((name.indexOf("nix") >= 0) || (name.indexOf("nux") >= 0)) {
                     if (Processor.INTEL_32 == processor) {
@@ -121,7 +122,7 @@ public final class NativeLibraryLoader {
             }
         }
 
-        LOGGER.debug(MessageCodes.UTIL_023, myArchitecture, System.getProperty(OS_NAME).toLowerCase());
+        LOGGER.debug(MessageCodes.UTIL_023, myArchitecture, System.getProperty(OS_NAME).toLowerCase(Locale.US));
         return myArchitecture;
     }
 
@@ -130,7 +131,7 @@ public final class NativeLibraryLoader {
         int bits;
 
         // Note that this is actually the architecture of the installed JVM.
-        final String arch = System.getProperty(OS_ARCH).toLowerCase();
+        final String arch = System.getProperty(OS_ARCH).toLowerCase(Locale.US);
 
         if (arch.indexOf("arm") >= 0) {
             processor = Processor.ARM;
@@ -146,7 +147,7 @@ public final class NativeLibraryLoader {
             processor = 32 == bits ? Processor.INTEL_32 : Processor.INTEL_64;
         }
 
-        LOGGER.debug(MessageCodes.UTIL_024, processor, System.getProperty(OS_ARCH).toLowerCase());
+        LOGGER.debug(MessageCodes.UTIL_024, processor, System.getProperty(OS_ARCH).toLowerCase(Locale.US));
         return processor;
     }
 
@@ -175,6 +176,7 @@ public final class NativeLibraryLoader {
                 break;
             default:
                 LOGGER.warn("Unexpected architecture value: {}", getArchitecture());
+                break;
         }
 
         LOGGER.debug(MessageCodes.UTIL_025, libName);

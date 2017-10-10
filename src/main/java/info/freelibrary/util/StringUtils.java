@@ -4,6 +4,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +24,10 @@ import java.util.Set;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class StringUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, BUNDLE_NAME);
 
     private static final String EOL = System.getProperty("line.separator");
 
@@ -105,8 +110,7 @@ public final class StringUtils {
         }
 
         if (count != aDetails.length) {
-            throw new IndexOutOfBoundsException("Different number of slots and values: " + count + " and " +
-                    aDetails.length);
+            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
         }
 
         final String[] parts = aMessage.split("\\{\\}");
@@ -486,7 +490,7 @@ public final class StringUtils {
 
         if (read != aFile.length()) {
             fileStream.close();
-            throw new IOException("Failed to read whole file");
+            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_044, aFile));
         }
 
         fileStream.close();
@@ -520,7 +524,7 @@ public final class StringUtils {
                     ints[position++] = index;
                 }
             } else {
-                throw new NumberFormatException("Inverted number range: " + start + RANGE_DELIMETER + end);
+                throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMETER, end));
             }
         }
 
@@ -555,7 +559,7 @@ public final class StringUtils {
      * @return The upcased string
      */
     public static String upcase(final String aString) {
-        return aString.substring(0, 1).toUpperCase() + aString.substring(1);
+        return aString.substring(0, 1).toUpperCase(Locale.getDefault()) + aString.substring(1);
     }
 
     /**
@@ -608,7 +612,7 @@ public final class StringUtils {
             case 20:
                 return "Twentieth";
             default:
-                throw new UnsupportedOperationException("Don't have a string value for " + aInt);
+                throw new UnsupportedOperationException(LOGGER.getI18n(MessageCodes.UTIL_046, aInt));
         }
     }
 

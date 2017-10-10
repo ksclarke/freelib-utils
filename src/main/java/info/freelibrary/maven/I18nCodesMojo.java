@@ -79,7 +79,6 @@ public class I18nCodesMojo extends AbstractMojo {
                             : myGeneratedSrcDir.getAbsolutePath();
 
                     if (fullClassName != null) {
-                        final Iterator<String> messageIterator = properties.stringPropertyNames().iterator();
                         final String[] nameParts = fullClassName.split("\\.");
                         final int classNameIndex = nameParts.length - 1;
                         final String className = nameParts[classNameIndex];
@@ -96,6 +95,8 @@ public class I18nCodesMojo extends AbstractMojo {
                             final String message = LOGGER.getMessage(MessageCodes.MVN_003, packageDir, className);
                             throw new MojoExecutionException(message);
                         }
+
+                        final Iterator<String> messageIterator = properties.stringPropertyNames().iterator();
 
                         // Cycle through all the entries in the supplied messages file, creating fields
                         while (messageIterator.hasNext()) {

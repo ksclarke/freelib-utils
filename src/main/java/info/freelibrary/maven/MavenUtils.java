@@ -4,6 +4,7 @@ package info.freelibrary.maven;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,7 @@ public final class MavenUtils {
      * @param aIncludesList A list of names of additional loggers to include in the reset
      */
     public static void setLogLevels(final int aLogLevel, final String[] aLoggerList, final String[] aExcludesList,
-            final String[] aIncludesList) {
+            final String... aIncludesList) {
         final ArrayList<String> loggerList = new ArrayList<>(Arrays.asList(aLoggerList));
         final Class<? extends Logger> simpleLogger = LoggerFactory.getLogger("org.slf4j.impl.SimpleLogger")
                 .getClass();
@@ -149,7 +150,7 @@ public final class MavenUtils {
      * @return The int code of the supplied level or zero if the supplied name doesn't correspond to a known level
      */
     public static int getLevelIntCode(final String aLogLevelName) {
-        final String levelName = aLogLevelName.trim().toLowerCase();
+        final String levelName = aLogLevelName.trim().toLowerCase(Locale.US);
 
         if ("error".equals(levelName)) {
             return ERROR_LOG_LEVEL;

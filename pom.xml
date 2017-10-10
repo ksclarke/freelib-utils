@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>freelib-utils</artifactId>
@@ -47,7 +48,7 @@
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
     <iharder.base64.version>2.3.8</iharder.base64.version>
     <commons.compress.version>1.11</commons.compress.version>
-    <slf4j.simple.logger.version>1.7.10</slf4j.simple.logger.version>
+    <slf4j.simple.logger.version>1.7.25</slf4j.simple.logger.version>
 
     <!-- Project settings -->
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -139,6 +140,13 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <org.slf4j.simpleLogger.defaultLogLevel>trace</org.slf4j.simpleLogger.defaultLogLevel>
+            <org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>info</org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>
+            <org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>debug</org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>
+          </systemPropertyVariables>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>br.com.ingenieux</groupId>
@@ -168,7 +176,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
   </parent>
 
 </project>

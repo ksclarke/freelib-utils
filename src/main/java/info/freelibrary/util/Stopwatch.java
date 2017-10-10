@@ -4,12 +4,16 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 /**
  * Allows timing of the execution of any block of code.
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class Stopwatch {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Stopwatch.class, BUNDLE_NAME);
 
     private boolean myTimerIsRunning;
 
@@ -24,7 +28,7 @@ public final class Stopwatch {
      */
     public Stopwatch start() {
         if (myTimerIsRunning) {
-            throw new IllegalStateException("Must stop before calling start again.");
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_040));
         }
 
         myStart = System.currentTimeMillis();
@@ -40,7 +44,7 @@ public final class Stopwatch {
      */
     public Stopwatch stop() {
         if (!myTimerIsRunning) {
-            throw new IllegalStateException("Cannot stop if not currently running.");
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_041));
         }
 
         myStop = System.currentTimeMillis();
@@ -56,11 +60,11 @@ public final class Stopwatch {
      * @throws IllegalStateException if the stopwatch is not already running.
      */
     public Stopwatch stopAfter(final int aSecondsCount) {
-        int stopCount = aSecondsCount;
-
         if (!myTimerIsRunning) {
-            throw new IllegalStateException("Cannot stop if not currently running");
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_041));
         }
+
+        int stopCount = aSecondsCount;
 
         while (stopCount < aSecondsCount) {
             stopCount = (int) (System.currentTimeMillis() - myStart) / 1000;
@@ -79,20 +83,14 @@ public final class Stopwatch {
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getSeconds() {
+        if (myTimerIsRunning) {
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
+        }
+
         final StringBuilder result = new StringBuilder();
         final long timeGap = myStop - myStart;
 
-        result.append(timeGap / 1000);
-        result.append(" secs, ");
-
-        result.append(timeGap % 1000);
-        result.append(" msecs ");
-
-        if (myTimerIsRunning) {
-            throw new IllegalStateException("Must stop first");
-        }
-
-        return result.toString();
+        return result.append(timeGap / 1000).append(" secs, ").append(timeGap % 1000).append(" msecs ").toString();
     }
 
     /**
@@ -102,15 +100,11 @@ public final class Stopwatch {
      * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
      */
     public String getMilliseconds() {
-        final StringBuilder result = new StringBuilder();
-        result.append(myStop - myStart);
-        result.append(" msecs");
-
         if (myTimerIsRunning) {
-            throw new IllegalStateException("Must stop first.");
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
         }
 
-        return result.toString();
+        return new StringBuilder().append(myStop - myStart).append(" msecs").toString();
     }
 
     /**
@@ -122,4 +116,5 @@ public final class Stopwatch {
     public String toString() {
         return "Stopwatch milliseconds elapsed: " + getMilliseconds();
     }
+
 }

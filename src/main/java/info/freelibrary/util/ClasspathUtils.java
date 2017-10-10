@@ -4,6 +4,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -11,9 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for working with the Java classpath.
@@ -32,7 +31,7 @@ public final class ClasspathUtils {
 
     private static final String JAR_EXT = "jar";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class, BUNDLE_NAME);
 
     private ClasspathUtils() {
     }

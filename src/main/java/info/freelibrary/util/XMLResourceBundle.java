@@ -4,15 +4,14 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A {@link ResourceBundle} that uses a XML file as its source.
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class XMLResourceBundle extends ResourceBundle {
 
     /* Use the original loggers here, not the info.freelib.util.Logger/LoggerFactory wrappers */
-    private static final Logger LOGGER = LoggerFactory.getLogger(XMLResourceBundle.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLResourceBundle.class, BUNDLE_NAME);
 
     /**
      * The properties set by the XML file.

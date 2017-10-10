@@ -1,8 +1,6 @@
 
 package info.freelibrary.maven;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,8 +18,6 @@ import org.apache.maven.project.MavenProject;
 
 import info.freelibrary.util.FileExtFileFilter;
 import info.freelibrary.util.FileUtils;
-import info.freelibrary.util.Logger;
-import info.freelibrary.util.LoggerFactory;
 
 /**
  * A helper class that configures the default Java log manager if there is a <code>logging.properties</code> file in
@@ -32,15 +28,13 @@ import info.freelibrary.util.LoggerFactory;
 @Mojo(name = "read-logging-properties", defaultPhase = LifecyclePhase.INITIALIZE)
 public final class JavaLoggingHelperMojo extends AbstractMojo {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaLoggingHelperMojo.class, BUNDLE_NAME);
-
     private static final String LOGGING_CONF_FILE = "logging.properties";
 
     /**
      * The Maven project directory.
      */
     @Parameter(defaultValue = "${project}")
-    protected MavenProject myProject;
+    private MavenProject myProject;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

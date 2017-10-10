@@ -5,13 +5,13 @@ import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -50,15 +50,13 @@ public final class URLUtils {
      * @return A File that corresponds to the URL's location
      */
     public static File toFile(final URL aURL) {
-        final String path3;
-
-        Objects.requireNonNull(aURL, "Supplied URL may not be null");
-
-        String string = aURL.toExternalForm();
+        Objects.requireNonNull(aURL, LOGGER.getI18n(MessageCodes.UTIL_031));
 
         if (!FILE_PROTOCOL.equals(aURL.getProtocol())) {
-            throw new UnsupportedOperationException(LOGGER.getI18n("Supplied URL is not a file URL"));
+            throw new UnsupportedOperationException(LOGGER.getI18n(MessageCodes.UTIL_030));
         }
+
+        String string = aURL.toExternalForm();
 
         // An invalid URL created using file.toURL() or file.toURI().toURL() on a specific version of Java 5 on Mac
         if (string.contains(PLUS)) {
@@ -67,11 +65,13 @@ public final class URLUtils {
 
         try {
             string = URLDecoder.decode(string, StandardCharsets.UTF_8.name());
-        } catch (final UnsupportedEncodingException details) {
-            throw new AssertionError("Could not decode the URL to UTF-8 format", details);
+        } catch (final java.io.UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingException(details, MessageCodes.UTIL_029);
         }
 
-        if (OS.toUpperCase().contains("WINDOWS") && string.startsWith(STANDARD_PREFIX)) {
+        final String path3;
+
+        if (OS.toUpperCase(Locale.US).contains("WINDOWS") && string.startsWith(STANDARD_PREFIX)) {
             path3 = string.substring(STANDARD_PREFIX.length() - 2);
         } else if (string.startsWith(STANDARD_PREFIX)) {
             path3 = string.substring(STANDARD_PREFIX.length());
@@ -135,8 +135,8 @@ public final class URLUtils {
                 // Java's URLDecoder needs a little help with occurrences of '%' that aren't percent escaped values
                 urlString = URLDecoder.decode(decodedString.replaceAll("%(?![0-9a-fA-F]{2})", PERCENT), aEncoding);
             } while (!urlString.equals(decodedString));
-        } catch (final UnsupportedEncodingException details) {
-            throw new RuntimeException("An unsupported charset was supplied: " + aEncoding, details);
+        } catch (final java.io.UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingException(details, aEncoding);
         }
 
         if (LOGGER.isDebugEnabled() && !aURL.equals(decodedString)) {
@@ -186,6 +186,7 @@ public final class URLUtils {
                     break;
                 default:
                     builder.append(c);
+                    break;
             }
         }
 

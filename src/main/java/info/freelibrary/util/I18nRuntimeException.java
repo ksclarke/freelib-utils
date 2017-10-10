@@ -1,20 +1,23 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public abstract class I18nRuntimeException extends RuntimeException {
+public class I18nRuntimeException extends RuntimeException {
 
     /**
      * The <code>serialVersionUID</code> for the <code>I18nException</code>.
      */
     private static final long serialVersionUID = 1137212882896281357L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nRuntimeException.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nRuntimeException.class, BUNDLE_NAME);
 
     /**
      * Constructs a new <code>RuntimeI18nException</code>.
@@ -91,7 +94,8 @@ public abstract class I18nRuntimeException extends RuntimeException {
     }
 
     /**
-     * Constructs a new <code>RuntimeI18nException</code> using the {@link Locale} with the supplied cause and message.
+     * Constructs a new <code>RuntimeI18nException</code> using the {@link Locale} with the supplied cause and
+     * message.
      *
      * @param aCause The underlying cause of the current exception
      * @param aLocale The locale to use when constructing the exception
@@ -128,7 +132,7 @@ public abstract class I18nRuntimeException extends RuntimeException {
      */
     public I18nRuntimeException(final Throwable aCause, final Locale aLocale, final String aBundleName,
             final String aMessageKey, final Object... aVarargs) {
-        super(format(aBundleName, aMessageKey, aVarargs), aCause);
+        super(format(aLocale, aBundleName, aMessageKey, aVarargs), aCause);
     }
 
     /**
@@ -154,17 +158,11 @@ public abstract class I18nRuntimeException extends RuntimeException {
      */
     private static String format(final Locale aLocale, final String aBundleName, final String aMessageKey,
             final Object... aVarargs) {
+        Objects.requireNonNull(aBundleName, LOGGER.getI18n(MessageCodes.UTIL_016));
+        Objects.requireNonNull(aMessageKey, LOGGER.getI18n(MessageCodes.UTIL_018));
+        LOGGER.debug(MessageCodes.UTIL_022, aBundleName);
+
         final XMLResourceBundle bundle;
-
-        if (aBundleName == null) {
-            throw new NullPointerException(MessageCodes.UTIL_016);
-        } else {
-            LOGGER.debug(MessageCodes.UTIL_022, aBundleName);
-        }
-
-        if (aMessageKey == null) {
-            throw new NullPointerException(MessageCodes.UTIL_018);
-        }
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
@@ -173,7 +171,7 @@ public abstract class I18nRuntimeException extends RuntimeException {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
         }
 
-        if (aVarargs != null && aVarargs.length > 0) {
+        if ((aVarargs != null) && (aVarargs.length > 0)) {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
             return bundle.get(aMessageKey, aVarargs);
         } else {

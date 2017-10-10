@@ -6,6 +6,7 @@ package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
@@ -25,7 +26,8 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(final String aMainClassName) throws Exception {
+    public JarClassLoader(final String aMainClassName) throws IOException, IllegalAccessException,
+            InstantiationException, ClassNotFoundException {
         super(JarUtils.getJarURLs());
 
         LOGGER.debug(MessageCodes.UTIL_001, aMainClassName);
@@ -39,7 +41,8 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws Exception {
+    public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws IOException, IllegalAccessException,
+            InstantiationException, ClassNotFoundException {
         super(aURLs);
 
         loadClass(aMainClassName).newInstance();
@@ -52,7 +55,8 @@ public class JarClassLoader extends URLClassLoader {
      * @param aMainClassName A main class name to locate
      * @throws Exception If there is trouble locating the main class
      */
-    public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws Exception {
+    public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws IOException,
+            IllegalAccessException, InstantiationException, ClassNotFoundException {
         super(aListOfURLs.toArray(new URL[aListOfURLs.size()]));
 
         loadClass(aMainClassName).newInstance();

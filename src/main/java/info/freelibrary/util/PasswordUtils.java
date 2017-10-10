@@ -4,12 +4,15 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Objects;
 
 import net.iharder.Base64;
 
@@ -19,6 +22,8 @@ import net.iharder.Base64;
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class PasswordUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordUtils.class, BUNDLE_NAME);
 
     private PasswordUtils() {
     }
@@ -52,13 +57,8 @@ public final class PasswordUtils {
      * @throws IOException If there is trouble encrypting the supplied text
      */
     public static String encrypt(final String aText, final String aSalt) throws NullPointerException, IOException {
-        if (aText == null) {
-            throw new NullPointerException("Text to encrypt is null");
-        }
-
-        if (aSalt == null) {
-            throw new NullPointerException("Salt to encrypt with is null");
-        }
+        Objects.requireNonNull(aText, LOGGER.getI18n("Text to encrypt is null"));
+        Objects.requireNonNull(aSalt, LOGGER.getI18n("Salt to encrypt with is null"));
 
         try {
             final MessageDigest digest = MessageDigest.getInstance("SHA");
@@ -66,9 +66,9 @@ public final class PasswordUtils {
             digest.update(saltedText.getBytes("UTF-8"));
             return Base64.encodeBytes(digest.digest());
         } catch (final NoSuchAlgorithmException details) {
-            throw new RuntimeException(details); // programming error
+            throw new I18nRuntimeException(details); // programming error
         } catch (final UnsupportedEncodingException details) {
-            throw new RuntimeException(details); // programming error
+            throw new I18nRuntimeException(details); // programming error
         }
     }
 }

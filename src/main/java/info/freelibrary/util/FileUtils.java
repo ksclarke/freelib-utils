@@ -4,6 +4,7 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.BUNDLE_NAME;
 import static java.nio.file.attribute.PosixFilePermission.GROUP_EXECUTE;
 import static java.nio.file.attribute.PosixFilePermission.GROUP_READ;
 import static java.nio.file.attribute.PosixFilePermission.GROUP_WRITE;
@@ -37,6 +38,7 @@ import java.util.EnumSet;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,8 +46,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -54,6 +54,7 @@ import org.w3c.dom.Element;
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class FileUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
@@ -70,7 +71,7 @@ public final class FileUtils {
 
     private static final char DOT = '.';
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, BUNDLE_NAME);
 
     /**
      * Constructor for the contained file utilities.
@@ -241,7 +242,7 @@ public final class FileUtils {
                 if (!paths.contains(filePath)) {
                     paths.add(filePath);
                 } else {
-                    throw new RuntimeException("Duplicate file path name");
+                    throw new I18nRuntimeException(BUNDLE_NAME, MessageCodes.UTIL_034);
                 }
             } else {
                 final ArrayList<String> pathList = new ArrayList<>();
@@ -341,7 +342,7 @@ public final class FileUtils {
             return new File(aURL.toString().replace("file:", ""));
         }
 
-        throw new MalformedURLException("Not a file URL");
+        throw new MalformedURLException(LOGGER.getI18n(MessageCodes.UTIL_036, aURL));
     }
 
     /**
@@ -529,12 +530,12 @@ public final class FileUtils {
      */
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if ((aFromFile.isDirectory() && aToFile.isFile()) || (aFromFile.isFile() && aToFile.isDirectory())) {
-            throw new IOException("Can't copy file to directory or directory to file");
+            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
         }
 
         if (aFromFile.isDirectory()) {
             if (!aToFile.exists() && !aToFile.mkdirs()) {
-                throw new RuntimeException("Unable to create new directory: " + aToFile.getAbsolutePath());
+                throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_035, aToFile.getAbsolutePath()));
             }
 
             for (final File file : aFromFile.listFiles()) {
@@ -618,9 +619,8 @@ public final class FileUtils {
      *
      * @param aFileUrl A file-based URL
      * @return The MIME-type name for the supplied file
-     * @throws IOException If there is trouble reading the MIME type
      */
-    public static String getMimeType(final String aFileUrl) throws IOException {
+    public static String getMimeType(final String aFileUrl) {
         return URLConnection.getFileNameMap().getContentTypeFor(aFileUrl);
     }
 
@@ -822,7 +822,7 @@ public final class FileUtils {
 
                 element = doc.createElement(tagName);
             } catch (final ParserConfigurationException details) {
-                throw new RuntimeException(details);
+                throw new I18nRuntimeException(details);
             }
         } else {
             element = aParent.getOwnerDocument().createElement(tagName);
@@ -874,7 +874,7 @@ public final class FileUtils {
      * @param aElement A destination element for the file metadata
      */
     private static void copyMetadata(final File aFile, final Element aElement) {
-        final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT, Locale.US);
         final StringBuilder permissions = new StringBuilder();
         final Date date = new Date(aFile.lastModified());
 
