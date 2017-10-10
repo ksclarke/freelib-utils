@@ -133,6 +133,9 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
       <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
+      <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
       <plugin>
@@ -176,7 +179,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
   </parent>
 
 </project>
