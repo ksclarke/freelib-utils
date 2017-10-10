@@ -25,6 +25,7 @@ public final class Stopwatch {
      * Start the stopwatch.
      *
      * @throws IllegalStateException if the stopwatch is already running.
+     * @return The stopwatch
      */
     public Stopwatch start() {
         if (myTimerIsRunning) {
@@ -41,6 +42,7 @@ public final class Stopwatch {
      * Stop the stopwatch.
      *
      * @throws IllegalStateException if the stopwatch is not already running.
+     * @return The stopwatch
      */
     public Stopwatch stop() {
         if (!myTimerIsRunning) {
@@ -58,6 +60,7 @@ public final class Stopwatch {
      *
      * @param aSecondsCount A number of seconds after which to stop the stopwatch
      * @throws IllegalStateException if the stopwatch is not already running.
+     * @return The stopwatch
      */
     public Stopwatch stopAfter(final int aSecondsCount) {
         if (!myTimerIsRunning) {

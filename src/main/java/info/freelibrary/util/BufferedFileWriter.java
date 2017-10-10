@@ -35,7 +35,7 @@ public final class BufferedFileWriter extends BufferedWriter {
      * @param aFile A file to which to write
      * @param aEncoding A character encoding to use to write to the supplied file
      * @throws FileNotFoundException If the supplied file cannot be found
-     * @throws UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
+     * @throws java.io.UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
      */
     public BufferedFileWriter(final File aFile, final String aEncoding) throws FileNotFoundException,
             java.io.UnsupportedEncodingException {

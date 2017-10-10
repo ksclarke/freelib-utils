@@ -101,7 +101,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_005 = "UTIL-005";
 	/**
-	 * Message: Can't copy file to directory or directory to file: {} -> {}
+	 * Message: Can't copy file to directory or directory to file: {} to {}
 	 */
 	public static final String UTIL_037 = "UTIL-037";
 	/**

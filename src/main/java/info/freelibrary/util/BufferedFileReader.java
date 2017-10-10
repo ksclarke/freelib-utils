@@ -35,7 +35,7 @@ public class BufferedFileReader extends BufferedReader {
      * @param aFile A file from which to read
      * @param aEncoding A character encoding to use while reading from the file
      * @throws FileNotFoundException If the supplied file couldn't be found
-     * @throws UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
+     * @throws java.io.UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     public BufferedFileReader(final File aFile, final String aEncoding) throws FileNotFoundException,
             java.io.UnsupportedEncodingException {
@@ -48,6 +48,7 @@ public class BufferedFileReader extends BufferedReader {
      * @param aFile The file for which to get a {#link Reader}
      * @return A {#link Reader} that will read using the UTF-8 charset
      * @throws FileNotFoundException If the supplied file couldn't be found
+     * @throws UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     private static Reader getReader(final File aFile) throws FileNotFoundException {
         try {

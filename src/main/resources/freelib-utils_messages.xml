@@ -44,7 +44,7 @@
   <entry key="UTIL-034">Duplicate file path name</entry>
   <entry key="UTIL-035">Unable to create new directory: {}</entry>
   <entry key="UTIL-036">Not a file URL: {}</entry>
-  <entry key="UTIL-037">Can't copy file to directory or directory to file: {} -> {}</entry>
+  <entry key="UTIL-037">Can't copy file to directory or directory to file: {} to {}</entry>
   <entry key="UTIL-038">Unable to create directory structure for: {}</entry>
   <entry key="UTIL-039">Problem creating libfile: {}</entry>
   <entry key="UTIL-040">Must stop before calling start again</entry>

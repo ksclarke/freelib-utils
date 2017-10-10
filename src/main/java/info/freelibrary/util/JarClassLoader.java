@@ -24,7 +24,10 @@ public class JarClassLoader extends URLClassLoader {
      * Constructor for a Jar ClassLoader.
      *
      * @param aMainClassName A main class name to locate
-     * @throws Exception If there is trouble locating the main class
+     * @throws IOException If there is trouble reading the main class
+     * @throws InstantiationException If there is a problem instantiating the main class
+     * @throws IllegalAccessException If there is trouble accessing the main class
+     * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final String aMainClassName) throws IOException, IllegalAccessException,
             InstantiationException, ClassNotFoundException {
@@ -39,7 +42,10 @@ public class JarClassLoader extends URLClassLoader {
      *
      * @param aURLs An array of URLs to search
      * @param aMainClassName A main class name to locate
-     * @throws Exception If there is trouble locating the main class
+     * @throws IOException If there is trouble reading the main class
+     * @throws IllegalAccessException If there is a problem accessing the main class
+     * @throws InstantiationException If there is trouble instantiating the main class
+     * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws IOException, IllegalAccessException,
             InstantiationException, ClassNotFoundException {
@@ -53,7 +59,10 @@ public class JarClassLoader extends URLClassLoader {
      *
      * @param aListOfURLs A {@link List} of URLs to search
      * @param aMainClassName A main class name to locate
-     * @throws Exception If there is trouble locating the main class
+     * @throws IOException If there is trouble reading the main class
+     * @throws IllegalAccessException If there is a problem accessing the main class
+     * @throws InstantiationException If there is trouble instantiating the main class
+     * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws IOException,
             IllegalAccessException, InstantiationException, ClassNotFoundException {
