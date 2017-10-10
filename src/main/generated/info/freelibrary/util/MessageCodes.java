@@ -2,7 +2,7 @@ package info.freelibrary.util;
 /**
  * BEGIN GENERATED CODE
  */
-public interface MessageCodes {
+final public class MessageCodes {
 
 	/**
 	 * Message: Constructing exception message using supplied locale: {}
@@ -249,4 +249,8 @@ public interface MessageCodes {
 	 * Message: No message files were supplied so no code classes were created
 	 */
 	public static final String MVN_001 = "MVN-001";
+
+	private MessageCodes() {
+		super();
+	}
 }
