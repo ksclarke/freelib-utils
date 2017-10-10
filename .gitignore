@@ -3,6 +3,3 @@ target/
 
 # By product of using PMD in Eclipse
 .eclipse-pmd
-
-# These are unpacked by the build
-src/main/tools
