@@ -15,9 +15,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
@@ -121,30 +118,6 @@ public class FileUtilsTest {
         assertTrue("Constructor should be private", Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
         constructor.newInstance();
-    }
-
-    @Test
-    public void testToHashMapFilePath() throws IOException {
-        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder");
-
-        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")),
-                new TreeMap<String, List<String>>(map).toString());
-    }
-
-    @Test
-    public void testToHashMapFilePathPatternAll() throws IOException {
-        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*");
-
-        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")),
-                new TreeMap<String, List<String>>(map).toString());
-    }
-
-    @Test
-    public void testToHashMapFilePathPatternTxt() throws IOException {
-        final Map<String, List<String>> map = FileUtils.toHashMap("src/test/resources/test_folder", ".*\\.txt");
-
-        assertEquals(StringUtils.read(new File("target/test-classes/test_folder-map.txt")),
-                new TreeMap<String, List<String>>(map).toString());
     }
 
     @Test(expected = FileNotFoundException.class)
