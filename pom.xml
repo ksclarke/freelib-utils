@@ -4,7 +4,7 @@
 
   <artifactId>freelib-utils</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>0.8.6-SNAPSHOT</version>
+  <version>0.8.6</version>
   <name>FreeLibrary Utilities</name>
   <description>A small collection of utility classes used by other FreeLibrary projects</description>
   <url>http://projects.freelibrary.info/freelib-utils</url>
