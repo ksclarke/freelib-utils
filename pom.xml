@@ -133,6 +133,11 @@
       <artifactId>roaster-api</artifactId>
       <version>${roaster.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.roaster</groupId>
+      <artifactId>roaster-jdt</artifactId>
+      <version>${roaster.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -200,6 +205,7 @@
             <configuration>
               <ignoredDependencies>
                 <ignoredDependency>org.slf4j:slf4j-simple:jar</ignoredDependency>
+                <ignoredDependency>org.jboss.forge.roaster:roaster-jdt:jar</ignoredDependency>
               </ignoredDependencies>
             </configuration>
           </execution>
