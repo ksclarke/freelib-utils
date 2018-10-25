@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import java.util.Enumeration;
+
 import org.slf4j.Marker;
 
 /**
@@ -688,6 +690,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         } else {
             return StringUtils.format(aMessage, aObjArray);
         }
+    }
+
+    @Override
+    public Enumeration<String> getKeys() {
+        return super.getKeys();
     }
 
     /**

@@ -15,8 +15,6 @@ import java.util.ResourceBundle;
 
 /**
  * A {@link ResourceBundle} that uses a XML file as its source.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class XMLResourceBundle extends ResourceBundle {
 
