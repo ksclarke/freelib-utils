@@ -12,8 +12,6 @@ import org.junit.Test;
 
 /**
  * Tests of the <code>XMLBundleControl</code> class.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class XMLBundleControlTest {
 

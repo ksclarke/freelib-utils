@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -10,8 +7,6 @@ import java.util.regex.Pattern;
 
 /**
  * A {@link FilenameFilter} that allows filtering directory names based on regular expressions.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class RegexDirFilter implements FilenameFilter {
 

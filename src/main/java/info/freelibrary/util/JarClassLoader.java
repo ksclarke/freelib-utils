@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -13,8 +10,6 @@ import java.util.List;
 
 /**
  * A {@link URLClassLoader} for Jar files.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class JarClassLoader extends URLClassLoader {
 

@@ -1,6 +1,3 @@
-/**
- *
- */
 
 package info.freelibrary.util;
 
@@ -22,8 +19,6 @@ import org.junit.Test;
 
 /**
  * Tests of the {@link StringUtils} class.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class StringUtilsTest {
 

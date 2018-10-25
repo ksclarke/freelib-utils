@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 
 /**
  * An internationalizable exception.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class I18nException extends Exception {
 

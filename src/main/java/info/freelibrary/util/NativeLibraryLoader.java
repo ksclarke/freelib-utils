@@ -16,8 +16,6 @@ import java.util.jar.JarFile;
 
 /**
  * Utility class to load a native library that lives in the current classpath.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class NativeLibraryLoader {
 
@@ -59,7 +57,7 @@ public final class NativeLibraryLoader {
         final File libFile = new File(tmpDir, libFileName);
 
         // Check to see whether it already exists before we go creating it again?
-        if (!libFile.exists() || (libFile.length() == 0)) {
+        if (!libFile.exists() || libFile.length() == 0) {
             final URL url = ClasspathUtils.findFirst(libFileName);
 
             if (url == null) {
@@ -77,7 +75,7 @@ public final class NativeLibraryLoader {
             IOUtils.closeQuietly(jarFile);
         }
 
-        if (libFile.exists() && (libFile.length() > 0)) {
+        if (libFile.exists() && libFile.length() > 0) {
             System.load(libFile.getAbsolutePath());
         } else {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_039, libFile));
@@ -96,7 +94,7 @@ public final class NativeLibraryLoader {
             if (Processor.UNKNOWN != processor) {
                 final String name = System.getProperty(OS_NAME).toLowerCase(Locale.US);
 
-                if ((name.indexOf("nix") >= 0) || (name.indexOf("nux") >= 0)) {
+                if (name.indexOf("nix") >= 0 || name.indexOf("nux") >= 0) {
                     if (Processor.INTEL_32 == processor) {
                         myArchitecture = Architecture.LINUX_32;
                     } else if (Processor.INTEL_64 == processor) {
@@ -137,7 +135,7 @@ public final class NativeLibraryLoader {
             processor = Processor.ARM;
         } else if (arch.indexOf("ppc") >= 0) {
             processor = Processor.PPC;
-        } else if ((arch.indexOf("86") >= 0) || (arch.indexOf("amd") >= 0)) {
+        } else if (arch.indexOf("86") >= 0 || arch.indexOf("amd") >= 0) {
             bits = 32;
 
             if (arch.indexOf("64") >= 0) {

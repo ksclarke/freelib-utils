@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -16,8 +13,6 @@ import java.util.jar.JarFile;
 
 /**
  * Utilities for working with the Java classpath.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class ClasspathUtils {
 
@@ -240,7 +235,7 @@ public final class ClasspathUtils {
                 final JarFile jarFile = new JarFile(file);
                 final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
 
-                if ((jarEntry != null) && (jarEntry.getSize() > 0)) {
+                if (jarEntry != null && jarEntry.getSize() > 0) {
                     LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
                     jarFile.close();
                     return file.toURI().toURL();

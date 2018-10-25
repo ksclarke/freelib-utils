@@ -1,6 +1,3 @@
-/**
- *
- */
 
 package info.freelibrary.util;
 
@@ -20,7 +17,7 @@ import org.junit.Test;
 import info.freelibrary.util.test.I18nExceptionWrapper;
 
 /**
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ * Creates a new exception test.
  */
 public class I18nExceptionTest {
 

@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -51,8 +48,6 @@ import org.w3c.dom.Element;
 
 /**
  * Utilities for working with files.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class FileUtils {

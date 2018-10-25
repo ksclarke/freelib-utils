@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -21,8 +18,6 @@ import java.util.Set;
 
 /**
  * Provides a few convenience methods for working with strings.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class StringUtils {
@@ -116,7 +111,7 @@ public final class StringUtils {
         final String[] parts = aMessage.split("\\{\\}");
         final StringBuilder builder = new StringBuilder();
 
-        if ((count == 1) && (parts.length == 0)) {
+        if (count == 1 && parts.length == 0) {
             builder.append(aDetails[0]);
         } else {
             for (int index = 0; index < parts.length; index++) {
@@ -328,7 +323,7 @@ public final class StringUtils {
         final ArrayList<String> list = new ArrayList<>();
 
         for (final String string : aStringArray) {
-            if ((string != null) && !"".equals(string)) {
+            if (string != null && !"".equals(string)) {
                 list.add(string);
             }
         }
@@ -377,7 +372,7 @@ public final class StringUtils {
      * @return A concatenation of the supplied objects' string representations
      */
     public static String toString(final Object[] aObjArray, final char aPadChar) {
-        if ((aObjArray == null) || (aObjArray.length == 0)) {
+        if (aObjArray == null || aObjArray.length == 0) {
             return "";
         }
 
@@ -444,7 +439,7 @@ public final class StringUtils {
             buffer.append('&');
         }
 
-        if ((buffer.length() > 0) && (buffer.charAt(buffer.length() - 1) == '&')) {
+        if (buffer.length() > 0 && buffer.charAt(buffer.length() - 1) == '&') {
             buffer.deleteCharAt(buffer.length() - 1);
         }
 

@@ -7,8 +7,6 @@ import org.slf4j.Marker;
 
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount" })
 public class Logger extends I18nObject implements org.slf4j.Logger {
