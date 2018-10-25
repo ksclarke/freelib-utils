@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -14,8 +11,6 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * A {@link BufferedReader} that reads from a file.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class BufferedFileReader extends BufferedReader {
 

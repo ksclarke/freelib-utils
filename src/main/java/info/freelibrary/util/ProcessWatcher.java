@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * Watcher that can register listeners that will fire when the process has finished.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class ProcessWatcher extends Thread {
 

@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -9,8 +6,6 @@ import java.io.FilenameFilter;
 
 /**
  * A filter that returns only directories from a file system scan.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class DirFileFilter implements FilenameFilter {
 

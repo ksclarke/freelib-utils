@@ -17,8 +17,6 @@ import java.util.Scanner;
 
 /**
  * Utilities to assist with working with URLs.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class URLUtils {
 
@@ -81,7 +79,7 @@ public final class URLUtils {
             final String auth = aURL.getAuthority();
             final String path2 = aURL.getPath().replace("%20", " ");
 
-            if ((auth != null) && !"".equals(auth)) {
+            if (auth != null && !"".equals(auth)) {
                 path3 = "//" + auth + path2;
             } else {
                 path3 = path2;

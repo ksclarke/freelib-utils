@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 
 /**
  * An internationalizable exception.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class I18nException extends Exception {
 
@@ -172,12 +170,21 @@ public class I18nException extends Exception {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
         }
 
-        if ((aVarargs != null) && (aVarargs.length > 0)) {
+        if (aVarargs != null && aVarargs.length > 0) {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
-            return bundle.get(aMessageKey, aVarargs);
+
+            if (bundle.containsKey(aMessageKey)) {
+                return bundle.get(aMessageKey, aVarargs);
+            } else {
+                return StringUtils.format(aMessageKey, aVarargs);
+            }
         } else {
-            LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
-            return bundle.get(aMessageKey);
+            if (bundle.containsKey(aMessageKey)) {
+                LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
+                return bundle.get(aMessageKey);
+            } else {
+                return aMessageKey;
+            }
         }
     }
 

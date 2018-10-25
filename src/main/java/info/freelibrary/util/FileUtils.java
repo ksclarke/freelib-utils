@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -51,8 +48,6 @@ import org.w3c.dom.Element;
 
 /**
  * Utilities for working with files.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class FileUtils {
@@ -416,7 +411,7 @@ public final class FileUtils {
                     fileList.add(file);
                 }
 
-                if (file.isDirectory() && (Arrays.binarySearch(ignoreList, fileName) < 0)) {
+                if (file.isDirectory() && Arrays.binarySearch(ignoreList, fileName) < 0) {
                     final File[] files;
 
                     LOGGER.debug(MessageCodes.UTIL_011, file);
@@ -481,7 +476,7 @@ public final class FileUtils {
     public static long getSize(final File aFile) {
         long size = 0;
 
-        if ((aFile != null) && aFile.exists()) {
+        if (aFile != null && aFile.exists()) {
             if (aFile.isDirectory()) {
                 for (final File file : aFile.listFiles()) {
                     size += getSize(file);
@@ -501,19 +496,19 @@ public final class FileUtils {
      * @return True if file was successfully deleted; else, false
      */
     public static boolean delete(final File aDir) {
-        if (aDir.exists() && (aDir.listFiles() != null)) {
+        if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
                 if (file.isDirectory()) {
                     if (!delete(file)) {
                         LOGGER.error(MessageCodes.UTIL_012, file);
                     }
                 } else {
-                    if (!file.delete()) {
+                    if (file.exists() && !file.delete()) {
                         LOGGER.error(MessageCodes.UTIL_012, file);
                     }
                 }
             }
-        } else if (LOGGER.isDebugEnabled() && (aDir.listFiles() == null)) {
+        } else if (LOGGER.isDebugEnabled() && aDir.listFiles() == null) {
             LOGGER.debug(MessageCodes.UTIL_013, aDir);
         }
 
@@ -529,7 +524,7 @@ public final class FileUtils {
      * @throws IOException If there is an exception copying the files or directories
      */
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
-        if ((aFromFile.isDirectory() && aToFile.isFile()) || (aFromFile.isFile() && aToFile.isDirectory())) {
+        if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
         }
 

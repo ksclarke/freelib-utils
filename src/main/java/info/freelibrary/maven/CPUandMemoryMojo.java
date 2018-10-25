@@ -30,8 +30,6 @@ import oshi.hardware.HardwareAbstractionLayer;
  * version is appropriate). Usually, though, the plugin would just be configured to run as a part of the Maven
  * lifecycle.
  * </p>
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @Mojo(name = "set-cpumem-properties", defaultPhase = LifecyclePhase.INITIALIZE)
 public class CPUandMemoryMojo extends AbstractMojo {

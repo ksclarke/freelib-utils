@@ -14,8 +14,6 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * A utility class for working with Zip files.
- *
- * @author Kevin S. Clarke <a href="mailto:ksclarke@ksclarke.io">ksclarke@ksclarke.io</a>
  */
 public final class ZipUtils {
 

@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ * A runtime exception that wraps an I18n resource bundle.
  */
 public class I18nRuntimeException extends RuntimeException {
 
@@ -171,7 +171,7 @@ public class I18nRuntimeException extends RuntimeException {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
         }
 
-        if ((aVarargs != null) && (aVarargs.length > 0)) {
+        if (aVarargs != null && aVarargs.length > 0) {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
             return bundle.get(aMessageKey, aVarargs);
         } else {

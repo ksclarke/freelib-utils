@@ -18,7 +18,7 @@ import info.freelibrary.util.LoggerFactory;
 import info.freelibrary.util.MessageCodes;
 
 /**
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ * A Maven mojo that can generate UUIDs as a part of the build process.
  */
 @Mojo(name = "set-uuid-property", defaultPhase = LifecyclePhase.INITIALIZE)
 public class UUIDGeneratingMojo extends AbstractMojo {

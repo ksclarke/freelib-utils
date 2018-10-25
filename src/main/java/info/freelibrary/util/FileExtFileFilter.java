@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -11,8 +8,6 @@ import java.util.Arrays;
 /**
  * A file name filter that checks the file extension to determine whether the filter matches the file name or not. It
  * can have a single or multiple file extensions in the form: 'gif' or 'xml'.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class FileExtFileFilter implements FilenameFilter {
 

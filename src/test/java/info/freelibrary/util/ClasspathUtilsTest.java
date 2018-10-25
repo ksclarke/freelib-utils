@@ -11,8 +11,6 @@ import org.junit.Test;
 
 /**
  * Tests the {@link ClasspathUtils} class.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class ClasspathUtilsTest {
 

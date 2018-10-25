@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -26,8 +23,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for working with IO streams.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class IOUtils {
 

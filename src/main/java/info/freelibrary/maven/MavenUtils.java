@@ -13,7 +13,7 @@ import org.slf4j.spi.LocationAwareLogger;
 import info.freelibrary.util.MessageCodes;
 
 /**
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ * Maven related utilities.
  */
 public final class MavenUtils {
 

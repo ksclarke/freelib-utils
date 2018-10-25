@@ -38,8 +38,6 @@ import info.freelibrary.util.MessageCodes;
  * -DmessageFiles=src/main/resources/freelib-utils_messages.xml` (supplying whatever version and message file is
  * appropriate). Usually, though, the plugin would just be configured to run with the process-sources Maven lifecycle.
  * </p>
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @Mojo(name = "generate-codes", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class I18nCodesMojo extends AbstractMojo {

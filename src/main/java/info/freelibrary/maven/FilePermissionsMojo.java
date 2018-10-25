@@ -20,8 +20,6 @@ import info.freelibrary.util.FileUtils;
 
 /**
  * A Maven plugin to set file permissions on a project file (probably one created by the build).
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @Mojo(name = "set-file-perms")
 public class FilePermissionsMojo extends AbstractMojo {

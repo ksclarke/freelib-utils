@@ -3,8 +3,6 @@ package info.freelibrary.util;
 
 /**
  * An interface for a {@link Process} listener.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public interface ProcessListener {
 

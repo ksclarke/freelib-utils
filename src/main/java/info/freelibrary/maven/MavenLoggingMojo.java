@@ -42,8 +42,6 @@ import info.freelibrary.util.MessageCodes;
        &lt;/executions&gt;
      &lt;/plugin&gt;
  * </code></pre>
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @Mojo(name = "configure-logging")
 public class MavenLoggingMojo extends AbstractMojo {

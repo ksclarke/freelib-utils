@@ -1,6 +1,3 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
 
 package info.freelibrary.util;
 
@@ -8,8 +5,6 @@ import static info.freelibrary.util.Constants.BUNDLE_NAME;
 
 /**
  * Allows timing of the execution of any block of code.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class Stopwatch {
 

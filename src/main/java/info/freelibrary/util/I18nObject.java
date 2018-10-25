@@ -5,6 +5,7 @@
 package info.freelibrary.util;
 
 import java.io.File;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -12,8 +13,6 @@ import java.util.ResourceBundle;
  * A generic object with baked-in &quot;default Locale&quot; I18N support. It wraps an {@link XMLResourceBundle} and
  * provides an easy way to get access to internationalized strings. It doesn't support dynamically passed in locales,
  * but just the one that the system is configured to use as its default locale.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class I18nObject {
 
@@ -159,7 +158,22 @@ public class I18nObject {
      * @return True if the key exists; else, false
      */
     protected boolean hasI18nKey(final String aMessageKey) {
-        return (myBundle != null) && (aMessageKey != null) && myBundle.containsKey(aMessageKey);
+        return myBundle != null && aMessageKey != null && myBundle.containsKey(aMessageKey);
     }
 
+    /**
+     * Returns the number of keys known to this object.
+     *
+     * @return The number of keys known to this object
+     */
+    protected int countKeys() {
+        return myBundle.keySet().size();
+    }
+
+    /**
+     * Returns an enumeration of this object's keys.
+     */
+    protected Enumeration<String> getKeys() {
+        return myBundle.getKeys();
+    }
 }
