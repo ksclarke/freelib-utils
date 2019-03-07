@@ -8,9 +8,22 @@ env:
     - secure: "kVeWVyb63Sog3uFooqxWmArjlfCeVq0Se/odmb25jkbabuv/aHCLWQrlG0sFokXIGG8hN952R3GE//98KRd5wGCHdR6BuW8HglOiSpUtx4eFQD549EpXVnk1X7wdzEqzDLPn5ibhrhtRpVAB+ydco9H/wPzox0W3OcW/45QZz5w="
     - secure: "ip8uNb8zEfBTscKw5KmOnmBloajBEmNnMeS8D+fq6UNrIGXlESdrQHdlUejZ0wJQWJoaAyt5//WmB2FywKcWwbLN7qZmBGyJ+FMZAsW+LYTC1PgGNhGi2jqv5KDF+wIcHw7FA9loUACCzNbLsdRx5GMozKYve/61vgRUS7cYIDk="
 
+before_install:
+  - >
+    openssl aes-256-cbc -K $encrypted_0e0f91f7a6ed_key -iv $encrypted_0e0f91f7a6ed_iv \
+      -in src/main/resources/build-key.gpg.enc -out src/main/resources/build-key.gpg -d
+
+install:
+  - mvn install -q -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 script: mvn install pmd:pmd pmd:check
 
-after_success: mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
+after_success:
+ - >
+   mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml \
+     -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
+ - >
+   freelib-resources/src/main/resources/travis/deploy
 
 cache:
   directories:
@@ -21,13 +34,11 @@ notifications:
     recipients:
     - ksclarke@ksclarke.io
     on_failure: change
-    on_success: never
+    on_success: change
   irc:
     channels:
     - irc.freenode.org#freelibrary
     on_failure: always
     on_success: always
-  slack:
-    secure: eMZgS79kzSH6opY2sSJhrYdTg0jLB/JzLEvQFcn6xoDtek3/WjWWg4+M8sYv/qPqwzY3jeJ0vxd8SIwcgBJkgOHVJqvmqxWV49/F8EOENaDU+oWo5vUUh8GvM1e+B/4wZd14PbD6w9m4qs1gIAUcPECE21p0KDtvN/VYnH+96LI=
 
 sudo: false
