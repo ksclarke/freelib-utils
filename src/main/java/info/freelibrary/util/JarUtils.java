@@ -69,7 +69,7 @@ public final class JarUtils {
             jarFile.close();
         }
 
-        return urlList.toArray(new URL[urlList.size()]);
+        return urlList.toArray(new URL[0]);
     }
 
     /**

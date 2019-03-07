@@ -1,10 +1,10 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class FileExtFileFilterTest {
         final String[] fileNames = new File("src/test/resources").list(new FileExtFileFilter("txt"));
 
         assertEquals(2, fileNames.length);
-        assertEquals("80_char_test_1.txt", fileNames[0]);
+        assertTrue(Arrays.stream(fileNames).anyMatch(x -> x.equals("80_char_test_1.txt")));
     }
 
     @Test

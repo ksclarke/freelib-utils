@@ -2,15 +2,6 @@
 package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.BUNDLE_NAME;
-import static java.nio.file.attribute.PosixFilePermission.GROUP_EXECUTE;
-import static java.nio.file.attribute.PosixFilePermission.GROUP_READ;
-import static java.nio.file.attribute.PosixFilePermission.GROUP_WRITE;
-import static java.nio.file.attribute.PosixFilePermission.OTHERS_EXECUTE;
-import static java.nio.file.attribute.PosixFilePermission.OTHERS_READ;
-import static java.nio.file.attribute.PosixFilePermission.OTHERS_WRITE;
-import static java.nio.file.attribute.PosixFilePermission.OWNER_EXECUTE;
-import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
-import static java.nio.file.attribute.PosixFilePermission.OWNER_WRITE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -421,7 +412,7 @@ public final class FileUtils {
 
             }
 
-            return fileList.toArray(new File[fileList.size()]);
+            return fileList.toArray(new File[0]);
         }
     }
 
@@ -653,39 +644,39 @@ public final class FileUtils {
         final Set<PosixFilePermission> result = EnumSet.noneOf(PosixFilePermission.class);
 
         if (isSet(aMode, 0400)) {
-            result.add(OWNER_READ);
+            result.add(PosixFilePermission.OWNER_READ);
         }
 
         if (isSet(aMode, 0200)) {
-            result.add(OWNER_WRITE);
+            result.add(PosixFilePermission.OWNER_WRITE);
         }
 
         if (isSet(aMode, 0100)) {
-            result.add(OWNER_EXECUTE);
+            result.add(PosixFilePermission.OWNER_EXECUTE);
         }
 
         if (isSet(aMode, 040)) {
-            result.add(GROUP_READ);
+            result.add(PosixFilePermission.GROUP_READ);
         }
 
         if (isSet(aMode, 020)) {
-            result.add(GROUP_WRITE);
+            result.add(PosixFilePermission.GROUP_WRITE);
         }
 
         if (isSet(aMode, 010)) {
-            result.add(GROUP_EXECUTE);
+            result.add(PosixFilePermission.GROUP_EXECUTE);
         }
 
         if (isSet(aMode, 04)) {
-            result.add(OTHERS_READ);
+            result.add(PosixFilePermission.OTHERS_READ);
         }
 
         if (isSet(aMode, 02)) {
-            result.add(OTHERS_WRITE);
+            result.add(PosixFilePermission.OTHERS_WRITE);
         }
 
         if (isSet(aMode, 01)) {
-            result.add(OTHERS_EXECUTE);
+            result.add(PosixFilePermission.OTHERS_EXECUTE);
         }
 
         return result;
@@ -700,39 +691,39 @@ public final class FileUtils {
     public static int convertToInt(final Set<PosixFilePermission> aPermSet) {
         int result = 0;
 
-        if (aPermSet.contains(OWNER_READ)) {
+        if (aPermSet.contains(PosixFilePermission.OWNER_READ)) {
             result = result | 0400;
         }
 
-        if (aPermSet.contains(OWNER_WRITE)) {
+        if (aPermSet.contains(PosixFilePermission.OWNER_WRITE)) {
             result = result | 0200;
         }
 
-        if (aPermSet.contains(OWNER_EXECUTE)) {
+        if (aPermSet.contains(PosixFilePermission.OWNER_EXECUTE)) {
             result = result | 0100;
         }
 
-        if (aPermSet.contains(GROUP_READ)) {
+        if (aPermSet.contains(PosixFilePermission.GROUP_READ)) {
             result = result | 040;
         }
 
-        if (aPermSet.contains(GROUP_WRITE)) {
+        if (aPermSet.contains(PosixFilePermission.GROUP_WRITE)) {
             result = result | 020;
         }
 
-        if (aPermSet.contains(GROUP_EXECUTE)) {
+        if (aPermSet.contains(PosixFilePermission.GROUP_EXECUTE)) {
             result = result | 010;
         }
 
-        if (aPermSet.contains(OTHERS_READ)) {
+        if (aPermSet.contains(PosixFilePermission.OTHERS_READ)) {
             result = result | 04;
         }
 
-        if (aPermSet.contains(OTHERS_WRITE)) {
+        if (aPermSet.contains(PosixFilePermission.OTHERS_WRITE)) {
             result = result | 02;
         }
 
-        if (aPermSet.contains(OTHERS_EXECUTE)) {
+        if (aPermSet.contains(PosixFilePermission.OTHERS_EXECUTE)) {
             result = result | 01;
         }
 

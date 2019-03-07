@@ -49,7 +49,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -70,7 +70,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new File[list.size()]);
+        return list.toArray(new File[0]);
     }
 
     /**
@@ -91,7 +91,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -115,7 +115,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new File[list.size()]);
+        return list.toArray(new File[0]);
     }
 
     /**
@@ -135,7 +135,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -159,7 +159,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -180,7 +180,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new JarFile[list.size()]);
+        return list.toArray(new JarFile[0]);
     }
 
     /**
@@ -205,7 +205,7 @@ public final class ClasspathUtils {
             }
         }
 
-        return list.toArray(new JarFile[list.size()]);
+        return list.toArray(new JarFile[0]);
     }
 
     /**

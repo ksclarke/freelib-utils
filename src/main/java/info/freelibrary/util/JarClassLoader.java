@@ -61,7 +61,7 @@ public class JarClassLoader extends URLClassLoader {
      */
     public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws IOException,
             IllegalAccessException, InstantiationException, ClassNotFoundException {
-        super(aListOfURLs.toArray(new URL[aListOfURLs.size()]));
+        super(aListOfURLs.toArray(new URL[0]));
 
         loadClass(aMainClassName).newInstance();
     }
