@@ -1,11 +1,7 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,25 +38,19 @@ public class StringUtilsTest {
     @Test
     public void formatMessageStringStringArray() {
         final String message = "This is the {} and the {}";
-        final String[] values = new String[] {
-            "first", "second"
-        };
+        final String[] values = new String[] { "first", "second" };
         final String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
 
         try {
-            StringUtils.format(message, new String[] {
-                "first"
-            });
+            StringUtils.format(message, new String[] { "first" });
             fail("Failed to notice more slots than values");
         } catch (final IndexOutOfBoundsException details) {
         }
 
         try {
-            final String[] array = new String[] {
-                "first", "second", "third"
-            };
+            final String[] array = new String[] { "first", "second", "third" };
             StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
         } catch (final IndexOutOfBoundsException details) {
@@ -153,13 +143,11 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringObjectArrayChar() {
-        final Integer i1 = new Integer(1);
-        final Integer i2 = new Integer(21);
-        final Integer i3 = new Integer(3);
+        final Integer i1 = Integer.valueOf(1);
+        final Integer i2 = Integer.valueOf(21);
+        final Integer i3 = Integer.valueOf(3);
 
-        final Integer[] array = new Integer[] {
-            i1, i2, i3
-        };
+        final Integer[] array = new Integer[] { i1, i2, i3 };
         assertEquals("1~21~3", StringUtils.toString(array, '~'));
     }
 
@@ -168,13 +156,11 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringCharVarargs() {
-        final Integer i1 = new Integer(1);
-        final Integer i2 = new Integer(21);
-        final Integer i3 = new Integer(3);
+        final Integer i1 = Integer.valueOf(1);
+        final Integer i2 = Integer.valueOf(21);
+        final Integer i3 = Integer.valueOf(3);
 
-        final Object[] array = new Object[] {
-            i1, i2, i3
-        };
+        final Object[] array = new Object[] { i1, i2, i3 };
 
         assertEquals("1~21~3", StringUtils.toString('~', array));
     }
@@ -229,12 +215,8 @@ public class StringUtilsTest {
      */
     @Test
     public void testParseIntRangeString() {
-        final int[] iArray1 = new int[] {
-            1111
-        };
-        final int[] iArray2 = new int[] {
-            1000, 1001, 1002, 1003, 1004, 1005
-        };
+        final int[] iArray1 = new int[] { 1111 };
+        final int[] iArray2 = new int[] { 1000, 1001, 1002, 1003, 1004, 1005 };
 
         assertArrayEquals(iArray1, StringUtils.parseIntRange("1111"));
         assertArrayEquals(iArray2, StringUtils.parseIntRange("1000-1005"));
