@@ -33,6 +33,11 @@ after_success:
 #  directories:
 #  - $HOME/.m2
 
+# The only branch we build on is master; all other builds are done on PRs to master
+branches:
+  only:
+  - master
+
 notifications:
   email:
     recipients:
