@@ -4,4 +4,4 @@
 # A simple script to return the version of a Maven project.
 #
 
-echo $(mvn -q -Dexec.executable="echo" -Dexec.args='0.8.10-SNAPSHOT' --non-recursive exec:exec)
+echo $(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec)
