@@ -8,7 +8,7 @@ import org.slf4j.Marker;
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount" })
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount", "PMD.ExcessiveClassLength" })
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
     private static final String EOL_RE = "(\\n|\\r|\\r\\n)";
