@@ -4,34 +4,21 @@ jdk:
 - openjdk8
 - openjdk11
 
-env:
-  global:
-    - secure: "kVeWVyb63Sog3uFooqxWmArjlfCeVq0Se/odmb25jkbabuv/aHCLWQrlG0sFokXIGG8hN952R3GE//98KRd5wGCHdR6BuW8HglOiSpUtx4eFQD549EpXVnk1X7wdzEqzDLPn5ibhrhtRpVAB+ydco9H/wPzox0W3OcW/45QZz5w="
-    - secure: "ip8uNb8zEfBTscKw5KmOnmBloajBEmNnMeS8D+fq6UNrIGXlESdrQHdlUejZ0wJQWJoaAyt5//WmB2FywKcWwbLN7qZmBGyJ+FMZAsW+LYTC1PgGNhGi2jqv5KDF+wIcHw7FA9loUACCzNbLsdRx5GMozKYve/61vgRUS7cYIDk="
-
-before_install:
-  - >
-    openssl aes-256-cbc -K $encrypted_0e0f91f7a6ed_key -iv $encrypted_0e0f91f7a6ed_iv \
-      -in src/main/resources/build-key.gpg.enc -out src/main/resources/build-key.gpg -d
-
+# Overridden because parent project uses maven.test.skip instead of skipTests
 install:
-  - mvn install -q -Dmaven.test.skip -Dmaven.javadoc.skip -B -V
+  - mvn package -q -Dmaven.test.skip -Dmaven.javadoc.skip -B -V
 
 script:
-  - mvn -q install pmd:pmd pmd:check
+  - mvn -q help:active-profiles verify
 
 after_success:
-  - >
-    mvn -q com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml \
-      -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
-  - >
-    chmod -R 755 src/main/tools/travis
-  - >
-    src/main/tools/travis/deploy
+  - chmod 755 src/main/tools/travis/*
+  - src/main/tools/travis/get_build_key $encrypted_0e0f91f7a6ed_key $encrypted_0e0f91f7a6ed_iv
+  - src/main/tools/travis/deploy
 
-#cache:
-#  directories:
-#  - $HOME/.m2
+cache:
+  directories:
+  - $HOME/.m2
 
 # The only branch we build on is master; all other builds are done on PRs to master
 branches:
