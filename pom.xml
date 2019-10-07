@@ -113,9 +113,9 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <systemPropertyVariables>
-            <org.slf4j.simpleLogger.defaultLogLevel>trace</org.slf4j.simpleLogger.defaultLogLevel>
+            <org.slf4j.simpleLogger.defaultLogLevel>info</org.slf4j.simpleLogger.defaultLogLevel>
             <org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>info</org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>
-            <org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>debug</org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>
+            <org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>info</org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>
           </systemPropertyVariables>
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
