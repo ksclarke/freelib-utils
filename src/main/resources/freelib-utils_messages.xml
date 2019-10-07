@@ -3,10 +3,10 @@
 <properties>
   <!-- Define message codes class name -->
   <entry key="message-class-name">info.freelibrary.util.MessageCodes</entry>
-  
+
   <!-- To process file: -->
   <!-- mvn info.freelibrary:freelib-utils:generate-codes -DmessageFiles=`ls src/main/resources/*_messages.xml` -->
-  
+
   <!-- General utility messages -->
   <entry key="UTIL-001">Initiating JarClassLoader with {}</entry>
   <entry key="UTIL-002">Native library file for {} wasn't found</entry>
@@ -54,24 +54,32 @@
   <entry key="UTIL-044">Failed to read whole file: {}</entry>
   <entry key="UTIL-045">Inverted number range: {}{}{}</entry>
   <entry key="UTIL-046">Don't have a string value for: {}</entry>
+  <entry key="UTIL-047">Failed to match supplied file name: {}</entry>
+  <entry key="UTIL-048">Decoded '{}' to '{}'</entry>
+  <entry key="UTIL-049">Path '{}' isn't a directory as expected</entry>
+  <entry key="UTIL-050">Expected to find 1 match for regex but found: {} </entry>
+  <entry key="UTIL-051">Path '{}' doesn't have a .jar extension as expected</entry>
+  <entry key="UTIL-052">Should have found one and only one junit jar file</entry>
+  <entry key="UTIL-053">File '{}' is not a jar file</entry>
+  <entry key="UTIL-054">Failed to find junit jar file using regexp filter</entry>
+  <entry key="UTIL-055">Didn't find freelib-utils_messages.xml like it should</entry>
+  <entry key="UTIL-056">Didn't find expected info/freelibrary/util/StringUtils.class</entry>
+  <entry key="UTIL-057">Found SOMETHING_NOT_FOUND when it shouldn't have</entry>
+  <entry key="UTIL-058">Didn't find META-INF/MANIFEST.MF like it should</entry>
+  <entry key="UTIL-059">Failed to throw expected NullPointerException</entry>
+  <!-- The next two have corresponding entries in test_freelib-utils_messages_en_US.xml; keep in sync -->
+  <entry key="UTIL-060">{} | {}</entry>
+  <entry key="UTIL-061">{}</entry>
+  <!-- End of the two to keep in sync -->
+  <entry key="UTIL-062">Failed to throw MissingResourceException</entry>
+  <entry key="UTIL-063">Found an unexpected zip entry: {}</entry>
+  <entry key="UTIL-064">Failed to find all the zip entries</entry>
+  <entry key="UTIL-065"></entry>
+  <entry key="UTIL-066"></entry>
+  <entry key="UTIL-067"></entry>
+  <entry key="UTIL-068"></entry>
+  <entry key="UTIL-069"></entry>
+  <entry key="UTIL-070"></entry>
+  <entry key="UTIL-071"></entry>
 
-  <!-- Maven plugin related messages -->
-  <entry key="MVN-001">No message files were supplied so no code classes were created</entry>
-  <entry key="MVN-002">ResourceBundle&apos;s &quot;{}&quot; key not found</entry>
-  <entry key="MVN-003">Codes class ({}) cannot be created because package directory ({}) does not exist and cannot be
-    created</entry>
-  <entry key="MVN-004">Set system.free.memory property to: {}</entry>
-  <entry key="MVN-005">Set system.total.memory property to: {}</entry>
-  <entry key="MVN-006">Set system.cores property to: {}</entry>
-  <entry key="MVN-007">Getting a percentage of system's free memory: {} of {}</entry>
-  <entry key="MVN-008">BEGIN GENERATED CODE</entry>
-  <entry key="MVN-009">Supplied log level '{}' was unknown, setting level to 'ERROR'</entry>
-  <entry key="MVN-010">Supplied logger '{}' isn't a org.slf4j.impl.SimpleLogger</entry>
-  <entry key="MVN-011">Has the Maven logger changed?</entry>
-  <entry key="MVN-012">'{}' logging level is now set to: {}</entry>
-  <entry key="MVN-013">Setting a UUID property ({} = {}) for use in the Maven build</entry>
-
-  <!--  Debugging messages -->
-  <entry key="DBG-001">Writing MessageCodes Java source file: {}</entry>
-  <entry key="DBG-002">Decoded '{}' to '{}'</entry>
 </properties>

@@ -18,6 +18,9 @@ public class JarUtilsTest {
 
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    /**
+     * Test clean-up performed after test has run.
+     */
     @After
     public void afterTest() {
         FileUtils.delete(new File(TMP_DIR, "test_folder"));
@@ -28,12 +31,11 @@ public class JarUtilsTest {
      */
     @Test
     public void testExtractFileStringFile() throws IOException {
-        final File tmpDir = new File(System.getProperty("java.io.tmpdir"));
         final String filePath = "test_folder/test_folder2/test_file1.txt";
-        final File output = new File(tmpDir, filePath);
 
-        JarUtils.extract(JAR_FILE, filePath, tmpDir);
-        assertTrue(output.exists());
+        JarUtils.extract(JAR_FILE, filePath, TMP_DIR);
+
+        assertTrue(new File(TMP_DIR, filePath).exists());
     }
 
 }

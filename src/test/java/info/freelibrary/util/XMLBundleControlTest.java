@@ -15,6 +15,8 @@ import org.junit.Test;
  */
 public class XMLBundleControlTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLBundleControlTest.class, Constants.BUNDLE_NAME);
+
     private static final String BUNDLE_NAME = "test_freelib-utils_messages";
 
     private static final String XML_FORMAT = "xml";
@@ -40,7 +42,7 @@ public class XMLBundleControlTest {
         try {
             // If we request a null though we should get an exception
             myControl.getFormats(null).get(0);
-            fail("Failed to throw expected NullPointerException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_059));
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
@@ -71,7 +73,7 @@ public class XMLBundleControlTest {
 
         try {
             myControl.newBundle(null, Locale.US, XML_FORMAT, classLoader, true);
-            fail("Failed to throw expected NullPointerException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_059));
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
@@ -86,7 +88,7 @@ public class XMLBundleControlTest {
 
         try {
             myControl.newBundle(BUNDLE_NAME, null, XML_FORMAT, classLoader, true);
-            fail("Failed to throw expected NullPointerException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_059));
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
@@ -101,7 +103,7 @@ public class XMLBundleControlTest {
 
         try {
             myControl.newBundle(BUNDLE_NAME, Locale.US, null, classLoader, true);
-            fail("Failed to throw expected NullPointerException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_059));
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }
@@ -114,7 +116,7 @@ public class XMLBundleControlTest {
     public void newBundleWithNullClassLoader() {
         try {
             myControl.newBundle(BUNDLE_NAME, Locale.US, XML_FORMAT, null, true);
-            fail("Failed to throw expected NullPointerException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_059));
         } catch (final Exception details) {
             assertTrue(details instanceof NullPointerException);
         }

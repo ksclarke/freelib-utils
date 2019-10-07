@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-    <entry key="test.one">one</entry>
-    <entry key="test.two">two</entry>
-    <entry key="test.value.one">{}</entry>
-    <entry key="test.value.two">{} and {}</entry>
+  <entry key="test.one">one</entry>
+  <entry key="test.two">two</entry>
+  <entry key="test.value.one">{}</entry>
+  <entry key="test.value.two">{} and {}</entry>
+  <!-- The next two have corresponding entries in freelib-utils_messages.xml; keep in sync -->
+  <entry key="UTIL-060">{} | {}</entry>
+  <entry key="UTIL-061">{}</entry>
+  <!-- End of the entries to keep in sync -->
 </properties>

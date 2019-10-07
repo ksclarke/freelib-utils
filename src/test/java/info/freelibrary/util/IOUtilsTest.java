@@ -18,6 +18,9 @@ import javax.imageio.stream.FileImageOutputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test of IOUtils.
+ */
 public class IOUtilsTest {
 
     private static final File BIN_FILE = new File("src/test/resources/green.gif");
@@ -28,6 +31,11 @@ public class IOUtilsTest {
 
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    private static final String YES = "yes";
+
+    /**
+     * Tests closeQuietly(Reader).
+     */
     @Test
     public void testCloseQuietlyReader() {
         try {
@@ -37,6 +45,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(Writer).
+     */
     @Test
     public void testCloseQuietlyWriter() {
         try {
@@ -46,6 +57,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(InputStream).
+     */
     @Test
     public void testCloseQuietlyInputStream() {
         try {
@@ -55,6 +69,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(ImageInputStream).
+     */
     @Test
     public void testCloseQuietlyImageInputStream() {
         try {
@@ -64,6 +81,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(ImageOutputStream).
+     */
     @Test
     public void testCloseQuietlyImageOutputStream() {
         try {
@@ -73,6 +93,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(OutputStream).
+     */
     @Test
     public void testCloseQuietlyOutputStream() {
         try {
@@ -82,6 +105,9 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests closeQuietly(JarFile).
+     */
     @Test
     public void testCloseQuietlyJarFile() {
         try {
@@ -91,9 +117,12 @@ public class IOUtilsTest {
         }
     }
 
+    /**
+     * Tests copyStream(InputStream, OutputStream).
+     */
     @Test
     public void testCopyStreamInputStreamOutputStream() {
-        final ByteArrayInputStream baInStream = new ByteArrayInputStream("yes".getBytes());
+        final ByteArrayInputStream baInStream = new ByteArrayInputStream(YES.getBytes());
         final ByteArrayOutputStream baOutStream = new ByteArrayOutputStream();
 
         try {
@@ -102,9 +131,12 @@ public class IOUtilsTest {
             Assert.fail(details.getMessage());
         }
 
-        Assert.assertEquals("yes", new String(baOutStream.toByteArray()));
+        Assert.assertEquals(YES, new String(baOutStream.toByteArray()));
     }
 
+    /**
+     * Tests copyStream(File, OutputStream).
+     */
     @Test
     public void testCopyStreamFileOutputStream() {
         final ByteArrayOutputStream baOutStream = new ByteArrayOutputStream();
@@ -118,10 +150,13 @@ public class IOUtilsTest {
         Assert.assertEquals("Lorem ipsum", new String(baOutStream.toByteArray()).substring(0, 11));
     }
 
+    /**
+     * Tests readBytes(ByteArrayInputStream).
+     */
     @Test
     public void testReadBytes() {
         try {
-            Assert.assertEquals("yes", new String(IOUtils.readBytes(new ByteArrayInputStream("yes".getBytes()))));
+            Assert.assertEquals(YES, new String(IOUtils.readBytes(new ByteArrayInputStream(YES.getBytes()))));
         } catch (final IOException details) {
             Assert.fail(details.getMessage());
         }

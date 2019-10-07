@@ -15,30 +15,50 @@ import java.util.zip.ZipInputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests of ZipUtils.
+ */
 public class ZipUtilsTest {
 
-    private final File myTmpDir = new File(System.getProperty("java.io.tmpdir"));
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtilsTest.class, Constants.BUNDLE_NAME);
 
-    private final Set<String> myFiles = new HashSet<String>();
+    private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    private static final String FILE_NAME = "80_char_test_1.txt";
+
+    private static final String FOLDER_NAME = "test_folder";
+
+    private static final File RESOURCES_DIR = new File("src/test/resources");
+
+    private static final String ZIP_EXT = ".zip";
+
+    private static final String ZIP_TEST = "ziptest-";
+
+    private final Set<String> myFiles = new HashSet<>();
+
+    /**
+     * Set up the testing environment.
+     */
     @Before
     public void beforeTest() {
-        final String[] files = new String[] {
-            "/test_folder/test_folder2/test_file1.txt", "/test_folder/test_folder2/test_folder/test_file1.txt",
-            "/test_folder/test_file1.txt", "/test_folder/test_folder/test_file1.txt",
-            "/test_folder/test_folder/test_file2.txt"
-        };
+        final String[] files = new String[] { "/test_folder/test_folder2/test_file1.txt",
+            "/test_folder/test_folder2/test_folder/test_file1.txt", "/test_folder/test_file1.txt",
+            "/test_folder/test_folder/test_file1.txt", "/test_folder/test_folder/test_file2.txt" };
 
         for (final String file : files) {
             myFiles.add(file);
         }
     }
 
+    /**
+     * Tests ZipUtils.
+     *
+     * @throws IOException If there is trouble using ZipUtils
+     */
     @Test
     public void testZipFileFile() throws IOException {
-        final File zipFile = new File(myTmpDir, "ziptest-" + UUID.randomUUID().toString() + ".zip");
-        final File testDir = new File("src/test/resources");
-        final File dir = new File(testDir, "test_folder");
+        final File zipFile = new File(TMP_DIR, ZIP_TEST + UUID.randomUUID().toString() + ZIP_EXT);
+        final File dir = new File(RESOURCES_DIR, FOLDER_NAME);
         final ZipInputStream zipStream;
 
         zipFile.deleteOnExit();
@@ -52,23 +72,27 @@ public class ZipUtilsTest {
             final String name = zipEntry.getName();
 
             if (!myFiles.remove(name)) {
-                fail("Found an unexpected zip entry: " + name);
+                fail(LOGGER.getMessage(MessageCodes.UTIL_063, name));
             }
         }
 
         IOUtils.closeQuietly(zipStream);
 
         if (myFiles.size() != 0) {
-            fail("Failed to find all the zip entries");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_064));
         }
     }
 
+    /**
+     * Tests ZipUtils.
+     *
+     * @throws IOException If there is trouble using ZipUtils
+     */
     @Test
     public void testZipFileFileFileArray() throws IOException {
-        final File zipFile = new File(myTmpDir, "ziptest-" + UUID.randomUUID().toString() + ".zip");
-        final File testDir = new File("src/test/resources");
-        final File dir = new File(testDir, "test_folder");
-        final File other = new File(testDir, "80_char_test_1.txt");
+        final File zipFile = new File(TMP_DIR, ZIP_TEST + UUID.randomUUID().toString() + ZIP_EXT);
+        final File dir = new File(RESOURCES_DIR, FOLDER_NAME);
+        final File other = new File(RESOURCES_DIR, FILE_NAME);
         final ZipInputStream zipStream;
 
         zipFile.deleteOnExit();
@@ -77,29 +101,33 @@ public class ZipUtilsTest {
         ZipUtils.zip(dir, zipFile, other);
 
         zipStream = new ZipInputStream(new FileInputStream(zipFile));
-        myFiles.add("/test_folder/80_char_test_1.txt");
+        myFiles.add("/test_folder/" + FILE_NAME);
 
         while ((zipEntry = zipStream.getNextEntry()) != null) {
             final String name = zipEntry.getName();
 
             if (!myFiles.remove(name)) {
-                fail("Found an unexpected zip entry: " + name);
+                fail(LOGGER.getMessage(MessageCodes.UTIL_063, name));
             }
         }
 
         IOUtils.closeQuietly(zipStream);
 
         if (myFiles.size() != 0) {
-            fail("Failed to find all the zip entries");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_064));
         }
     }
 
+    /**
+     * Tests ZipUtils.
+     *
+     * @throws IOException If there is trouble using ZipUtils
+     */
     @Test
     public void testZipFileFileFilenameFilterFileArray() throws IOException {
-        final File zipFile = new File(myTmpDir, "ziptest-" + UUID.randomUUID().toString() + ".zip");
-        final File testDir = new File("src/test/resources");
-        final File dir = new File(testDir, "test_folder");
-        final File other = new File(testDir, "80_char_test_1.txt");
+        final File zipFile = new File(TMP_DIR, ZIP_TEST + UUID.randomUUID().toString() + ZIP_EXT);
+        final File dir = new File(RESOURCES_DIR, FOLDER_NAME);
+        final File other = new File(RESOURCES_DIR, FILE_NAME);
         final ZipInputStream zipStream;
 
         zipFile.deleteOnExit();

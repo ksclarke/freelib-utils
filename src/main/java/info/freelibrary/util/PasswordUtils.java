@@ -9,9 +9,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Objects;
-
-import net.iharder.Base64;
 
 /**
  * Utilities for use with password creation.
@@ -58,8 +57,10 @@ public final class PasswordUtils {
         try {
             final MessageDigest digest = MessageDigest.getInstance("SHA");
             final String saltedText = aText + aSalt;
+
             digest.update(saltedText.getBytes("UTF-8"));
-            return Base64.encodeBytes(digest.digest());
+
+            return Base64.getEncoder().encodeToString(digest.digest());
         } catch (final NoSuchAlgorithmException details) {
             throw new I18nRuntimeException(details); // programming error
         } catch (final UnsupportedEncodingException details) {

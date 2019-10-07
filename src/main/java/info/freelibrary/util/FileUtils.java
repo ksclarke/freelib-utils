@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,25 +15,15 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.EnumSet;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Utilities for working with files.
@@ -45,130 +33,18 @@ public final class FileUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
 
-    private static final String DIR_TYPE = "dir";
-
     private static final String FILE_TYPE = "file";
-
-    private static final String FILE_PATH = "path";
-
-    private static final String MODIFIED = "modified";
 
     private static final String WILDCARD = ".*";
 
     private static final char DOT = '.';
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, Constants.BUNDLE_NAME);
 
     /**
      * Constructor for the contained file utilities.
      */
     private FileUtils() {
-    }
-
-    /**
-     * Creates a string of XML that describes the supplied file or directory (and, possibly, all its subdirectories).
-     * Includes absolute path, last modified time, read/write permissions, etc. By default, it only descends one
-     * directory.
-     *
-     * @param aFilePath A file system path to be turned into as XML
-     * @return Am XML string representation of the file structure
-     * @throws FileNotFoundException If the supplied file or directory can not be found
-     * @throws TransformerException If there is trouble with the XSL transformation
-     */
-    public static String toXML(final String aFilePath) throws FileNotFoundException, TransformerException {
-        return toXML(aFilePath, WILDCARD);
-    }
-
-    /**
-     * Creates an <code>Element</code> that describes the supplied file or directory (and, possibly, all its
-     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc. By default, it only
-     * descends one directory.
-     *
-     * @param aFilePath A file system path to turn into XML
-     * @return An element representation of the file structure
-     * @throws FileNotFoundException If the supplied file does not exist
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Element toElement(final String aFilePath) throws FileNotFoundException,
-            ParserConfigurationException {
-        return toElement(aFilePath, WILDCARD);
-    }
-
-    /**
-     * Creates an <code>Element</code> that describes the supplied file or directory (and, possibly, all its
-     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
-     *
-     * @param aFilePath A file system path to turn into XML
-     * @param aBool A boolean indicating whether the XML should contain more than one level
-     * @return An element representation of the file structure
-     * @throws FileNotFoundException If the supplied file does not exist
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Element toElement(final String aFilePath, final boolean aBool) throws FileNotFoundException,
-            ParserConfigurationException {
-        return toElement(aFilePath, WILDCARD, aBool);
-    }
-
-    /**
-     * Creates an <code>Document</code> that describes the supplied file or directory (and, possibly, all its
-     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc. By default, it only
-     * descends one directory.
-     *
-     * @param aFilePath A file system path to turn into XML
-     * @return A document representation of the file structure
-     * @throws FileNotFoundException If the supplied file does not exist
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Document toDocument(final String aFilePath) throws FileNotFoundException,
-            ParserConfigurationException {
-        return toDocument(aFilePath, WILDCARD);
-    }
-
-    /**
-     * Creates a string of XML that describes the supplied file or directory (and all its subdirectories). Includes
-     * absolute path, last modified time, read/write permissions, etc.
-     *
-     * @param aFilePath The file or directory to be returned as XML
-     * @param aPattern A regular expression that file names must match
-     * @return A string of XML describing the supplied file system path's structure
-     * @throws FileNotFoundException If the supplied file or directory can not be found
-     * @throws TransformerException If there is trouble with the XSL transformation
-     */
-    public static String toXML(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            TransformerException {
-        return toXML(aFilePath, aPattern, false);
-    }
-
-    /**
-     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its
-     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
-     *
-     * @param aFilePath The file or directory to be returned as XML
-     * @param aDeepConversion Whether the subdirectories are included
-     * @return A string of XML describing the supplied file system path's structure
-     * @throws FileNotFoundException If the supplied file or directory can not be found
-     * @throws TransformerException If there is trouble with the XSL transformation
-     */
-    public static String toXML(final String aFilePath, final boolean aDeepConversion) throws FileNotFoundException,
-            TransformerException {
-        return toXML(aFilePath, WILDCARD, aDeepConversion);
-    }
-
-    /**
-     * Creates a string of XML that describes the supplied file or directory (and, optionally, all its
-     * subdirectories). Includes absolute path, last modified time, read/write permissions, etc.
-     *
-     * @param aFilePath The file or directory to be returned as XML
-     * @param aPattern A regular expression pattern to evaluate file matches against
-     * @param aDeepTransformation Whether the subdirectories are included
-     * @return A string of XML describing the supplied file system path's structure
-     * @throws FileNotFoundException If the supplied file or directory can not be found
-     * @throws TransformerException If there is trouble with the XSL transformation
-     */
-    public static String toXML(final String aFilePath, final String aPattern, final boolean aDeepTransformation)
-            throws FileNotFoundException, TransformerException {
-        final Element element = toElement(aFilePath, aPattern, aDeepTransformation);
-        return DOMUtils.toXML(element);
     }
 
     /**
@@ -228,7 +104,7 @@ public final class FileUtils {
                 if (!paths.contains(filePath)) {
                     paths.add(filePath);
                 } else {
-                    throw new I18nRuntimeException(BUNDLE_NAME, MessageCodes.UTIL_034);
+                    throw new I18nRuntimeException(Constants.BUNDLE_NAME, MessageCodes.UTIL_034);
                 }
             } else {
                 final ArrayList<String> pathList = new ArrayList<>();
@@ -238,82 +114,6 @@ public final class FileUtils {
         }
 
         return Collections.unmodifiableMap(fileMap);
-    }
-
-    /**
-     * Returns an XML Element representing the file structure found at the supplied file system path. Files included
-     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
-     * the directory structure.
-     *
-     * @param aFilePath The directory from which the structural representation should be built
-     * @param aPattern A regular expression pattern which files included in the Element should match
-     * @return An XML Element representation of the directory structure
-     * @throws FileNotFoundException If the supplied directory isn't found
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Element toElement(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            ParserConfigurationException {
-        return toElement(aFilePath, aPattern, false);
-    }
-
-    /**
-     * Returns an XML Element representing the file structure found at the supplied file system path. Files included
-     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
-     * the directory structure.
-     *
-     * @param aFilePath The directory from which the structural representation should be built
-     * @param aPattern A regular expression pattern which files included in the Element should match
-     * @param aDeepTransformation Whether the conversion should descend through subdirectories
-     * @return An XML Element representation of the directory structure
-     * @throws FileNotFoundException If the supplied directory isn't found
-     */
-    public static Element toElement(final String aFilePath, final String aPattern, final boolean aDeepTransformation)
-            throws FileNotFoundException {
-        final RegexFileFilter filter = new RegexFileFilter(aPattern);
-        final File file = new File(aFilePath);
-
-        if (file.exists() && file.canRead()) {
-            return add(file, null, filter, aDeepTransformation);
-        }
-
-        throw new FileNotFoundException(aFilePath);
-    }
-
-    /**
-     * Returns an XML Document representing the file structure found at the supplied file system path. Files included
-     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
-     * the directory structure.
-     *
-     * @param aFilePath The directory from which the structural representation should be built
-     * @param aPattern A regular expression pattern which files included in the Element should match
-     * @return An XML Document representation of the directory structure
-     * @throws FileNotFoundException If the supplied directory isn't found
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Document toDocument(final String aFilePath, final String aPattern) throws FileNotFoundException,
-            ParserConfigurationException {
-        return toDocument(aFilePath, aPattern, false);
-    }
-
-    /**
-     * Returns an XML Document representing the file structure found at the supplied file system path. Files included
-     * in the representation will match the supplied regular expression pattern. This method doesn't descend through
-     * the directory structure.
-     *
-     * @param aFilePath The directory from which the structural representation should be built
-     * @param aPattern A regular expression pattern which files included in the Document should match
-     * @param aDeepConversion Whether the conversion should descend through subdirectories
-     * @return An XML Document representation of the directory structure
-     * @throws FileNotFoundException If the supplied directory isn't found
-     * @throws ParserConfigurationException If the default XML parser for the JRE isn't configured correctly
-     */
-    public static Document toDocument(final String aFilePath, final String aPattern, final boolean aDeepConversion)
-            throws FileNotFoundException, ParserConfigurationException {
-        final Element element = toElement(aFilePath, aPattern, aDeepConversion);
-        final Document document = element.getOwnerDocument();
-
-        document.appendChild(element);
-        return document;
     }
 
     /**
@@ -790,91 +590,4 @@ public final class FileUtils {
         return success;
     }
 
-    private static Element add(final File aFile, final Element aParent, final RegexFileFilter aFilter,
-            final boolean aDeepAdd) throws FileNotFoundException {
-        final Element element;
-        final String tagName;
-
-        if (aFile.isDirectory()) {
-            tagName = DIR_TYPE;
-        } else {
-            tagName = FILE_TYPE;
-        }
-
-        if (aParent == null) {
-            try {
-                final DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-                final Document doc = f.newDocumentBuilder().newDocument();
-
-                element = doc.createElement(tagName);
-            } catch (final ParserConfigurationException details) {
-                throw new I18nRuntimeException(details);
-            }
-        } else {
-            element = aParent.getOwnerDocument().createElement(tagName);
-            aParent.appendChild(element);
-        }
-
-        copyMetadata(aFile, element);
-
-        if (aFile.isDirectory()) {
-            if (aDeepAdd) {
-                final File[] dirs = listFiles(aFile, new RegexDirFilter(WILDCARD));
-
-                Arrays.sort(dirs); // Consistency to make testing easier
-
-                for (final File dir : dirs) {
-                    element.appendChild(add(dir, element, aFilter, aDeepAdd));
-                }
-            } else if (aFilter.toString().equals(WILDCARD)) {
-                final Document doc = element.getOwnerDocument();
-                final File[] dirs = listFiles(aFile, new RegexDirFilter(WILDCARD));
-
-                Arrays.sort(dirs); // Consistency to make testing easier
-
-                for (final File dir : dirs) {
-                    final Element dirElem = doc.createElement(DIR_TYPE);
-
-                    element.appendChild(dirElem);
-                    copyMetadata(dir, dirElem);
-                }
-            }
-
-            final File[] files = listFiles(aFile, aFilter);
-
-            // Provide some consistency in what's returned to make testing easier
-            Arrays.sort(files);
-
-            for (final File file : files) {
-                element.appendChild(add(file, element, aFilter, aDeepAdd));
-            }
-        }
-
-        return element;
-    }
-
-    /**
-     * Copy file metadata into the supplied file element.
-     *
-     * @param aFile A file to extract metadata from
-     * @param aElement A destination element for the file metadata
-     */
-    private static void copyMetadata(final File aFile, final Element aElement) {
-        final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        final StringBuilder permissions = new StringBuilder();
-        final Date date = new Date(aFile.lastModified());
-
-        aElement.setAttribute(FILE_PATH, aFile.getAbsolutePath());
-        aElement.setAttribute(MODIFIED, formatter.format(date));
-
-        if (aFile.canRead()) {
-            permissions.append('r');
-        }
-
-        if (aFile.canWrite()) {
-            permissions.append('w');
-        }
-
-        aElement.setAttribute("permissions", permissions.toString());
-    }
 }

@@ -22,11 +22,11 @@ public final class URLUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, BUNDLE_NAME);
 
-    private static final String SIMPLE_PREFIX = "file:/";
-
-    private static final String STANDARD_PREFIX = "file://";
-
     private static final String FILE_PROTOCOL = "file";
+
+    private static final String SIMPLE_PREFIX = FILE_PROTOCOL + ":/";
+
+    private static final String STANDARD_PREFIX = SIMPLE_PREFIX + "/";
 
     private static final String OS = System.getProperty("os.name");
 
@@ -138,7 +138,7 @@ public final class URLUtils {
         }
 
         if (LOGGER.isDebugEnabled() && !aURL.equals(decodedString)) {
-            LOGGER.debug(MessageCodes.DBG_002, aURL, decodedString);
+            LOGGER.debug(MessageCodes.UTIL_048, aURL, decodedString);
         }
 
         return decodedString;

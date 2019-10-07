@@ -1,7 +1,11 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,15 +24,33 @@ public class StringUtilsTest {
 
     private static final String CHARSET = "UTF-8";
 
+    private static final String DEFAULT = "default";
+
+    private static final String EMPTY = "";
+
+    private static final String FIRST = "first";
+
+    private static final String SECOND = "second";
+
+    private static final String THIRD = "third";
+
+    private static final String EXCLAMATION_AT = "!@";
+
+    private static final String SOURCE = "source";
+
+    private static final String EMPTY_A = " a ";
+
+    private static final String ONE_21_3 = "1~21~3";
+
     /**
      * Tests {@link StringUtils#trimTo(Object, String)}.
      */
     @Test
     public void trimToStringString() {
-        final String assertion = StringUtils.trimTo(" original ", "default");
+        final String assertion = StringUtils.trimTo(" original ", DEFAULT);
 
-        assertEquals("default", StringUtils.trimTo(null, "default"));
-        assertEquals("default", StringUtils.trimTo("", "default"));
+        assertEquals(DEFAULT, StringUtils.trimTo(null, DEFAULT));
+        assertEquals(DEFAULT, StringUtils.trimTo(EMPTY, DEFAULT));
         assertEquals("original", assertion);
     }
 
@@ -38,22 +60,24 @@ public class StringUtilsTest {
     @Test
     public void formatMessageStringStringArray() {
         final String message = "This is the {} and the {}";
-        final String[] values = new String[] { "first", "second" };
+        final String[] values = new String[] { FIRST, SECOND };
         final String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
 
         try {
-            StringUtils.format(message, new String[] { "first" });
+            StringUtils.format(message, new String[] { FIRST });
             fail("Failed to notice more slots than values");
         } catch (final IndexOutOfBoundsException details) {
+            // This is expected
         }
 
         try {
-            final String[] array = new String[] { "first", "second", "third" };
+            final String[] array = new String[] { FIRST, SECOND, THIRD };
             StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
         } catch (final IndexOutOfBoundsException details) {
+            // This is expected
         }
     }
 
@@ -86,8 +110,8 @@ public class StringUtilsTest {
      */
     @Test
     public void testTrimToNullString() {
-        assertEquals(null, StringUtils.trimToNull(""));
-        assertEquals("a", StringUtils.trimToNull(" a "));
+        assertEquals(null, StringUtils.trimToNull(EMPTY));
+        assertEquals("a", StringUtils.trimToNull(EMPTY_A));
         assertEquals(null, StringUtils.trimToNull(null));
     }
 
@@ -96,10 +120,10 @@ public class StringUtilsTest {
      */
     @Test
     public void testIsEmpty() {
-        assertTrue(StringUtils.isEmpty(""));
+        assertTrue(StringUtils.isEmpty(EMPTY));
         assertTrue(StringUtils.isEmpty(null));
         assertTrue(StringUtils.isEmpty("   "));
-        assertFalse(StringUtils.isEmpty(" a "));
+        assertFalse(StringUtils.isEmpty(EMPTY_A));
     }
 
     /**
@@ -148,7 +172,7 @@ public class StringUtilsTest {
         final Integer i3 = Integer.valueOf(3);
 
         final Integer[] array = new Integer[] { i1, i2, i3 };
-        assertEquals("1~21~3", StringUtils.toString(array, '~'));
+        assertEquals(ONE_21_3, StringUtils.toString(array, '~'));
     }
 
     /**
@@ -162,7 +186,7 @@ public class StringUtilsTest {
 
         final Object[] array = new Object[] { i1, i2, i3 };
 
-        assertEquals("1~21~3", StringUtils.toString('~', array));
+        assertEquals(ONE_21_3, StringUtils.toString('~', array));
     }
 
     /**
@@ -170,7 +194,7 @@ public class StringUtilsTest {
      */
     @Test
     public void repeatStringInt() {
-        assertEquals("!@!@!@", StringUtils.repeat("!@", 3));
+        assertEquals("!@!@!@", StringUtils.repeat(EXCLAMATION_AT, 3));
     }
 
     /**
@@ -186,7 +210,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testPadStartStringStringInt() {
-        final String result = StringUtils.padStart("source", "!@", 3);
+        final String result = StringUtils.padStart(SOURCE, EXCLAMATION_AT, 3);
         assertEquals("!@!@!@source", result);
     }
 
@@ -195,7 +219,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testPadEndStringStringInt() {
-        final String result = StringUtils.padEnd("source", "!@", 3);
+        final String result = StringUtils.padEnd(SOURCE, EXCLAMATION_AT, 3);
         assertEquals("source!@!@!@", result);
     }
 
@@ -225,12 +249,14 @@ public class StringUtilsTest {
             StringUtils.parseIntRange("1001-1000");
             fail("Failed to catch inverted number range");
         } catch (final NumberFormatException details) {
+            // This is expected
         }
 
         try {
             StringUtils.parseIntRange("1000-");
             fail("Failed to catch single number range value");
         } catch (final NumberFormatException details) {
+            // This is expected
         }
     }
 }

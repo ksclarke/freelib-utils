@@ -17,22 +17,37 @@ import org.junit.Test;
 
 import info.freelibrary.util.test.I18nObjectWrapper;
 
+/**
+ * Tests of I18nObject.
+ */
 public class I18nObjectTest {
 
-    private static final Locale myLocale = Locale.getDefault();
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nObjectTest.class, Constants.BUNDLE_NAME);
+
+    private static final Locale LOCALE = Locale.getDefault();
 
     private static final String VALUE_ONE = "test.value.one";
 
+    private static final String TEST_ONE = "test.one";
+
+    private static final String ONE = "one";
+
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    /**
+     * Sets up the testing environment.
+     */
     @Before
     public void beforeTests() {
         Locale.setDefault(Locale.US);
     }
 
+    /**
+     * Cleans up the testing environment.
+     */
     @After
     public void afterTests() {
-        Locale.setDefault(myLocale);
+        Locale.setDefault(LOCALE);
     }
 
     /**
@@ -40,7 +55,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nString() {
-        assertEquals("one", new I18nObjectWrapper().getI18n("test.one"));
+        assertEquals(ONE, new I18nObjectWrapper().getI18n(TEST_ONE));
     }
 
     /**
@@ -48,7 +63,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringException() {
-        final String expected = "one";
+        final String expected = ONE;
         final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new IOException(expected));
 
         assertEquals(expected, found);
@@ -79,7 +94,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringString() {
-        final String expected = "one";
+        final String expected = ONE;
         final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, expected);
 
         assertEquals(expected, found);
@@ -90,7 +105,7 @@ public class I18nObjectTest {
      */
     @Test
     public void testGetI18nStringStringArray() {
-        final String expected = "one";
+        final String expected = ONE;
         final String found = new I18nObjectWrapper().getI18n(VALUE_ONE, new String[] { expected });
 
         assertEquals(expected, found);
@@ -137,7 +152,7 @@ public class I18nObjectTest {
         try {
             new I18nObjectWrapper().getI18n("something.not.found");
 
-            fail("Failed to throw MissingResourceException");
+            fail(LOGGER.getMessage(MessageCodes.UTIL_062));
         } catch (final MissingResourceException details) {
             // this is expected
         }
@@ -149,7 +164,7 @@ public class I18nObjectTest {
     @Test
     public void testHasI18nKey() {
         final I18nObjectWrapper i18nObj = new I18nObjectWrapper();
-        assertTrue(i18nObj.hasI18nKey("test.one"));
-        assertEquals("one", i18nObj.getI18n("test.one"));
+        assertTrue(i18nObj.hasI18nKey(TEST_ONE));
+        assertEquals(ONE, i18nObj.getI18n(TEST_ONE));
     }
 }

@@ -10,21 +10,29 @@ import org.junit.Test;
 
 public class RegexFileFilterTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegexFileFilterTest.class, Constants.BUNDLE_NAME);
+
+    private static final String TOTES = "totes";
+
+    private static final String CARROT = "^";
+
+    private static final String EMPTY = "";
+
+    private static final String DOLLAR_SIGN = "$";
+
     /**
      * Tests RegexFileFilter constructor.
      */
     @Test
     public void testConstructor() {
-        FilenameFilter filter;
-        File tmpFile;
-
         try {
-            tmpFile = File.createTempFile("totes", "");
-            filter = new RegexFileFilter("^" + tmpFile.getName() + "$");
+            final File tmpFile = File.createTempFile(TOTES, EMPTY);
+            final FilenameFilter filter = new RegexFileFilter(CARROT + tmpFile.getName() + DOLLAR_SIGN);
+
             tmpFile.deleteOnExit();
 
             if (!filter.accept(tmpFile.getParentFile(), tmpFile.getName())) {
-                fail("Failed to match supplied file name");
+                fail(LOGGER.getMessage(MessageCodes.UTIL_047, tmpFile));
             }
         } catch (final Exception details) {
             fail(details.getMessage());
@@ -36,14 +44,11 @@ public class RegexFileFilterTest {
      */
     @Test
     public void testCaseInsensitiveConstructor() {
-        FilenameFilter filter;
-        String pattern;
-        File file;
-
         try {
-            file = File.createTempFile("totes", "");
-            pattern = "^" + file.getName().toUpperCase() + "$";
-            filter = new RegexFileFilter(pattern, true);
+            final File file = File.createTempFile(TOTES, EMPTY);
+            final String pattern = CARROT + file.getName().toUpperCase() + DOLLAR_SIGN;
+            final FilenameFilter filter = new RegexFileFilter(pattern, true);
+
             file.deleteOnExit();
 
             if (!filter.accept(file.getParentFile(), file.getName())) {
