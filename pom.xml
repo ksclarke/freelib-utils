@@ -5,7 +5,7 @@
   <artifactId>freelib-utils</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>FreeLibrary Utilities</name>
-  <description>A small collection of utility classes used by other FreeLibrary projects</description>
+  <description>A small collection of utility classes</description>
   <url>http://projects.freelibrary.info/freelib-utils</url>
 
   <licenses>
@@ -41,8 +41,6 @@
 
   <properties>
     <slf4j.simple.logger.version>1.7.25</slf4j.simple.logger.version>
-
-    <!-- Project build plug-in dependencies -->
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
   </properties>
 
