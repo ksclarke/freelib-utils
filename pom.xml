@@ -80,6 +80,14 @@
     <plugins>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <show>public</show>
+          <detectLinks>false</detectLinks>
+          <links>
+            <link>https://google.github.io/guava/releases/23.0/api/docs/</link>
+          </links>
+          <sourcepath>src/main/java:src/main/generated</sourcepath>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -119,13 +127,8 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>br.com.ingenieux</groupId>
+        <groupId>org.jbake</groupId>
         <artifactId>jbake-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>com.gavinmogan</groupId>
-        <artifactId>codacy-maven-plugin</artifactId>
-        <version>${codacy.plugin.version}</version>
       </plugin>
     </plugins>
   </build>
