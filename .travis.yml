@@ -12,7 +12,6 @@ script:
   - mvn -s src/test/resources/settings.xml -q help:active-profiles verify
 
 after_success:
-  - mvn -s src/test/resources/settings.xml site -Djava.util.logging.config.file=src/test/resources/logging.properties site:deploy
   - chmod 755 src/main/tools/travis/*
   - src/main/tools/travis/get_build_key $encrypted_0e0f91f7a6ed_key $encrypted_0e0f91f7a6ed_iv
   - src/main/tools/travis/deploy
