@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * An internationalizable exception.
+ * An I18n'ed exception.
  */
 public class I18nException extends Exception {
 
@@ -159,9 +159,11 @@ public class I18nException extends Exception {
             final Object... aVarargs) {
         Objects.requireNonNull(aBundleName, LOGGER.getI18n(MessageCodes.UTIL_016));
         Objects.requireNonNull(aMessageKey, LOGGER.getI18n(MessageCodes.UTIL_018));
+
         LOGGER.debug(MessageCodes.UTIL_017, aBundleName);
 
         final XMLResourceBundle bundle;
+        final String message;
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
@@ -174,18 +176,20 @@ public class I18nException extends Exception {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
 
             if (bundle.containsKey(aMessageKey)) {
-                return bundle.get(aMessageKey, aVarargs);
+                message = bundle.get(aMessageKey, aVarargs);
             } else {
-                return StringUtils.format(aMessageKey, aVarargs);
+                message = StringUtils.format(aMessageKey, aVarargs);
             }
         } else {
             if (bundle.containsKey(aMessageKey)) {
                 LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
-                return bundle.get(aMessageKey);
+                message = bundle.get(aMessageKey);
             } else {
-                return aMessageKey;
+                message = aMessageKey;
             }
         }
+
+        return message;
     }
 
 }

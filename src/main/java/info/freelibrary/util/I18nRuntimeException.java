@@ -160,12 +160,15 @@ public class I18nRuntimeException extends RuntimeException {
             final Object... aVarargs) {
         Objects.requireNonNull(aBundleName, LOGGER.getI18n(MessageCodes.UTIL_016));
         Objects.requireNonNull(aMessageKey, LOGGER.getI18n(MessageCodes.UTIL_018));
+
         LOGGER.debug(MessageCodes.UTIL_022, aBundleName);
 
         final XMLResourceBundle bundle;
+        final String message;
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
+
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new XMLBundleControl());
         } else {
             bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
@@ -173,11 +176,23 @@ public class I18nRuntimeException extends RuntimeException {
 
         if (aVarargs != null && aVarargs.length > 0) {
             LOGGER.debug(MessageCodes.UTIL_020, aMessageKey, aVarargs, aVarargs.getClass().getSimpleName());
-            return bundle.get(aMessageKey, aVarargs);
+
+            if (bundle.containsKey(aMessageKey)) {
+                message = bundle.get(aMessageKey, aVarargs);
+            } else {
+                message = StringUtils.format(aMessageKey, aVarargs);
+            }
         } else {
             LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
-            return bundle.get(aMessageKey);
+
+            if (bundle.containsKey(aMessageKey)) {
+                message = bundle.get(aMessageKey);
+            } else {
+                message = aMessageKey;
+            }
         }
+
+        return message;
     }
 
 }
