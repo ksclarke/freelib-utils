@@ -9,7 +9,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_022 = "UTIL-022";
 	/**
-	 * Message: 
+	 * Message: The {} argument may not be null
 	 */
 	public static final String UTIL_066 = "UTIL-066";
 	/**
@@ -17,7 +17,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_021 = "UTIL-021";
 	/**
-	 * Message: 
+	 * Message: Illegal argument [{}]: {}
 	 */
 	public static final String UTIL_065 = "UTIL-065";
 	/**
@@ -33,7 +33,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_023 = "UTIL-023";
 	/**
-	 * Message: 
+	 * Message: Unsupported operation: {}
 	 */
 	public static final String UTIL_067 = "UTIL-067";
 	/**
@@ -49,11 +49,11 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_020 = "UTIL-020";
 	/**
-	 * Message: 
+	 * Message: Failed to find all the zip entries
 	 */
 	public static final String UTIL_064 = "UTIL-064";
 	/**
-	 * Message: 
+	 * Message: Found an unexpected zip entry: {}
 	 */
 	public static final String UTIL_063 = "UTIL-063";
 	/**

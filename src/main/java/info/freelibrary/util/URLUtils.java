@@ -64,7 +64,7 @@ public final class URLUtils {
         try {
             string = URLDecoder.decode(string, StandardCharsets.UTF_8.name());
         } catch (final java.io.UnsupportedEncodingException details) {
-            throw new UnsupportedEncodingException(details, MessageCodes.UTIL_029);
+            throw new UnsupportedEncodingI18nException(details, MessageCodes.UTIL_029);
         }
 
         final String path3;
@@ -134,7 +134,7 @@ public final class URLUtils {
                 urlString = URLDecoder.decode(decodedString.replaceAll("%(?![0-9a-fA-F]{2})", PERCENT), aEncoding);
             } while (!urlString.equals(decodedString));
         } catch (final java.io.UnsupportedEncodingException details) {
-            throw new UnsupportedEncodingException(details, aEncoding);
+            throw new UnsupportedEncodingI18nException(details, aEncoding);
         }
 
         if (LOGGER.isDebugEnabled() && !aURL.equals(decodedString)) {

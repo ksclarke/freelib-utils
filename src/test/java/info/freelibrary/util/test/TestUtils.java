@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-import info.freelibrary.util.UnsupportedEncodingException;
+import info.freelibrary.util.UnsupportedEncodingI18nException;
 
 /**
  * A utility class that has some test helpers.
@@ -33,7 +33,7 @@ public final class TestUtils {
 
             result = new String(baos.toByteArray(), StandardCharsets.UTF_8);
         } catch (final java.io.UnsupportedEncodingException details) {
-            throw new UnsupportedEncodingException(details, StandardCharsets.UTF_8.name());
+            throw new UnsupportedEncodingI18nException(details, StandardCharsets.UTF_8.name());
         } finally {
             System.setErr(stdErr);
         }

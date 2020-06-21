@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
@@ -33,7 +34,7 @@ public final class BufferedFileWriter extends BufferedWriter {
      * @throws java.io.UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
      */
     public BufferedFileWriter(final File aFile, final String aEncoding) throws FileNotFoundException,
-            java.io.UnsupportedEncodingException {
+            UnsupportedEncodingException {
         super(new OutputStreamWriter(new FileOutputStream(aFile), aEncoding));
     }
 
@@ -47,8 +48,8 @@ public final class BufferedFileWriter extends BufferedWriter {
     private static Writer getWriter(final File aFile) throws FileNotFoundException {
         try {
             return new OutputStreamWriter(new FileOutputStream(aFile), StandardCharsets.UTF_8.name());
-        } catch (final java.io.UnsupportedEncodingException details) {
-            throw new UnsupportedEncodingException(details, StandardCharsets.UTF_8.name());
+        } catch (final UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingI18nException(details, StandardCharsets.UTF_8);
         }
     }
 

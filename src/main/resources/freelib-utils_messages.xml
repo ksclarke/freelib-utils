@@ -74,9 +74,9 @@
   <entry key="UTIL-062">Failed to throw MissingResourceException</entry>
   <entry key="UTIL-063">Found an unexpected zip entry: {}</entry>
   <entry key="UTIL-064">Failed to find all the zip entries</entry>
-  <entry key="UTIL-065"></entry>
-  <entry key="UTIL-066"></entry>
-  <entry key="UTIL-067"></entry>
+  <entry key="UTIL-065">Illegal argument [{}]: {}</entry>
+  <entry key="UTIL-066">The {} argument may not be null</entry>
+  <entry key="UTIL-067">Unsupported operation: {}</entry>
   <entry key="UTIL-068"></entry>
   <entry key="UTIL-069"></entry>
   <entry key="UTIL-070"></entry>
