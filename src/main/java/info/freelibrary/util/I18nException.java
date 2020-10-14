@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -17,7 +15,7 @@ public class I18nException extends Exception {
      */
     private static final long serialVersionUID = 1137212885016281357L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nException.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nException.class, MessageCodes.BUNDLE);
 
     /**
      * Constructs a new <code>I18nException</code>.
@@ -44,7 +42,7 @@ public class I18nException extends Exception {
      * @param aMessageKey The message key whose value should be retrieved from the supplied bundle
      */
     public I18nException(final Locale aLocale, final String aBundleName, final String aMessageKey) {
-        super(format(aLocale, aBundleName, aMessageKey, new Object[] {}));
+        super(format(aLocale, aBundleName, aMessageKey));
     }
 
     /**
@@ -90,7 +88,7 @@ public class I18nException extends Exception {
      * @param aMessageKey The key to use when looking up the message
      */
     public I18nException(final Throwable aCause, final String aBundleName, final String aMessageKey) {
-        super(format(aBundleName, aMessageKey, new Object[] {}), aCause);
+        super(format(aBundleName, aMessageKey), aCause);
     }
 
     /**
@@ -103,7 +101,7 @@ public class I18nException extends Exception {
      */
     public I18nException(final Throwable aCause, final Locale aLocale, final String aBundleName,
             final String aMessageKey) {
-        super(format(aLocale, aBundleName, aMessageKey, new Object[] {}), aCause);
+        super(format(aLocale, aBundleName, aMessageKey), aCause);
     }
 
     /**

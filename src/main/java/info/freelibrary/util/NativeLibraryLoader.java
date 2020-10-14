@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +17,7 @@ import java.util.jar.JarFile;
  */
 public final class NativeLibraryLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MessageCodes.BUNDLE);
 
     private static final String OS_NAME = "os.name";
 

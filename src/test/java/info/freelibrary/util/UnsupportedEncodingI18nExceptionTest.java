@@ -107,7 +107,7 @@ public class UnsupportedEncodingI18nExceptionTest {
     @Test
     public final void testI18nUnsupportedEncodingExceptionStringStringObjectArray() {
         try {
-            throw new UnsupportedEncodingI18nException(Constants.BUNDLE_NAME, MessageCodes.UTIL_028,
+            throw new UnsupportedEncodingI18nException(MessageCodes.BUNDLE, MessageCodes.UTIL_028,
                     StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingI18nException details) {
             assertEquals(MESSAGE, details.getMessage());
@@ -122,7 +122,7 @@ public class UnsupportedEncodingI18nExceptionTest {
     @Test
     public final void testI18nUnsupportedEncodingExceptionThrowableStringStringObjectArray() {
         try {
-            throw new UnsupportedEncodingI18nException(new Throwable(), Constants.BUNDLE_NAME, MessageCodes.UTIL_028,
+            throw new UnsupportedEncodingI18nException(new Throwable(), MessageCodes.BUNDLE, MessageCodes.UTIL_028,
                     StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingI18nException details) {
             assertEquals(MESSAGE, details.getMessage());

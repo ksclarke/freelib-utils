@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -17,7 +15,7 @@ public class I18nRuntimeException extends RuntimeException {
      */
     private static final long serialVersionUID = 1137212882896281357L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nRuntimeException.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nRuntimeException.class, MessageCodes.BUNDLE);
 
     /**
      * Constructs a new <code>RuntimeI18nException</code>.
@@ -44,7 +42,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aMessageKey The message key whose value should be retrieved from the supplied bundle
      */
     public I18nRuntimeException(final Locale aLocale, final String aBundleName, final String aMessageKey) {
-        super(format(aLocale, aBundleName, aMessageKey, new Object[] {}));
+        super(format(aLocale, aBundleName, aMessageKey));
     }
 
     /**
@@ -90,12 +88,11 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aMessageKey The key to use when looking up the message
      */
     public I18nRuntimeException(final Throwable aCause, final String aBundleName, final String aMessageKey) {
-        super(format(aBundleName, aMessageKey, new Object[] {}), aCause);
+        super(format(aBundleName, aMessageKey), aCause);
     }
 
     /**
-     * Constructs a new <code>RuntimeI18nException</code> using the {@link Locale} with the supplied cause and
-     * message.
+     * Constructs a new <code>RuntimeI18nException</code> using the {@link Locale} with the supplied cause and message.
      *
      * @param aCause The underlying cause of the current exception
      * @param aLocale The locale to use when constructing the exception
@@ -104,7 +101,7 @@ public class I18nRuntimeException extends RuntimeException {
      */
     public I18nRuntimeException(final Throwable aCause, final Locale aLocale, final String aBundleName,
             final String aMessageKey) {
-        super(format(aLocale, aBundleName, aMessageKey, new Object[] {}), aCause);
+        super(format(aLocale, aBundleName, aMessageKey), aCause);
     }
 
     /**

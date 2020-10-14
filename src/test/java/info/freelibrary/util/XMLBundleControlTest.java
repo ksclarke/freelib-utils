@@ -1,9 +1,7 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Locale;
 
@@ -15,7 +13,7 @@ import org.junit.Test;
  */
 public class XMLBundleControlTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XMLBundleControlTest.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLBundleControlTest.class, MessageCodes.BUNDLE);
 
     private static final String BUNDLE_NAME = "test_freelib-utils_messages";
 

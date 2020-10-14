@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public class JarClassLoader extends URLClassLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, MessageCodes.BUNDLE);
 
     /**
      * Constructor for a Jar ClassLoader.
@@ -24,8 +22,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws IllegalAccessException If there is trouble accessing the main class
      * @throws ClassNotFoundException If the main class cannot be found
      */
-    public JarClassLoader(final String aMainClassName) throws IOException, IllegalAccessException,
-            InstantiationException, ClassNotFoundException {
+    public JarClassLoader(final String aMainClassName)
+            throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         super(JarUtils.getJarURLs());
 
         LOGGER.debug(MessageCodes.UTIL_001, aMainClassName);
@@ -42,8 +40,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws InstantiationException If there is trouble instantiating the main class
      * @throws ClassNotFoundException If the main class cannot be found
      */
-    public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws IOException, IllegalAccessException,
-            InstantiationException, ClassNotFoundException {
+    public JarClassLoader(final URL[] aURLs, final String aMainClassName)
+            throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         super(aURLs);
 
         loadClass(aMainClassName).newInstance();
@@ -59,8 +57,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws InstantiationException If there is trouble instantiating the main class
      * @throws ClassNotFoundException If the main class cannot be found
      */
-    public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName) throws IOException,
-            IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName)
+            throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         super(aListOfURLs.toArray(new URL[0]));
 
         loadClass(aMainClassName).newInstance();

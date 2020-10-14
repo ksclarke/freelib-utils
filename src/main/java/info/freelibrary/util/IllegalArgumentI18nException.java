@@ -17,7 +17,7 @@ public class IllegalArgumentI18nException extends I18nRuntimeException {
      * @param aObject The object that was an illegal argument
      */
     public IllegalArgumentI18nException(final Object aObject) {
-        super(Constants.BUNDLE_NAME, MessageCodes.UTIL_065, aObject.getClass().getName(), aObject);
+        super(MessageCodes.BUNDLE, MessageCodes.UTIL_065, aObject.getClass().getName(), aObject);
     }
 
     /**
@@ -27,7 +27,7 @@ public class IllegalArgumentI18nException extends I18nRuntimeException {
      * @param aObject The object that was an illegal argument
      */
     public IllegalArgumentI18nException(final Throwable aCause, final Object aObject) {
-        super(aCause, Constants.BUNDLE_NAME, MessageCodes.UTIL_065, aObject.getClass().getName(), aObject);
+        super(aCause, MessageCodes.BUNDLE, MessageCodes.UTIL_065, aObject.getClass().getName(), aObject);
     }
 
     /**

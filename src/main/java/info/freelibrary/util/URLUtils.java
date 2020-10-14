@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +18,7 @@ import java.util.Scanner;
  */
 public final class URLUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, MessageCodes.BUNDLE);
 
     private static final String FILE_PROTOCOL = "file";
 

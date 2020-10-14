@@ -1,9 +1,7 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +20,7 @@ import info.freelibrary.util.test.I18nObjectWrapper;
  */
 public class I18nObjectTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nObjectTest.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nObjectTest.class, MessageCodes.BUNDLE);
 
     private static final Locale LOCALE = Locale.getDefault();
 

@@ -20,7 +20,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aEncoding An unsupported encoding
      */
     public UnsupportedEncodingI18nException(final String aEncoding) {
-        super(Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding);
+        super(MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding);
     }
 
     /**
@@ -29,7 +29,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aEncoding An unsupported encoding
      */
     public UnsupportedEncodingI18nException(final Charset aEncoding) {
-        super(Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding.displayName(Locale.getDefault()));
+        super(MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding.displayName(Locale.getDefault()));
     }
 
     /**
@@ -39,7 +39,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aLocale A locale to use when getting the charset's name
      */
     public UnsupportedEncodingI18nException(final Charset aEncoding, final Locale aLocale) {
-        super(Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding.displayName(aLocale));
+        super(MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding.displayName(aLocale));
     }
 
     /**
@@ -49,7 +49,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aEncoding An unsupported encoding
      */
     public UnsupportedEncodingI18nException(final Throwable aCause, final String aEncoding) {
-        super(aCause, Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding);
+        super(aCause, MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aEncoding An unsupported encoding
      */
     public UnsupportedEncodingI18nException(final Throwable aCause, final Charset aEncoding) {
-        super(aCause, Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding.displayName(Locale.getDefault()));
+        super(aCause, MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding.displayName(Locale.getDefault()));
     }
 
     /**
@@ -70,7 +70,7 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aLocale A locale to use when getting the charset's name
      */
     public UnsupportedEncodingI18nException(final Throwable aCause, final Charset aEncoding, final Locale aLocale) {
-        super(aCause, Constants.BUNDLE_NAME, MessageCodes.UTIL_028, aEncoding.displayName(aLocale));
+        super(aCause, MessageCodes.BUNDLE, MessageCodes.UTIL_028, aEncoding.displayName(aLocale));
     }
 
     /**

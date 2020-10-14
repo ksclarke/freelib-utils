@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
  */
 public class ProcessWatcher extends Thread {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessWatcher.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessWatcher.class, MessageCodes.BUNDLE);
 
     private final List<ProcessListener> myListeners = new ArrayList<>();
 

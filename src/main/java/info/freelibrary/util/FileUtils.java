@@ -39,7 +39,7 @@ public final class FileUtils {
 
     private static final char DOT = '.';
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, MessageCodes.BUNDLE);
 
     /**
      * Constructor for the contained file utilities.
@@ -48,9 +48,9 @@ public final class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
-     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
-     * that file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
+     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
+     * file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @return An unmodifiable map representing the files in the file structure
@@ -61,9 +61,9 @@ public final class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
-     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
-     * that file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
+     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
+     * file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
@@ -76,9 +76,9 @@ public final class FileUtils {
     }
 
     /**
-     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key
-     * and its path as the value. If a file with a name occurs more than once, multiple path values are returned for
-     * that file name key. The map that is returned is unmodifiable.
+     * Returns a Map representation of the supplied directory's structure. The map contains the file name as the key and
+     * its path as the value. If a file with a name occurs more than once, multiple path values are returned for that
+     * file name key. The map that is returned is unmodifiable.
      *
      * @param aFilePath The directory of which you'd like a file listing
      * @param aPattern A regular expression pattern which the files must match to be returned
@@ -104,7 +104,7 @@ public final class FileUtils {
                 if (!paths.contains(filePath)) {
                     paths.add(filePath);
                 } else {
-                    throw new I18nRuntimeException(Constants.BUNDLE_NAME, MessageCodes.UTIL_034);
+                    throw new I18nRuntimeException(MessageCodes.BUNDLE, MessageCodes.UTIL_034);
                 }
             } else {
                 final ArrayList<String> pathList = new ArrayList<>();
@@ -307,8 +307,8 @@ public final class FileUtils {
     }
 
     /**
-     * Copies a file or directory from one place to another. This copies a file to a file or a directory to a
-     * directory. It does not copy a file to a directory.
+     * Copies a file or directory from one place to another. This copies a file to a file or a directory to a directory.
+     * It does not copy a file to a directory.
      *
      * @param aFromFile A file or directory source
      * @param aToFile A file or directory destination
@@ -373,8 +373,7 @@ public final class FileUtils {
      * @throws NoSuchAlgorithmException If the supplied algorithm isn't supported
      * @throws IOException If there is trouble reading the file
      */
-    public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException,
-            IOException {
+    public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException, IOException {
         final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
         final FileInputStream inStream = new FileInputStream(aFile);
         final DigestInputStream mdStream = new DigestInputStream(inStream, md);

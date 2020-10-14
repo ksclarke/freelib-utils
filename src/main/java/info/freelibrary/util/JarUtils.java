@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,7 +22,7 @@ import java.util.jar.Manifest;
  */
 public final class JarUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JarUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JarUtils.class, MessageCodes.BUNDLE);
 
     private static final String JAR_URL_PROTOCOL = "jar:file://";
 
@@ -116,8 +114,7 @@ public final class JarUtils {
      * @param aDestDir The destination directory into which the file should be extracted
      * @throws IOException If there is an exception thrown while reading or writing the file
      */
-    public static void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir)
-            throws IOException {
+    public static void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir) throws IOException {
         final Enumeration<JarEntry> entries = aJarFile.entries();
 
         try {

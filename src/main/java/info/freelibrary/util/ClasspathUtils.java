@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -26,7 +24,7 @@ public final class ClasspathUtils {
 
     private static final String JAR_EXT = "jar";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class, MessageCodes.BUNDLE);
 
     private ClasspathUtils() {
     }
@@ -184,8 +182,7 @@ public final class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the jar files in the system classpath that match the supplied
-     * <code>FilenameFilter</code>
+     * Returns an array of all the jar files in the system classpath that match the supplied <code>FilenameFilter</code>
      *
      * @param aFilter A file name filter to use while retrieving Jar files
      * @return The jar files from the system classpath that match the supplied <code>FilenameFilter</code>

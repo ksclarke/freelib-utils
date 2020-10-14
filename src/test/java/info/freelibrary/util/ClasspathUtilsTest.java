@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class ClasspathUtilsTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtilsTest.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtilsTest.class, MessageCodes.BUNDLE);
 
     private static final String CLASSES_PATTERN = "(.*)t-classes";
 

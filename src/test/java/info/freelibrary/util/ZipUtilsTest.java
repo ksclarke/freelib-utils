@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 public class ZipUtilsTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtilsTest.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtilsTest.class, MessageCodes.BUNDLE);
 
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 

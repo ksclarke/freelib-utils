@@ -24,7 +24,7 @@ public class UnsupportedOperationI18nException extends I18nRuntimeException {
      * @param aMessage Details about the unsupported operation
      */
     public UnsupportedOperationI18nException(final String aMessage) {
-        super(Constants.BUNDLE_NAME, MessageCodes.UTIL_067, aMessage);
+        super(MessageCodes.BUNDLE, MessageCodes.UTIL_067, aMessage);
     }
 
     /**
@@ -34,7 +34,7 @@ public class UnsupportedOperationI18nException extends I18nRuntimeException {
      * @param aMessage Details about the unsupported operation
      */
     public UnsupportedOperationI18nException(final Throwable aCause, final String aMessage) {
-        super(aCause, Constants.BUNDLE_NAME, MessageCodes.UTIL_067, aMessage);
+        super(aCause, MessageCodes.BUNDLE, MessageCodes.UTIL_067, aMessage);
     }
 
     /**

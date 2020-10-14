@@ -4,8 +4,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +17,7 @@ import java.util.ResourceBundle;
 public class XMLResourceBundle extends ResourceBundle {
 
     /* Use the original loggers here, not the info.freelib.util.Logger/LoggerFactory wrappers */
-    private static final Logger LOGGER = LoggerFactory.getLogger(XMLResourceBundle.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLResourceBundle.class, MessageCodes.BUNDLE);
 
     /**
      * The properties set by the XML file.
@@ -57,7 +55,7 @@ public class XMLResourceBundle extends ResourceBundle {
     public Enumeration<String> getKeys() {
         final Enumeration<?> enumeration = myProperties.elements();
 
-        return new Enumeration<String>() {
+        return new Enumeration<>() {
 
             /**
              * Returns whether the {@link Enumeration} has more elements.
@@ -139,7 +137,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The message value with the supplied file name integrated
      */
     public String get(final String aMessage, final File aFile) {
-        return StringUtils.format(super.getString(aMessage), new String[] { aFile.getAbsolutePath() });
+        return StringUtils.format(super.getString(aMessage), aFile.getAbsolutePath());
     }
 
     /**
@@ -178,7 +176,7 @@ public class XMLResourceBundle extends ResourceBundle {
      * @return The value of the bundle message
      */
     public String get(final String aMessage, final Object aDetail) {
-        return StringUtils.format(super.getString(aMessage), new String[] { aDetail.toString() });
+        return StringUtils.format(super.getString(aMessage), aDetail.toString());
     }
 
     /**

@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -17,7 +15,7 @@ import java.util.Objects;
  */
 public final class PasswordUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordUtils.class, MessageCodes.BUNDLE);
 
     private PasswordUtils() {
     }

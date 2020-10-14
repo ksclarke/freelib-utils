@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class RegexFileFilterTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegexFileFilterTest.class, Constants.BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegexFileFilterTest.class, MessageCodes.BUNDLE);
 
     private static final String TOTES = "totes";
 

@@ -55,7 +55,7 @@ public class UnsupportedOperationI18nExceptionTest {
     @Test
     public final void testI18nUnsupportedOperationExceptionStringStringObjectArray() {
         try {
-            throw new UnsupportedOperationI18nException(Constants.BUNDLE_NAME, MessageCodes.UTIL_067, DETAIL);
+            throw new UnsupportedOperationI18nException(MessageCodes.BUNDLE, MessageCodes.UTIL_067, DETAIL);
         } catch (final UnsupportedOperationI18nException details) {
             assertEquals(MESSAGE, details.getMessage());
             assertNull(details.getCause());
@@ -69,7 +69,7 @@ public class UnsupportedOperationI18nExceptionTest {
     @Test
     public final void testI18nUnsupportedOperationExceptionThrowableStringStringObjectArray() {
         try {
-            throw new UnsupportedOperationI18nException(new Throwable(DETAIL), Constants.BUNDLE_NAME,
+            throw new UnsupportedOperationI18nException(new Throwable(DETAIL), MessageCodes.BUNDLE,
                     MessageCodes.UTIL_067, DETAIL);
         } catch (final UnsupportedOperationI18nException details) {
             assertEquals(MESSAGE, details.getMessage());

@@ -46,7 +46,7 @@ public class IllegalArgumentI18nExceptionTest {
     @Test
     public final void testIllegalArgumentI18nExceptionStringStringObjectArray() {
         try {
-            throw new IllegalArgumentI18nException(Constants.BUNDLE_NAME, MessageCodes.UTIL_065, String.class.getName(),
+            throw new IllegalArgumentI18nException(MessageCodes.BUNDLE, MessageCodes.UTIL_065, String.class.getName(),
                     DETAIL);
         } catch (final IllegalArgumentI18nException details) {
             assertEquals(MESSAGE, details.getMessage());
@@ -60,7 +60,7 @@ public class IllegalArgumentI18nExceptionTest {
     @Test
     public final void testIllegalArgumentI18nExceptionThrowableStringStringObjectArray() {
         try {
-            throw new IllegalArgumentI18nException(new Throwable(), Constants.BUNDLE_NAME, MessageCodes.UTIL_065,
+            throw new IllegalArgumentI18nException(new Throwable(), MessageCodes.BUNDLE, MessageCodes.UTIL_065,
                     String.class.getName(), DETAIL);
         } catch (final IllegalArgumentI18nException details) {
             assertEquals(MESSAGE, details.getMessage());

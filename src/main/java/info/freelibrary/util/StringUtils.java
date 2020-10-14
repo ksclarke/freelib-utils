@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +20,7 @@ import java.util.Set;
 @SuppressWarnings("PMD.TooManyMethods")
 public final class StringUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, MessageCodes.BUNDLE);
 
     private static final String EOL = System.getProperty("line.separator");
 
@@ -45,9 +43,9 @@ public final class StringUtils {
     }
 
     /**
-     * Trims a string object down into a boolean and has the ability to define what the default value should be. We
-     * only offer the method with the default value because most times a boolean with either exist or not (and in the
-     * case of not a default should be specified).
+     * Trims a string object down into a boolean and has the ability to define what the default value should be. We only
+     * offer the method with the default value because most times a boolean with either exist or not (and in the case of
+     * not a default should be specified).
      *
      * @param aString A boolean in string form
      * @param aBool A default boolean value
@@ -88,8 +86,8 @@ public final class StringUtils {
 
     /**
      * Takes a <code>String</code> in the form "This is {} text {}" and replaces the <code>{}</code>s with values from
-     * the supplied <code>String[]</code>. The number of curly braces should be the same as the number of strings in
-     * the string array.
+     * the supplied <code>String[]</code>. The number of curly braces should be the same as the number of strings in the
+     * string array.
      *
      * @param aMessage A string that contains curly braces in the form <code>{}</code>
      * @param aDetails Strings that should be put in place of the curly braces in the message string.
@@ -527,8 +525,8 @@ public final class StringUtils {
     }
 
     /**
-     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1"
-     * becomes "first", "2" becomes "second", etc.
+     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1" becomes
+     * "first", "2" becomes "second", etc.
      *
      * @param aInt An int to convert into a string
      * @return The string form of the supplied int
@@ -558,8 +556,8 @@ public final class StringUtils {
     }
 
     /**
-     * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes
-     * "First", "2" becomes "Second", etc.
+     * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes "First",
+     * "2" becomes "Second", etc.
      *
      * @param aInt An int to convert into a string
      * @return The string form of the supplied int

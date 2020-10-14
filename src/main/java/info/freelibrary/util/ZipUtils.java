@@ -1,8 +1,6 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +15,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ZipUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtils.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtils.class, MessageCodes.BUNDLE);
 
     private static final String WILDCARD = ".*";
 
@@ -32,8 +30,8 @@ public final class ZipUtils {
      * @throws FileNotFoundException If a file expected to be there is not found
      * @throws IOException If there is trouble writing to a Zip file
      */
-    public static void zip(final File aFileSystemDir, final File aOutputZipFile) throws FileNotFoundException,
-            IOException {
+    public static void zip(final File aFileSystemDir, final File aOutputZipFile)
+            throws FileNotFoundException, IOException {
         zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(WILDCARD));
     }
 

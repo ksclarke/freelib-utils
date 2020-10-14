@@ -1,14 +1,12 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.BUNDLE_NAME;
-
 /**
  * Allows timing of the execution of any block of code.
  */
 public final class Stopwatch {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Stopwatch.class, BUNDLE_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Stopwatch.class, MessageCodes.BUNDLE);
 
     private boolean myTimerIsRunning;
 
