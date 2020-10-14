@@ -4,6 +4,11 @@ jdk:
 - openjdk8
 - openjdk11
 
+before_install:
+  - >
+    openssl aes-256-cbc -K $encrypted_1da62148018a_key -iv $encrypted_1da62148018a_iv \
+      -in src/main/resources/build-key.gpg.enc -out build-key.gpg -d
+
 # Overridden because parent project uses maven.test.skip instead of skipTests
 install:
   - mvn -s src/test/resources/settings.xml -q package -Dmaven.test.skip -Dmaven.javadoc.skip -B -V
@@ -13,7 +18,6 @@ script:
 
 after_success:
   - chmod 755 src/main/tools/travis/*
-  - src/main/tools/travis/get_build_key $encrypted_0e0f91f7a6ed_key $encrypted_0e0f91f7a6ed_iv
   - src/main/tools/travis/deploy
 
 cache:
@@ -23,13 +27,15 @@ cache:
 # The only branch we build on is master; all other builds are done on PRs to master
 branches:
   only:
-  - master
+  - main
 
 notifications:
-  email:
-    recipients:
-    - ksclarke@ksclarke.io
+  pushover:
+    api_key: "${PUSHOVER_API_KEY}"
+    users:
+      - "${PUSHOVER_USER_KEY}"
+    template: "%{repository_slug} (%{commit}) : %{message} - Build details: %{build_url}"
+    on_success: never
     on_failure: change
-    on_success: change
 
 sudo: false
