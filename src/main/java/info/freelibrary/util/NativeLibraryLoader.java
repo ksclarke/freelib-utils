@@ -27,13 +27,16 @@ public final class NativeLibraryLoader {
 
     private static final String LIB_PREFIX = "lib";
 
+    /**
+     * Possible architectures of native libraries.
+     */
     public enum Architecture {
         UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
-    };
+    }
 
     private enum Processor {
         UNKNOWN, INTEL_32, INTEL_64, PPC, ARM
-    };
+    }
 
     private static Architecture myArchitecture = Architecture.UNKNOWN;
 

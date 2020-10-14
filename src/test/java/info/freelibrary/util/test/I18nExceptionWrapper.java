@@ -5,6 +5,9 @@ import java.util.Locale;
 
 import info.freelibrary.util.I18nException;
 
+/**
+ * A wrapper around I18nException that makes it easier to test.
+ */
 public class I18nExceptionWrapper extends I18nException {
 
     /**

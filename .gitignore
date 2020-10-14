@@ -11,3 +11,4 @@ src/main/resources/build-key.gpg
 # we keep Checkstyle and PMD so they can be picked up by Codacy
 src/main/tools/travis
 src/main/tools/eclipse
+/bin/

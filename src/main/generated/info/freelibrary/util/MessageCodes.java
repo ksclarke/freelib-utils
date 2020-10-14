@@ -288,6 +288,10 @@ final public class MessageCodes {
 	 * Message: Unable to create directory structure for: {}
 	 */
 	public static final String UTIL_038 = "UTIL-038";
+	/**
+	 * Message bundle name.
+	 */
+	public static final String BUNDLE = "freelib-utils_messages";
 
 	private MessageCodes() {
 		super();

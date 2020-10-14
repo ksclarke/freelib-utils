@@ -3,6 +3,9 @@ package info.freelibrary.util.test;
 
 import info.freelibrary.util.I18nObject;
 
+/**
+ * A wrapper to make testing I18nObject easier.
+ */
 public class I18nObjectWrapper extends I18nObject {
 
     /**

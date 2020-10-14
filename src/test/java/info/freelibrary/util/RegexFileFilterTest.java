@@ -8,6 +8,9 @@ import java.io.FilenameFilter;
 
 import org.junit.Test;
 
+/**
+ * A test of <code>RegexFileFilter</code>
+ */
 public class RegexFileFilterTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegexFileFilterTest.class, Constants.BUNDLE_NAME);

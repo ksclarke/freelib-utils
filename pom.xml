@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>freelib-utils</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <name>FreeLibrary Utilities</name>
   <description>A small collection of utility classes</description>
   <url>http://projects.freelibrary.info/freelib-utils</url>
@@ -124,12 +124,11 @@
             <org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>info</org.slf4j.simpleLogger.log.info.freelibrary.util.ClasspathUtils>
             <org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>info</org.slf4j.simpleLogger.log.info.freelibrary.util.JarClassLoader>
           </systemPropertyVariables>
+          <forkCount>5</forkCount>
+          <!-- We cannot reuse forks with our logging tests -->
+          <reuseForks>false</reuseForks>
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jbake</groupId>
-        <artifactId>jbake-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
@@ -146,7 +145,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>3.8.7</version>
+    <version>5.0.0</version>
   </parent>
 
 </project>

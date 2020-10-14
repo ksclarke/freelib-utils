@@ -1,6 +1,9 @@
 
 package info.freelibrary.util;
 
+/**
+ * An I18n wrapper around <code>UnsupportedOperationException</code>.
+ */
 public class UnsupportedOperationI18nException extends I18nRuntimeException {
 
     /**
@@ -54,8 +57,8 @@ public class UnsupportedOperationI18nException extends I18nRuntimeException {
      * @param aMessageKey A message key for the exception message
      * @param aVarargs Additional details to be inserted into the exception message
      */
-    public UnsupportedOperationI18nException(final Throwable aCause, final String aBundleName,
-            final String aMessageKey, final Object... aVarargs) {
+    public UnsupportedOperationI18nException(final Throwable aCause, final String aBundleName, final String aMessageKey,
+            final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 

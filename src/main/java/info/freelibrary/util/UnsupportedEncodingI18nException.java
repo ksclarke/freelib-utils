@@ -4,6 +4,9 @@ package info.freelibrary.util;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+/**
+ * An I18n wrapper around <code>UnsupportedEncodingException</code>.
+ */
 public class UnsupportedEncodingI18nException extends I18nRuntimeException {
 
     /**
@@ -90,8 +93,8 @@ public class UnsupportedEncodingI18nException extends I18nRuntimeException {
      * @param aMessageKey A message key for the exception message
      * @param aVarargs Additional details to be inserted into the exception message
      */
-    public UnsupportedEncodingI18nException(final Throwable aCause, final String aBundleName,
-            final String aMessageKey, final Object... aVarargs) {
+    public UnsupportedEncodingI18nException(final Throwable aCause, final String aBundleName, final String aMessageKey,
+            final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 

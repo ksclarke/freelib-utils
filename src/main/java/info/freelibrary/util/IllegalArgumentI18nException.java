@@ -1,6 +1,9 @@
 
 package info.freelibrary.util;
 
+/**
+ * An I18n wrapper around <code>IllegalArgumentException</code>.
+ */
 public class IllegalArgumentI18nException extends I18nRuntimeException {
 
     /**
@@ -35,8 +38,7 @@ public class IllegalArgumentI18nException extends I18nRuntimeException {
      * @param aMessageKey A message (or message key) for the exception message
      * @param aVarargs Additional details about the illegal argument
      */
-    public IllegalArgumentI18nException(final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+    public IllegalArgumentI18nException(final String aBundleName, final String aMessageKey, final Object... aVarargs) {
         super(aBundleName, aMessageKey, aVarargs);
     }
 

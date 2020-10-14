@@ -1,12 +1,13 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
 /**
- * Tests UnsupportedOperationI18nException.
+ * Tests of UnsupportedOperationI18nException.
  */
 public class UnsupportedOperationI18nExceptionTest {
 
@@ -14,11 +15,17 @@ public class UnsupportedOperationI18nExceptionTest {
 
     private static final String MESSAGE = "Unsupported operation: soup";
 
+    /**
+     * Tests UnsupportedOperationI18nException's default constructor.
+     */
     @Test(expected = UnsupportedOperationI18nException.class)
     public final void testI18nUnsupportedOperationException() throws UnsupportedOperationI18nException {
         throw new UnsupportedOperationI18nException();
     }
 
+    /**
+     * Tests UnsupportedOperationI18nException's constructor that takes an UnsupportedOperationException.
+     */
     @Test
     public final void testI18nUnsupportedOperationExceptionString() {
         try {
@@ -29,6 +36,9 @@ public class UnsupportedOperationI18nExceptionTest {
         }
     }
 
+    /**
+     * Tests UnsupportedOperationI18nException constructor that takes an exception and additional details.
+     */
     @Test
     public final void testI18nUnsupportedOperationExceptionThrowableString() {
         try {
@@ -39,6 +49,9 @@ public class UnsupportedOperationI18nExceptionTest {
         }
     }
 
+    /**
+     * Tests UnsupportedOperationI18nException's constructor that takes a bundle name, key, and additional details.
+     */
     @Test
     public final void testI18nUnsupportedOperationExceptionStringStringObjectArray() {
         try {
@@ -49,6 +62,10 @@ public class UnsupportedOperationI18nExceptionTest {
         }
     }
 
+    /**
+     * Tests UnsupportedOperationI18nException's constructor that takes an exception, bundle name, and key, and
+     * additional details.
+     */
     @Test
     public final void testI18nUnsupportedOperationExceptionThrowableStringStringObjectArray() {
         try {
