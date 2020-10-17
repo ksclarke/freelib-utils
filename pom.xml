@@ -42,7 +42,6 @@
 
   <properties>
     <slf4j.simple.logger.version>1.7.25</slf4j.simple.logger.version>
-    <codacy.plugin.version>1.0.2</codacy.plugin.version>
   </properties>
 
   <dependencies>
