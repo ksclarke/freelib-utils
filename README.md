@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project is a small collection of convenience and utility classes (mostly used by other FreeLibrary projects). It includes utilities related to I/O, resource bundles, string manipulation, and class loaders.
+This project is a small collection of convenience and utility classes (mostly used by other FreeLibrary projects). It includes utilities related to I/O, resource bundles, string manipulation, and class loaders. It used to contain a set of Maven plugins, but those have been moved to a new project, [freelib-maven-plugins](https://github.com/ksclarke/freelib-maven-plugins).
 
 ## Building the Project
 
