@@ -10,7 +10,7 @@ before_install:
 
 # Overridden because parent project uses maven.test.skip instead of skipTests
 install:
-  - mvn -s src/test/resources/settings.xml -q package -Dmaven.test.skip -Dmaven.javadoc.skip -B -V
+#  - mvn -s src/test/resources/settings.xml -q package -Dmaven.test.skip -Dmaven.javadoc.skip -B -V
   - sudo apt-get install -y ccrypt
   - echo $BUILD_PASSPHRASE > info.txt
   - ccencrypt info.txt -K $THAT_THING
