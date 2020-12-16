@@ -25,7 +25,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_024 = "UTIL-024";
 	/**
-	 * Message: 
+	 * Message: Malformed URL: {}
 	 */
 	public static final String UTIL_068 = "UTIL-068";
 	/**
@@ -69,7 +69,7 @@ final public class MessageCodes {
 	 */
 	public static final String UTIL_025 = "UTIL-025";
 	/**
-	 * Message: 
+	 * Message: The start index position ({}) is after the end position ({})
 	 */
 	public static final String UTIL_069 = "UTIL-069";
 	/**

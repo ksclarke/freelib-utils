@@ -1,11 +1,7 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -55,6 +51,29 @@ public class StringUtilsTest {
     }
 
     /**
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
+     */
+    @Test
+    public void testFormatTwoCurlyBraces() {
+        assertEquals("12", StringUtils.format("{}{}", 1, 2));
+    }
+
+    /**
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
+     */
+    @Test
+    public void testFormatPassThrough() {
+        assertEquals(FIRST, StringUtils.format(FIRST));
+    }
+
+    /**
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
+     */
+    public void testForSiblingCurlyBrances() {
+        assertEquals("first://secondthird", StringUtils.format("{}://{}{}", FIRST, SECOND, THIRD));
+    }
+
+    /**
      * Tests {@link StringUtils#formatMessage()}.
      */
     @Test
@@ -66,7 +85,7 @@ public class StringUtilsTest {
         assertEquals(result, "This is the first and the second");
 
         try {
-            StringUtils.format(message, new String[] { FIRST });
+            StringUtils.format(message, FIRST);
             fail("Failed to notice more slots than values");
         } catch (final IndexOutOfBoundsException details) {
             // This is expected
@@ -167,9 +186,9 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringObjectArrayChar() {
-        final Integer i1 = Integer.valueOf(1);
-        final Integer i2 = Integer.valueOf(21);
-        final Integer i3 = Integer.valueOf(3);
+        final Integer i1 = 1;
+        final Integer i2 = 21;
+        final Integer i3 = 3;
 
         final Integer[] array = new Integer[] { i1, i2, i3 };
         assertEquals(ONE_21_3, StringUtils.toString(array, '~'));
@@ -180,9 +199,9 @@ public class StringUtilsTest {
      */
     @Test
     public void toStringCharVarargs() {
-        final Integer i1 = Integer.valueOf(1);
-        final Integer i2 = Integer.valueOf(21);
-        final Integer i3 = Integer.valueOf(3);
+        final Integer i1 = 1;
+        final Integer i2 = 21;
+        final Integer i3 = 3;
 
         final Object[] array = new Object[] { i1, i2, i3 };
 

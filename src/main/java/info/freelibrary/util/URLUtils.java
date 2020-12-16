@@ -36,7 +36,7 @@ public final class URLUtils {
     }
 
     /**
-     * Takes a URL and converts it to a File. The attempts to deal with Windows UNC format specific problems,
+     * Takes a URL and converts it to a File. This method attempts to deal with Windows UNC format specific problems,
      * specifically files located on network shares and different drives. If the URL.getAuthority() returns null or is
      * empty, then only the url's path property is used to construct the file. Otherwise, the authority is prefixed
      * before the path. It is assumed that url.getProtocol returns "file". Authority is the drive or network share the
@@ -85,6 +85,17 @@ public final class URLUtils {
         }
 
         return new File(path3);
+    }
+
+    /**
+     * Parses a string representation of a URL into a standard Java URL in an unchecked manner.
+     *
+     * @param aURL A string representation of a URL
+     * @return A standard Java URL
+     * @throws MalformedUrlException If the supplied URL string is invalid
+     */
+    public static URL parse(final String aURL) throws MalformedUrlException {
+        return new info.freelibrary.util.URL(aURL).toURL();
     }
 
     /**

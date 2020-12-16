@@ -77,9 +77,9 @@
   <entry key="UTIL-065">Illegal argument [{}]: {}</entry>
   <entry key="UTIL-066">The {} argument may not be null</entry>
   <entry key="UTIL-067">Unsupported operation: {}</entry>
-  <entry key="UTIL-068"></entry>
-  <entry key="UTIL-069"></entry>
-  <entry key="UTIL-070"></entry>
-  <entry key="UTIL-071"></entry>
+  <entry key="UTIL-068">Malformed URL: {}</entry>
+  <entry key="UTIL-069">The start index position ({}) is after the end position ({})</entry>
+  <entry key="UTIL-070">Start position out of bounds: {}</entry>
+  <entry key="UTIL-071">End position out of bounds: {}</entry>
 
 </properties>
