@@ -86,22 +86,19 @@
         <artifactId>maven-resources-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <show>public</show>
           <detectLinks>false</detectLinks>
-          <links>
-            <link>https://google.github.io/guava/releases/23.0/api/docs/</link>
-          </links>
           <sourcepath>src/main/java:src/main/generated</sourcepath>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <configLocation>${basedir}/src/main/tools/checkstyle/checkstyle.xml</configLocation>
+          <suppressionsLocation>${basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-pmd-plugin</artifactId>
@@ -155,7 +152,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>5.2.0</version>
+    <version>6.3.0</version>
   </parent>
 
 </project>

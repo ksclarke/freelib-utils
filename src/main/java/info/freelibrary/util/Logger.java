@@ -163,7 +163,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isDebugEnabled()) {
             final MDCCloseable closeable = setLineNumber();
-            final String[] details = new String[aDetails.length];
+            final Object[] details = new String[aDetails.length];
 
             // We can output different types of EOL based on marker
             addMarker(aMarker);
@@ -221,8 +221,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             addMarker(aMarker);
 
             if (hasI18nKey(aMessage)) {
-                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1), updateMessage(
-                        detail2));
+                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                        updateMessage(detail2));
             } else {
                 myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
             }
@@ -423,7 +423,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isErrorEnabled()) {
             final MDCCloseable closeable = setLineNumber();
-            final String[] details = new String[aDetails.length];
+            final Object[] details = new String[aDetails.length];
 
             // We can output different types of EOL based on marker
             addMarker(aMarker);
@@ -481,8 +481,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             addMarker(aMarker);
 
             if (hasI18nKey(aMessage)) {
-                myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1), updateMessage(
-                        detail2));
+                myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                        updateMessage(detail2));
             } else {
                 myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
             }
@@ -623,7 +623,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
             final MDCCloseable closeable = setDebugLineNumber();
-            final String[] details = new String[aDetails.length];
+            final Object[] details = new String[aDetails.length];
 
             // We can output different types of EOL based on marker
             addMarker(aMarker);
@@ -681,8 +681,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             addMarker(aMarker);
 
             if (hasI18nKey(aMessage)) {
-                myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1), updateMessage(
-                        detail2));
+                myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                        updateMessage(detail2));
             } else {
                 myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
             }
@@ -868,7 +868,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isTraceEnabled()) {
             final MDCCloseable closeable = setLineNumber();
-            final String[] details = new String[aDetails.length];
+            final Object[] details = new String[aDetails.length];
 
             // We can output different types of EOL based on marker
             addMarker(aMarker);
@@ -926,8 +926,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             addMarker(aMarker);
 
             if (hasI18nKey(aMessage)) {
-                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1), updateMessage(
-                        detail2));
+                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                        updateMessage(detail2));
             } else {
                 myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
             }
@@ -1063,7 +1063,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
             final MDCCloseable closeable = setDebugLineNumber();
-            final String[] details = new String[aDetails.length];
+            final Object[] details = new String[aDetails.length];
 
             // We can output different types of EOL based on marker
             addMarker(aMarker);
@@ -1121,8 +1121,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
             addMarker(aMarker);
 
             if (hasI18nKey(aMessage)) {
-                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1), updateMessage(
-                        detail2));
+                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                        updateMessage(detail2));
             } else {
                 myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
             }
@@ -1185,8 +1185,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     /**
-     * Gets the internal logger that this logger decorates. This allows casting it to the actual logging
-     * implementation so that native methods, etc., can be called.
+     * Gets the internal logger that this logger decorates. This allows casting it to the actual logging implementation
+     * so that native methods, etc., can be called.
      *
      * @return An underlying logger
      */
