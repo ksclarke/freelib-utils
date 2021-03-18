@@ -135,7 +135,7 @@ public final class ByteUtils {
         }
 
         ByteArrayAsList(final byte[] aByteArray, final int aStart, final int aEnd) {
-            myArray = aByteArray;
+            myArray = aByteArray.clone();
             myStart = aStart;
             myEnd = aEnd;
         }

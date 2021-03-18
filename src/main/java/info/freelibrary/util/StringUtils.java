@@ -98,8 +98,8 @@ public final class StringUtils {
      * @return The formatted string
      */
     public static String format(final String aMessage, final String... aDetails) {
-        final StringBuilder builder = new StringBuilder();
-        final Matcher matcher = PATTERN.matcher(aMessage);
+        final StringBuilder builder;
+        final Matcher matcher;
 
         int index = 0;
         int count = 0;
@@ -114,6 +114,8 @@ public final class StringUtils {
         }
 
         index = 0;
+        builder = new StringBuilder();
+        matcher = PATTERN.matcher(aMessage);
 
         while (matcher.find()) {
             matcher.appendReplacement(builder, "");
