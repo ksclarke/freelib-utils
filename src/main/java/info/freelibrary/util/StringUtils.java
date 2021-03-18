@@ -98,24 +98,10 @@ public final class StringUtils {
      * @return The formatted string
      */
     public static String format(final String aMessage, final String... aDetails) {
-        final StringBuilder builder;
-        final Matcher matcher;
+        final StringBuilder builder = new StringBuilder();
+        final Matcher matcher = PATTERN.matcher(aMessage);
 
-        int index = 0;
-        int count = 0;
-
-        while ((index = aMessage.indexOf("{}", index)) != -1) {
-            index += 1;
-            count += 1;
-        }
-
-        if (count != aDetails.length) {
-            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
-        }
-
-        index = 0;
-        builder = new StringBuilder();
-        matcher = PATTERN.matcher(aMessage);
+        int index = checkBracketCount(aMessage, aDetails);
 
         while (matcher.find()) {
             matcher.appendReplacement(builder, "");
@@ -610,4 +596,27 @@ public final class StringUtils {
         }
     }
 
+    /**
+     * Checks a string for the number of brackets compared to the number of arguments and throws an exception if the two
+     * numbers aren't equal.
+     *
+     * @param aMessage A message string
+     * @param aDetails An array of additional string details
+     * @return The starting index position if the counts matched
+     */
+    private static int checkBracketCount(final String aMessage, final String... aDetails) {
+        int index = 0;
+        int count = 0;
+
+        while ((index = aMessage.indexOf("{}", index)) != -1) {
+            index += 1;
+            count += 1;
+        }
+
+        if (count != aDetails.length) {
+            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
+        }
+
+        return 0;
+    }
 }
