@@ -28,7 +28,7 @@ public final class HTTP {
     public static final int ACCEPTED = 202;
 
     /** Non-authoritative information HTTP response code. */
-    @SuppressWarnings("PMD.LongVariable")
+    @SuppressWarnings(PMD.LONG_VARIABLE)
     public static final int NONAUTHORITATIVE_INFORMATION = 203;
 
     /** No content HTTP response code. */
@@ -158,11 +158,11 @@ public final class HTTP {
     public static final int TOO_MANY_REQUESTS = 429;
 
     /** Request header fields too large HTTP response code. */
-    @SuppressWarnings("PMD.LongVariable")
+    @SuppressWarnings(PMD.LONG_VARIABLE)
     public static final int REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
 
     /** Unavailable for legal reasons HTTP response code. */
-    @SuppressWarnings("PMD.LongVariable")
+    @SuppressWarnings(PMD.LONG_VARIABLE)
     public static final int UNAVAILABLE_FOR_LEGAL_REASONS = 451;
 
     /** Client closed connection error HTTP response code. */
@@ -184,7 +184,7 @@ public final class HTTP {
     public static final int GATEWAY_TIMEOUT = 504;
 
     /** HTTP version not supported error HTTP response code. */
-    @SuppressWarnings("PMD.LongVariable")
+    @SuppressWarnings(PMD.LONG_VARIABLE)
     public static final int HTTP_VERSION_NOT_SUPPORTED = 505;
 
     /** Variant also negotiates error HTTP response code. */
