@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides a few convenience methods for working with strings.
@@ -23,6 +25,8 @@ public final class StringUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, MessageCodes.BUNDLE);
 
     private static final String EOL = System.getProperty("line.separator");
+
+    private static final Pattern PATTERN = Pattern.compile("\\{\\}");
 
     private static final String RANGE_DELIMETER = "-";
 
@@ -94,34 +98,17 @@ public final class StringUtils {
      * @return The formatted string
      */
     public static String format(final String aMessage, final String... aDetails) {
-        int position = 0;
-        int count = 0;
-
-        while ((position = aMessage.indexOf("{}", position)) != -1) {
-            position += 1;
-            count += 1;
-        }
-
-        if (count != aDetails.length) {
-            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
-        }
-
-        final String[] parts = aMessage.split("\\{\\}");
         final StringBuilder builder = new StringBuilder();
+        final Matcher matcher = PATTERN.matcher(aMessage);
 
-        if (count == 1 && parts.length == 0) {
-            builder.append(aDetails[0]);
-        } else {
-            for (int index = 0; index < parts.length; index++) {
-                builder.append(parts[index]);
+        int index = checkBracketCount(aMessage, aDetails);
 
-                if (index < aDetails.length) {
-                    builder.append(aDetails[index]);
-                }
-            }
+        while (matcher.find()) {
+            matcher.appendReplacement(builder, "");
+            builder.append(aDetails[index++]);
         }
 
-        return builder.length() == 0 ? aMessage : builder.toString();
+        return matcher.appendTail(builder).toString();
     }
 
     /**
@@ -609,4 +596,27 @@ public final class StringUtils {
         }
     }
 
+    /**
+     * Checks a string for the number of brackets compared to the number of arguments and throws an exception if the two
+     * numbers aren't equal.
+     *
+     * @param aMessage A message string
+     * @param aDetails An array of additional string details
+     * @return The starting index position if the counts matched
+     */
+    private static int checkBracketCount(final String aMessage, final String... aDetails) {
+        int index = 0;
+        int count = 0;
+
+        while ((index = aMessage.indexOf("{}", index)) != -1) {
+            index += 1;
+            count += 1;
+        }
+
+        if (count != aDetails.length) {
+            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
+        }
+
+        return 0;
+    }
 }

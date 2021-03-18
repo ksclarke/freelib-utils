@@ -11,15 +11,13 @@ import org.junit.Test;
  */
 public class JarClassLoaderTest {
 
-    private static final String BUILD = "org.apache.maven.model.Build";
-
     /**
      * Tests JarClassLoader constructor.
      */
     @Test
     public void testJarClassLoaderString() {
         try {
-            new JarClassLoader(BUILD).close();
+            new JarClassLoader(I18nObject.class.getCanonicalName()).close();
         } catch (final Exception details) {
             Assert.fail(details.getMessage());
         }
@@ -31,7 +29,7 @@ public class JarClassLoaderTest {
     @Test
     public void testJarClassLoaderURLArrayString() {
         try {
-            new JarClassLoader(JarUtils.getJarURLs(), BUILD).close();
+            new JarClassLoader(JarUtils.getJarURLs(), I18nObject.class.getCanonicalName()).close();
         } catch (final Exception details) {
             Assert.fail(details.getMessage());
         }
@@ -43,7 +41,7 @@ public class JarClassLoaderTest {
     @Test
     public void testJarClassLoaderListOfURLString() {
         try {
-            new JarClassLoader(Arrays.asList(JarUtils.getJarURLs()), BUILD).close();
+            new JarClassLoader(Arrays.asList(JarUtils.getJarURLs()), I18nObject.class.getCanonicalName()).close();
         } catch (final Exception details) {
             Assert.fail(details.getMessage());
         }

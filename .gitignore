@@ -4,11 +4,16 @@ target/
 # By product of using PMD in Eclipse
 .eclipse-pmd
 
-# We encode this for Travis builds, but don't want to check it in to source control!
-src/main/resources/build-key.gpg
+# We ignore this work produce used to support dynamic versioning
+.flattened-pom.xml
 
 # Ignore project build tools which are generated on each build;
 # we keep Checkstyle and PMD so they can be picked up by Codacy
 src/main/tools/travis
 src/main/tools/eclipse
+
+# We can ignore generated sources; they'll be regenerated
+src/main/generated
+
+# Ignore this little dir Eclipse sometimes creates out of the gate
 /bin/
