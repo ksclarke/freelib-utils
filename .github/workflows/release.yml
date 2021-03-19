@@ -42,6 +42,7 @@ jobs:
           gpg_passphrase: ${{ secrets.BUILD_PASSPHRASE }}
           nexus_username: ${{ secrets.SONATYPE_USERNAME }}
           nexus_password: ${{ secrets.SONATYPE_PASSWORD }}
+          server_id: ossrh
           maven_profiles: "release"
           maven_args: >
             -Drevision=${{ github.event.release.tag_name }} -Dautorelease.artifact=${{ env.AUTORELEASE_ARTIFACT }}
