@@ -37,6 +37,21 @@ public final class Constants {
     public static final String COMMA = ",";
 
     /**
+     * A constant for a period.
+     */
+    public static final String PERIOD = ".";
+
+    /**
+     * A constant for a verticle bar.
+     */
+    public static final String VERTICAL_BAR = "|";
+
+    /**
+     * A constant for the plus symbol.
+     */
+    public static final String PLUS = "+";
+
+    /**
      * Private constructor for a constants class.
      */
     private Constants() {
