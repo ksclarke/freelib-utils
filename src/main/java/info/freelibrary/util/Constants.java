@@ -52,6 +52,11 @@ public final class Constants {
     public static final String PLUS = "+";
 
     /**
+     * A constant for the equals sign.
+     */
+    public static final String EQUALS = "=";
+
+    /**
      * Private constructor for a constants class.
      */
     private Constants() {
