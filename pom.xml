@@ -153,7 +153,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>6.7.0</version>
+    <version>6.7.2</version>
   </parent>
 
 </project>
