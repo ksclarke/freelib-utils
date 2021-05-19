@@ -14,18 +14,39 @@ import java.util.jar.JarFile;
  */
 public final class ClasspathUtils {
 
+    /**
+     * The <code>java.class.path</code> variable.
+     */
     private static final String CLASSPATH = "java.class.path";
 
+    /**
+     * A constant for YES.
+     */
     private static final String YES = "yes";
 
+    /**
+     * A constant for NO.
+     */
     private static final String NO = "no";
 
+    /**
+     * The classpath delimiter.
+     */
     private static final String DELIMETER = ":";
 
+    /**
+     * A constant for the Jar extension.
+     */
     private static final String JAR_EXT = "jar";
 
+    /**
+     * The logger used by ClasspathUtils.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtils.class, MessageCodes.BUNDLE);
 
+    /**
+     * Creates a new classpath utilities class.
+     */
     private ClasspathUtils() {
     }
 
@@ -229,22 +250,20 @@ public final class ClasspathUtils {
                     return target.toURI().toURL();
                 }
             } else if (filter.accept(file.getParentFile(), file.getName())) {
-                final JarFile jarFile = new JarFile(file);
-                final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
+                try (JarFile jarFile = new JarFile(file)) {
+                    final JarEntry jarEntry = jarFile.getJarEntry(aFileName);
 
-                if (jarEntry != null && jarEntry.getSize() > 0) {
-                    LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
-                    jarFile.close();
-                    return file.toURI().toURL();
-                } else {
-                    if (jarEntry != null) {
-                        LOGGER.debug(MessageCodes.UTIL_007, jarEntry.getName());
+                    if (jarEntry != null && jarEntry.getSize() > 0) {
+                        LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
+                        return file.toURI().toURL();
                     } else {
-                        LOGGER.debug(MessageCodes.UTIL_008, aFileName);
+                        if (jarEntry != null) {
+                            LOGGER.debug(MessageCodes.UTIL_007, jarEntry.getName());
+                        } else {
+                            LOGGER.debug(MessageCodes.UTIL_008, aFileName);
+                        }
                     }
                 }
-
-                jarFile.close();
             } else {
                 LOGGER.debug(MessageCodes.UTIL_009, file);
             }

@@ -8,19 +8,29 @@ import org.slf4j.Marker;
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount", "PMD.ExcessiveClassLength" })
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessivePublicCount", "PMD.ExcessiveClassLength",
+    "PMD.CyclomaticComplexity" })
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
+    /**
+     * An end of line regular expression pattern in string form.
+     */
     private static final String EOL_RE = "(\\n|\\r|\\r\\n)";
 
+    /**
+     * A constant representing line number.
+     */
     private static final String LINE_NUM = "line";
 
+    /**
+     * A wrapped SLF4J logger.
+     */
     private final org.slf4j.Logger myLogger;
 
     /**
      * Creates a logger using the supplied class as the name.
      *
-     * @param aClass A class to use as the name of the logger
+     * @param aLogger A SLF4J logger to wrap
      */
     Logger(final org.slf4j.Logger aLogger) {
         super();
@@ -30,7 +40,8 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     /**
      * Creates a logger using the supplied class as the name.
      *
-     * @param aClass A class to use as the name of the logger
+     * @param aLogger A SLF4J logger to wrap
+     * @param aBundleName A resource bundle name to use with the logger
      */
     Logger(final org.slf4j.Logger aLogger, final String aBundleName) {
         super(aBundleName);
@@ -40,263 +51,242 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void debug(final String aMessage) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(getI18n(aMessage));
-            } else {
-                myLogger.debug(aMessage);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(getI18n(aMessage));
+                } else {
+                    myLogger.debug(aMessage);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final String aMessage, final Object aDetail) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(getI18n(aMessage), aDetail);
-            } else {
-                myLogger.debug(aMessage, aDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(getI18n(aMessage), aDetail);
+                } else {
+                    myLogger.debug(aMessage, aDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final String aMessage, final Object... aDetails) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(getI18n(aMessage), aDetails);
-            } else {
-                myLogger.debug(aMessage, aDetails);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(getI18n(aMessage), aDetails);
+                } else {
+                    myLogger.debug(aMessage, aDetails);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.debug(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.debug(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.debug(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.debug(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.debug(aMessage, aThrowable);
-                } else {
-                    myLogger.debug(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.debug(aMessage, aThrowable);
+                    } else {
+                        myLogger.debug(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final Marker aMarker, final String aMessage) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)));
+                } else {
+                    myLogger.debug(aMarker, updateMessage(aMessage));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)));
-            } else {
-                myLogger.debug(aMarker, updateMessage(aMessage));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(getI18n(aMessage), a1stDetail, a2ndDetail);
-            } else {
-                myLogger.debug(aMessage, a1stDetail, a2ndDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(getI18n(aMessage), a1stDetail, a2ndDetail);
+                } else {
+                    myLogger.debug(aMessage, a1stDetail, a2ndDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    final String message = updateMessage(aDetail.toString());
+                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), message);
+                } else {
+                    myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(aDetail.toString()));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                final String message = updateMessage(aDetail.toString());
-                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), message);
-            } else {
-                myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(aDetail.toString()));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final Object[] details = new String[aDetails.length];
+            try (MDCCloseable closeable = setLineNumber()) {
+                final Object[] details = new String[aDetails.length];
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            for (int index = 0; index < aDetails.length; index++) {
-                details[index] = updateMessage(aDetails[index].toString());
+                for (int index = 0; index < aDetails.length; index++) {
+                    details[index] = updateMessage(aDetails[index].toString());
+                }
+
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), details);
+                } else {
+                    myLogger.debug(aMarker, updateMessage(aMessage), details);
+                }
+
+                clearMarker();
             }
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), details);
-            } else {
-                myLogger.debug(aMarker, updateMessage(aMessage), details);
-            }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
+                    } else {
+                        myLogger.debug(aMarker, updateMessage(getI18n(aMessage)));
+                    }
+                } else {
+                    if (aThrowable != null) {
+                        myLogger.debug(aMarker, updateMessage(aMessage), aThrowable);
+                    } else {
+                        myLogger.debug(aMarker, updateMessage(aMessage));
+                    }
+                }
 
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
-                } else {
-                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.debug(aMarker, updateMessage(aMessage), aThrowable);
-                } else {
-                    myLogger.debug(aMarker, updateMessage(aMessage));
-                }
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isDebugEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final String detail1 = a1stDetail.toString();
-            final String detail2 = a2ndDetail.toString();
+            try (MDCCloseable closeable = setLineNumber()) {
+                final String detail1 = a1stDetail.toString();
+                final String detail2 = a2ndDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
-            } else {
-                myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                            updateMessage(detail2));
+                } else {
+                    myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final String aMessage) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(getI18n(aMessage));
-            } else {
-                myLogger.error(aMessage);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(getI18n(aMessage));
+                } else {
+                    myLogger.error(aMessage);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final String aMessage, final Object aDetail) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(getI18n(aMessage), aDetail);
-            } else {
-                myLogger.error(aMessage, aDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(getI18n(aMessage), aDetail);
+                } else {
+                    myLogger.error(aMessage, aDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final String aMessage, final Object... aDetails) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(getI18n(aMessage), aDetails);
-            } else {
-                myLogger.error(aMessage, aDetails);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(getI18n(aMessage), aDetails);
+                } else {
+                    myLogger.error(aMessage, aDetails);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.error(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.error(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.error(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.error(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.error(aMessage, aThrowable);
-                } else {
-                    myLogger.error(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.error(aMessage, aThrowable);
+                    } else {
+                        myLogger.error(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
@@ -308,23 +298,21 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      */
     public void error(final Throwable aThrowable, final String aMessage) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.error(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.error(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.error(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.error(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.error(aMessage, aThrowable);
-                } else {
-                    myLogger.error(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.error(aMessage, aThrowable);
+                    } else {
+                        myLogger.error(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
@@ -337,158 +325,152 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      */
     public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.error(getI18n(aMessage, aVarargs), aThrowable);
-                } else {
-                    myLogger.error(getI18n(aMessage, aVarargs));
-                }
-            } else {
-                if (aThrowable != null) {
-                    if (aVarargs.length == 0) {
-                        myLogger.error(aMessage, aThrowable);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.error(getI18n(aMessage, aVarargs), aThrowable);
                     } else {
-                        myLogger.error(StringUtils.format(aMessage, aVarargs), aThrowable);
+                        myLogger.error(getI18n(aMessage, aVarargs));
                     }
                 } else {
-                    if (aVarargs.length == 0) {
-                        myLogger.error(aMessage);
+                    if (aThrowable != null) {
+                        if (aVarargs.length == 0) {
+                            myLogger.error(aMessage, aThrowable);
+                        } else {
+                            myLogger.error(StringUtils.format(aMessage, aVarargs), aThrowable);
+                        }
                     } else {
-                        myLogger.error(aMessage, aVarargs);
+                        if (aVarargs.length == 0) {
+                            myLogger.error(aMessage);
+                        } else {
+                            myLogger.error(aMessage, aVarargs);
+                        }
                     }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final Marker aMarker, final String aMessage) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)));
+                } else {
+                    myLogger.error(aMarker, updateMessage(aMessage));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(aMarker, updateMessage(getI18n(aMessage)));
-            } else {
-                myLogger.error(aMarker, updateMessage(aMessage));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(getI18n(aMessage), a1stDetail, a2ndDetail);
-            } else {
-                myLogger.error(aMessage, a1stDetail, a2ndDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(getI18n(aMessage), a1stDetail, a2ndDetail);
+                } else {
+                    myLogger.error(aMessage, a1stDetail, a2ndDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final String detail = aDetail.toString();
+            try (MDCCloseable closeable = setLineNumber()) {
+                final String detail = aDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
-            } else {
-                myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
+                } else {
+                    myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final Object[] details = new String[aDetails.length];
+            try (MDCCloseable closeable = setLineNumber()) {
+                final Object[] details = new String[aDetails.length];
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            for (int index = 0; index < details.length; index++) {
-                details[index] = updateMessage(aDetails[index].toString());
+                for (int index = 0; index < details.length; index++) {
+                    details[index] = updateMessage(aDetails[index].toString());
+                }
+
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)), details);
+                } else {
+                    myLogger.error(aMarker, updateMessage(aMessage), details);
+                }
+
+                clearMarker();
             }
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(aMarker, updateMessage(getI18n(aMessage)), details);
-            } else {
-                myLogger.error(aMarker, updateMessage(aMessage), details);
-            }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.error(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
+                    } else {
+                        myLogger.error(aMarker, updateMessage(getI18n(aMessage)));
+                    }
+                } else {
+                    if (aThrowable != null) {
+                        myLogger.error(aMarker, updateMessage(aMessage), aThrowable);
+                    } else {
+                        myLogger.error(aMarker, updateMessage(aMessage));
+                    }
+                }
 
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
-                } else {
-                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.error(aMarker, updateMessage(aMessage), aThrowable);
-                } else {
-                    myLogger.error(aMarker, updateMessage(aMessage));
-                }
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void error(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isErrorEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final String detail1 = a1stDetail.toString();
-            final String detail2 = a2ndDetail.toString();
+            try (MDCCloseable closeable = setLineNumber()) {
+                final String detail1 = a1stDetail.toString();
+                final String detail2 = a2ndDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
-            } else {
-                myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                            updateMessage(detail2));
+                } else {
+                    myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
@@ -500,195 +482,183 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(getI18n(aMessage));
-            } else {
-                myLogger.info(aMessage);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(getI18n(aMessage));
+                } else {
+                    myLogger.info(aMessage);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(getI18n(aMessage), aDetail);
-            } else {
-                myLogger.info(aMessage, aDetail);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(getI18n(aMessage), aDetail);
+                } else {
+                    myLogger.info(aMessage, aDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(getI18n(aMessage), aDetails);
-            } else {
-                myLogger.info(aMessage, aDetails);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(getI18n(aMessage), aDetails);
+                } else {
+                    myLogger.info(aMessage, aDetails);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.info(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.info(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.info(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.info(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.info(aMessage, aThrowable);
-                } else {
-                    myLogger.info(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.info(aMessage, aThrowable);
+                    } else {
+                        myLogger.info(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final Marker aMarker, final String aMessage) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)));
+                } else {
+                    myLogger.info(aMarker, updateMessage(aMessage));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(aMarker, updateMessage(getI18n(aMessage)));
-            } else {
-                myLogger.info(aMarker, updateMessage(aMessage));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(getI18n(aMessage), a1stDetail, a2ndDetail);
-            } else {
-                myLogger.info(aMessage, a1stDetail, a2ndDetail);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(getI18n(aMessage), a1stDetail, a2ndDetail);
+                } else {
+                    myLogger.info(aMessage, a1stDetail, a2ndDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final String detail = aDetail.toString();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final String detail = aDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
-            } else {
-                myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
+                } else {
+                    myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final Object[] details = new String[aDetails.length];
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final Object[] details = new String[aDetails.length];
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            for (int index = 0; index < details.length; index++) {
-                details[index] = updateMessage(aDetails[index].toString());
+                for (int index = 0; index < details.length; index++) {
+                    details[index] = updateMessage(aDetails[index].toString());
+                }
+
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)), details);
+                } else {
+                    myLogger.info(aMarker, updateMessage(aMessage), details);
+                }
+
+                clearMarker();
             }
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(aMarker, updateMessage(getI18n(aMessage)), details);
-            } else {
-                myLogger.info(aMarker, updateMessage(aMessage), details);
-            }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.info(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
+                    } else {
+                        myLogger.info(aMarker, updateMessage(getI18n(aMessage)));
+                    }
+                } else {
+                    if (aThrowable != null) {
+                        myLogger.info(aMarker, updateMessage(aMessage), aThrowable);
+                    } else {
+                        myLogger.info(aMarker, updateMessage(aMessage));
+                    }
+                }
 
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
-                } else {
-                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.info(aMarker, updateMessage(aMessage), aThrowable);
-                } else {
-                    myLogger.info(aMarker, updateMessage(aMessage));
-                }
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final String detail1 = a1stDetail.toString();
-            final String detail2 = a2ndDetail.toString();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final String detail1 = a1stDetail.toString();
+                final String detail2 = a2ndDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
-            } else {
-                myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                            updateMessage(detail2));
+                } else {
+                    myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
@@ -745,390 +715,366 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void trace(final String aMessage) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(getI18n(aMessage));
-            } else {
-                myLogger.trace(aMessage);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(getI18n(aMessage));
+                } else {
+                    myLogger.trace(aMessage);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final String aMessage, final Object aDetail) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(getI18n(aMessage), aDetail);
-            } else {
-                myLogger.trace(aMessage, aDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(getI18n(aMessage), aDetail);
+                } else {
+                    myLogger.trace(aMessage, aDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final String aMessage, final Object... aDetails) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(getI18n(aMessage), aDetails);
-            } else {
-                myLogger.trace(aMessage, aDetails);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(getI18n(aMessage), aDetails);
+                } else {
+                    myLogger.trace(aMessage, aDetails);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.trace(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.trace(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.trace(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.trace(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.trace(aMessage, aThrowable);
-                } else {
-                    myLogger.trace(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.trace(aMessage, aThrowable);
+                    } else {
+                        myLogger.trace(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final Marker aMarker, final String aMessage) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)));
+                } else {
+                    myLogger.trace(aMarker, updateMessage(aMessage));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)));
-            } else {
-                myLogger.trace(aMarker, updateMessage(aMessage));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(getI18n(aMessage), a1stDetail, a2ndDetail);
-            } else {
-                myLogger.trace(aMessage, a1stDetail, a2ndDetail);
+            try (MDCCloseable closeable = setLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(getI18n(aMessage), a1stDetail, a2ndDetail);
+                } else {
+                    myLogger.trace(aMessage, a1stDetail, a2ndDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final String detail = aDetail.toString();
+            try (MDCCloseable closeable = setLineNumber()) {
+                final String detail = aDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
-            } else {
-                myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
+                } else {
+                    myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final Object[] details = new String[aDetails.length];
+            try (MDCCloseable closeable = setLineNumber()) {
+                final Object[] details = new String[aDetails.length];
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            for (int index = 0; index < details.length; index++) {
-                details[index] = updateMessage(aDetails[index].toString());
+                for (int index = 0; index < details.length; index++) {
+                    details[index] = updateMessage(aDetails[index].toString());
+                }
+
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), details);
+                } else {
+                    myLogger.trace(aMarker, updateMessage(aMessage), details);
+                }
+
+                clearMarker();
             }
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), details);
-            } else {
-                myLogger.trace(aMarker, updateMessage(aMessage), details);
-            }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
+            try (MDCCloseable closeable = setLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
+                    } else {
+                        myLogger.trace(aMarker, updateMessage(getI18n(aMessage)));
+                    }
+                } else {
+                    if (aThrowable != null) {
+                        myLogger.trace(aMarker, updateMessage(aMessage), aThrowable);
+                    } else {
+                        myLogger.trace(aMarker, updateMessage(aMessage));
+                    }
+                }
 
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
-                } else {
-                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.trace(aMarker, updateMessage(aMessage), aThrowable);
-                } else {
-                    myLogger.trace(aMarker, updateMessage(aMessage));
-                }
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isTraceEnabled()) {
-            final MDCCloseable closeable = setLineNumber();
-            final String detail1 = a1stDetail.toString();
-            final String detail2 = a2ndDetail.toString();
+            try (MDCCloseable closeable = setLineNumber()) {
+                final String detail1 = a1stDetail.toString();
+                final String detail2 = a2ndDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
-            } else {
-                myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                            updateMessage(detail2));
+                } else {
+                    myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final String aMessage) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(getI18n(aMessage));
-            } else {
-                myLogger.warn(aMessage);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(getI18n(aMessage));
+                } else {
+                    myLogger.warn(aMessage);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(getI18n(aMessage), aDetail);
-            } else {
-                myLogger.warn(aMessage, aDetail);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(getI18n(aMessage), aDetail);
+                } else {
+                    myLogger.warn(aMessage, aDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(getI18n(aMessage), aDetails);
-            } else {
-                myLogger.warn(aMessage, aDetails);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(getI18n(aMessage), aDetails);
+                } else {
+                    myLogger.warn(aMessage, aDetails);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.warn(getI18n(aMessage), aThrowable);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.warn(getI18n(aMessage), aThrowable);
+                    } else {
+                        myLogger.warn(getI18n(aMessage));
+                    }
                 } else {
-                    myLogger.warn(getI18n(aMessage));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.warn(aMessage, aThrowable);
-                } else {
-                    myLogger.warn(aMessage);
+                    if (aThrowable != null) {
+                        myLogger.warn(aMessage, aThrowable);
+                    } else {
+                        myLogger.warn(aMessage);
+                    }
                 }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final Marker aMarker, final String aMessage) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)));
+                } else {
+                    myLogger.warn(aMarker, updateMessage(aMessage));
+                }
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)));
-            } else {
-                myLogger.warn(aMarker, updateMessage(aMessage));
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(getI18n(aMessage), a1stDetail, a2ndDetail);
-            } else {
-                myLogger.warn(aMessage, a1stDetail, a2ndDetail);
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(getI18n(aMessage), a1stDetail, a2ndDetail);
+                } else {
+                    myLogger.warn(aMessage, a1stDetail, a2ndDetail);
+                }
             }
-
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final String detail = aDetail.toString();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final String detail = aDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
-            } else {
-                myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail));
+                } else {
+                    myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final Object[] details = new String[aDetails.length];
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final Object[] details = new String[aDetails.length];
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            for (int index = 0; index < details.length; index++) {
-                details[index] = updateMessage(aDetails[index].toString());
+                for (int index = 0; index < details.length; index++) {
+                    details[index] = updateMessage(aDetails[index].toString());
+                }
+
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), details);
+                } else {
+                    myLogger.warn(aMarker, updateMessage(aMessage), details);
+                }
+
+                clearMarker();
             }
-
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), details);
-            } else {
-                myLogger.warn(aMarker, updateMessage(aMessage), details);
-            }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                if (hasI18nKey(aMessage)) {
+                    if (aThrowable != null) {
+                        myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
+                    } else {
+                        myLogger.warn(aMarker, updateMessage(getI18n(aMessage)));
+                    }
+                } else {
+                    if (aThrowable != null) {
+                        myLogger.warn(aMarker, updateMessage(aMessage), aThrowable);
+                    } else {
+                        myLogger.warn(aMarker, updateMessage(aMessage));
+                    }
+                }
 
-            if (hasI18nKey(aMessage)) {
-                if (aThrowable != null) {
-                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), aThrowable);
-                } else {
-                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)));
-                }
-            } else {
-                if (aThrowable != null) {
-                    myLogger.warn(aMarker, updateMessage(aMessage), aThrowable);
-                } else {
-                    myLogger.warn(aMarker, updateMessage(aMessage));
-                }
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
-            final MDCCloseable closeable = setDebugLineNumber();
-            final String detail1 = a1stDetail.toString();
-            final String detail2 = a2ndDetail.toString();
+            try (MDCCloseable closeable = setDebugLineNumber()) {
+                final String detail1 = a1stDetail.toString();
+                final String detail2 = a2ndDetail.toString();
 
-            // We can output different types of EOL based on marker
-            addMarker(aMarker);
+                // We can output different types of EOL based on marker
+                addMarker(aMarker);
 
-            if (hasI18nKey(aMessage)) {
-                myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
-            } else {
-                myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                if (hasI18nKey(aMessage)) {
+                    myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
+                            updateMessage(detail2));
+                } else {
+                    myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
+                }
+
+                clearMarker();
             }
-
-            clearMarker();
-            clearLineNumber(closeable);
         }
     }
 
@@ -1215,17 +1161,6 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     private MDCCloseable setLineNumber() {
         final int lineNum = Thread.currentThread().getStackTrace()[3].getLineNumber();
         return MDC.putCloseable(LINE_NUM, Integer.toString(lineNum));
-    }
-
-    /**
-     * Clear the line number.
-     *
-     * @param aCloseable A handle than can remove the line number after it's no longer needed
-     */
-    private void clearLineNumber(final MDCCloseable aCloseable) {
-        if (aCloseable != null) {
-            aCloseable.close();
-        }
     }
 
     private void addMarker(final Marker aMarker) {

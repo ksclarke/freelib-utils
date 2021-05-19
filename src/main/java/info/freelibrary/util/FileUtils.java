@@ -1,16 +1,22 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.EMPTY;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -28,17 +34,32 @@ import java.util.Set;
 /**
  * Utilities for working with files.
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.CyclomaticComplexity", "PMD.GodClass", "PMD.AvoidDuplicateLiterals" })
 public final class FileUtils {
 
+    /**
+     * A date format pattern.
+     */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
 
+    /**
+     * A constant for file type.
+     */
     private static final String FILE_TYPE = "file";
 
+    /**
+     * A regex expression for file extensions.
+     */
     private static final String WILDCARD = ".*";
 
+    /**
+     * A constant for the file extension delimiter.
+     */
     private static final char DOT = '.';
 
+    /**
+     * A logger for FileUtils.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class, MessageCodes.BUNDLE);
 
     /**
@@ -168,6 +189,7 @@ public final class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
             final String... aIgnoreList) throws FileNotFoundException {
         if (!aDir.exists()) {
@@ -255,7 +277,7 @@ public final class FileUtils {
             return aFileName.substring(index + 1, aFileName.length());
         }
 
-        return "";
+        return EMPTY;
     }
 
     /**
@@ -286,6 +308,7 @@ public final class FileUtils {
      * @param aDir A directory to delete
      * @return True if file was successfully deleted; else, false
      */
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
@@ -314,6 +337,7 @@ public final class FileUtils {
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
@@ -353,9 +377,9 @@ public final class FileUtils {
     public static String sizeFromBytes(final long aByteCount, final boolean aAbbreviatedLabel) {
         long count;
 
-        if ((count = aByteCount / 1073741824) > 0) {
+        if ((count = aByteCount / 1_073_741_824) > 0) {
             return count + (aAbbreviatedLabel ? " GB" : " gigabytes");
-        } else if ((count = aByteCount / 1048576) > 0) {
+        } else if ((count = aByteCount / 1_048_576) > 0) {
             return count + (aAbbreviatedLabel ? " MB" : " megabytes");
         } else if ((count = aByteCount / 1024) > 0) {
             return count + (aAbbreviatedLabel ? " KB" : " kilobytes");
@@ -375,28 +399,23 @@ public final class FileUtils {
      */
     public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException, IOException {
         final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
-        final FileInputStream inStream = new FileInputStream(aFile);
-        final DigestInputStream mdStream = new DigestInputStream(inStream, md);
-        final byte[] bytes = new byte[8192];
-        int bytesRead = 0;
+        final Path filePath = Paths.get(aFile.getAbsolutePath());
 
-        while (bytesRead != -1) {
-            bytesRead = mdStream.read(bytes);
+        try (InputStream inStream = Files.newInputStream(filePath); Formatter formatter = new Formatter();
+                DigestInputStream mdStream = new DigestInputStream(inStream, md)) {
+            final byte[] bytes = new byte[8192];
+            int bytesRead = 0;
+
+            while (bytesRead != -1) {
+                bytesRead = mdStream.read(bytes);
+            }
+
+            for (final byte bite : md.digest()) {
+                formatter.format("%02x", bite);
+            }
+
+            return formatter.toString();
         }
-
-        final Formatter formatter = new Formatter();
-
-        for (final byte bite : md.digest()) {
-            formatter.format("%02x", bite);
-        }
-
-        IOUtils.closeQuietly(mdStream);
-
-        final String hash = formatter.toString();
-
-        formatter.close();
-
-        return hash;
     }
 
     /**
@@ -439,42 +458,43 @@ public final class FileUtils {
      * @param aMode An integer permissions mode.
      * @return A PosixFilePermission set
      */
+    @SuppressWarnings("PMD.NPathComplexity")
     public static Set<PosixFilePermission> convertToPermissionsSet(final int aMode) {
         final Set<PosixFilePermission> result = EnumSet.noneOf(PosixFilePermission.class);
 
-        if (isSet(aMode, 0400)) {
+        if (isSet(aMode, 400)) {
             result.add(PosixFilePermission.OWNER_READ);
         }
 
-        if (isSet(aMode, 0200)) {
+        if (isSet(aMode, 200)) {
             result.add(PosixFilePermission.OWNER_WRITE);
         }
 
-        if (isSet(aMode, 0100)) {
+        if (isSet(aMode, 100)) {
             result.add(PosixFilePermission.OWNER_EXECUTE);
         }
 
-        if (isSet(aMode, 040)) {
+        if (isSet(aMode, 40)) {
             result.add(PosixFilePermission.GROUP_READ);
         }
 
-        if (isSet(aMode, 020)) {
+        if (isSet(aMode, 20)) {
             result.add(PosixFilePermission.GROUP_WRITE);
         }
 
-        if (isSet(aMode, 010)) {
+        if (isSet(aMode, 10)) {
             result.add(PosixFilePermission.GROUP_EXECUTE);
         }
 
-        if (isSet(aMode, 04)) {
+        if (isSet(aMode, 4)) {
             result.add(PosixFilePermission.OTHERS_READ);
         }
 
-        if (isSet(aMode, 02)) {
+        if (isSet(aMode, 2)) {
             result.add(PosixFilePermission.OTHERS_WRITE);
         }
 
-        if (isSet(aMode, 01)) {
+        if (isSet(aMode, 1)) {
             result.add(PosixFilePermission.OTHERS_EXECUTE);
         }
 
@@ -487,43 +507,44 @@ public final class FileUtils {
      * @param aPermSet A PosixFilePermission set
      * @return A permissions mode integer
      */
+    @SuppressWarnings("PMD.NPathComplexity")
     public static int convertToInt(final Set<PosixFilePermission> aPermSet) {
         int result = 0;
 
         if (aPermSet.contains(PosixFilePermission.OWNER_READ)) {
-            result = result | 0400;
+            result = result | 400;
         }
 
         if (aPermSet.contains(PosixFilePermission.OWNER_WRITE)) {
-            result = result | 0200;
+            result = result | 200;
         }
 
         if (aPermSet.contains(PosixFilePermission.OWNER_EXECUTE)) {
-            result = result | 0100;
+            result = result | 100;
         }
 
         if (aPermSet.contains(PosixFilePermission.GROUP_READ)) {
-            result = result | 040;
+            result = result | 40;
         }
 
         if (aPermSet.contains(PosixFilePermission.GROUP_WRITE)) {
-            result = result | 020;
+            result = result | 20;
         }
 
         if (aPermSet.contains(PosixFilePermission.GROUP_EXECUTE)) {
-            result = result | 010;
+            result = result | 10;
         }
 
         if (aPermSet.contains(PosixFilePermission.OTHERS_READ)) {
-            result = result | 04;
+            result = result | 4;
         }
 
         if (aPermSet.contains(PosixFilePermission.OTHERS_WRITE)) {
-            result = result | 02;
+            result = result | 2;
         }
 
         if (aPermSet.contains(PosixFilePermission.OTHERS_EXECUTE)) {
-            result = result | 01;
+            result = result | 1;
         }
 
         return result;
@@ -541,9 +562,8 @@ public final class FileUtils {
      * @return True if the copy was successful; else, false
      * @throws IOException If there is a problem copying the file
      */
+    @SuppressWarnings({ "PMD.NPathComplexity", "PMD.AvoidFileStream" })
     private static boolean copyFile(final File aSourceFile, final File aDestFile) throws IOException {
-        FileOutputStream outputStream = null;
-        FileInputStream inputStream = null;
         boolean success = true;
 
         // destructive copy
@@ -557,16 +577,10 @@ public final class FileUtils {
         }
 
         if (success) {
-            try {
-                final FileChannel source;
-
-                outputStream = new FileOutputStream(aDestFile);
-                inputStream = new FileInputStream(aSourceFile);
-                source = inputStream.getChannel();
+            try (FileOutputStream outputStream = new FileOutputStream(aDestFile);
+                    FileInputStream inputStream = new FileInputStream(aSourceFile);
+                    FileChannel source = inputStream.getChannel()) {
                 outputStream.getChannel().transferFrom(source, 0, source.size());
-            } finally {
-                IOUtils.closeQuietly(outputStream);
-                IOUtils.closeQuietly(inputStream);
             }
         }
 

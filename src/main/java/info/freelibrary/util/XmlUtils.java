@@ -18,8 +18,14 @@ import javax.xml.transform.stream.StreamSource;
  */
 public final class XmlUtils {
 
+    /**
+     * The default indentation amount.
+     */
     private static final int DEFAULT_INDENTATION = 2;
 
+    /**
+     * A constant for YES.
+     */
     private static final String YES = "yes";
 
     /**

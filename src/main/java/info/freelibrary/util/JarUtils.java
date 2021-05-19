@@ -2,12 +2,14 @@
 package info.freelibrary.util;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,11 +24,21 @@ import java.util.jar.Manifest;
  */
 public final class JarUtils {
 
+    /**
+     * The logger used by the Jar utilities.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(JarUtils.class, MessageCodes.BUNDLE);
 
+    /**
+     * A constant for the protocol of a Jar file.
+     */
     private static final String JAR_URL_PROTOCOL = "jar:file://";
 
+    /**
+     * Creates a new Jar utilities instance.
+     */
     private JarUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -35,36 +47,37 @@ public final class JarUtils {
      * @return An array of {@link URL}s found in the classpath
      * @throws IOException If there is trouble reading the classpath
      */
+    @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
     public static URL[] getJarURLs() throws IOException {
         final List<URL> urlList = new LinkedList<>();
 
         for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
-            final Manifest manifest = jarFile.getManifest();
-            final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + "!/");
+            try (jarFile) {
+                final Manifest manifest = jarFile.getManifest();
+                final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + "!/");
 
-            urlList.add(jarURL);
+                urlList.add(jarURL);
 
-            if (manifest != null) {
-                final Attributes attributes = manifest.getMainAttributes();
+                if (manifest != null) {
+                    final Attributes attributes = manifest.getMainAttributes();
 
-                if (attributes != null) {
-                    final String classpath = attributes.getValue("Class-Path");
+                    if (attributes != null) {
+                        final String classpath = attributes.getValue("Class-Path");
 
-                    if (classpath != null) {
-                        final StringTokenizer tokenizer = new StringTokenizer(classpath);
+                        if (classpath != null) {
+                            final StringTokenizer tokenizer = new StringTokenizer(classpath);
 
-                        while (tokenizer.hasMoreTokens()) {
-                            final String jarPath = tokenizer.nextToken();
+                            while (tokenizer.hasMoreTokens()) {
+                                final String jarPath = tokenizer.nextToken();
 
-                            if (jarPath.endsWith(".jar")) {
-                                urlList.add(new URL(jarURL.toExternalForm() + jarPath));
+                                if (jarPath.endsWith(".jar")) {
+                                    urlList.add(new URL(jarURL.toExternalForm() + jarPath));
+                                }
                             }
                         }
                     }
                 }
             }
-
-            jarFile.close();
         }
 
         return urlList.toArray(new URL[0]);
@@ -117,7 +130,7 @@ public final class JarUtils {
     public static void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir) throws IOException {
         final Enumeration<JarEntry> entries = aJarFile.entries();
 
-        try {
+        try (aJarFile) {
             while (entries.hasMoreElements()) {
                 final JarEntry entry = entries.nextElement();
                 final String entryName = entry.getName();
@@ -130,16 +143,12 @@ public final class JarUtils {
                         throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_038, file));
                     }
 
-                    final InputStream inputStream = aJarFile.getInputStream(entry);
-                    final FileOutputStream outputStream = new FileOutputStream(file);
-
-                    IOUtils.copyStream(inputStream, outputStream);
-                    IOUtils.closeQuietly(inputStream);
-                    IOUtils.closeQuietly(outputStream);
+                    try (InputStream inputStream = aJarFile.getInputStream(entry);
+                            OutputStream outputStream = Files.newOutputStream(Paths.get(file.getAbsolutePath()))) {
+                        IOUtils.copyStream(inputStream, outputStream);
+                    }
                 }
             }
-        } finally {
-            aJarFile.close();
         }
     }
 }

@@ -16,6 +16,9 @@ import java.util.ResourceBundle;
  */
 public class I18nObject {
 
+    /**
+     * The internationalized object's internal resource bundle.
+     */
     private final XMLResourceBundle myBundle;
 
     /**
@@ -172,6 +175,8 @@ public class I18nObject {
 
     /**
      * Returns an enumeration of this object's keys.
+     *
+     * @return An enumeration of I18n keys
      */
     protected Enumeration<String> getKeys() {
         return myBundle.getKeys();

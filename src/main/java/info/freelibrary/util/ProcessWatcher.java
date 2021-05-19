@@ -10,10 +10,19 @@ import java.util.List;
  */
 public class ProcessWatcher extends Thread {
 
+    /**
+     * A logger for the process watcher.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessWatcher.class, MessageCodes.BUNDLE);
 
+    /**
+     * A process listener.
+     */
     private final List<ProcessListener> myListeners = new ArrayList<>();
 
+    /**
+     * A wrapped process.
+     */
     private final Process myProcess;
 
     /**
@@ -23,10 +32,12 @@ public class ProcessWatcher extends Thread {
      * @throws IOException If there is trouble starting the process
      */
     public ProcessWatcher(final ProcessBuilder aProcessBuilder) throws IOException {
+        super();
         myProcess = aProcessBuilder.start();
     }
 
     @Override
+    @SuppressWarnings("PMD.UseTryWithResources")
     public void run() {
         try {
             myProcess.waitFor();

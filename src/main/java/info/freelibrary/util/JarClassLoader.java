@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class JarClassLoader extends URLClassLoader {
 
+    /**
+     * The logger used by the JarClassLoader.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(JarClassLoader.class, MessageCodes.BUNDLE);
 
     /**

@@ -15,9 +15,16 @@ import java.util.Objects;
  */
 public final class PasswordUtils {
 
+    /**
+     * A logger used by the password utilities.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(PasswordUtils.class, MessageCodes.BUNDLE);
 
+    /**
+     * Creates a new password utilities instance.
+     */
     private PasswordUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -48,7 +55,7 @@ public final class PasswordUtils {
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
      */
-    public static String encrypt(final String aText, final String aSalt) throws NullPointerException, IOException {
+    public static String encrypt(final String aText, final String aSalt) throws IOException {
         Objects.requireNonNull(aText, LOGGER.getI18n("Text to encrypt is null"));
         Objects.requireNonNull(aSalt, LOGGER.getI18n("Salt to encrypt with is null"));
 
@@ -59,9 +66,7 @@ public final class PasswordUtils {
             digest.update(saltedText.getBytes("UTF-8"));
 
             return Base64.getEncoder().encodeToString(digest.digest());
-        } catch (final NoSuchAlgorithmException details) {
-            throw new I18nRuntimeException(details); // programming error
-        } catch (final UnsupportedEncodingException details) {
+        } catch (final NoSuchAlgorithmException | UnsupportedEncodingException details) {
             throw new I18nRuntimeException(details); // programming error
         }
     }

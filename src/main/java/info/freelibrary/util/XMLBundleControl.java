@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
  */
 public class XMLBundleControl extends ResourceBundle.Control {
 
+    /**
+     * An expected resource file extension.
+     */
     private static final String FORMAT = "xml";
 
     /**
@@ -42,13 +45,11 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     @Override
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
-            final ClassLoader aClassLoader, final boolean aReload) throws IllegalAccessException,
-            InstantiationException, IOException {
-        ResourceBundle bundle = null;
-
+            final ClassLoader aClassLoader, final boolean aReload)
+            throws IllegalAccessException, InstantiationException, IOException {
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
-        if (aFormat.equals(FORMAT)) {
+        if (FORMAT.equals(aFormat)) {
             final String bundleName = toBundleName(aBaseName, aLocale);
             final String resourceName = toResourceName(bundleName, aFormat);
 
@@ -59,15 +60,19 @@ public class XMLBundleControl extends ResourceBundle.Control {
                     final URLConnection connection = url.openConnection();
 
                     connection.setUseCaches(false);
-                    bundle = makeBundle(connection.getInputStream());
+
+                    try (InputStream bundleStream = connection.getInputStream()) {
+                        return makeBundle(bundleStream);
+                    }
                 }
             } else {
-                final InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName);
-                bundle = makeBundle(bundleStream);
+                try (InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName)) {
+                    return makeBundle(bundleStream);
+                }
             }
         }
 
-        return bundle;
+        return null;
     }
 
     /**
@@ -75,8 +80,7 @@ public class XMLBundleControl extends ResourceBundle.Control {
      *
      * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
      * @return A {@link ResourceBundle}
-     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied
-     *         {@link InputStream}
+     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
      */
     private ResourceBundle makeBundle(final InputStream aInputStream) throws IOException {
         final BufferedInputStream bufferedInputStream = new BufferedInputStream(aInputStream);

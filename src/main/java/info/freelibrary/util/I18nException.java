@@ -15,6 +15,9 @@ public class I18nException extends Exception {
      */
     private static final long serialVersionUID = 1137212885016281357L;
 
+    /**
+     * The logger for I18nException.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(I18nException.class, MessageCodes.BUNDLE);
 
     /**

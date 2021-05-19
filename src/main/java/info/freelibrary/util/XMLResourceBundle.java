@@ -16,7 +16,9 @@ import java.util.ResourceBundle;
  */
 public class XMLResourceBundle extends ResourceBundle {
 
-    /* Use the original loggers here, not the info.freelib.util.Logger/LoggerFactory wrappers */
+    /**
+     * Use the original loggers here, not the info.freelib.util.Logger/LoggerFactory wrappers.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLResourceBundle.class, MessageCodes.BUNDLE);
 
     /**
@@ -31,6 +33,8 @@ public class XMLResourceBundle extends ResourceBundle {
      * @throws IOException If there is trouble reading from the XML file
      */
     XMLResourceBundle(final InputStream aInStream) throws IOException {
+        super();
+
         myProperties = new Properties();
         myProperties.loadFromXML(aInStream);
     }

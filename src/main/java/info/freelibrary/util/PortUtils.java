@@ -11,6 +11,9 @@ import java.util.NoSuchElementException;
  */
 public final class PortUtils {
 
+    /**
+     * Create a new instance of the port utilities.
+     */
     private PortUtils() {
     }
 
@@ -19,19 +22,13 @@ public final class PortUtils {
      *
      * @return An open port
      */
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public static int getPort() {
-        final int port;
-
-        try {
-            final ServerSocket socket = new ServerSocket(0);
-
-            port = socket.getLocalPort();
-            socket.close();
+        try (ServerSocket socket = new ServerSocket(0)) {
+            return socket.getLocalPort();
         } catch (final IOException details) {
             throw new RuntimeException(details);
         }
-
-        return port;
     }
 
     /**
@@ -48,9 +45,13 @@ public final class PortUtils {
      */
     private static class PortIterator implements Iterator<Integer> {
 
+        /**
+         * The next available port.
+         */
         private int myNextPort;
 
         @Override
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
         public boolean hasNext() {
             try {
                 myNextPort = getPort();
@@ -61,6 +62,7 @@ public final class PortUtils {
         }
 
         @Override
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
         public Integer next() {
             final Integer port;
 
@@ -70,7 +72,7 @@ public final class PortUtils {
 
                 return port;
             } catch (final RuntimeException details) {
-                throw new NoSuchElementException(details.getMessage());
+                throw (NoSuchElementException) new NoSuchElementException(details.getMessage()).initCause(details);
             }
         }
 

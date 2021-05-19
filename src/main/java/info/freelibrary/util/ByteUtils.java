@@ -14,8 +14,14 @@ import java.util.RandomAccess;
  */
 public final class ByteUtils {
 
+    /**
+     * The logger for ByteUtils.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ByteUtils.class, MessageCodes.BUNDLE);
 
+    /**
+     * Creates a new ByteUtils instance.
+     */
     private ByteUtils() {
     }
 
@@ -120,21 +126,50 @@ public final class ByteUtils {
         }
     }
 
+    /**
+     * Creates a list wrapper over top of a byte array.
+     */
     private static class ByteArrayAsList extends AbstractList<Byte> implements RandomAccess, Serializable {
 
+        /**
+         * The serialVersionUID for ByteArrayAsList.
+         */
         private static final long serialVersionUID = 0;
 
+        /**
+         * The internal byte array.
+         */
         final byte[] myArray;
 
+        /**
+         * The array start index.
+         */
         final int myStart;
 
+        /**
+         * The array end index.
+         */
         final int myEnd;
 
+        /**
+         * Creates a new ByteArrayAsList from the supplied byte array.
+         *
+         * @param aByteArray A byte array to wrap with a list
+         */
         ByteArrayAsList(final byte[] aByteArray) {
             this(aByteArray, 0, aByteArray.length);
         }
 
+        /**
+         * Creates a new ByteArrayAsList from the supplied byte array and start/end positions.
+         *
+         * @param aByteArray A byte array to wrap with a list
+         * @param aStart A start index position
+         * @param aEnd A end index position
+         */
         ByteArrayAsList(final byte[] aByteArray, final int aStart, final int aEnd) {
+            super();
+
             myArray = aByteArray.clone();
             myStart = aStart;
             myEnd = aEnd;
@@ -269,4 +304,5 @@ public final class ByteUtils {
             return Arrays.copyOfRange(myArray, myStart, myEnd);
         }
     }
+
 }
