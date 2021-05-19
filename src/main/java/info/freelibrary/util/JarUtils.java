@@ -52,7 +52,7 @@ public final class JarUtils {
         final List<URL> urlList = new LinkedList<>();
 
         for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
-            try {
+            try (jarFile) {
                 final Manifest manifest = jarFile.getManifest();
                 final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + "!/");
 
@@ -77,8 +77,6 @@ public final class JarUtils {
                         }
                     }
                 }
-            } finally {
-                jarFile.close();
             }
         }
 
@@ -132,7 +130,7 @@ public final class JarUtils {
     public static void extract(final JarFile aJarFile, final String aFilePath, final File aDestDir) throws IOException {
         final Enumeration<JarEntry> entries = aJarFile.entries();
 
-        try {
+        try (aJarFile) {
             while (entries.hasMoreElements()) {
                 final JarEntry entry = entries.nextElement();
                 final String entryName = entry.getName();
@@ -151,8 +149,6 @@ public final class JarUtils {
                     }
                 }
             }
-        } finally {
-            aJarFile.close();
         }
     }
 }

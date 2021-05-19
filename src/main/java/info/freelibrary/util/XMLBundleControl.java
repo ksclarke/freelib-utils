@@ -47,11 +47,9 @@ public class XMLBundleControl extends ResourceBundle.Control {
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
             final ClassLoader aClassLoader, final boolean aReload)
             throws IllegalAccessException, InstantiationException, IOException {
-        ResourceBundle bundle = null;
-
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
-        if (aFormat.equals(FORMAT)) {
+        if (FORMAT.equals(aFormat)) {
             final String bundleName = toBundleName(aBaseName, aLocale);
             final String resourceName = toResourceName(bundleName, aFormat);
 
@@ -64,17 +62,17 @@ public class XMLBundleControl extends ResourceBundle.Control {
                     connection.setUseCaches(false);
 
                     try (InputStream bundleStream = connection.getInputStream()) {
-                        bundle = makeBundle(bundleStream);
+                        return makeBundle(bundleStream);
                     }
                 }
             } else {
                 try (InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName)) {
-                    bundle = makeBundle(bundleStream);
+                    return makeBundle(bundleStream);
                 }
             }
         }
 
-        return bundle;
+        return null;
     }
 
     /**
