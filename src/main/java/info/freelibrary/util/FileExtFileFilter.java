@@ -11,9 +11,14 @@ import java.util.Arrays;
  */
 public class FileExtFileFilter implements FilenameFilter {
 
+    /**
+     * A constant for the file extension delimiter.
+     */
     private static final String DOT = ".";
 
-    // Extensions registered with this filter
+    /**
+     * Extensions registered with this filter.
+     */
     private final String[] myExtensions;
 
     /**
@@ -86,6 +91,12 @@ public class FileExtFileFilter implements FilenameFilter {
         return false;
     }
 
+    /**
+     * Normalizes the supplied file extension.
+     *
+     * @param aFileExt A file extension
+     * @return A normalized version of the file extension
+     */
     private String normalizeExt(final String aFileExt) {
         return DOT + (aFileExt.startsWith(DOT) ? aFileExt.substring(1) : aFileExt);
     }

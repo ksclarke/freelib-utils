@@ -6,12 +6,24 @@ package info.freelibrary.util;
  */
 public final class Stopwatch {
 
+    /**
+     * The logger of the stopwatch.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(Stopwatch.class, MessageCodes.BUNDLE);
 
+    /**
+     * A flag indicating if the timer is running.
+     */
     private boolean myTimerIsRunning;
 
+    /**
+     * A start time.
+     */
     private long myStart;
 
+    /**
+     * A stop time.
+     */
     private long myStop;
 
     /**

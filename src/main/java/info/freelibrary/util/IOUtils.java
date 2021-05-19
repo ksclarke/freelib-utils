@@ -26,9 +26,16 @@ import org.slf4j.LoggerFactory;
  */
 public final class IOUtils {
 
+    /**
+     * The logger of the I/O utilities.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
+    /**
+     * Creates a new instance of IOUtils.
+     */
     private IOUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -137,8 +144,8 @@ public final class IOUtils {
     }
 
     /**
-     * Writes from an input stream to an output stream; you're responsible for closing the <code>InputStream</code>
-     * and <code>OutputStream</code>.
+     * Writes from an input stream to an output stream; you're responsible for closing the <code>InputStream</code> and
+     * <code>OutputStream</code>.
      *
      * @param aInStream The stream from which to read
      * @param aOutStream The stream from which to write
@@ -149,15 +156,10 @@ public final class IOUtils {
         final BufferedInputStream inStream = new BufferedInputStream(aInStream);
         final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         final byte[] buffer = new byte[1024];
-        int bytesRead = 0;
 
-        while (true) {
-            bytesRead = inStream.read(buffer);
+        int bytesRead;
 
-            if (bytesRead == -1) {
-                break;
-            }
-
+        while ((bytesRead = inStream.read(buffer)) != -1) {
             byteStream.write(buffer, 0, bytesRead);
         }
 
@@ -166,26 +168,25 @@ public final class IOUtils {
     }
 
     /**
-     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input
-     * stream is closed for you since just a <code>File</code> was passed in.
+     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input stream
+     * is closed for you since just a <code>File</code> was passed in.
      *
      * @param aFile A file from which to read
      * @param aOutStream An output stream to which to write
      * @throws IOException If there is a problem reading or writing
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     public static void copyStream(final File aFile, final OutputStream aOutStream) throws IOException {
-        final FileInputStream input = new FileInputStream(aFile);
-        final FileChannel channel = input.getChannel();
-        final byte[] buffer = new byte[256 * 1024];
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
+        try (FileInputStream input = new FileInputStream(aFile); FileChannel channel = input.getChannel()) {
+            final byte[] buffer = new byte[256 * 1024];
+            final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 
-        try {
-            for (int length = 0; (length = channel.read(byteBuffer)) != -1;) {
+            int length;
+
+            while ((length = channel.read(byteBuffer)) != -1) {
                 aOutStream.write(buffer, 0, length);
                 byteBuffer.clear();
             }
-        } finally {
-            input.close();
         }
     }
 

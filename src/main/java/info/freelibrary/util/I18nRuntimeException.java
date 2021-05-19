@@ -15,6 +15,9 @@ public class I18nRuntimeException extends RuntimeException {
      */
     private static final long serialVersionUID = 1137212882896281357L;
 
+    /**
+     * The logger used by I18nRuntimeException.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(I18nRuntimeException.class, MessageCodes.BUNDLE);
 
     /**

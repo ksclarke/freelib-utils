@@ -4,12 +4,13 @@ package info.freelibrary.util;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Locale;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
@@ -17,12 +18,24 @@ import java.util.jar.JarFile;
  */
 public final class NativeLibraryLoader {
 
+    /**
+     * The logger used by the native library loader.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MessageCodes.BUNDLE);
 
+    /**
+     * A constant for OS name.
+     */
     private static final String OS_NAME = "os.name";
 
+    /**
+     * A constant for OS architecture.
+     */
     private static final String OS_ARCH = "os.arch";
 
+    /**
+     * A constant prefix for libraries.
+     */
     private static final String LIB_PREFIX = "lib";
 
     /**
@@ -32,10 +45,16 @@ public final class NativeLibraryLoader {
         UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
     }
 
+    /**
+     * Possible processors for native libraries.
+     */
     private enum Processor {
         UNKNOWN, INTEL_32, INTEL_64, PPC, ARM
     }
 
+    /**
+     * An architecture assignment with unknown as the default.
+     */
     private static Architecture myArchitecture = Architecture.UNKNOWN;
 
     /**
@@ -44,6 +63,7 @@ public final class NativeLibraryLoader {
      * @throws IOException
      */
     private NativeLibraryLoader() {
+        // This is intentionally left empty
     }
 
     /**
@@ -65,15 +85,11 @@ public final class NativeLibraryLoader {
                 throw new FileNotFoundException(LOGGER.getMessage(MessageCodes.UTIL_002, aNativeLibrary));
             }
 
-            final JarFile jarFile = new JarFile(url.getFile());
-            final JarEntry jarEntry = jarFile.getJarEntry(libFileName);
-            final InputStream inStream = jarFile.getInputStream(jarEntry);
-            final BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(libFile));
-
-            IOUtils.copyStream(inStream, outStream);
-            IOUtils.closeQuietly(inStream);
-            IOUtils.closeQuietly(outStream);
-            IOUtils.closeQuietly(jarFile);
+            try (JarFile jarFile = new JarFile(url.getFile());
+                    InputStream inStream = jarFile.getInputStream(jarFile.getJarEntry(libFileName));
+                    OutputStream outStream = Files.newOutputStream(Paths.get(libFile.getAbsolutePath()))) {
+                IOUtils.copyStream(inStream, new BufferedOutputStream(outStream));
+            }
         }
 
         if (libFile.exists() && libFile.length() > 0) {
@@ -88,6 +104,7 @@ public final class NativeLibraryLoader {
      *
      * @return The architecture of the machine running the JVM
      */
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public static Architecture getArchitecture() {
         if (Architecture.UNKNOWN == myArchitecture) {
             final Processor processor = getProcessor();

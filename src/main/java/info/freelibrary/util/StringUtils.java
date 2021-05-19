@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.EOL;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,17 +21,27 @@ import java.util.regex.Pattern;
 /**
  * Provides a few convenience methods for working with strings.
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.CyclomaticComplexity", "PMD.GodClass" })
 public final class StringUtils {
 
+    /**
+     * The logger used by the string utilities.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, MessageCodes.BUNDLE);
 
-    private static final String EOL = System.getProperty("line.separator");
-
+    /**
+     * A message format regex pattern.
+     */
     private static final Pattern PATTERN = Pattern.compile("\\{\\}");
 
+    /**
+     * A range delimiter constant.
+     */
     private static final String RANGE_DELIMETER = "-";
 
+    /**
+     * A double space constant.
+     */
     private static final String DOUBLE_SPACE = "  ";
 
     private StringUtils() {
@@ -356,6 +368,7 @@ public final class StringUtils {
      * @param aPadChar The character used to separate concatenated strings
      * @return A concatenation of the supplied objects' string representations
      */
+    @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
     public static String toString(final Object[] aObjArray, final char aPadChar) {
         if (aObjArray == null || aObjArray.length == 0) {
             return "";
@@ -463,18 +476,18 @@ public final class StringUtils {
      * @return The bytes read from the file
      * @throws IOException If the supplied file could not be read in its entirety
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     private static byte[] readBytes(final File aFile) throws IOException {
-        final FileInputStream fileStream = new FileInputStream(aFile);
-        final ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
-        final int read = fileStream.getChannel().read(buf);
+        try (FileInputStream fileStream = new FileInputStream(aFile)) {
+            final ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
+            final int read = fileStream.getChannel().read(buf);
 
-        if (read != aFile.length()) {
-            fileStream.close();
-            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_044, aFile));
+            if (read != aFile.length()) {
+                throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_044, aFile));
+            }
+
+            return buf.array();
         }
-
-        fileStream.close();
-        return buf.array();
     }
 
     /**
@@ -484,6 +497,7 @@ public final class StringUtils {
      * @param aIntRange A string representation of a range of integers
      * @return An int array with the expanded values of the string representation
      */
+    @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
     public static int[] parseIntRange(final String aIntRange) {
         final String[] range = aIntRange.split(RANGE_DELIMETER);
         final int[] ints;
@@ -546,9 +560,10 @@ public final class StringUtils {
      * Returns an up-cased human-friendly string representation for the supplied int; for instance, "1" becomes "First",
      * "2" becomes "Second", etc.
      *
-     * @param aInt An int to convert into a string
-     * @return The string form of the supplied int
+     * @param aInt An integer to convert into a string
+     * @return The string form of the supplied integer
      */
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public static String toUpcaseString(final int aInt) {
         switch (aInt) {
             case 1:

@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
  */
 public class RegexDirFilter implements FilenameFilter {
 
+    /**
+     * A regex pattern for the directory filter.
+     */
     private final Pattern myPattern;
 
     /**

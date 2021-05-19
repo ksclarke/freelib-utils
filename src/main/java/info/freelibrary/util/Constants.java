@@ -7,6 +7,16 @@ package info.freelibrary.util;
 public final class Constants {
 
     /**
+     * A constant for a message slot.
+     */
+    public static final String MESSAGE_SLOT = "{}";
+
+    /**
+     * A constant for an end of line character.
+     */
+    public static final String EOL = System.lineSeparator();
+
+    /**
      * A constant for an empty string.
      */
     public static final String EMPTY = "";

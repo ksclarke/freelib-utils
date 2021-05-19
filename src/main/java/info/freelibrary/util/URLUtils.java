@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.PLUS;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -18,21 +20,41 @@ import java.util.Scanner;
  */
 public final class URLUtils {
 
+    /**
+     * The logger used by URLUtils.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, MessageCodes.BUNDLE);
 
+    /**
+     * A file protocol constant.
+     */
     private static final String FILE_PROTOCOL = "file";
 
+    /**
+     * A simple URL protocol delimiter.
+     */
     private static final String SIMPLE_PREFIX = FILE_PROTOCOL + ":/";
 
+    /**
+     * A full URL protocol delimiter.
+     */
     private static final String STANDARD_PREFIX = SIMPLE_PREFIX + "/";
 
+    /**
+     * The OS name from its system property.
+     */
     private static final String OS = System.getProperty("os.name");
 
+    /**
+     * An encoded percent constant.
+     */
     private static final String PERCENT = "%25";
 
-    private static final String PLUS = "+";
-
+    /**
+     * Creates a new URL utilities instance.
+     */
     private URLUtils() {
+        // This intentionally left empty.
     }
 
     /**
@@ -45,6 +67,7 @@ public final class URLUtils {
      * @param aURL a URL object that uses protocol "file"
      * @return A File that corresponds to the URL's location
      */
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public static File toFile(final URL aURL) {
         Objects.requireNonNull(aURL, LOGGER.getI18n(MessageCodes.UTIL_031));
 
@@ -95,12 +118,9 @@ public final class URLUtils {
      * @throws IOException If there is a problem reading the URL's contents
      */
     public static String toString(final URL aURL) throws IOException {
-        final Scanner scanner = new Scanner(aURL.openStream(), StandardCharsets.UTF_8.name());
-        final String string = scanner.useDelimiter("\\A").next();
-
-        scanner.close();
-
-        return string;
+        try (Scanner scanner = new Scanner(aURL.openStream(), StandardCharsets.UTF_8.name())) {
+            return scanner.useDelimiter("\\A").next();
+        }
     }
 
     /**
@@ -149,6 +169,7 @@ public final class URLUtils {
      * @param aIgnoreSlashFlag Whether slashes should be encoded or not
      * @return The percent-encoded string
      */
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public static String encode(final String aString, final boolean aIgnoreSlashFlag) {
         final CharacterIterator iterator = new StringCharacterIterator(decode(aString));
         final StringBuilder builder = new StringBuilder();
