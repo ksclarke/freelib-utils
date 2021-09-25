@@ -139,8 +139,8 @@ public class NativeLibraryLoaderTest {
      * @throws InstantiationException
      */
     @Test
-    public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
+    public void testConstructorIsPrivate()
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         final Constructor<NativeLibraryLoader> constructor = NativeLibraryLoader.class.getDeclaredConstructor();
 
         assertTrue("Constructor should be private", Modifier.isPrivate(constructor.getModifiers()));

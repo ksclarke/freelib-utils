@@ -105,8 +105,7 @@ public class I18nExceptionTest {
         /* Test multiple values passed into object varargs */
         assertEquals("one and two", new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, ONE, "two").getMessage());
 
-        assertEquals(ONE_AND_2, new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, new Object[] { ONE, 2 })
-                .getMessage());
+        assertEquals(ONE_AND_2, new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, new Object[] { ONE, 2 }).getMessage());
 
         assertEquals(ONE_AND_2, new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, ONE, 2).getMessage());
 
@@ -117,8 +116,8 @@ public class I18nExceptionTest {
 
             file.deleteOnExit();
 
-            assertEquals(ONE_AND + file.getAbsolutePath(), new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO,
-                    new Object[] { ONE, file }).getMessage());
+            assertEquals(ONE_AND + file.getAbsolutePath(),
+                    new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, new Object[] { ONE, file }).getMessage());
         } catch (final IOException details) {
             fail(details.getMessage());
         }
@@ -128,8 +127,8 @@ public class I18nExceptionTest {
 
             file.deleteOnExit();
 
-            assertEquals(ONE_AND + file.getAbsolutePath(), new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, ONE, file)
-                    .getMessage());
+            assertEquals(ONE_AND + file.getAbsolutePath(),
+                    new I18nExceptionWrapper(BUNDLE_NAME, VALUE_TWO, ONE, file).getMessage());
         } catch (final IOException details) {
             fail(details.getMessage());
         }
@@ -171,8 +170,8 @@ public class I18nExceptionTest {
      */
     @Test
     public void testI18nExceptionThrowableLocaleStringString() {
-        final I18nException exception = new I18nExceptionWrapper(new RuntimeException(), Locale.ENGLISH, BUNDLE_NAME,
-                VALUE_ONE);
+        final I18nException exception =
+                new I18nExceptionWrapper(new RuntimeException(), Locale.ENGLISH, BUNDLE_NAME, VALUE_ONE);
 
         assertEquals(MESSAGE, exception.getMessage());
     }
@@ -182,8 +181,8 @@ public class I18nExceptionTest {
      */
     @Test
     public void testI18nExceptionThrowableStringStringObjectArray() {
-        final I18nException exception = new I18nExceptionWrapper(new RuntimeException(), BUNDLE_NAME, VALUE_ONE,
-                new Object[] { ONE });
+        final I18nException exception =
+                new I18nExceptionWrapper(new RuntimeException(), BUNDLE_NAME, VALUE_ONE, new Object[] { ONE });
 
         assertEquals(ONE, exception.getMessage());
     }
