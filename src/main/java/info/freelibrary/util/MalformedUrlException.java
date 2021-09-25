@@ -15,6 +15,7 @@ public class MalformedUrlException extends RuntimeException {
     /**
      * Constructs a MalformedUrlException with no detail message.
      */
+    @SuppressWarnings("PMD.CallSuperInConstructor")
     public MalformedUrlException() {
         // This is intentionally left empty
     }

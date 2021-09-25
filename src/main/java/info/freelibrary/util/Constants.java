@@ -14,7 +14,7 @@ public final class Constants {
     /**
      * The default / any host IP address.
      */
-    public static final String INADDR_ANY = "0.0.0.0";
+    public static final String INADDR_ANY = "0.0.0.0"; // NOPMD - don't hard code IPs
 
     /**
      * A constant for an end of line character.
