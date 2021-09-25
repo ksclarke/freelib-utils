@@ -11,9 +11,8 @@
 
   <licenses>
     <license>
-      <name>GNU Lesser General Public License, Version 3.0</name>
-      <url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
-      <comments>Licensed under the GNU LGPL 3.0 or later (at your option)</comments>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
     </license>
   </licenses>
 
@@ -135,6 +134,10 @@
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
@@ -142,7 +145,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>6.9.2</version>
+    <version>7.0.1</version>
   </parent>
 
 </project>

@@ -43,8 +43,8 @@ public class FileUtilsTest {
      * @throws InstantiationException
      */
     @Test
-    public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
+    public void testConstructorIsPrivate()
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         final Constructor<FileUtils> constructor = FileUtils.class.getDeclaredConstructor();
 
         assertTrue("Constructor should be private", Modifier.isPrivate(constructor.getModifiers()));
@@ -116,8 +116,8 @@ public class FileUtilsTest {
      */
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
-        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true, new String[] {
-            "test_folder" }).length);
+        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true,
+                new String[] { "test_folder" }).length);
     }
 
     /**

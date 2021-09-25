@@ -12,6 +12,11 @@ public final class Constants {
     public static final String MESSAGE_SLOT = "{}";
 
     /**
+     * The default / any host IP address.
+     */
+    public static final String INADDR_ANY = "0.0.0.0"; // NOPMD - don't hard code IPs
+
+    /**
      * A constant for an end of line character.
      */
     public static final String EOL = System.lineSeparator();
@@ -42,6 +47,11 @@ public final class Constants {
     public static final String HASH = "#";
 
     /**
+     * A constant for a dash.
+     */
+    public static final String DASH = "-";
+
+    /**
      * A constant for a comma.
      */
     public static final String COMMA = ",";
@@ -52,7 +62,7 @@ public final class Constants {
     public static final String PERIOD = ".";
 
     /**
-     * A constant for a verticle bar.
+     * A constant for a vertical bar.
      */
     public static final String VERTICAL_BAR = "|";
 
