@@ -77,6 +77,11 @@ public final class Constants {
     public static final String EQUALS = "=";
 
     /**
+     * A constant for a single instance.
+     */
+    public static final int SINGLE_INSTANCE = 1;
+
+    /**
      * Private constructor for a constants class.
      */
     private Constants() {
