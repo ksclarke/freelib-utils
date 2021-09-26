@@ -37,7 +37,7 @@ public class I18nObject {
      */
     public I18nObject(final String aBundleName) {
         myBundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
-            new XMLBundleControl());
+                new XMLBundleControl());
     }
 
     /**

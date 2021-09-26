@@ -45,7 +45,7 @@ public class UnsupportedOperationI18nException extends I18nRuntimeException {
      * @param aVarargs Additional details to be inserted into the exception message
      */
     public UnsupportedOperationI18nException(final String aBundleName, final String aMessageKey,
-        final Object... aVarargs) {
+            final Object... aVarargs) {
         super(aBundleName, aMessageKey, aVarargs);
     }
 
@@ -58,7 +58,7 @@ public class UnsupportedOperationI18nException extends I18nRuntimeException {
      * @param aVarargs Additional details to be inserted into the exception message
      */
     public UnsupportedOperationI18nException(final Throwable aCause, final String aBundleName, final String aMessageKey,
-        final Object... aVarargs) {
+            final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 

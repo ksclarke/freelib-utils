@@ -44,7 +44,7 @@ public final class XmlUtils {
      * @throws TransformerException If there is trouble transforming the supplied XML
      */
     public static String format(final String aUnformattedXmlString, final int aIndentation)
-        throws TransformerConfigurationException, TransformerException {
+            throws TransformerConfigurationException, TransformerException {
         final Source xmlInput = new StreamSource(new StringReader(aUnformattedXmlString));
         final StringWriter stringWriter = new StringWriter();
         final StreamResult xmlOutput = new StreamResult(stringWriter);
@@ -70,7 +70,7 @@ public final class XmlUtils {
      * @throws TransformerException If there is trouble transforming the supplied XML
      */
     public static String format(final String aUnformattedXmlString)
-        throws TransformerConfigurationException, TransformerException {
+            throws TransformerConfigurationException, TransformerException {
         return format(aUnformattedXmlString, DEFAULT_INDENTATION);
     }
 }

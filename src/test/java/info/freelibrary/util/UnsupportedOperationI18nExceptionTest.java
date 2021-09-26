@@ -70,7 +70,7 @@ public class UnsupportedOperationI18nExceptionTest {
     public final void testI18nUnsupportedOperationExceptionThrowableStringStringObjectArray() {
         try {
             throw new UnsupportedOperationI18nException(new Throwable(DETAIL), MessageCodes.BUNDLE,
-                MessageCodes.UTIL_067, DETAIL);
+                    MessageCodes.UTIL_067, DETAIL);
         } catch (final UnsupportedOperationI18nException details) {
             assertEquals(MESSAGE, details.getMessage());
             assertEquals(DETAIL, details.getCause().getMessage());

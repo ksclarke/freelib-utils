@@ -42,7 +42,7 @@ public final class ZipUtils {
      * @throws IOException If there is trouble writing to a Zip file
      */
     public static void zip(final File aFileSystemDir, final File aOutputZipFile)
-        throws FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException {
         zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(WILDCARD));
     }
 
@@ -56,7 +56,7 @@ public final class ZipUtils {
      * @throws IOException If there is trouble writing to the Zip file
      */
     public static void zip(final File aFileSystemDir, final File aOutputZipFile, final File... aIncludesFileList)
-        throws FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException {
         zip(aFileSystemDir, aOutputZipFile, new RegexFileFilter(WILDCARD), aIncludesFileList);
     }
 
@@ -72,7 +72,7 @@ public final class ZipUtils {
      */
     @SuppressWarnings("PMD.AvoidFileStream")
     public static void zip(final File aFileSystemDir, final File aOutputZipFile, final FilenameFilter aIncludesFilter,
-        final File... aIncludesFileList) throws FileNotFoundException, IOException {
+            final File... aIncludesFileList) throws FileNotFoundException, IOException {
         try (ZipOutputStream zipFileStream = new ZipOutputStream(new FileOutputStream(aOutputZipFile))) {
             final String parentDirPath = aFileSystemDir.getParentFile().getAbsolutePath();
 
@@ -101,7 +101,7 @@ public final class ZipUtils {
      */
     @SuppressWarnings("PMD.AvoidFileStream")
     private static void dirToZip(final File aSourceDir, final String aRootDir, final FilenameFilter aFilter,
-        final ZipOutputStream aZipStream) throws IOException {
+            final ZipOutputStream aZipStream) throws IOException {
         for (final File inFile : aSourceDir.listFiles()) {
             if (inFile.isDirectory()) {
                 LOGGER.debug(MessageCodes.UTIL_027, inFile);

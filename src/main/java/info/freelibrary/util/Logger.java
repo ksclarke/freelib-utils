@@ -220,7 +220,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
+                            updateMessage(detail2));
                 } else {
                     myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -464,7 +464,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
+                            updateMessage(detail2));
                 } else {
                     myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -652,7 +652,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
+                            updateMessage(detail2));
                 } else {
                     myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -885,7 +885,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
+                            updateMessage(detail2));
                 } else {
                     myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -1068,7 +1068,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                        updateMessage(detail2));
+                            updateMessage(detail2));
                 } else {
                     myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }

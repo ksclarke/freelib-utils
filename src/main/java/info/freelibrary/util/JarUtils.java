@@ -92,7 +92,7 @@ public final class JarUtils {
      * @throws IOException If there is an exception thrown while reading or writing the file
      */
     public static void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
-        throws IOException {
+            throws IOException {
         File file;
 
         try {
@@ -144,7 +144,7 @@ public final class JarUtils {
                     }
 
                     try (InputStream inputStream = aJarFile.getInputStream(entry);
-                        OutputStream outputStream = Files.newOutputStream(Paths.get(file.getAbsolutePath()))) {
+                            OutputStream outputStream = Files.newOutputStream(Paths.get(file.getAbsolutePath()))) {
                         IOUtils.copyStream(inputStream, outputStream);
                     }
                 }

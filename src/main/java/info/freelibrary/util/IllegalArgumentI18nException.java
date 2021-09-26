@@ -52,7 +52,7 @@ public class IllegalArgumentI18nException extends I18nRuntimeException {
      * @param aVarargs Additional details about the illegal argument
      */
     public IllegalArgumentI18nException(final Throwable aCause, final String aBundleName, final String aMessageKey,
-        final Object... aVarargs) {
+            final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 }
