@@ -37,7 +37,7 @@ public class BufferedFileReader extends BufferedReader {
      * @throws java.io.UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     public BufferedFileReader(final File aFile, final String aEncoding)
-            throws NoSuchFileException, IOException, UnsupportedEncodingException {
+        throws NoSuchFileException, IOException, UnsupportedEncodingException {
         super(new InputStreamReader(Files.newInputStream(Paths.get(aFile.getAbsolutePath())), aEncoding));
     }
 
@@ -52,7 +52,7 @@ public class BufferedFileReader extends BufferedReader {
     private static Reader getReader(final File aFile) throws NoSuchFileException, IOException {
         try {
             return new InputStreamReader(Files.newInputStream(Paths.get(aFile.getAbsolutePath())),
-                    StandardCharsets.UTF_8.name());
+                StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingException details) {
             throw new UnsupportedEncodingI18nException(details, StandardCharsets.UTF_8);
         }

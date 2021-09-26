@@ -33,7 +33,7 @@ public class LoggerTest {
         System.setProperty(LoggerTestConstants.LOG_LEVEL, "trace");
         Locale.setDefault(Locale.US);
         myLogger = new Logger(org.slf4j.LoggerFactory.getLogger(UUID.randomUUID().toString()),
-                LoggerTestConstants.BUNDLE_NAME);
+            LoggerTestConstants.BUNDLE_NAME);
     }
 
     /**
@@ -124,7 +124,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.debug(LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -140,7 +140,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.debug(LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -313,10 +313,10 @@ public class LoggerTest {
     public void testDebugMarkerMessageVarargs() throws IOException {
         final Marker notifyAdmin = MarkerFactory.getMarker(LoggerTestConstants.NOTIFY_ADMIN);
         final String expected =
-                LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
+            LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.debug(notifyAdmin, LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
+                new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
         });
 
         assertEquals(expected, found);
@@ -333,7 +333,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.debug(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -434,7 +434,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_DEBUG + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.debug(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -512,7 +512,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -528,7 +528,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -672,7 +672,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(new IOException(LoggerTestConstants.BAD), LoggerTestConstants.TEST_VALUE_TWO,
-                    LoggerTestConstants.ONE, LoggerTestConstants.TWO);
+                LoggerTestConstants.ONE, LoggerTestConstants.TWO);
         });
         final String[] parts = found.split(LoggerTestConstants.BACKSLASH_R);
 
@@ -690,7 +690,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error((Throwable) null, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -706,7 +706,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(new IOException(LoggerTestConstants.BAD), LoggerTestConstants.THIS_AND_THAT,
-                    LoggerTestConstants.ONE, LoggerTestConstants.TWO);
+                LoggerTestConstants.ONE, LoggerTestConstants.TWO);
         });
         final String[] parts = found.split(LoggerTestConstants.BACKSLASH_R);
 
@@ -724,7 +724,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error((Throwable) null, LoggerTestConstants.THIS_AND_THAT, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -865,10 +865,10 @@ public class LoggerTest {
     public void testErrorMarkerMessageVarargs() throws IOException {
         final Marker notifyAdmin = MarkerFactory.getMarker(LoggerTestConstants.NOTIFY_ADMIN);
         final String expected =
-                LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
+            LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(notifyAdmin, LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
+                new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
         });
 
         assertEquals(expected, found);
@@ -885,7 +885,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -986,7 +986,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_ERROR + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.error(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -1064,7 +1064,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_INFO + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.info(LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1080,7 +1080,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_INFO + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.info(LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1255,7 +1255,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_INFO + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.info(notifyAdmin, LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
+                new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
         });
 
         assertEquals(expected, found);
@@ -1272,7 +1272,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_INFO + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.info(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1373,7 +1373,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_INFO + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.info(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -1451,7 +1451,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.trace(LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1467,7 +1467,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.trace(LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1640,10 +1640,10 @@ public class LoggerTest {
     public void testTraceMarkerMessageVarargs() throws IOException {
         final Marker notifyAdmin = MarkerFactory.getMarker(LoggerTestConstants.NOTIFY_ADMIN);
         final String expected =
-                LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
+            LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.trace(notifyAdmin, LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
+                new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
         });
 
         assertEquals(expected, found);
@@ -1660,7 +1660,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.trace(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1761,7 +1761,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_TRACE + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.trace(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -1839,7 +1839,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_WARN + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.warn(LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -1855,7 +1855,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_WARN + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.warn(LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -2030,7 +2030,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_WARN + myLogger.getName() + LoggerTestConstants.DASH_ASDF_SADF;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.warn(notifyAdmin, LoggerTestConstants.THIS_AND_THAT,
-                    new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
+                new Object[] { LoggerTestConstants.ASDF, LoggerTestConstants.SADF });
         });
 
         assertEquals(expected, found);
@@ -2047,7 +2047,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_WARN + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.warn(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO,
-                    new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
+                new Object[] { LoggerTestConstants.ONE, LoggerTestConstants.TWO });
         });
 
         assertEquals(expected, found);
@@ -2148,7 +2148,7 @@ public class LoggerTest {
         final String expected = LoggerTestConstants.MAIN_WARN + myLogger.getName() + LoggerTestConstants.DASH_ONE_TWO;
         final String found = TestUtils.captureStdOut(() -> {
             myLogger.warn(notifyAdmin, LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                    LoggerTestConstants.TWO);
+                LoggerTestConstants.TWO);
         });
 
         assertEquals(expected, found);
@@ -2179,8 +2179,8 @@ public class LoggerTest {
      */
     @Test
     public void testGetMessageVarargs() {
-        final String found = myLogger.getMessage(LoggerTestConstants.THIS_AND_THAT, LoggerTestConstants.ONE,
-                LoggerTestConstants.TWO);
+        final String found =
+            myLogger.getMessage(LoggerTestConstants.THIS_AND_THAT, LoggerTestConstants.ONE, LoggerTestConstants.TWO);
 
         assertEquals(LoggerTestConstants.ONE_AND_TWO, found);
     }
@@ -2190,8 +2190,8 @@ public class LoggerTest {
      */
     @Test
     public void testGetMessageKey() {
-        final String found = myLogger.getMessage(LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE,
-                LoggerTestConstants.TWO);
+        final String found =
+            myLogger.getMessage(LoggerTestConstants.TEST_VALUE_TWO, LoggerTestConstants.ONE, LoggerTestConstants.TWO);
 
         assertEquals(LoggerTestConstants.ONE_AND_TWO, found);
     }

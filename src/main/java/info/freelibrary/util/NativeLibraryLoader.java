@@ -86,8 +86,8 @@ public final class NativeLibraryLoader {
             }
 
             try (JarFile jarFile = new JarFile(url.getFile());
-                    InputStream inStream = jarFile.getInputStream(jarFile.getJarEntry(libFileName));
-                    OutputStream outStream = Files.newOutputStream(Paths.get(libFile.getAbsolutePath()))) {
+                InputStream inStream = jarFile.getInputStream(jarFile.getJarEntry(libFileName));
+                OutputStream outStream = Files.newOutputStream(Paths.get(libFile.getAbsolutePath()))) {
                 IOUtils.copyStream(inStream, new BufferedOutputStream(outStream));
             }
         }

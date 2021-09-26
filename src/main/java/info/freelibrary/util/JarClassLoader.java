@@ -27,7 +27,7 @@ public class JarClassLoader extends URLClassLoader {
      * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final String aMainClassName) throws IOException, IllegalAccessException,
-            InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         super(JarUtils.getJarURLs());
 
         LOGGER.debug(MessageCodes.UTIL_001, aMainClassName);
@@ -45,7 +45,7 @@ public class JarClassLoader extends URLClassLoader {
      * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws IOException, IllegalAccessException,
-            InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         super(aURLs);
 
         loadClass(aMainClassName).getDeclaredConstructor().newInstance();
@@ -62,8 +62,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws ClassNotFoundException If the main class cannot be found
      */
     public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName)
-            throws IOException, IllegalAccessException, InstantiationException, NoSuchMethodException,
-            InvocationTargetException, ClassNotFoundException {
+        throws IOException, IllegalAccessException, InstantiationException, NoSuchMethodException,
+        InvocationTargetException, ClassNotFoundException {
         super(aListOfURLs.toArray(new URL[0]));
 
         loadClass(aMainClassName).getDeclaredConstructor().newInstance();

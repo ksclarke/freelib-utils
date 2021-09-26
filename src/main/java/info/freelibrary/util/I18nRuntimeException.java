@@ -70,7 +70,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aVarargs The additional details to pass into the exception
      */
     public I18nRuntimeException(final Locale aLocale, final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+        final Object... aVarargs) {
         super(format(aLocale, aBundleName, aMessageKey, aVarargs));
     }
 
@@ -103,7 +103,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aMessageKey The key to use when looking up the message
      */
     public I18nRuntimeException(final Throwable aCause, final Locale aLocale, final String aBundleName,
-            final String aMessageKey) {
+        final String aMessageKey) {
         super(format(aLocale, aBundleName, aMessageKey), aCause);
     }
 
@@ -116,7 +116,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aVarargs The additional details to add to the exception message
      */
     public I18nRuntimeException(final Throwable aCause, final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+        final Object... aVarargs) {
         super(format(aBundleName, aMessageKey, aVarargs), aCause);
     }
 
@@ -131,7 +131,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @param aVarargs The additional details to add to the exception message
      */
     public I18nRuntimeException(final Throwable aCause, final Locale aLocale, final String aBundleName,
-            final String aMessageKey, final Object... aVarargs) {
+        final String aMessageKey, final Object... aVarargs) {
         super(format(aLocale, aBundleName, aMessageKey, aVarargs), aCause);
     }
 
@@ -157,7 +157,7 @@ public class I18nRuntimeException extends RuntimeException {
      * @return A formatted exception message
      */
     private static String format(final Locale aLocale, final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+        final Object... aVarargs) {
         Objects.requireNonNull(aBundleName, LOGGER.getI18n(MessageCodes.UTIL_016));
         Objects.requireNonNull(aMessageKey, LOGGER.getI18n(MessageCodes.UTIL_018));
 

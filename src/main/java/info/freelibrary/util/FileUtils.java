@@ -92,7 +92,7 @@ public final class FileUtils {
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern)
-            throws FileNotFoundException {
+        throws FileNotFoundException {
         return toHashMap(aFilePath, aPattern, (String[]) null);
     }
 
@@ -109,7 +109,7 @@ public final class FileUtils {
      * @throws RuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern,
-            final String... aIgnoreList) throws FileNotFoundException {
+        final String... aIgnoreList) throws FileNotFoundException {
         final String filePattern = aPattern != null ? aPattern : WILDCARD;
         final RegexFileFilter filter = new RegexFileFilter(filePattern);
         final Map<String, List<String>> fileMap = new HashMap<>();
@@ -174,7 +174,7 @@ public final class FileUtils {
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing)
-            throws FileNotFoundException {
+        throws FileNotFoundException {
         return listFiles(aDir, aFilter, aDeepListing, (String[]) null);
     }
 
@@ -191,7 +191,7 @@ public final class FileUtils {
      */
     @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
-            final String... aIgnoreList) throws FileNotFoundException {
+        final String... aIgnoreList) throws FileNotFoundException {
         if (!aDir.exists()) {
             throw new FileNotFoundException(aDir.getAbsolutePath());
         }
@@ -402,7 +402,7 @@ public final class FileUtils {
         final Path filePath = Paths.get(aFile.getAbsolutePath());
 
         try (InputStream inStream = Files.newInputStream(filePath); Formatter formatter = new Formatter();
-                DigestInputStream mdStream = new DigestInputStream(inStream, md)) {
+            DigestInputStream mdStream = new DigestInputStream(inStream, md)) {
             final byte[] bytes = new byte[8192];
             int bytesRead = 0;
 
@@ -578,8 +578,8 @@ public final class FileUtils {
 
         if (success) {
             try (FileOutputStream outputStream = new FileOutputStream(aDestFile);
-                    FileInputStream inputStream = new FileInputStream(aSourceFile);
-                    FileChannel source = inputStream.getChannel()) {
+                FileInputStream inputStream = new FileInputStream(aSourceFile);
+                FileChannel source = inputStream.getChannel()) {
                 outputStream.getChannel().transferFrom(source, 0, source.size());
             }
         }

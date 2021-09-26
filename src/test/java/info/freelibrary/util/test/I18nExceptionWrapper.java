@@ -65,7 +65,7 @@ public class I18nExceptionWrapper extends I18nException {
      * @param aVarargs The additional details to pass into the exception
      */
     public I18nExceptionWrapper(final Locale aLocale, final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+        final Object... aVarargs) {
         super(aLocale, aBundleName, aMessageKey, aVarargs);
     }
 
@@ -98,7 +98,7 @@ public class I18nExceptionWrapper extends I18nException {
      * @param aMessageKey The key to use when looking up the message
      */
     public I18nExceptionWrapper(final Throwable aCause, final Locale aLocale, final String aBundleName,
-            final String aMessageKey) {
+        final String aMessageKey) {
         super(aCause, aLocale, aBundleName, aMessageKey, new Object[] {});
     }
 
@@ -111,7 +111,7 @@ public class I18nExceptionWrapper extends I18nException {
      * @param aVarargs The additional details to add to the exception message
      */
     public I18nExceptionWrapper(final Throwable aCause, final String aBundleName, final String aMessageKey,
-            final Object... aVarargs) {
+        final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 
@@ -126,7 +126,7 @@ public class I18nExceptionWrapper extends I18nException {
      * @param aVarargs The additional details to add to the exception message
      */
     public I18nExceptionWrapper(final Throwable aCause, final Locale aLocale, final String aBundleName,
-            final String aMessageKey, final Object... aVarargs) {
+        final String aMessageKey, final Object... aVarargs) {
         super(aCause, aBundleName, aMessageKey, aVarargs);
     }
 

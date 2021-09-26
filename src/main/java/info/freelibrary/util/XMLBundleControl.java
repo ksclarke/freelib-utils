@@ -45,8 +45,8 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     @Override
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
-            final ClassLoader aClassLoader, final boolean aReload)
-            throws IllegalAccessException, InstantiationException, IOException {
+        final ClassLoader aClassLoader, final boolean aReload)
+        throws IllegalAccessException, InstantiationException, IOException {
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
         if (FORMAT.equals(aFormat)) {

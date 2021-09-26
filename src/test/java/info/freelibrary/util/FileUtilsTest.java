@@ -44,7 +44,7 @@ public class FileUtilsTest {
      */
     @Test
     public void testConstructorIsPrivate()
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         final Constructor<FileUtils> constructor = FileUtils.class.getDeclaredConstructor();
 
         assertTrue("Constructor should be private", Modifier.isPrivate(constructor.getModifiers()));
@@ -95,7 +95,7 @@ public class FileUtilsTest {
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTarget() throws FileNotFoundException {
         assertEquals(1, FileUtils.listFiles(new File(TEST_FOLDER_MAP), new RegexFileFilter(WILDCARD), false,
-                new String[] {}).length);
+            new String[] {}).length);
     }
 
     /**
@@ -106,7 +106,7 @@ public class FileUtilsTest {
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTargetJpg() throws FileNotFoundException {
         assertEquals(0, FileUtils.listFiles(new File(TEST_FOLDER_MAP), new RegexFileFilter(".*\\.jpg"), false,
-                new String[] {}).length);
+            new String[] {}).length);
     }
 
     /**
@@ -117,7 +117,7 @@ public class FileUtilsTest {
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
         assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true,
-                new String[] { "test_folder" }).length);
+            new String[] { "test_folder" }).length);
     }
 
     /**
