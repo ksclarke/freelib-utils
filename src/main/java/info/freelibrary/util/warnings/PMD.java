@@ -8,6 +8,11 @@ package info.freelibrary.util.warnings;
 public final class PMD {
 
     /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_bestpractices.html#avoidreassigningloopvariables
+     */
+    public static final String AVOID_REASSIGNING_LOOP_VARIABLES = "PMD.AvoidReassigningLoopVariables";
+
+    /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod
      */
     @SuppressWarnings("PMD.LongVariable")
