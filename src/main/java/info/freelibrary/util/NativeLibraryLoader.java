@@ -92,11 +92,11 @@ public final class NativeLibraryLoader {
             }
         }
 
-        if (libFile.exists() && libFile.length() > 0) {
-            System.load(libFile.getAbsolutePath());
-        } else {
+        if (!libFile.exists() || libFile.length() <= 0) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_039, libFile));
         }
+
+        System.load(libFile.getAbsolutePath());
     }
 
     /**
@@ -104,7 +104,7 @@ public final class NativeLibraryLoader {
      *
      * @return The architecture of the machine running the JVM
      */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.AvoidDeeplyNestedIfStmts" })
     public static Architecture getArchitecture() {
         if (Architecture.UNKNOWN == myArchitecture) {
             final Processor processor = getProcessor();

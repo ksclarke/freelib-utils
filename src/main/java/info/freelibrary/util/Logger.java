@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.SPACE;
+
 import org.slf4j.MDC;
 import org.slf4j.MDC.MDCCloseable;
 import org.slf4j.Marker;
@@ -97,12 +99,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.debug(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.debug(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.debug(aMessage, aThrowable);
-                    } else {
-                        myLogger.debug(aMessage);
-                    }
+                    myLogger.debug(aMessage);
                 }
             }
         }
@@ -195,12 +195,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.debug(aMarker, updateMessage(getI18n(aMessage)));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.debug(aMarker, updateMessage(aMessage), aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.debug(aMarker, updateMessage(aMessage), aThrowable);
-                    } else {
-                        myLogger.debug(aMarker, updateMessage(aMessage));
-                    }
+                    myLogger.debug(aMarker, updateMessage(aMessage));
                 }
 
                 clearMarker();
@@ -279,12 +277,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.error(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.error(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.error(aMessage, aThrowable);
-                    } else {
-                        myLogger.error(aMessage);
-                    }
+                    myLogger.error(aMessage);
                 }
             }
         }
@@ -305,12 +301,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.error(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.error(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.error(aMessage, aThrowable);
-                    } else {
-                        myLogger.error(aMessage);
-                    }
+                    myLogger.error(aMessage);
                 }
             }
         }
@@ -323,6 +317,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aMessage A message with information about the exception
      * @param aVarargs Additional details about the exception being thrown
      */
+    @SuppressWarnings("PMD.CognitiveComplexity")
     public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
         if (isErrorEnabled()) {
             try (MDCCloseable closeable = setLineNumber()) {
@@ -332,20 +327,16 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.error(getI18n(aMessage, aVarargs));
                     }
-                } else {
-                    if (aThrowable != null) {
-                        if (aVarargs.length == 0) {
-                            myLogger.error(aMessage, aThrowable);
-                        } else {
-                            myLogger.error(StringUtils.format(aMessage, aVarargs), aThrowable);
-                        }
+                } else if (aThrowable != null) {
+                    if (aVarargs.length == 0) {
+                        myLogger.error(aMessage, aThrowable);
                     } else {
-                        if (aVarargs.length == 0) {
-                            myLogger.error(aMessage);
-                        } else {
-                            myLogger.error(aMessage, aVarargs);
-                        }
+                        myLogger.error(StringUtils.format(aMessage, aVarargs), aThrowable);
                     }
+                } else if (aVarargs.length == 0) {
+                    myLogger.error(aMessage);
+                } else {
+                    myLogger.error(aMessage, aVarargs);
                 }
             }
         }
@@ -439,12 +430,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.error(aMarker, updateMessage(getI18n(aMessage)));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.error(aMarker, updateMessage(aMessage), aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.error(aMarker, updateMessage(aMessage), aThrowable);
-                    } else {
-                        myLogger.error(aMarker, updateMessage(aMessage));
-                    }
+                    myLogger.error(aMarker, updateMessage(aMessage));
                 }
 
                 clearMarker();
@@ -528,12 +517,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.info(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.info(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.info(aMessage, aThrowable);
-                    } else {
-                        myLogger.info(aMessage);
-                    }
+                    myLogger.info(aMessage);
                 }
             }
         }
@@ -627,12 +614,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.info(aMarker, updateMessage(getI18n(aMessage)));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.info(aMarker, updateMessage(aMessage), aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.info(aMarker, updateMessage(aMessage), aThrowable);
-                    } else {
-                        myLogger.info(aMarker, updateMessage(aMessage));
-                    }
+                    myLogger.info(aMarker, updateMessage(aMessage));
                 }
 
                 clearMarker();
@@ -761,12 +746,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.trace(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.trace(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.trace(aMessage, aThrowable);
-                    } else {
-                        myLogger.trace(aMessage);
-                    }
+                    myLogger.trace(aMessage);
                 }
             }
         }
@@ -860,12 +843,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.trace(aMarker, updateMessage(getI18n(aMessage)));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.trace(aMarker, updateMessage(aMessage), aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.trace(aMarker, updateMessage(aMessage), aThrowable);
-                    } else {
-                        myLogger.trace(aMarker, updateMessage(aMessage));
-                    }
+                    myLogger.trace(aMarker, updateMessage(aMessage));
                 }
 
                 clearMarker();
@@ -944,12 +925,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.warn(getI18n(aMessage));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.warn(aMessage, aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.warn(aMessage, aThrowable);
-                    } else {
-                        myLogger.warn(aMessage);
-                    }
+                    myLogger.warn(aMessage);
                 }
             }
         }
@@ -1043,12 +1022,10 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
                     } else {
                         myLogger.warn(aMarker, updateMessage(getI18n(aMessage)));
                     }
+                } else if (aThrowable != null) {
+                    myLogger.warn(aMarker, updateMessage(aMessage), aThrowable);
                 } else {
-                    if (aThrowable != null) {
-                        myLogger.warn(aMarker, updateMessage(aMessage), aThrowable);
-                    } else {
-                        myLogger.warn(aMarker, updateMessage(aMessage));
-                    }
+                    myLogger.warn(aMarker, updateMessage(aMessage));
                 }
 
                 clearMarker();
@@ -1090,11 +1067,13 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public String getMessage(final String aMessage, final Object... aDetails) {
         if (hasI18nKey(aMessage)) {
             return getI18n(aMessage, aDetails);
-        } else if (aDetails.length == 0) {
-            return aMessage;
-        } else {
-            return StringUtils.format(aMessage, aDetails);
         }
+
+        if (aDetails.length == 0) {
+            return aMessage;
+        }
+
+        return StringUtils.format(aMessage, aDetails);
     }
 
     /**
@@ -1144,13 +1123,14 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * Sets the line number if the debug level is active.
      *
      * @return A handle that can remove the line number after it's no longer needed
+     * @throws UnsupportedOperationException If debugging is not enabled
      */
     private MDCCloseable setDebugLineNumber() {
         if (isDebugEnabled()) {
             return setLineNumber();
-        } else {
-            return null;
         }
+
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1177,16 +1157,22 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
     private String updateMessage(final String aMessage) {
         if (MDC.get(LoggerMarker.EOL_TO_SPACE) != null) {
-            return aMessage.replaceAll(EOL_RE, " ");
-        } else if (MDC.get(LoggerMarker.EOL_TO_CRLF) != null) {
-            return aMessage.replaceAll(EOL_RE, "\r\n");
-        } else if (MDC.get(LoggerMarker.EOL_TO_CR) != null) {
-            return aMessage.replaceAll(EOL_RE, "\r");
-        } else if (MDC.get(LoggerMarker.EOL_TO_LF) != null) {
-            return aMessage.replaceAll(EOL_RE, "\n");
-        } else {
-            return aMessage;
+            return aMessage.replaceAll(EOL_RE, SPACE);
         }
+
+        if (MDC.get(LoggerMarker.EOL_TO_CRLF) != null) {
+            return aMessage.replaceAll(EOL_RE, "\r\n");
+        }
+
+        if (MDC.get(LoggerMarker.EOL_TO_CR) != null) {
+            return aMessage.replaceAll(EOL_RE, "\r");
+        }
+
+        if (MDC.get(LoggerMarker.EOL_TO_LF) != null) {
+            return aMessage.replaceAll(EOL_RE, "\n");
+        }
+
+        return aMessage;
     }
 
     private void clearMarker() {

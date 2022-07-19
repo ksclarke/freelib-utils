@@ -66,6 +66,7 @@ public final class FileUtils {
      * Constructor for the contained file utilities.
      */
     private FileUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -122,13 +123,14 @@ public final class FileUtils {
             if (fileMap.containsKey(fileName)) {
                 final List<String> paths = fileMap.get(fileName);
 
-                if (!paths.contains(filePath)) {
-                    paths.add(filePath);
-                } else {
+                if (paths.contains(filePath)) {
                     throw new I18nRuntimeException(MessageCodes.BUNDLE, MessageCodes.UTIL_034);
                 }
+
+                paths.add(filePath);
             } else {
                 final ArrayList<String> pathList = new ArrayList<>();
+
                 pathList.add(filePath);
                 fileMap.put(fileName, pathList);
             }
@@ -145,8 +147,8 @@ public final class FileUtils {
      * @throws MalformedURLException If the supplied URL doesn't have a file protocol
      */
     public static File toFile(final URL aURL) throws MalformedURLException {
-        if (aURL.getProtocol().equals(FILE_TYPE)) {
-            return new File(aURL.toString().replace("file:", ""));
+        if (FILE_TYPE.equals(aURL.getProtocol())) {
+            return new File(aURL.toString().replace("file:", EMPTY));
         }
 
         throw new MalformedURLException(LOGGER.getI18n(MessageCodes.UTIL_036, aURL));
@@ -189,9 +191,12 @@ public final class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals", "PMD.CognitiveComplexity" })
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
             final String... aIgnoreList) throws FileNotFoundException {
+        final ArrayList<File> fileList;
+        final String[] ignoreList;
+
         if (!aDir.exists()) {
             throw new FileNotFoundException(aDir.getAbsolutePath());
         }
@@ -199,43 +204,43 @@ public final class FileUtils {
         if (aDir.isFile()) {
             if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
                 return new File[] { aDir };
-            } else {
-                return new File[0];
             }
+
+            return new File[0];
         }
 
         if (!aDeepListing) {
             return aDir.listFiles(aFilter);
-        } else {
-            final ArrayList<File> fileList = new ArrayList<>();
-            final String[] ignoreList;
-
-            if (aIgnoreList == null) {
-                ignoreList = new String[0];
-            } else {
-                ignoreList = aIgnoreList;
-            }
-
-            for (final File file : aDir.listFiles()) {
-                final String fileName = file.getName();
-
-                if (aFilter.accept(aDir, fileName)) {
-                    LOGGER.debug(MessageCodes.UTIL_010, file);
-                    fileList.add(file);
-                }
-
-                if (file.isDirectory() && Arrays.binarySearch(ignoreList, fileName) < 0) {
-                    final File[] files;
-
-                    LOGGER.debug(MessageCodes.UTIL_011, file);
-                    files = listFiles(file, aFilter, aDeepListing);
-                    fileList.addAll(Arrays.asList(files));
-                }
-
-            }
-
-            return fileList.toArray(new File[0]);
         }
+
+        fileList = new ArrayList<>();
+
+        if (aIgnoreList == null) {
+            ignoreList = new String[0];
+        } else {
+            ignoreList = aIgnoreList;
+        }
+
+        for (final File file : aDir.listFiles()) {
+            final String fileName = file.getName();
+
+            if (aFilter.accept(aDir, fileName)) {
+                LOGGER.debug(MessageCodes.UTIL_010, file);
+                fileList.add(file);
+            }
+
+            if (file.isDirectory() && Arrays.binarySearch(ignoreList, fileName) < 0) {
+                final File[] files;
+
+                LOGGER.debug(MessageCodes.UTIL_011, file);
+
+                files = listFiles(file, aFilter, aDeepListing);
+                fileList.addAll(Arrays.asList(files));
+            }
+
+        }
+
+        return fileList.toArray(new File[0]);
     }
 
     /**
@@ -274,7 +279,7 @@ public final class FileUtils {
         final int index = aFileName.lastIndexOf(DOT);
 
         if (index != -1) {
-            return aFileName.substring(index + 1, aFileName.length());
+            return aFileName.substring(index + 1);
         }
 
         return EMPTY;
@@ -308,7 +313,7 @@ public final class FileUtils {
      * @param aDir A directory to delete
      * @return True if file was successfully deleted; else, false
      */
-    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.AvoidDuplicateLiterals" })
+    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.CognitiveComplexity" })
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
@@ -316,10 +321,8 @@ public final class FileUtils {
                     if (!delete(file)) {
                         LOGGER.error(MessageCodes.UTIL_012, file);
                     }
-                } else {
-                    if (file.exists() && !file.delete()) {
-                        LOGGER.error(MessageCodes.UTIL_012, file);
-                    }
+                } else if (file.exists() && !file.delete()) {
+                    LOGGER.error(MessageCodes.UTIL_012, file);
                 }
             }
         } else if (LOGGER.isDebugEnabled() && aDir.listFiles() == null) {
@@ -379,9 +382,13 @@ public final class FileUtils {
 
         if ((count = aByteCount / 1_073_741_824) > 0) {
             return count + (aAbbreviatedLabel ? " GB" : " gigabytes");
-        } else if ((count = aByteCount / 1_048_576) > 0) {
+        }
+
+        if ((count = aByteCount / 1_048_576) > 0) {
             return count + (aAbbreviatedLabel ? " MB" : " megabytes");
-        } else if ((count = aByteCount / 1024) > 0) {
+        }
+
+        if ((count = aByteCount / 1024) > 0) {
             return count + (aAbbreviatedLabel ? " KB" : " kilobytes");
         }
 
@@ -441,15 +448,21 @@ public final class FileUtils {
 
         if (!dir.exists() && !dir.mkdirs()) {
             return false;
-        } else if ("r".contains(aPermString)) {
-            return dir.canRead();
-        } else if ("w".contains(aPermString)) {
-            return dir.canWrite();
-        } else if ("x".contains(aPermString)) {
-            return dir.canExecute();
-        } else {
-            return true;
         }
+
+        if ("r".contains(aPermString)) {
+            return dir.canRead();
+        }
+
+        if ("w".contains(aPermString)) {
+            return dir.canWrite();
+        }
+
+        if ("x".contains(aPermString)) {
+            return dir.canExecute();
+        }
+
+        return true;
     }
 
     /**

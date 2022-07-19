@@ -15,12 +15,22 @@ import java.util.ResourceBundle;
 /**
  * A resource bundle control that supports the {@link XMLResourceBundle}.
  */
-public class XMLBundleControl extends ResourceBundle.Control {
+public class CustomBundleControl extends ResourceBundle.Control {
 
     /**
-     * An expected resource file extension.
+     * A constant for the XML format.
      */
-    private static final String FORMAT = "xml";
+    private static final String XML = "xml";
+
+    /**
+     * A constant for the properties format.
+     */
+    private static final String PROPERTIES = "properties";
+
+    /**
+     * An array of expected resource file extensions.
+     */
+    private static final String[] FORMATS = { XML, PROPERTIES };
 
     /**
      * Returns a list of formats supported for the supplied base name.
@@ -30,8 +40,8 @@ public class XMLBundleControl extends ResourceBundle.Control {
      */
     @Override
     public List<String> getFormats(final String aBaseName) {
-        Objects.requireNonNull(aBaseName);
-        return Arrays.asList(FORMAT);
+        checkForNull(aBaseName);
+        return Arrays.asList(FORMATS);
     }
 
     /**
@@ -49,25 +59,24 @@ public class XMLBundleControl extends ResourceBundle.Control {
             throws IllegalAccessException, InstantiationException, IOException {
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
-        if (FORMAT.equals(aFormat)) {
+        if (canRead(aFormat)) {
             final String bundleName = toBundleName(aBaseName, aLocale);
             final String resourceName = toResourceName(bundleName, aFormat);
+            final URL url;
 
-            if (aReload) {
-                final URL url = aClassLoader.getResource(resourceName);
-
-                if (url != null) {
-                    final URLConnection connection = url.openConnection();
-
-                    connection.setUseCaches(false);
-
-                    try (InputStream bundleStream = connection.getInputStream()) {
-                        return makeBundle(bundleStream);
-                    }
-                }
-            } else {
+            if (!aReload) {
                 try (InputStream bundleStream = aClassLoader.getResourceAsStream(resourceName)) {
-                    return makeBundle(bundleStream);
+                    return makeBundle(bundleStream, aFormat);
+                }
+            }
+
+            if ((url = aClassLoader.getResource(resourceName)) != null) {
+                final URLConnection connection = url.openConnection();
+
+                connection.setUseCaches(false);
+
+                try (InputStream bundleStream = connection.getInputStream()) {
+                    return makeBundle(bundleStream, aFormat);
                 }
             }
         }
@@ -76,17 +85,41 @@ public class XMLBundleControl extends ResourceBundle.Control {
     }
 
     /**
+     * Detects if the supplied format can be read by this bundle control.
+     *
+     * @param aFormat A bundle file format
+     * @return True if the bundle can be read; else, false
+     */
+    private boolean canRead(final String aFormat) {
+        boolean result = false;
+
+        for (final String format : FORMATS) {
+            if (format.equals(aFormat)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * Makes a {@link ResourceBundle} from the supplied {@link InputStream}.
      *
      * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
+     * @param aFormat The format of the bundle's resources
      * @return A {@link ResourceBundle}
      * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
      */
-    private ResourceBundle makeBundle(final InputStream aInputStream) throws IOException {
-        final BufferedInputStream bufferedInputStream = new BufferedInputStream(aInputStream);
-        final ResourceBundle bundle = new XMLResourceBundle(bufferedInputStream);
+    private ResourceBundle makeBundle(final InputStream aInputStream, final String aFormat) throws IOException {
+        final ResourceBundle bundle;
 
-        bufferedInputStream.close();
+        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(aInputStream)) {
+            if (XML.equalsIgnoreCase(aFormat)) {
+                bundle = new XMLResourceBundle(bufferedInputStream);
+            } else { // The default is a properties file
+                bundle = new PropertiesResourceBundle(bufferedInputStream);
+            }
+        }
 
         return bundle;
     }

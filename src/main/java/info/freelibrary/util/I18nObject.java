@@ -10,16 +10,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * A generic object with baked-in &quot;default Locale&quot; I18N support. It wraps an {@link XMLResourceBundle} and
- * provides an easy way to get access to internationalized strings. It doesn't support dynamically passed in locales,
- * but just the one that the system is configured to use as its default locale.
+ * A generic object with baked-in &quot;default Locale&quot; I18N support. It wraps a {@link ResourceBundle} and
+ * provides an easy way to get access to internationalized strings.
  */
 public class I18nObject {
 
     /**
      * The internationalized object's internal resource bundle.
      */
-    private final XMLResourceBundle myBundle;
+    private final I18nResourceBundle myBundle;
 
     /**
      * Empty constructor for an I18nObject.
@@ -30,14 +29,24 @@ public class I18nObject {
 
     /**
      * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
-     * something specific to the package that's extending the <code>I18nObject</code>... for instance:
-     * <code>freelib-utils_messages</code> or <code>freelib-djatoka_messages</code>.
+     * something specific to the package that's extending the <code>I18nObject</code>.
      *
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(final String aBundleName) {
-        myBundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
-                new XMLBundleControl());
+        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
+                new CustomBundleControl());
+    }
+
+    /**
+     * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
+     * something specific to the package that's extending the <code>I18nObject</code>.
+     *
+     * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
+     * @param aLocale The locale of the desired bundle.
+     */
+    public I18nObject(final String aBundleName, final Locale aLocale) {
+        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale));
     }
 
     /**
@@ -170,7 +179,7 @@ public class I18nObject {
      * @return The number of keys known to this object
      */
     protected int countKeys() {
-        return myBundle.keySet().size();
+        return myBundle.countKeys();
     }
 
     /**

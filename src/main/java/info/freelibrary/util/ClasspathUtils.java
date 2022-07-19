@@ -234,6 +234,7 @@ public final class ClasspathUtils {
      * @return The {@link URL} of the file we want to read
      * @throws IOException If there is trouble reading from the file system or jars
      */
+    @SuppressWarnings("PMD.CognitiveComplexity")
     public static URL findFirst(final String aFileName) throws IOException {
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
@@ -256,12 +257,11 @@ public final class ClasspathUtils {
                     if (jarEntry != null && jarEntry.getSize() > 0) {
                         LOGGER.debug(MessageCodes.UTIL_006, aFileName, cpEntry);
                         return file.toURI().toURL();
+                    }
+                    if (jarEntry != null) {
+                        LOGGER.debug(MessageCodes.UTIL_007, jarEntry.getName());
                     } else {
-                        if (jarEntry != null) {
-                            LOGGER.debug(MessageCodes.UTIL_007, jarEntry.getName());
-                        } else {
-                            LOGGER.debug(MessageCodes.UTIL_008, aFileName);
-                        }
+                        LOGGER.debug(MessageCodes.UTIL_008, aFileName);
                     }
                 }
             } else {

@@ -1,7 +1,9 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Locale;
 
@@ -11,31 +13,42 @@ import org.junit.Test;
 /**
  * Tests of the <code>XMLBundleControl</code> class.
  */
-public class XMLBundleControlTest {
+public class CustomBundleControlTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XMLBundleControlTest.class, MessageCodes.BUNDLE);
+    /**
+     * The logger for the test.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomBundleControlTest.class, MessageCodes.BUNDLE);
 
+    /**
+     * A test bundle name.
+     */
     private static final String BUNDLE_NAME = "test_freelib-utils_messages";
 
+    /**
+     * A constant for the XML format.
+     */
     private static final String XML_FORMAT = "xml";
 
-    private XMLBundleControl myControl;
+    /**
+     * A custom bundle control.
+     */
+    private CustomBundleControl myControl;
 
     /**
      * Sets up the <code>XMLBundleControl</code> used in the tests.
      */
     @Before
     public void setup() {
-        myControl = new XMLBundleControl();
+        myControl = new CustomBundleControl();
     }
 
     /**
-     * Tests {@link XMLBundleControl#getFormats(String)}.
+     * Tests {@link CustomBundleControl#getFormats(String)}.
      */
     @Test
     public void testGetFormatsString() {
-        // The only format XMLBundleControl returns is "xml"
-        assertEquals(XML_FORMAT, myControl.getFormats("yada").get(0));
+        assertEquals(2, myControl.getFormats("yada").size());
 
         try {
             // If we request a null though we should get an exception
