@@ -47,7 +47,7 @@ public final class JarUtils {
      * @return An array of {@link URL}s found in the classpath
      * @throws IOException If there is trouble reading the classpath
      */
-    @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
+    @SuppressWarnings({ "PMD.AvoidDeeplyNestedIfStmts", "PMD.CognitiveComplexity" })
     public static URL[] getJarURLs() throws IOException {
         final List<URL> urlList = new LinkedList<>();
 

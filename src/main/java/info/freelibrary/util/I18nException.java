@@ -163,14 +163,14 @@ public class I18nException extends Exception {
 
         LOGGER.debug(MessageCodes.UTIL_017, aBundleName);
 
-        final XMLResourceBundle bundle;
+        final I18nResourceBundle bundle;
         final String message;
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
-            bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new XMLBundleControl());
+            bundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new CustomBundleControl());
         } else {
-            bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
+            bundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName, new CustomBundleControl());
         }
 
         if (aVarargs != null && aVarargs.length > 0) {
@@ -181,13 +181,11 @@ public class I18nException extends Exception {
             } else {
                 message = StringUtils.format(aMessageKey, aVarargs);
             }
+        } else if (bundle.containsKey(aMessageKey)) {
+            LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
+            message = bundle.get(aMessageKey);
         } else {
-            if (bundle.containsKey(aMessageKey)) {
-                LOGGER.debug(MessageCodes.UTIL_021, aMessageKey);
-                message = bundle.get(aMessageKey);
-            } else {
-                message = aMessageKey;
-            }
+            message = aMessageKey;
         }
 
         return message;

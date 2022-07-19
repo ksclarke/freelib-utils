@@ -163,15 +163,15 @@ public class I18nRuntimeException extends RuntimeException {
 
         LOGGER.debug(MessageCodes.UTIL_022, aBundleName);
 
-        final XMLResourceBundle bundle;
+        final I18nResourceBundle bundle;
         final String message;
 
         if (aLocale != null) {
             LOGGER.debug(MessageCodes.UTIL_019, aLocale.toString());
 
-            bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new XMLBundleControl());
+            bundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName, aLocale, new CustomBundleControl());
         } else {
-            bundle = (XMLResourceBundle) ResourceBundle.getBundle(aBundleName, new XMLBundleControl());
+            bundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName, new CustomBundleControl());
         }
 
         if (aVarargs != null && aVarargs.length > 0) {

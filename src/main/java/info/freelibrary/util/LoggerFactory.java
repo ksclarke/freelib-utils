@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import java.util.ResourceBundle;
+
 import org.slf4j.ILoggerFactory;
 
 /**
@@ -9,10 +11,11 @@ import org.slf4j.ILoggerFactory;
 public final class LoggerFactory {
 
     private LoggerFactory() {
+        // This is intentionally left empty
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
+     * Gets a {@link ResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
      * "messages".
      *
      * @param aClass A class to use for the logger name
@@ -23,7 +26,7 @@ public final class LoggerFactory {
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
+     * Gets a {@link ResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}. By default, the resource bundle is
      * "messages".
      *
      * @param aName A class to use for the logger name
@@ -34,7 +37,7 @@ public final class LoggerFactory {
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
+     * Gets a {@link ResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
      *
      * @param aClass A class to use for the logger name
      * @param aBundleName The name of the resource bundle to use
@@ -45,7 +48,7 @@ public final class LoggerFactory {
     }
 
     /**
-     * Gets an {@link XMLResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
+     * Gets a {@link ResourceBundle} wrapped SLF4J {@link org.slf4j.Logger}.
      *
      * @param aName A class to use for the logger name
      * @param aBundleName The name of the resource bundle to use
