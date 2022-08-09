@@ -1,6 +1,7 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.COLON;
 import static info.freelibrary.util.Constants.SPACE;
 
 import org.slf4j.MDC;
@@ -471,7 +472,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage));
                 } else {
@@ -484,7 +485,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), aDetail);
                 } else {
@@ -497,7 +498,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), aDetails);
                 } else {
@@ -510,7 +511,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.info(getI18n(aMessage), aThrowable);
@@ -529,7 +530,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final Marker aMarker, final String aMessage) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -547,7 +548,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -560,7 +561,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -580,7 +581,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -604,7 +605,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -628,7 +629,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void info(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -879,7 +880,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final String aMessage) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage));
                 } else {
@@ -892,7 +893,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), aDetail);
                 } else {
@@ -905,7 +906,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), aDetails);
                 } else {
@@ -918,7 +919,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.warn(getI18n(aMessage), aThrowable);
@@ -937,7 +938,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final Marker aMarker, final String aMessage) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -955,7 +956,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -968,7 +969,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -988,7 +989,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -1012,7 +1013,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -1036,7 +1037,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
-            try (MDCCloseable closeable = setDebugLineNumber()) {
+            try (MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -1120,29 +1121,25 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     }
 
     /**
-     * Sets the line number if the debug level is active.
-     *
-     * @return A handle that can remove the line number after it's no longer needed
-     * @throws UnsupportedOperationException If debugging is not enabled
-     */
-    private MDCCloseable setDebugLineNumber() {
-        if (isDebugEnabled()) {
-            return setLineNumber();
-        }
-
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Sets the line number.
+     * Sets the line number if debugging is enabled. This is a legacy option; one could also just configure different
+     * appenders/encoders in the Logback configuration file.
      *
      * @return A handle that can remove the line number after it's no longer needed
      */
     private MDCCloseable setLineNumber() {
-        final int lineNum = Thread.currentThread().getStackTrace()[3].getLineNumber();
-        return MDC.putCloseable(LINE_NUM, Integer.toString(lineNum));
+        if (isDebugEnabled()) {
+            final int lineNum = Thread.currentThread().getStackTrace()[3].getLineNumber();
+            return MDC.putCloseable(LINE_NUM, COLON + Integer.toString(lineNum));
+        }
+
+        return null; // This should not throw a NPE... at least not in the JVMs I tested.
     }
 
+    /**
+     * Adds a marker that controls how the EOL is handled.
+     *
+     * @param aMarker A marker possibly containing the desired EOL handling
+     */
     private void addMarker(final Marker aMarker) {
         if (aMarker.contains(LoggerMarker.EOL_TO_SPACE)) {
             MDC.put(LoggerMarker.EOL_TO_SPACE, Boolean.TRUE.toString());
