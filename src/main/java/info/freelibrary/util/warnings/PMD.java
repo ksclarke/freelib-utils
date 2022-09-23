@@ -88,6 +88,36 @@ public final class PMD {
      */
     public static final String UNUSED_PRIVATE_METHOD = "PMD.UnusedPrivateMethod";
 
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#cognitivecomplexity
+     */
+    public static final String COGNITIVE_COMPLEXITY = "PMD.CognitiveComplexity";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_performance.html#avoidfilestream
+     */
+    public static final String AVOID_FILE_STREAM = "PMD.AvoidFileStream";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_errorprone.html#avoidliteralsinifcondition
+     */
+    public static final String AVOID_LITERALS_IN_IF_CONDITION = "PMD.AvoidLiteralsInIfCondition";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_errorprone.html#morethanonelogger
+     */
+    public static final String MORE_THAN_ONE_LOGGER = "PMD.MoreThanOneLogger";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_performance.html#consecutiveliteralappends
+     */
+    public static final String CONSECUTIVE_LITERAL_APPENDS = "PMD.ConsecutiveLiteralAppends";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_errorprone.html#avoidduplicateliterals
+     */
+    public static final String AVOID_DUPLICATE_LITERALS = "PMD.AvoidDuplicateLiterals";
+
     /*
      * Constant classes have private constructors.
      */

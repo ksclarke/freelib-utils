@@ -46,7 +46,8 @@ public class I18nObject {
      * @param aLocale The locale of the desired bundle.
      */
     public I18nObject(final String aBundleName, final Locale aLocale) {
-        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale));
+        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale),
+                new CustomBundleControl());
     }
 
     /**

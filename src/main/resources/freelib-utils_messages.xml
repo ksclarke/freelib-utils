@@ -81,5 +81,6 @@
   <entry key="UTIL-069">The start index position ({}) is after the end position ({})</entry>
   <entry key="UTIL-070">Start position out of bounds: {}</entry>
   <entry key="UTIL-071">End position out of bounds: {}</entry>
+  <entry key="UTIL-072">Jar file's URL must contain a subfile path too: {}</entry>
 
 </properties>

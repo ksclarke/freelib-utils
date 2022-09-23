@@ -1,7 +1,9 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -164,5 +166,13 @@ public class I18nObjectTest {
         final I18nObjectWrapper i18nObj = new I18nObjectWrapper();
         assertTrue(i18nObj.hasI18nKey(TEST_ONE));
         assertEquals(ONE, i18nObj.getI18n(TEST_ONE));
+    }
+
+    /**
+     * Tests the use of an I18n properties file.
+     */
+    @Test
+    public void testPropertiesFile() {
+        assertEquals(1, new I18nObjectWrapper("test_messages").countKeys());
     }
 }

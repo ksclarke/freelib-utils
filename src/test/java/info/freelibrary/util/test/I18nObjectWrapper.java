@@ -15,4 +15,20 @@ public class I18nObjectWrapper extends I18nObject {
         super("test_freelib-utils_messages");
     }
 
+    /**
+     * Generic constructor for the I18nObject.
+     *
+     * @param aName A resource bundle name
+     */
+    public I18nObjectWrapper(final String aName) {
+        super(aName);
+    }
+
+    /**
+     * Gets the number of keys in the bundle.
+     */
+    @Override
+    public int countKeys() {
+        return super.countKeys();
+    }
 }
