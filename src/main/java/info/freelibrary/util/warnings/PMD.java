@@ -19,6 +19,11 @@ public final class PMD {
     public static final String ABSTRACT_CLASS_WITHOUT_ABSTRACT_METHOD = "PMD.AbstractClassWithoutAbstractMethod";
 
     /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#avoidthrowingnullpointerexception
+     */
+    public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "AvoidThrowingNullPointerException";
+
+    /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#avoiddeeplynestedifstmts
      */
     public static final String AVOID_DEEPLY_NESTED_IF_STMTS = "PMD.AvoidDeeplyNestedIfStmts";
