@@ -24,9 +24,19 @@ public final class PMD {
     public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "AvoidThrowingNullPointerException";
 
     /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#signaturedeclarethrowsexception
+     */
+    public static final String SIGNATURE_DECLARE_THROWS_EXCEPTION = "PMD.SignatureDeclareThrowsException";
+
+    /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#avoiddeeplynestedifstmts
      */
     public static final String AVOID_DEEPLY_NESTED_IF_STMTS = "PMD.AvoidDeeplyNestedIfStmts";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#avoidcatchinggenericexception
+     */
+    public static final String AVOID_CATCHING_GENERIC_EXCEPTION = "PMD.AvoidCatchingGenericException";
 
     /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_codestyle.html#classnamingconventions
