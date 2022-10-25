@@ -82,5 +82,6 @@
   <entry key="UTIL-070">Start position out of bounds: {}</entry>
   <entry key="UTIL-071">End position out of bounds: {}</entry>
   <entry key="UTIL-072">Jar file's URL must contain a subfile path too: {}</entry>
+  <entry key="UTIL-073">The value of the found ENV did not match the expected type: '{}' should be: {}</entry>
 
 </properties>

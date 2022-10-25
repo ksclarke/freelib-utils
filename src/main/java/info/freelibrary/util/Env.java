@@ -8,6 +8,9 @@ import java.util.Objects;
  */
 public final class Env {
 
+    /** A logger for the <code>Env</code> convenience class. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(Env.class, MessageCodes.BUNDLE);
+
     /**
      * Creates a new environment object.
      */
@@ -25,6 +28,44 @@ public final class Env {
     public static String get(final String aPropertyName, final String aFallbackValue) {
         final String envProperty = StringUtils.trimToNull(System.getenv(aPropertyName));
         return envProperty == null ? aFallbackValue : envProperty;
+    }
+
+    /**
+     * Gets an environmental property value, optionally falling back to the supplied alternative. If the ENV found value
+     * isn't an integer, the fallback value will be used instead (and a warning logged).
+     *
+     * @param aPropertyName An environmental property name
+     * @param aFallbackValue A fallback value used if the required property isn't set
+     * @return The environmental property value or its supplied fallback value
+     */
+    public static int get(final String aPropertyName, final int aFallbackValue) {
+        final String envProperty = StringUtils.trimToNull(System.getenv(aPropertyName));
+
+        try {
+            return envProperty == null ? aFallbackValue : Integer.parseInt(envProperty);
+        } catch (final NumberFormatException details) {
+            LOGGER.warn(MessageCodes.UTIL_073, envProperty, Integer.class.getSimpleName());
+            return aFallbackValue;
+        }
+    }
+
+    /**
+     * Gets an environmental property value, optionally falling back to the supplied alternative. If the ENV found value
+     * isn't a float, the fallback value will be used instead (and a warning logged).
+     *
+     * @param aPropertyName An environmental property name
+     * @param aFallbackValue A fallback value used if the required property isn't set
+     * @return The environmental property value or its supplied fallback value
+     */
+    public static float get(final String aPropertyName, final float aFallbackValue) {
+        final String envProperty = StringUtils.trimToNull(System.getenv(aPropertyName));
+
+        try {
+            return envProperty == null ? aFallbackValue : Float.parseFloat(envProperty);
+        } catch (final NumberFormatException details) {
+            LOGGER.warn(MessageCodes.UTIL_073, envProperty, Float.class.getSimpleName());
+            return aFallbackValue;
+        }
     }
 
     /**
