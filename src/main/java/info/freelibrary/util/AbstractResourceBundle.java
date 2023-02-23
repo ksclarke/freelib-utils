@@ -53,7 +53,7 @@ abstract class AbstractResourceBundle extends ResourceBundle implements I18nReso
             }
 
             /**
-             * Returns the next element in the {@link Enumeration}
+             * Returns the next element in the {@link Enumeration}.
              *
              * @return The next element in the {@link Enumeration}
              */

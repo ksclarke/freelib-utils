@@ -1,7 +1,9 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -10,8 +12,10 @@ import org.junit.Test;
  */
 public class IllegalArgumentI18nExceptionTest {
 
+    /** A test value. */
     private static final String DETAIL = "bad";
 
+    /** A test message value. */
     private static final String MESSAGE = "Illegal argument [java.lang.String]: bad";
 
     /**

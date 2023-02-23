@@ -18,7 +18,11 @@ import org.w3c.dom.Node;
  */
 public final class DOMUtils {
 
+    /**
+     * Creates a new DOM utilities class.
+     */
     private DOMUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -27,6 +31,7 @@ public final class DOMUtils {
      * @param aNode A W3C node
      * @return An XML string representation of the supplied node
      * @throws TransformerException If there is trouble with the XSL transformation
+     * @throws I18nRuntimeException If the node transformation isn't configured correctly
      */
     public static String toXML(final Node aNode) throws TransformerException {
         try {

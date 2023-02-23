@@ -16,7 +16,7 @@ import org.junit.After;
 import org.junit.Test;
 
 /**
- * Test for {@link info.freelibrary.util.JarUtils}
+ * Test for {@link info.freelibrary.util.JarUtils}.
  */
 public class JarUtilsTest {
 
@@ -81,7 +81,7 @@ public class JarUtilsTest {
     }
 
     /**
-     * Tests that supplied a file that doesn't exist
+     * Tests that supplied a file that doesn't exist.
      *
      * @throws IOException If there is trouble reading the file
      */

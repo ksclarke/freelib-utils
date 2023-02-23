@@ -22,16 +22,22 @@ import info.freelibrary.util.test.I18nObjectWrapper;
  */
 public class I18nObjectTest {
 
+    /** A logger for the tests. */
     private static final Logger LOGGER = LoggerFactory.getLogger(I18nObjectTest.class, MessageCodes.BUNDLE);
 
+    /** A default locale. */
     private static final Locale LOCALE = Locale.getDefault();
 
+    /** A test value. */
     private static final String VALUE_ONE = "test.value.one";
 
+    /** A test value. */
     private static final String TEST_ONE = "test.one";
 
+    /** A test key. */
     private static final String ONE = "one";
 
+    /** A temporary directory used in testing. */
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
     /**

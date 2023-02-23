@@ -42,14 +42,54 @@ public final class NativeLibraryLoader {
      * Possible architectures of native libraries.
      */
     public enum Architecture {
-        UNKNOWN, LINUX_32, LINUX_64, LINUX_ARM, WINDOWS_32, WINDOWS_64, OSX_32, OSX_64, OSX_PPC
+
+        /** An unknown architecture. */
+        UNKNOWN,
+
+        /** A 32 bit Linux architecture. */
+        LINUX_32,
+
+        /** A 64 bit Linux architecture. */
+        LINUX_64,
+
+        /** A Linux ARM architecture. */
+        LINUX_ARM,
+
+        /** A 32 bit Windows architecture. */
+        WINDOWS_32,
+
+        /** A 64 bit Windows architecture. */
+        WINDOWS_64,
+
+        /** A 32 bit OSX architecture. */
+        OSX_32,
+
+        /** A 64 bit OSX architecture. */
+        OSX_64,
+
+        /** An OSX PPC architecture. */
+        OSX_PPC
     }
 
     /**
      * Possible processors for native libraries.
      */
     private enum Processor {
-        UNKNOWN, INTEL_32, INTEL_64, PPC, ARM
+
+        /** An unknown processor type. */
+        UNKNOWN,
+
+        /** A 32 bit Intel processor. */
+        INTEL_32,
+
+        /** A 64 bit Intel processor. */
+        INTEL_64,
+
+        /** A PPC processor. */
+        PPC,
+
+        /** An ARM processor. */
+        ARM
     }
 
     /**
@@ -59,8 +99,6 @@ public final class NativeLibraryLoader {
 
     /**
      * Constructor for the NativeLibraryLoader.
-     *
-     * @throws IOException
      */
     private NativeLibraryLoader() {
         // This is intentionally left empty
@@ -71,6 +109,7 @@ public final class NativeLibraryLoader {
      *
      * @param aNativeLibrary A native library to load from the classpath
      * @throws IOException If there is trouble reading from the Jar file or file system
+     * @throws FileNotFoundException If a native library file cannot be found
      */
     public static void load(final String aNativeLibrary) throws IOException {
         final String libFileName = getPlatformLibraryName(aNativeLibrary);
@@ -142,6 +181,11 @@ public final class NativeLibraryLoader {
         return myArchitecture;
     }
 
+    /**
+     * Gets the system processor type.
+     *
+     * @return A system processor type
+     */
     private static Processor getProcessor() {
         Processor processor = Processor.UNKNOWN;
         int bits;

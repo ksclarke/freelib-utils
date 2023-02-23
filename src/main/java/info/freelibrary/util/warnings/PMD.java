@@ -158,10 +158,11 @@ public final class PMD {
      */
     public static final String AVOID_DUPLICATE_LITERALS = "PMD.AvoidDuplicateLiterals";
 
-    /*
+    /**
      * Constant classes have private constructors.
      */
     private PMD() {
+        // This is intentionally left empty
     }
 
 }

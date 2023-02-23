@@ -54,6 +54,7 @@ public final class PasswordUtils {
      * @param aSalt The salt to use in the encryption
      * @return The encrypted password
      * @throws IOException If there is trouble encrypting the supplied text
+     * @throws I18nRuntimeException If an unsupported algorithm or encoded is supplied
      */
     public static String encrypt(final String aText, final String aSalt) throws IOException {
         Objects.requireNonNull(aText, LOGGER.getI18n("Text to encrypt is null"));

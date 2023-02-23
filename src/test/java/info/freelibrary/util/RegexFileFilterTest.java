@@ -1,6 +1,7 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.EMPTY;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -9,18 +10,20 @@ import java.io.FilenameFilter;
 import org.junit.Test;
 
 /**
- * A test of <code>RegexFileFilter</code>
+ * A test of <code>RegexFileFilter</code>.
  */
 public class RegexFileFilterTest {
 
+    /** The logger for the tests. */
     private static final Logger LOGGER = LoggerFactory.getLogger(RegexFileFilterTest.class, MessageCodes.BUNDLE);
 
+    /** A test string. */
     private static final String TOTES = "totes";
 
+    /** A constant for carrot. */
     private static final String CARROT = "^";
 
-    private static final String EMPTY = "";
-
+    /** A constant for a dollar sign. */
     private static final String DOLLAR_SIGN = "$";
 
     /**

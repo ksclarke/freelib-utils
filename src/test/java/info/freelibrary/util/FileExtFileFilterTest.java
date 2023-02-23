@@ -1,6 +1,7 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.PERIOD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -14,14 +15,16 @@ import org.junit.Test;
  */
 public class FileExtFileFilterTest {
 
+    /** A file extension for JPEGs. */
     private static final String JPG = "jpg";
 
+    /** A file extension for TIFFs. */
     private static final String TIFF = "tif";
 
-    private static final String DOT = ".";
-
+    /** A constant for a single JPEG extension. */
     private static final String BOX_JPG = "[.jpg]";
 
+    /** A constant for a JPEG and TIFF extension. */
     private static final String BOX_JPG_TIFF = "[.jpg, .tif]";
 
     /**
@@ -29,7 +32,7 @@ public class FileExtFileFilterTest {
      */
     @Test
     public final void testFileExtFileFilterString() {
-        assertEquals(new FileExtFileFilter(DOT + JPG).toString(), BOX_JPG);
+        assertEquals(new FileExtFileFilter(PERIOD + JPG).toString(), BOX_JPG);
         assertEquals(new FileExtFileFilter(JPG).toString(), BOX_JPG);
     }
 
@@ -38,8 +41,8 @@ public class FileExtFileFilterTest {
      */
     @Test
     public final void testFileExtFileFilterStringArray() {
-        assertEquals(new FileExtFileFilter(DOT + JPG, TIFF).toString(), BOX_JPG_TIFF);
-        assertEquals(new FileExtFileFilter(JPG, DOT + TIFF).toString(), BOX_JPG_TIFF);
+        assertEquals(new FileExtFileFilter(PERIOD + JPG, TIFF).toString(), BOX_JPG_TIFF);
+        assertEquals(new FileExtFileFilter(JPG, PERIOD + TIFF).toString(), BOX_JPG_TIFF);
     }
 
     /**
@@ -58,7 +61,7 @@ public class FileExtFileFilterTest {
         final String[] fileNames = new File("src/test/resources").list(new FileExtFileFilter("txt"));
 
         assertEquals(2, fileNames.length);
-        assertTrue(Arrays.stream(fileNames).anyMatch(x -> x.equals("80_char_test_1.txt")));
+        assertTrue(Arrays.stream(fileNames).anyMatch("80_char_test_1.txt"::equals));
     }
 
     /**
@@ -66,12 +69,12 @@ public class FileExtFileFilterTest {
      */
     @Test
     public final void testFilters() {
-        assertTrue(new FileExtFileFilter(DOT + JPG, TIFF).filters(TIFF));
-        assertTrue(new FileExtFileFilter(JPG, DOT + TIFF).filters(TIFF));
-        assertTrue(new FileExtFileFilter(DOT + JPG, TIFF).filters(DOT + TIFF));
-        assertTrue(new FileExtFileFilter(JPG, DOT + TIFF).filters(DOT + TIFF));
-        assertTrue(new FileExtFileFilter(TIFF).filters(DOT + TIFF));
-        assertTrue(new FileExtFileFilter(DOT + TIFF).filters(DOT + TIFF));
+        assertTrue(new FileExtFileFilter(PERIOD + JPG, TIFF).filters(TIFF));
+        assertTrue(new FileExtFileFilter(JPG, PERIOD + TIFF).filters(TIFF));
+        assertTrue(new FileExtFileFilter(PERIOD + JPG, TIFF).filters(PERIOD + TIFF));
+        assertTrue(new FileExtFileFilter(JPG, PERIOD + TIFF).filters(PERIOD + TIFF));
+        assertTrue(new FileExtFileFilter(TIFF).filters(PERIOD + TIFF));
+        assertTrue(new FileExtFileFilter(PERIOD + TIFF).filters(PERIOD + TIFF));
     }
 
 }

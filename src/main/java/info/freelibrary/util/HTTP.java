@@ -52,7 +52,7 @@ public final class HTTP {
     /** Multiple choices HTTP response code. */
     public static final int MULTIPLE_CHOICES = 300;
 
-    /** Moved permanently HTTP response code */
+    /** Moved permanently HTTP response code. */
     public static final int MOVED_PERMANENTLY = 301;
 
     /** Found HTTP response code. */

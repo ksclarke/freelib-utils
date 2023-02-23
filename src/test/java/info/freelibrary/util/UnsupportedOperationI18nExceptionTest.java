@@ -11,8 +11,10 @@ import org.junit.Test;
  */
 public class UnsupportedOperationI18nExceptionTest {
 
+    /** A test detail. */
     private static final String DETAIL = "soup";
 
+    /** A test message. */
     private static final String MESSAGE = "Unsupported operation: soup";
 
     /**

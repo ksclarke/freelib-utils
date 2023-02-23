@@ -15,19 +15,21 @@ public final class PortUtils {
      * Create a new instance of the port utilities.
      */
     private PortUtils() {
+        // This is intentionally left empty
     }
 
     /**
      * Gets an open port.
      *
      * @return An open port
+     * @throws I18nRuntimeException If a local port cannot be found
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public static int getPort() {
         try (ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();
         } catch (final IOException details) {
-            throw new RuntimeException(details);
+            throw new I18nRuntimeException(details);
         }
     }
 

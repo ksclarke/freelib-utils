@@ -48,10 +48,11 @@ public final class ClasspathUtils {
      * Creates a new classpath utilities class.
      */
     private ClasspathUtils() {
+        // This is intentionally left empty
     }
 
     /**
-     * Returns an String array of all the directory names in the system classpath
+     * Returns an String array of all the directory names in the system classpath.
      *
      * @return The names of directories from the system classpath
      */
@@ -72,7 +73,7 @@ public final class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the directories in the system classpath
+     * Returns an array of all the directories in the system classpath.
      *
      * @return The directories from the system classpath
      */
@@ -94,7 +95,7 @@ public final class ClasspathUtils {
 
     /**
      * Returns an String array of all the directory names in the system classpath that match the supplied
-     * <code>FilenameFilter</code>
+     * <code>FilenameFilter</code>.
      *
      * @param aFilter A filter to use while retrieving directories
      * @return The names of directories from the system classpath that match the supplied <code>FilenameFilter</code>
@@ -115,7 +116,7 @@ public final class ClasspathUtils {
 
     /**
      * Returns an array of all the directories in the system classpath that match the supplied
-     * <code>FilenameFilter</code>
+     * <code>FilenameFilter</code>.
      *
      * @param aFilter A filter to use while retrieving directories
      * @return The directories from the system classpath that match the supplied <code>FilenameFilter</code>
@@ -138,7 +139,7 @@ public final class ClasspathUtils {
     }
 
     /**
-     * Returns an String array of all the names of the jars in the system classpath
+     * Returns an String array of all the names of the jars in the system classpath.
      *
      * @return The names of jars from the system classpath
      */
@@ -159,7 +160,7 @@ public final class ClasspathUtils {
 
     /**
      * Returns an String array of all the names of the jars in the system classpath that match the supplied
-     * <code>FilenameFilter</code>
+     * <code>FilenameFilter</code>.
      *
      * @param aFilter A file name filter to use while retrieving Jar files
      * @return The names of jars from the system classpath that match the supplied <code>FilenameFilter</code>
@@ -182,7 +183,7 @@ public final class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the jar files in the system classpath
+     * Returns an array of all the jar files in the system classpath.
      *
      * @return The jar files from the system classpath
      * @throws IOException If there is trouble reading the file system while looking for Jar files
@@ -203,7 +204,8 @@ public final class ClasspathUtils {
     }
 
     /**
-     * Returns an array of all the jar files in the system classpath that match the supplied <code>FilenameFilter</code>
+     * Returns an array of all the jar files in the system classpath that match the supplied
+     * <code>FilenameFilter</code>.
      *
      * @param aFilter A file name filter to use while retrieving Jar files
      * @return The jar files from the system classpath that match the supplied <code>FilenameFilter</code>

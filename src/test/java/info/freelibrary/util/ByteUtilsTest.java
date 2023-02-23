@@ -16,10 +16,13 @@ import org.junit.Test;
  */
 public class ByteUtilsTest {
 
+    /** A reversed array of bytes. */
     private byte[] myReversedArrayOfBytes;
 
+    /** A list of bytes. */
     private List<Byte> myListOfBytes;
 
+    /** An array of bytes. */
     private byte[] myArrayOfBytes;
 
     /**
@@ -66,6 +69,12 @@ public class ByteUtilsTest {
         assertArrayEquals(myReversedArrayOfBytes, myArrayOfBytes);
     }
 
+    /**
+     * Gets a byte from the supplied character value.
+     *
+     * @param aCharValue A character value
+     * @return A byte
+     */
     private Byte getByte(final String aCharValue) {
         return aCharValue.getBytes(StandardCharsets.UTF_8)[0];
     }

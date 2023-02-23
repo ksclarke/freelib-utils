@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -20,20 +21,28 @@ import org.junit.Test;
  */
 public class ZipUtilsTest {
 
+    /** The logger for the tests. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtilsTest.class, MessageCodes.BUNDLE);
 
+    /** A temporary directory used in testing. */
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    /** A test file name. */
     private static final String FILE_NAME = "80_char_test_1.txt";
 
+    /** A test folder name. */
     private static final String FOLDER_NAME = "test_folder";
 
+    /** The resources directory used in testing. */
     private static final File RESOURCES_DIR = new File("src/test/resources");
 
+    /** A Zip file extension. */
     private static final String ZIP_EXT = ".zip";
 
+    /** A name pattern used in testing. */
     private static final String ZIP_TEST = "ziptest-";
 
+    /** The set of test files. */
     private final Set<String> myFiles = new HashSet<>();
 
     /**
@@ -41,13 +50,11 @@ public class ZipUtilsTest {
      */
     @Before
     public void beforeTest() {
-        final String[] files = new String[] { "/test_folder/test_folder2/test_file1.txt",
+        final String[] files = { "/test_folder/test_folder2/test_file1.txt",
             "/test_folder/test_folder2/test_folder/test_file1.txt", "/test_folder/test_file1.txt",
             "/test_folder/test_folder/test_file1.txt", "/test_folder/test_folder/test_file2.txt" };
 
-        for (final String file : files) {
-            myFiles.add(file);
-        }
+        Collections.addAll(myFiles, files);
     }
 
     /**

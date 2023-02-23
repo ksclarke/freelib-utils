@@ -42,7 +42,7 @@ public final class NumberUtils {
     /** Reusable Integer constant for one. */
     public static final Integer INTEGER_ONE = 1;
 
-    /** Reusable Integer constant for two */
+    /** Reusable Integer constant for two. */
     public static final Integer INTEGER_TWO = 2;
 
     /** Reusable Integer constant for minus one. */
