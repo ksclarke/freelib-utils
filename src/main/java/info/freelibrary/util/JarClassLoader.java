@@ -25,6 +25,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws InstantiationException If there is a problem instantiating the main class
      * @throws IllegalAccessException If there is trouble accessing the main class
      * @throws ClassNotFoundException If the main class cannot be found
+     * @throws InvocationTargetException If the main class' constructor cannot be invoked
+     * @throws NoSuchMethodException If the class does not have the declared constructor
      */
     public JarClassLoader(final String aMainClassName) throws IOException, IllegalAccessException,
             InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
@@ -43,6 +45,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws IllegalAccessException If there is a problem accessing the main class
      * @throws InstantiationException If there is trouble instantiating the main class
      * @throws ClassNotFoundException If the main class cannot be found
+     * @throws InvocationTargetException If the main class' constructor cannot be invoked
+     * @throws NoSuchMethodException If the class does not have the declared constructor
      */
     public JarClassLoader(final URL[] aURLs, final String aMainClassName) throws IOException, IllegalAccessException,
             InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
@@ -60,6 +64,8 @@ public class JarClassLoader extends URLClassLoader {
      * @throws IllegalAccessException If there is a problem accessing the main class
      * @throws InstantiationException If there is trouble instantiating the main class
      * @throws ClassNotFoundException If the main class cannot be found
+     * @throws InvocationTargetException If the main class' constructor cannot be invoked
+     * @throws NoSuchMethodException If the class does not have the declared constructor
      */
     public JarClassLoader(final List<URL> aListOfURLs, final String aMainClassName)
             throws IOException, IllegalAccessException, InstantiationException, NoSuchMethodException,

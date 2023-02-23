@@ -3,7 +3,6 @@ package info.freelibrary.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -22,7 +21,8 @@ public final class BufferedFileWriter extends BufferedWriter {
      * Constructs a writer to the supplied file using a UTF-8 charset.
      *
      * @param aFile A file to which to write
-     * @throws FileNotFoundException If the supplied file couldn't be found
+     * @throws NoSuchFileException If the supplied file couldn't be found
+     * @throws IOException If there is trouble getting the writer
      */
     public BufferedFileWriter(final File aFile) throws NoSuchFileException, IOException {
         super(getWriter(aFile));
@@ -33,8 +33,9 @@ public final class BufferedFileWriter extends BufferedWriter {
      *
      * @param aFile A file to which to write
      * @param aEncoding A character encoding to use to write to the supplied file
-     * @throws FileNotFoundException If the supplied file cannot be found
-     * @throws java.io.UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
+     * @throws NoSuchFileException If the supplied file cannot be found
+     * @throws UnsupportedEncodingException If the supplied character encoding isn't supported by the JVM
+     * @throws IOException If the writer cannot be created
      */
     public BufferedFileWriter(final File aFile, final String aEncoding)
             throws NoSuchFileException, IOException, UnsupportedEncodingException {
@@ -46,7 +47,9 @@ public final class BufferedFileWriter extends BufferedWriter {
      *
      * @param aFile A file to which to write
      * @return A writer that writes to the supplied file
-     * @throws FileNotFoundException If the supplied file cannot be found
+     * @throws NoSuchFileException If the supplied file cannot be found
+     * @throws IOException If a writer for the supplied file
+     * @throws UnsupportedEncodingI18nException If the JVM doesn't support UTF-8
      */
     private static Writer getWriter(final File aFile) throws NoSuchFileException, IOException {
         try {

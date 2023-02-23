@@ -188,6 +188,7 @@ public final class JarUtils {
      * @param aJarFile A jar file to search
      * @param aFilePath A path for which to search
      * @return True if the file path is found; else, false
+     * @throws IOException If the jar file cannot be read
      */
     public static boolean contains(final JarFile aJarFile, final String aFilePath) throws IOException {
         final Enumeration<JarEntry> entries = aJarFile.entries();

@@ -3,7 +3,6 @@ package info.freelibrary.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -22,7 +21,8 @@ public class BufferedFileReader extends BufferedReader {
      * Constructs a reader from the supplied file using a UTF-8 charset.
      *
      * @param aFile A file from which to read
-     * @throws FileNotFoundException If the supplied file couldn't be found
+     * @throws NoSuchFileException If the supplied file couldn't be found
+     * @throws IOException If the reader cannot be created from the supplied file
      */
     public BufferedFileReader(final File aFile) throws NoSuchFileException, IOException {
         super(getReader(aFile));
@@ -33,8 +33,9 @@ public class BufferedFileReader extends BufferedReader {
      *
      * @param aFile A file from which to read
      * @param aEncoding A character encoding to use while reading from the file
-     * @throws FileNotFoundException If the supplied file couldn't be found
-     * @throws java.io.UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
+     * @throws NoSuchFileException If the supplied file couldn't be found
+     * @throws IOException If the reader cannot be created from the supplied file
+     * @throws UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     public BufferedFileReader(final File aFile, final String aEncoding)
             throws NoSuchFileException, IOException, UnsupportedEncodingException {
@@ -46,8 +47,9 @@ public class BufferedFileReader extends BufferedReader {
      *
      * @param aFile The file for which to get a {#link Reader}
      * @return A {#link Reader} that will read using the UTF-8 charset
-     * @throws FileNotFoundException If the supplied file couldn't be found
+     * @throws NoSuchFileException If the supplied file couldn't be found
      * @throws UnsupportedEncodingI18nException If the supplied encoding isn't supported by the JVM
+     * @throws IOException If the reader cannot be created from the supplied file
      */
     private static Reader getReader(final File aFile) throws NoSuchFileException, IOException {
         try {

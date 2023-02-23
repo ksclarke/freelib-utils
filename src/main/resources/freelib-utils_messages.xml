@@ -83,5 +83,9 @@
   <entry key="UTIL-071">End position out of bounds: {}</entry>
   <entry key="UTIL-072">Jar file's URL must contain a subfile path too: {}</entry>
   <entry key="UTIL-073">The value of the found ENV did not match the expected type: '{}' should be: {}</entry>
+  <entry key="UTIL-074">A blank string is not a valid number</entry>
+  <entry key="UTIL-075">{} is not a valid number.</entry>
+  <entry key="UTIL-076">An empty string is not a valid number</entry>
+  <entry key="UTIL-077">Array cannot be empty</entry>
 
 </properties>

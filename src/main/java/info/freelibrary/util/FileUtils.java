@@ -107,7 +107,7 @@ public final class FileUtils {
      * @param aIgnoreList A list of directories into which we shouldn't descend
      * @return An unmodifiable map representing the files in the file structure
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
-     * @throws RuntimeException If a duplicate file path name is discovered
+     * @throws I18nRuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern,
             final String... aIgnoreList) throws FileNotFoundException {
@@ -563,6 +563,13 @@ public final class FileUtils {
         return result;
     }
 
+    /**
+     * Tests whether the test bit is set in the mode.
+     *
+     * @param aMode A file mode
+     * @param aTestbit A test bit
+     * @return True if testbit is set; else, false
+     */
     private static boolean isSet(final int aMode, final int aTestbit) {
         return (aMode & aTestbit) == aTestbit;
     }

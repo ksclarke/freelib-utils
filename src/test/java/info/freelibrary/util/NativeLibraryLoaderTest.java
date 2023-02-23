@@ -20,32 +20,32 @@ import info.freelibrary.util.NativeLibraryLoader.Architecture;
  */
 public class NativeLibraryLoaderTest {
 
+    /** A key for the OS' architecture. */
     private static final String OS_ARCH = "os.arch";
 
+    /** A key for the OS' name. */
     private static final String OS_NAME = "os.name";
 
+    /** The test OS name. */
     private String myOS;
 
+    /** The test OS architecture. */
     private String myArchitecture;
 
     /**
      * Sets up the test environment.
-     *
-     * @throws Exception If there is trouble setting up the environment.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myOS = System.getProperty(OS_NAME);
         myArchitecture = System.getProperty(OS_ARCH);
     }
 
     /**
      * Cleans up the test environment.
-     *
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         System.setProperty(OS_NAME, myOS);
         System.setProperty(OS_ARCH, myArchitecture);
     }
@@ -133,10 +133,10 @@ public class NativeLibraryLoaderTest {
     /**
      * Tests the NativeLibraryLoader constructor.
      *
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
+     * @throws NoSuchMethodException If the constructor cannot be accessed
+     * @throws IllegalAccessException If trying to set accessibility is forbidden
+     * @throws InvocationTargetException If the target cannot be invoked
+     * @throws InstantiationException If the constructor cannot be instantiated
      */
     @Test
     public void testConstructorIsPrivate()

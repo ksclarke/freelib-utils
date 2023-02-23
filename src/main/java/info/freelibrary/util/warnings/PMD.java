@@ -8,6 +8,26 @@ package info.freelibrary.util.warnings;
 public final class PMD {
 
     /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_errorprone.html#avoidcatchingnpe
+     */
+    public static final String AVOID_CATCHING_NPE = "PMD.AvoidCatchingNPE";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_design.html#ncsscount
+     */
+    public static final String NCSS_COUNT = "PMD.NcssCount";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_apex_design.html#excessivemethodlength
+     */
+    public static final String EXCESSIVE_METHOD_LENGTH = "PMD.ExcessiveMethodLength";
+
+    /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_apex_design.html#excessiveclasslength
+     */
+    public static final String EXCESSIVE_CLASS_LENGTH = "PMD.ExcessiveClassLength";
+
+    /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_bestpractices.html#avoidreassigningloopvariables
      */
     public static final String AVOID_REASSIGNING_LOOP_VARIABLES = "PMD.AvoidReassigningLoopVariables";
@@ -94,6 +114,11 @@ public final class PMD {
     public static final String TOO_MANY_METHODS = "PMD.TooManyMethods";
 
     /**
+     * Cf. https://pmd.github.io/latest/pmd_rules_java_codestyle.html#toomanystaticimports
+     */
+    public static final String TOO_MANY_STATIC_IMPORTS = "TooManyStaticImports";
+
+    /**
      * Cf. https://pmd.github.io/latest/pmd_rules_java_bestpractices.html#unusedformalparameter
      */
     public static final String UNUSED_FORMAL_PARAMETER = "PMD.UnusedFormalParameter";
@@ -133,10 +158,11 @@ public final class PMD {
      */
     public static final String AVOID_DUPLICATE_LITERALS = "PMD.AvoidDuplicateLiterals";
 
-    /*
+    /**
      * Constant classes have private constructors.
      */
     private PMD() {
+        // This is intentionally left empty
     }
 
 }

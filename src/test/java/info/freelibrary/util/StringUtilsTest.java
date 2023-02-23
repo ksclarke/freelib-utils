@@ -1,13 +1,19 @@
 
 package info.freelibrary.util;
 
-import static org.junit.Assert.*;
+import static info.freelibrary.util.Constants.EMPTY;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,24 +24,28 @@ import org.junit.Test;
  */
 public class StringUtilsTest {
 
-    private static final String CHARSET = "UTF-8";
-
+    /** A constant for 'default'. */
     private static final String DEFAULT = "default";
 
-    private static final String EMPTY = "";
-
+    /** A constant for 'first'. */
     private static final String FIRST = "first";
 
+    /** A constant for 'second'. */
     private static final String SECOND = "second";
 
+    /** A constant for 'third'. */
     private static final String THIRD = "third";
 
+    /** A symbol constant. */
     private static final String EXCLAMATION_AT = "!@";
 
+    /** A constant for 'source'. */
     private static final String SOURCE = "source";
 
+    /** A constant test value. */
     private static final String EMPTY_A = " a ";
 
+    /** A constant test value. */
     private static final String ONE_21_3 = "1~21~3";
 
     /**
@@ -79,7 +89,7 @@ public class StringUtilsTest {
     @Test
     public void formatMessageStringStringArray() {
         final String message = "This is the {} and the {}";
-        final String[] values = new String[] { FIRST, SECOND };
+        final String[] values = { FIRST, SECOND };
         final String result = StringUtils.format(message, values);
 
         assertEquals(result, "This is the first and the second");
@@ -92,7 +102,7 @@ public class StringUtilsTest {
         }
 
         try {
-            final String[] array = new String[] { FIRST, SECOND, THIRD };
+            final String[] array = { FIRST, SECOND, THIRD };
             StringUtils.format(message, array);
             fail("Failed to notice more values than slots");
         } catch (final IndexOutOfBoundsException details) {
@@ -108,7 +118,7 @@ public class StringUtilsTest {
         final File testFile1 = new File("src/test/resources/80_char_test_1.txt");
 
         try {
-            final String test1 = StringUtils.read(testFile1, CHARSET);
+            final String test1 = StringUtils.read(testFile1, StandardCharsets.UTF_8.toString());
             final String formattedTest1 = StringUtils.toCharCount(test1, 80);
             final StringReader stringReader = new StringReader(formattedTest1);
             final BufferedReader reader = new BufferedReader(stringReader);
@@ -158,7 +168,7 @@ public class StringUtilsTest {
             fileWriter.write(original);
             fileWriter.close();
 
-            assertEquals(original, StringUtils.read(tmpFile, CHARSET));
+            assertEquals(original, StringUtils.read(tmpFile, StandardCharsets.UTF_8.toString()));
         } catch (final IOException details) {
             fail(details.getMessage());
         } finally {
@@ -190,7 +200,7 @@ public class StringUtilsTest {
         final Integer i2 = 21;
         final Integer i3 = 3;
 
-        final Integer[] array = new Integer[] { i1, i2, i3 };
+        final Integer[] array = { i1, i2, i3 };
         assertEquals(ONE_21_3, StringUtils.toString(array, '~'));
     }
 
@@ -203,7 +213,7 @@ public class StringUtilsTest {
         final Integer i2 = 21;
         final Integer i3 = 3;
 
-        final Object[] array = new Object[] { i1, i2, i3 };
+        final Object[] array = { i1, i2, i3 };
 
         assertEquals(ONE_21_3, StringUtils.toString('~', array));
     }
@@ -258,8 +268,8 @@ public class StringUtilsTest {
      */
     @Test
     public void testParseIntRangeString() {
-        final int[] iArray1 = new int[] { 1111 };
-        final int[] iArray2 = new int[] { 1000, 1001, 1002, 1003, 1004, 1005 };
+        final int[] iArray1 = { 1111 };
+        final int[] iArray2 = { 1000, 1001, 1002, 1003, 1004, 1005 };
 
         assertArrayEquals(iArray1, StringUtils.parseIntRange("1111"));
         assertArrayEquals(iArray2, StringUtils.parseIntRange("1000-1005"));

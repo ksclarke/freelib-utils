@@ -14,12 +14,16 @@ import org.junit.Test;
  */
 public class ClasspathUtilsTest {
 
+    /** A logger for the tests. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathUtilsTest.class, MessageCodes.BUNDLE);
 
+    /** A test pattern for classes. */
     private static final String CLASSES_PATTERN = "(.*)t-classes";
 
+    /** A test pattern for junit classes. */
     private static final String JUNIT_PATTERN = "^junit(.*)$";
 
+    /** A test constant for a Jar extension. */
     private static final String JAR_EXT = ".jar";
 
     /**

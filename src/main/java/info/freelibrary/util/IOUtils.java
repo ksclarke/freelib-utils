@@ -84,7 +84,7 @@ public final class IOUtils {
     }
 
     /**
-     * Closes an image input stream, catching and logging any exceptions
+     * Closes an image input stream, catching and logging any exceptions.
      *
      * @param aImageInputStream A supplied image input stream to close
      */

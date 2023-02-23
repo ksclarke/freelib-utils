@@ -22,25 +22,31 @@ import org.junit.Test;
  */
 public class FileUtilsTest {
 
+    /** A temporary file directory used in testing. */
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    /** A test file. */
     private static final File TEST_FILE = new File("src/test/resources/test_file");
 
+    /** A test folder. */
     private static final File TEST_FOLDER = new File("src/test/resources/test_folder");
 
+    /** A mapping of the test folder. */
     private static final String TEST_FOLDER_MAP = "target/test-classes/test_folder-map.txt";
 
+    /** A "does not exist" string. */
     private static final String DOES_NOT_EXIST = "doesnotexist";
 
+    /** A wildcard constant. */
     private static final String WILDCARD = ".*";
 
     /**
      * Tests using the private constructor.
      *
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
+     * @throws NoSuchMethodException If the test constructor does not exist
+     * @throws IllegalAccessException If the constructors accessibility cannot be set
+     * @throws InvocationTargetException If the constructor cannot be invoked
+     * @throws InstantiationException If the constructor cannot be instantiated
      */
     @Test
     public void testConstructorIsPrivate()
@@ -116,8 +122,7 @@ public class FileUtilsTest {
      */
     @Test
     public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
-        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true,
-                new String[] { "test_folder" }).length);
+        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true, "test_folder").length);
     }
 
     /**
@@ -205,7 +210,7 @@ public class FileUtilsTest {
     }
 
     /**
-     * Test method for {@link FileUtils#getSize(File)}
+     * Test method for {@link FileUtils#getSize(File)}.
      */
     @Test
     public void testGetSize() {
@@ -213,7 +218,7 @@ public class FileUtilsTest {
     }
 
     /**
-     * Test method for {@link FileUtils#sizeFromBytes(long)}
+     * Test method for {@link FileUtils#sizeFromBytes(long)}.
      */
     @Test
     public void testSizeFromBytes() {
@@ -221,7 +226,7 @@ public class FileUtilsTest {
     }
 
     /**
-     * Test method for {@link FileUtils#delete(File)}
+     * Test method for {@link FileUtils#delete(File)}.
      */
     @Test
     public void testDeleteOfEmptyDir() {

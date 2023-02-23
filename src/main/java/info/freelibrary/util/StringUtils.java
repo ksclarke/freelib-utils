@@ -44,7 +44,11 @@ public final class StringUtils {
      */
     private static final String DOUBLE_SPACE = "  ";
 
+    /**
+     * Creates a class of string utilities.
+     */
     private StringUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -117,7 +121,8 @@ public final class StringUtils {
 
         while (matcher.find()) {
             matcher.appendReplacement(builder, "");
-            builder.append(aDetails[index++]);
+            builder.append(aDetails[index]);
+            index++;
         }
 
         return matcher.appendTail(builder).toString();
@@ -421,11 +426,9 @@ public final class StringUtils {
      */
     public static String toString(final Map<String, String[]> aMap) {
         final Set<Entry<String, String[]>> set = aMap.entrySet();
-        final Iterator<Entry<String, String[]>> setIter = set.iterator();
         final StringBuilder buffer = new StringBuilder();
 
-        while (setIter.hasNext()) {
-            final Entry<String, String[]> entry = setIter.next();
+        for (final Entry<String, String[]> entry : set) {
             final Object[] values = entry.getValue();
 
             buffer.append(entry.getKey()).append('=');
@@ -458,7 +461,8 @@ public final class StringUtils {
         int lineCount = 1; // Error messages start with line 1
 
         for (final String line : lines) {
-            buffer.append(lineCount++).append(' ').append(line);
+            buffer.append(lineCount).append(' ').append(line);
+            lineCount++;
             buffer.append(EOL);
         }
 
@@ -496,6 +500,7 @@ public final class StringUtils {
      *
      * @param aIntRange A string representation of a range of integers
      * @return An int array with the expanded values of the string representation
+     * @throws NumberFormatException if the supplied string isn't an integer range
      */
     @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
     public static int[] parseIntRange(final String aIntRange) {
@@ -509,16 +514,18 @@ public final class StringUtils {
             final int start = Integer.parseInt(range[0]);
             final int end = Integer.parseInt(range[1]);
 
-            if (end >= start) {
-                int position = 0;
-                final int size = end - start;
-                ints = new int[size + 1]; // because we're zero-based
-
-                for (int index = start; index <= end; index++) {
-                    ints[position++] = index;
-                }
-            } else {
+            if (end < start) {
                 throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMETER, end));
+            }
+
+            int position = 0;
+            final int size = end - start;
+
+            ints = new int[size + 1]; // because we're zero-based
+
+            for (int index = start; index <= end; index++) {
+                ints[position] = index;
+                position++;
             }
         }
 
@@ -562,6 +569,7 @@ public final class StringUtils {
      *
      * @param aInt An integer to convert into a string
      * @return The string form of the supplied integer
+     * @throws UnsupportedOperationException If the supplied integer isn't one that is supported
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public static String toUpcaseString(final int aInt) {
@@ -618,6 +626,7 @@ public final class StringUtils {
      * @param aMessage A message string
      * @param aDetails An array of additional string details
      * @return The starting index position if the counts matched
+     * @throws IndexOutOfBoundsException If the number of details doesn't match the number of slots
      */
     private static int checkBracketCount(final String aMessage, final String... aDetails) {
         int index = 0;

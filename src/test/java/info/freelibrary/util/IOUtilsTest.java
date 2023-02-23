@@ -23,14 +23,19 @@ import org.junit.Test;
  */
 public class IOUtilsTest {
 
+    /** A test file. */
     private static final File BIN_FILE = new File("src/test/resources/green.gif");
 
+    /** A test file. */
     private static final File TXT_FILE = new File("src/test/resources/80_char_test_1.txt");
 
+    /** A test file. */
     private static final File JAR_FILE = new File("src/test/resources/test_folder.jar");
 
+    /** A temporary directory used in testing. */
     private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
+    /** A constant for 'yes'. */
     private static final String YES = "yes";
 
     /**

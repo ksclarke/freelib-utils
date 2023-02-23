@@ -1152,6 +1152,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    /**
+     * Updates the supplied message.
+     *
+     * @param aMessage A message to update
+     * @return An updated message
+     */
     private String updateMessage(final String aMessage) {
         if (MDC.get(LoggerMarker.EOL_TO_SPACE) != null) {
             return aMessage.replaceAll(EOL_RE, SPACE);
@@ -1172,6 +1178,9 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         return aMessage;
     }
 
+    /**
+     * Clears the logger's marker.
+     */
     private void clearMarker() {
         if (MDC.get(LoggerMarker.EOL_TO_SPACE) != null) {
             MDC.remove(LoggerMarker.EOL_TO_SPACE);

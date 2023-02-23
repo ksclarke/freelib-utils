@@ -23,6 +23,7 @@ public final class ByteUtils {
      * Creates a new ByteUtils instance.
      */
     private ByteUtils() {
+        // This is intentionally left empty
     }
 
     /**
@@ -55,6 +56,16 @@ public final class ByteUtils {
         return bytes;
     }
 
+    /**
+     * Gets the index of the supplied byte in the supplied byte array, within the bounds of the start and end index
+     * positions.
+     *
+     * @param aByteArray A byte array to check
+     * @param aByte A byte to check
+     * @param aStart A starting position for the check
+     * @param aEnd An ending position for the check
+     * @return The found index position or a -1 if the supplied byte was not found
+     */
     private static int indexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
         for (int index = aStart; index < aEnd; index++) {
             if (aByteArray[index] == aByte) {
@@ -65,6 +76,16 @@ public final class ByteUtils {
         return -1;
     }
 
+    /**
+     * Gets the last index of the supplied byte in the supplied byte array, within the bounds of the start and end index
+     * positions.
+     *
+     * @param aByteArray A byte array to check
+     * @param aByte A byte to check
+     * @param aStart A starting position for the check
+     * @param aEnd An ending position for the check
+     * @return The found index position or a -1 if the supplied byte was not found
+     */
     private static int lastIndexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
         for (int index = aEnd - 1; index >= aStart; index--) {
             if (aByteArray[index] == aByte) {
@@ -111,6 +132,8 @@ public final class ByteUtils {
      * @param aStart A start position
      * @param aEnd An end position
      * @param aSize A size
+     * @throws IndexOutOfBoundsException If the supplied index falls outside of the start or end positions
+     * @throws IllegalArgumentException If the supplied end position precedes the supplied start position
      */
     private static void checkPositionIndexes(final int aStart, final int aEnd, final int aSize) {
         if (aStart < 0 || aStart >= aSize) {
@@ -299,6 +322,11 @@ public final class ByteUtils {
             return builder.append(']').toString();
         }
 
+        /**
+         * Returns the ByteArrayAsList as an array.
+         *
+         * @return A byte array of the bytes in the list
+         */
         @SuppressWarnings("unused")
         byte[] toByteArray() {
             return Arrays.copyOfRange(myArray, myStart, myEnd);

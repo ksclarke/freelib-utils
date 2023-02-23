@@ -1694,7 +1694,7 @@ public class LoggerTest {
     }
 
     /**
-     * Tests getMessage(String)
+     * Tests getMessage(String).
      */
     @Test
     public void testGetMessageKey() {
@@ -2135,54 +2135,81 @@ public class LoggerTest {
      */
     private static final class TestConstants {
 
+        /** A test bundle name. */
         private static final String BUNDLE_NAME = "test_freelib-utils_messages";
 
+        /** A test value. */
         private static final String DASH_ASDF = " - asdf";
 
+        /** A test value. */
         private static final String DASH_ONE = " - one";
 
+        /** A test value. */
         private static final String DASH_ONE_TWO = " - one and two";
 
+        /** A test value. */
         private static final String DASH_ASDF_SADF = " - asdf and sadf";
 
+        /** A test variable. */
         private static final String ONE = "one";
 
+        /** A test variable. */
         private static final String TWO = "two";
 
+        /** A test variable. */
         private static final String ASDF = "asdf";
 
+        /** A test variable. */
         private static final String SADF = "sadf";
 
+        /** A test variable. */
         private static final String TEST = "TEST";
 
+        /** A test result. */
         private static final String MAIN_DEBUG = "[main] DEBUG ";
 
+        /** A test result. */
         private static final String MAIN_WARN = "[main] WARN ";
 
+        /** A test result. */
         private static final String MAIN_TRACE = "[main] TRACE ";
 
+        /** A test result. */
         private static final String MAIN_INFO = "[main] INFO ";
 
+        /** A test result. */
         private static final String MAIN_ERROR = "[main] ERROR ";
 
+        /** A test value. */
         private static final String ONE_AND_TWO = "one and two";
 
+        /** A test value. */
         private static final String NOTIFY_ADMIN = "NOTIFY_ADMIN";
 
+        /** A test value. */
         private static final String BAD = "bad";
 
+        /** A test value. */
         private static final String TEST_ONE = "test.one";
 
+        /** A test key. */
         private static final String TEST_VALUE_ONE = "test.value.one";
 
+        /** A test key. */
         private static final String TEST_VALUE_TWO = "test.value.two";
 
+        /** A test message pattern. */
         private static final String MESSAGE = "{}";
 
+        /** A second test message pattern. */
         private static final String THIS_AND_THAT = "{} and {}";
 
+        /** A partial test string. */
         private static final String ASDF_SADF = " - asdf | sadf";
 
+        /**
+         * Creates a new constants class used in the logger tests.
+         */
         private TestConstants() {
             // This is intentionally left empty.
         }

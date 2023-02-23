@@ -87,6 +87,41 @@ public final class Constants {
     public static final int SINGLE_INSTANCE = 1;
 
     /**
+     * A constant for a zero character.
+     */
+    public static final char ZERO_CHAR = '0';
+
+    /**
+     * A constant for a dash character.
+     */
+    public static final char DASH_CHAR = '-';
+
+    /**
+     * A constant for a plus character.
+     */
+    public static final char PLUS_CHAR = '+';
+
+    /**
+     * A constant for a dot character.
+     */
+    public static final char DOT_CHAR = '.';
+
+    /**
+     * A constant for the string representation of Boolean.TRUE.
+     */
+    public static final String TRUE = "true";
+
+    /**
+     * A constant for the string representation of Boolean.FALSE.
+     */
+    public static final String FALSE = "false";
+
+    /**
+     * A constant for the string representation of null.
+     */
+    public static final String NULL = "null";
+
+    /**
      * Private constructor for a constants class.
      */
     private Constants() {

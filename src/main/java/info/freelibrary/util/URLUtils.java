@@ -5,6 +5,7 @@ import static info.freelibrary.util.Constants.PLUS;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -66,6 +67,8 @@ public final class URLUtils {
      *
      * @param aURL a URL object that uses protocol "file"
      * @return A File that corresponds to the URL's location
+     * @throws UnsupportedEncodingI18nException If the JVM doesn't support UTF-8
+     * @throws UnsupportedOperationException If the supplied URL doesn't use the file protocol
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public static File toFile(final URL aURL) {
@@ -84,7 +87,7 @@ public final class URLUtils {
 
         try {
             string = URLDecoder.decode(string, StandardCharsets.UTF_8.name());
-        } catch (final java.io.UnsupportedEncodingException details) {
+        } catch (final UnsupportedEncodingException details) {
             throw new UnsupportedEncodingI18nException(details, MessageCodes.UTIL_029);
         }
 
@@ -139,6 +142,7 @@ public final class URLUtils {
      * @param aURL An encoded URL String
      * @param aEncoding A character encoding to use for the string decoding
      * @return A decoded URL String
+     * @throws UnsupportedEncodingI18nException If the JVM doesn't support the supplied encoding
      */
     public static String decode(final String aURL, final String aEncoding) {
         String urlString = aURL;
@@ -151,7 +155,7 @@ public final class URLUtils {
                 // Java's URLDecoder needs a little help with occurrences of '%' that aren't percent escaped values
                 urlString = URLDecoder.decode(decodedString.replaceAll("%(?![0-9a-fA-F]{2})", PERCENT), aEncoding);
             } while (!urlString.equals(decodedString));
-        } catch (final java.io.UnsupportedEncodingException details) {
+        } catch (final UnsupportedEncodingException details) {
             throw new UnsupportedEncodingI18nException(details, aEncoding);
         }
 

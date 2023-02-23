@@ -10,6 +10,9 @@ import org.slf4j.ILoggerFactory;
  */
 public final class LoggerFactory {
 
+    /**
+     * Creates a new logger factory.
+     */
     private LoggerFactory() {
         // This is intentionally left empty
     }
