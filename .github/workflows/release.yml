@@ -29,15 +29,19 @@ jobs:
       - name: Set autorelease config
         if: env.AUTORELEASE_ARTIFACT == null
         run: echo "AUTORELEASE_ARTIFACT=false" >> $GITHUB_ENV
-      - id: install-secret-key
-        name: Install gpg secret key
+      - name: Install GPG secret key
         run: |
           cat <(echo -e "${{ secrets.BUILD_KEY }}") | gpg --batch --import
-      - id: publish-to-central
-        name: Publish Jar to Central Repository
-        env:
-          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Configure Maven
+        uses: s4u/maven-settings-action@60912582505985be4cc55d2b890eb32767f8de5f # v2.8.0
+        with:
+          servers: |
+            [{
+              "id": "ossrh",
+              "username": "${{ secrets.SONATYPE_USERNAME }}",
+              "password": "${{ secrets.SONATYPE_PASSWORD }}"
+            }]
+      - name: Release with Maven
         run: |
           mvn --no-transfer-progress --batch-mode \
           -DlogLevel=DEBUG -DtestLogLevel=DEBUG \

@@ -29,8 +29,7 @@ jobs:
         uses: stCarolas/setup-maven@1d56b37995622db66cce1214d81014b09807fb5a # v4
         with:
           maven-version: 3.6.3
-      - id: run-maven-build
-        name: Run Maven build
+      - name: Build with Maven
         run: |
           mvn --no-transfer-progress --batch-mode \
           -DlogLevel=DEBUG -DtestLogLevel=DEBUG \
