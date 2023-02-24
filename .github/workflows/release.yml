@@ -43,7 +43,7 @@ jobs:
             }]
       - name: Release with Maven
         run: |
-          mvn --no-transfer-progress --batch-mode \
+          MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED" mvn --no-transfer-progress --batch-mode \
           -DlogLevel=DEBUG -DtestLogLevel=DEBUG \
           -Dgpg.passphrase=${{ secrets.BUILD_PASSPHRASE }} \
           -Drevision=${{ github.event.release.tag_name }} \
