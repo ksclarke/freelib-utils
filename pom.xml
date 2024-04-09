@@ -108,6 +108,13 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-dependency-analyzer</artifactId>
+            <version>1.13.0</version>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>analyze-dep</id>
