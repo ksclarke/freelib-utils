@@ -1582,7 +1582,7 @@ public final class NumberUtils {
      * @return True if only contains digits and is non-null; else, false
      */
     public static boolean isNumeric(final CharSequence aCharSequence) {
-        if (aCharSequence == null || aCharSequence.isEmpty()) {
+        if (aCharSequence == null || aCharSequence.length() == 0) {
             return false;
         }
 
