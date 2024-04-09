@@ -45,7 +45,7 @@ public final class PortUtils {
     /**
      * Gets an open port iterator.
      */
-    private static class PortIterator implements Iterator<Integer> {
+    private static final class PortIterator implements Iterator<Integer> {
 
         /**
          * The next available port.
