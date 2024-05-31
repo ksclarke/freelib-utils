@@ -13,25 +13,12 @@ import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.jar.JarFile;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Utility class to load a native library that lives in the current classpath.
  */
 public final class NativeLibraryLoader {
-
-    /**
-     * The logger used by the native library loader.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MessageCodes.BUNDLE);
-
-    /**
-     * A constant for OS name.
-     */
-    private static final String OS_NAME = "os.name";
-
-    /**
-     * A constant for OS architecture.
-     */
-    private static final String OS_ARCH = "os.arch";
 
     /**
      * A constant prefix for libraries.
@@ -39,63 +26,24 @@ public final class NativeLibraryLoader {
     private static final String LIB_PREFIX = "lib";
 
     /**
-     * Possible architectures of native libraries.
+     * The logger used by the native library loader.
      */
-    public enum Architecture {
-
-        /** An unknown architecture. */
-        UNKNOWN,
-
-        /** A 32 bit Linux architecture. */
-        LINUX_32,
-
-        /** A 64 bit Linux architecture. */
-        LINUX_64,
-
-        /** A Linux ARM architecture. */
-        LINUX_ARM,
-
-        /** A 32 bit Windows architecture. */
-        WINDOWS_32,
-
-        /** A 64 bit Windows architecture. */
-        WINDOWS_64,
-
-        /** A 32 bit OSX architecture. */
-        OSX_32,
-
-        /** A 64 bit OSX architecture. */
-        OSX_64,
-
-        /** An OSX PPC architecture. */
-        OSX_PPC
-    }
-
-    /**
-     * Possible processors for native libraries.
-     */
-    private enum Processor {
-
-        /** An unknown processor type. */
-        UNKNOWN,
-
-        /** A 32 bit Intel processor. */
-        INTEL_32,
-
-        /** A 64 bit Intel processor. */
-        INTEL_64,
-
-        /** A PPC processor. */
-        PPC,
-
-        /** An ARM processor. */
-        ARM
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(NativeLibraryLoader.class, MessageCodes.BUNDLE);
 
     /**
      * An architecture assignment with unknown as the default.
      */
     private static Architecture myArchitecture = Architecture.UNKNOWN;
+
+    /**
+     * A constant for OS architecture.
+     */
+    private static final String OS_ARCH = "os.arch";
+
+    /**
+     * A constant for OS name.
+     */
+    private static final String OS_NAME = "os.name";
 
     /**
      * Constructor for the NativeLibraryLoader.
@@ -105,45 +53,11 @@ public final class NativeLibraryLoader {
     }
 
     /**
-     * Loads a native library from the classpath.
-     *
-     * @param aNativeLibrary A native library to load from the classpath
-     * @throws IOException If there is trouble reading from the Jar file or file system
-     * @throws FileNotFoundException If a native library file cannot be found
-     */
-    public static void load(final String aNativeLibrary) throws IOException {
-        final String libFileName = getPlatformLibraryName(aNativeLibrary);
-        final File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-        final File libFile = new File(tmpDir, libFileName);
-
-        // Check to see whether it already exists before we go creating it again?
-        if (!libFile.exists() || libFile.length() == 0) {
-            final URL url = ClasspathUtils.findFirst(libFileName);
-
-            if (url == null) {
-                throw new FileNotFoundException(LOGGER.getMessage(MessageCodes.UTIL_002, aNativeLibrary));
-            }
-
-            try (JarFile jarFile = new JarFile(url.getFile());
-                    InputStream inStream = jarFile.getInputStream(jarFile.getJarEntry(libFileName));
-                    OutputStream outStream = Files.newOutputStream(Paths.get(libFile.getAbsolutePath()))) {
-                IOUtils.copyStream(inStream, new BufferedOutputStream(outStream));
-            }
-        }
-
-        if (!libFile.exists() || libFile.length() <= 0) {
-            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_039, libFile));
-        }
-
-        System.load(libFile.getAbsolutePath());
-    }
-
-    /**
      * Gets the architecture of the machine running the JVM.
      *
      * @return The architecture of the machine running the JVM
      */
-    @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.AvoidDeeplyNestedIfStmts" })
+    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public static Architecture getArchitecture() {
         if (Architecture.UNKNOWN == myArchitecture) {
             final Processor processor = getProcessor();
@@ -182,6 +96,72 @@ public final class NativeLibraryLoader {
     }
 
     /**
+     * Gets the library name for the current platform.
+     *
+     * @param aLibraryName The platform-independent library name
+     * @return The library name for the current platform
+     */
+    public static String getPlatformLibraryName(final String aLibraryName) {
+        String libName = null;
+
+        switch (getArchitecture()) {
+            case LINUX_32:
+            case LINUX_64:
+            case LINUX_ARM:
+                libName = LIB_PREFIX + aLibraryName + ".so";
+                break;
+            case WINDOWS_32:
+            case WINDOWS_64:
+                libName = aLibraryName + ".dll";
+                break;
+            case OSX_32:
+            case OSX_64:
+                libName = LIB_PREFIX + aLibraryName + ".dylib";
+                break;
+            default:
+                LOGGER.warn("Unexpected architecture value: {}", getArchitecture());
+                break;
+        }
+
+        LOGGER.debug(MessageCodes.UTIL_025, libName);
+        return libName;
+    }
+
+    /**
+     * Loads a native library from the classpath.
+     *
+     * @param aNativeLibrary A native library to load from the classpath
+     * @throws IOException If there is trouble reading from the Jar file or file system
+     * @throws FileNotFoundException If a native library file cannot be found
+     */
+    public static void load(final String aNativeLibrary) throws IOException {
+        final String libFileName = getPlatformLibraryName(aNativeLibrary);
+        final File tmpDir = new File(System.getProperty("java.io.tmpdir"));
+        final File libFile = new File(tmpDir, libFileName);
+
+        // Check to see whether it already exists before we go creating it again?
+        if (!libFile.exists() || libFile.length() == 0) {
+            final URL url = ClasspathUtils.findFirst(libFileName);
+
+            if (url == null) {
+                throw new FileNotFoundException(LOGGER.getMessage(MessageCodes.UTIL_002, aNativeLibrary));
+            }
+
+            try (JarFile jarFile = new JarFile(url.getFile());
+                    InputStream inStream = jarFile.getInputStream(jarFile.getJarEntry(libFileName));
+                    OutputStream outStream = Files.newOutputStream(Paths.get(libFile.getAbsolutePath()))) {
+                IOUtils.copyStream(inStream, new BufferedOutputStream(outStream));
+            }
+        }
+
+        if (!libFile.exists() || libFile.length() <= 0) {
+            throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_039, libFile));
+        }
+
+        System.load(libFile.getAbsolutePath());
+    }
+
+    /**
      * Gets the system processor type.
      *
      * @return A system processor type
@@ -212,35 +192,57 @@ public final class NativeLibraryLoader {
     }
 
     /**
-     * Gets the library name for the current platform.
-     *
-     * @param aLibraryName The platform-independent library name
-     * @return The library name for the current platform
+     * Possible architectures of native libraries.
      */
-    public static String getPlatformLibraryName(final String aLibraryName) {
-        String libName = null;
+    public enum Architecture {
 
-        switch (getArchitecture()) {
-            case LINUX_32:
-            case LINUX_64:
-            case LINUX_ARM:
-                libName = LIB_PREFIX + aLibraryName + ".so";
-                break;
-            case WINDOWS_32:
-            case WINDOWS_64:
-                libName = aLibraryName + ".dll";
-                break;
-            case OSX_32:
-            case OSX_64:
-                libName = LIB_PREFIX + aLibraryName + ".dylib";
-                break;
-            default:
-                LOGGER.warn("Unexpected architecture value: {}", getArchitecture());
-                break;
-        }
+        /** A 32 bit Linux architecture. */
+        LINUX_32,
 
-        LOGGER.debug(MessageCodes.UTIL_025, libName);
-        return libName;
+        /** A 64 bit Linux architecture. */
+        LINUX_64,
+
+        /** A Linux ARM architecture. */
+        LINUX_ARM,
+
+        /** A 32 bit OSX architecture. */
+        OSX_32,
+
+        /** A 64 bit OSX architecture. */
+        OSX_64,
+
+        /** An OSX PPC architecture. */
+        OSX_PPC,
+
+        /** An unknown architecture. */
+        UNKNOWN,
+
+        /** A 32 bit Windows architecture. */
+        WINDOWS_32,
+
+        /** A 64 bit Windows architecture. */
+        WINDOWS_64
+    }
+
+    /**
+     * Possible processors for native libraries.
+     */
+    private enum Processor {
+
+        /** An ARM processor. */
+        ARM,
+
+        /** A 32 bit Intel processor. */
+        INTEL_32,
+
+        /** A 64 bit Intel processor. */
+        INTEL_64,
+
+        /** A PPC processor. */
+        PPC,
+
+        /** An unknown processor type. */
+        UNKNOWN
     }
 
 }

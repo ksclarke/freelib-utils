@@ -13,14 +13,6 @@ public class MalformedUrlException extends RuntimeException {
     private static final long serialVersionUID = -4345212901234152387L;
 
     /**
-     * Constructs a MalformedUrlException with no detail message.
-     */
-    @SuppressWarnings("PMD.CallSuperInConstructor")
-    public MalformedUrlException() {
-        // This is intentionally left empty
-    }
-
-    /**
      * Constructs a MalformedUrlException with the specified detail message.
      *
      * @param aMessage A detail message.

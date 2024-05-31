@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Watcher that can register listeners that will fire when the process has finished.
  */
@@ -36,24 +38,6 @@ public class ProcessWatcher extends Thread {
         myProcess = aProcessBuilder.start();
     }
 
-    @Override
-    @SuppressWarnings("PMD.UseTryWithResources")
-    public void run() {
-        try {
-            myProcess.waitFor();
-
-            for (final ProcessListener listener : myListeners) {
-                listener.processFinished(myProcess);
-            }
-        } catch (final InterruptedException details) {
-            LOGGER.warn(details.getMessage(), details);
-        } finally {
-            IOUtils.closeQuietly(myProcess.getInputStream());
-            IOUtils.closeQuietly(myProcess.getOutputStream());
-            IOUtils.closeQuietly(myProcess.getErrorStream());
-        }
-    }
-
     /**
      * Add a {@link info.freelibrary.util.ProcessListener} to this watcher.
      *
@@ -74,6 +58,24 @@ public class ProcessWatcher extends Thread {
     public ProcessWatcher removeListener(final ProcessListener aListener) {
         myListeners.remove(aListener);
         return this;
+    }
+
+    @Override
+    @SuppressWarnings(PMD.USE_TRY_WITH_RESOURCES)
+    public void run() {
+        try {
+            myProcess.waitFor();
+
+            for (final ProcessListener listener : myListeners) {
+                listener.processFinished(myProcess);
+            }
+        } catch (final InterruptedException details) {
+            LOGGER.warn(details.getMessage(), details);
+        } finally {
+            IOUtils.closeQuietly(myProcess.getInputStream());
+            IOUtils.closeQuietly(myProcess.getOutputStream());
+            IOUtils.closeQuietly(myProcess.getErrorStream());
+        }
     }
 
 }

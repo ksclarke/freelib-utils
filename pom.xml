@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>freelib-utils</artifactId>
   <version>${revision}</version>
@@ -108,21 +109,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <!--
-        <executions>
-          <execution>
-            <id>analyze-dep</id>
-            <goals>
-              <goal>analyze-only</goal>
-            </goals>
-            <configuration>
-              <ignoredDependencies>
-                <ignoredDependency>org.jboss.forge.roaster:roaster-jdt:jar</ignoredDependency>
-              </ignoredDependencies>
-            </configuration>
-          </execution>
-        </executions>
-        -->
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -142,7 +128,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>8.0.7</version>
+    <version>8.0.8</version>
   </parent>
 
 </project>

@@ -28,15 +28,6 @@ public final class PasswordUtils {
     }
 
     /**
-     * Generates a salt for working with passwords.
-     *
-     * @return A salt
-     */
-    public static String generateSalt() {
-        return new BigInteger(40, new SecureRandom()).toString(32);
-    }
-
-    /**
      * Encrypts the supplied text.
      *
      * @param aText The text to be encrypted
@@ -44,7 +35,7 @@ public final class PasswordUtils {
      * @throws IOException If there is trouble encrypting the supplied text
      */
     public static String encrypt(final String aText) throws IOException {
-        return PasswordUtils.encrypt(aText, "");
+        return encrypt(aText, "");
     }
 
     /**
@@ -70,5 +61,14 @@ public final class PasswordUtils {
         } catch (final NoSuchAlgorithmException | UnsupportedEncodingException details) {
             throw new I18nRuntimeException(details); // programming error
         }
+    }
+
+    /**
+     * Generates a salt for working with passwords.
+     *
+     * @return A salt
+     */
+    public static String generateSalt() {
+        return new BigInteger(40, new SecureRandom()).toString(32);
     }
 }

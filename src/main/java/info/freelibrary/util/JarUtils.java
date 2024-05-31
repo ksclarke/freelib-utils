@@ -18,20 +18,22 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * A small collection of Jar file utilities.
  */
 public final class JarUtils {
 
     /**
-     * A constant for the protocol of a Jar file.
-     */
-    public static final String JAR_URL_PROTOCOL = "jar:file://";
-
-    /**
      * The delimiter between the Jar file and its path.
      */
     public static final String JAR_URL_DELIMITER = "!/";
+
+    /**
+     * A constant for the protocol of a Jar file.
+     */
+    public static final String JAR_URL_PROTOCOL = "jar:file://";
 
     /**
      * The logger used by the Jar utilities.
@@ -51,86 +53,23 @@ public final class JarUtils {
     }
 
     /**
-     * Gets a list of jar files in the classpath (this includes jars in jars, one level deep).
+     * Tests whether the supplied file path exists in the supplied Jar file. This method does not close the JarFile.
      *
-     * @return An array of {@link URL}s found in the classpath
-     * @throws IOException If there is trouble reading the classpath
+     * @param aJarFile A jar file to search
+     * @param aFilePath A path for which to search
+     * @return True if the file path is found; else, false
+     * @throws IOException If the jar file cannot be read
      */
-    @SuppressWarnings({ "PMD.AvoidDeeplyNestedIfStmts", "PMD.CognitiveComplexity" })
-    public static URL[] getJarURLs() throws IOException {
-        final List<URL> urlList = new LinkedList<>();
+    public static boolean contains(final JarFile aJarFile, final String aFilePath) throws IOException {
+        final Enumeration<JarEntry> entries = aJarFile.entries();
 
-        for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
-            try (jarFile) {
-                final Manifest manifest = jarFile.getManifest();
-                final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + JAR_URL_DELIMITER);
-
-                urlList.add(jarURL);
-
-                if (manifest != null) {
-                    final Attributes attributes = manifest.getMainAttributes();
-
-                    if (attributes != null) {
-                        final String classpath = attributes.getValue("Class-Path");
-
-                        if (classpath != null) {
-                            final StringTokenizer tokenizer = new StringTokenizer(classpath);
-
-                            while (tokenizer.hasMoreTokens()) {
-                                final String jarPath = tokenizer.nextToken();
-
-                                if (jarPath.endsWith(".jar")) {
-                                    urlList.add(new URL(jarURL.toExternalForm() + jarPath));
-                                }
-                            }
-                        }
-                    }
-                }
+        while (entries.hasMoreElements()) {
+            if (entries.nextElement().getName().equals(aFilePath)) {
+                return true;
             }
         }
 
-        return urlList.toArray(new URL[0]);
-    }
-
-    /**
-     * Extracts the supplied path from the supplied Jar file's URL to the supplied {@link java.io.File} location. This
-     * method closes the JarFile.
-     *
-     * @param aJarURL A Jar URL that contains the system file path of a Jar file and a subfile path
-     * @param aDestDir The destination directory into which the file should be extracted
-     * @throws IOException If there is an exception thrown while reading or writing the file
-     * @throws NoSuchFileException If the Jar file cannot be found at the supplied path
-     * @throws MalformedUrlException If the supplied URL does not also contain a subfile path
-     */
-    public static void extract(final URL aJarURL, final File aDestDir) throws IOException {
-        final String[] jarURLParts = aJarURL.getFile().split(JAR_URL_DELIMITER);
-        final File jarFile;
-
-        if (jarURLParts.length != URL_COMPONENT_COUNT) {
-            throw new MalformedUrlException(LOGGER.getMessage(MessageCodes.UTIL_072, aJarURL));
-        }
-
-        jarFile = new File(jarURLParts[0].substring(aJarURL.getProtocol().length() + 4)); // Remove protocol
-        extract(jarFile, jarURLParts[1], aDestDir);
-    }
-
-    /**
-     * Extract the supplied path from the supplied Jar file to a supplied {@link java.io.File} location. This method
-     * closes the JarFile.
-     *
-     * @param aJarFilePath The path to a Jar file from which to extract
-     * @param aFilePath The Jar's file path of the file to extract
-     * @param aDestDir The destination directory into which the file should be extracted
-     * @throws IOException If there is an exception thrown while reading or writing the file
-     * @throws NoSuchFileException If the Jar file cannot be found at the supplied path
-     */
-    public static void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
-            throws IOException {
-        if (aJarFilePath.startsWith(JAR_URL_PROTOCOL)) {
-            extract(new URL(aJarFilePath + JAR_URL_DELIMITER + aFilePath), aDestDir);
-        } else {
-            extract(new File(aJarFilePath), aFilePath, aDestDir);
-        }
+        return false;
     }
 
     /**
@@ -183,22 +122,86 @@ public final class JarUtils {
     }
 
     /**
-     * Tests whether the supplied file path exists in the supplied Jar file. This method does not close the JarFile.
+     * Extract the supplied path from the supplied Jar file to a supplied {@link java.io.File} location. This method
+     * closes the JarFile.
      *
-     * @param aJarFile A jar file to search
-     * @param aFilePath A path for which to search
-     * @return True if the file path is found; else, false
-     * @throws IOException If the jar file cannot be read
+     * @param aJarFilePath The path to a Jar file from which to extract
+     * @param aFilePath The Jar's file path of the file to extract
+     * @param aDestDir The destination directory into which the file should be extracted
+     * @throws IOException If there is an exception thrown while reading or writing the file
+     * @throws NoSuchFileException If the Jar file cannot be found at the supplied path
      */
-    public static boolean contains(final JarFile aJarFile, final String aFilePath) throws IOException {
-        final Enumeration<JarEntry> entries = aJarFile.entries();
+    public static void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
+            throws IOException {
+        if (aJarFilePath.startsWith(JAR_URL_PROTOCOL)) {
+            extract(new URL(aJarFilePath + JAR_URL_DELIMITER + aFilePath), aDestDir);
+        } else {
+            extract(new File(aJarFilePath), aFilePath, aDestDir);
+        }
+    }
 
-        while (entries.hasMoreElements()) {
-            if (entries.nextElement().getName().equals(aFilePath)) {
-                return true;
+    /**
+     * Extracts the supplied path from the supplied Jar file's URL to the supplied {@link java.io.File} location. This
+     * method closes the JarFile.
+     *
+     * @param aJarURL A Jar URL that contains the system file path of a Jar file and a subfile path
+     * @param aDestDir The destination directory into which the file should be extracted
+     * @throws IOException If there is an exception thrown while reading or writing the file
+     * @throws NoSuchFileException If the Jar file cannot be found at the supplied path
+     * @throws MalformedUrlException If the supplied URL does not also contain a subfile path
+     */
+    public static void extract(final URL aJarURL, final File aDestDir) throws IOException {
+        final String[] jarURLParts = aJarURL.getFile().split(JAR_URL_DELIMITER);
+        final File jarFile;
+
+        if (jarURLParts.length != URL_COMPONENT_COUNT) {
+            throw new MalformedUrlException(LOGGER.getMessage(MessageCodes.UTIL_072, aJarURL));
+        }
+
+        jarFile = new File(jarURLParts[0].substring(aJarURL.getProtocol().length() + 4)); // Remove protocol
+        extract(jarFile, jarURLParts[1], aDestDir);
+    }
+
+    /**
+     * Gets a list of jar files in the classpath (this includes jars in jars, one level deep).
+     *
+     * @return An array of {@link URL}s found in the classpath
+     * @throws IOException If there is trouble reading the classpath
+     */
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS, PMD.COGNITIVE_COMPLEXITY })
+    public static URL[] getJarURLs() throws IOException {
+        final List<URL> urlList = new LinkedList<>();
+
+        for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
+            try (jarFile) {
+                final Manifest manifest = jarFile.getManifest();
+                final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + JAR_URL_DELIMITER);
+
+                urlList.add(jarURL);
+
+                if (manifest != null) {
+                    @SuppressWarnings({ PMD.LOOSE_COUPLING })
+                    final Attributes attributes = manifest.getMainAttributes();
+
+                    if (attributes != null) {
+                        final String classpath = attributes.getValue("Class-Path");
+
+                        if (classpath != null) {
+                            final StringTokenizer tokenizer = new StringTokenizer(classpath);
+
+                            while (tokenizer.hasMoreTokens()) {
+                                final String jarPath = tokenizer.nextToken();
+
+                                if (jarPath.endsWith(".jar")) {
+                                    urlList.add(new URL(jarURL.toExternalForm() + jarPath));
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        return false;
+        return urlList.toArray(new URL[0]);
     }
 }

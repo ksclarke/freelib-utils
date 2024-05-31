@@ -12,11 +12,6 @@ public final class Stopwatch {
     private static final Logger LOGGER = LoggerFactory.getLogger(Stopwatch.class, MessageCodes.BUNDLE);
 
     /**
-     * A flag indicating if the timer is running.
-     */
-    private boolean myTimerIsRunning;
-
-    /**
      * A start time.
      */
     private long myStart;
@@ -25,6 +20,42 @@ public final class Stopwatch {
      * A stop time.
      */
     private long myStop;
+
+    /**
+     * A flag indicating if the timer is running.
+     */
+    private boolean myTimerIsRunning;
+
+    /**
+     * Express the "reading" on the stopwatch in milliseconds.
+     *
+     * @return Time elapsed in stopwatch in milliseconds
+     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
+     */
+    public String getMilliseconds() {
+        if (myTimerIsRunning) {
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
+        }
+
+        return new StringBuilder().append(myStop - myStart).append(" msecs").toString();
+    }
+
+    /**
+     * Express the "reading" on the stopwatch in seconds.
+     *
+     * @return Time elapsed in stopwatch in seconds
+     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
+     */
+    public String getSeconds() {
+        if (myTimerIsRunning) {
+            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
+        }
+
+        final StringBuilder result = new StringBuilder(22);
+        final long timeGap = myStop - myStart;
+
+        return result.append(timeGap / 1000).append(" secs, ").append(timeGap % 1000).append(" msecs ").toString();
+    }
 
     /**
      * Start the stopwatch.
@@ -82,37 +113,6 @@ public final class Stopwatch {
         myTimerIsRunning = false;
 
         return this;
-    }
-
-    /**
-     * Express the "reading" on the stopwatch in seconds.
-     *
-     * @return Time elapsed in stopwatch in seconds
-     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
-     */
-    public String getSeconds() {
-        if (myTimerIsRunning) {
-            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
-        }
-
-        final StringBuilder result = new StringBuilder();
-        final long timeGap = myStop - myStart;
-
-        return result.append(timeGap / 1000).append(" secs, ").append(timeGap % 1000).append(" msecs ").toString();
-    }
-
-    /**
-     * Express the "reading" on the stopwatch in milliseconds.
-     *
-     * @return Time elapsed in stopwatch in milliseconds
-     * @throws IllegalStateException if the Stopwatch has never been used, or if the stopwatch is still running.
-     */
-    public String getMilliseconds() {
-        if (myTimerIsRunning) {
-            throw new IllegalStateException(LOGGER.getI18n(MessageCodes.UTIL_042));
-        }
-
-        return new StringBuilder().append(myStop - myStart).append(" msecs").toString();
     }
 
     /**
