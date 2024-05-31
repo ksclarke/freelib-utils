@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * A utility class for working with Zip files.
  */
@@ -70,7 +72,7 @@ public final class ZipUtils {
      * @throws FileNotFoundException If a file expected to be there is not found
      * @throws IOException If there is trouble writing to the Zip file
      */
-    @SuppressWarnings("PMD.AvoidFileStream")
+    @SuppressWarnings(PMD.AVOID_FILE_STREAM)
     public static void zip(final File aFileSystemDir, final File aOutputZipFile, final FilenameFilter aIncludesFilter,
             final File... aIncludesFileList) throws FileNotFoundException, IOException {
         try (ZipOutputStream zipFileStream = new ZipOutputStream(new FileOutputStream(aOutputZipFile))) {
@@ -99,7 +101,7 @@ public final class ZipUtils {
      * @param aZipStream An output stream for the zipped directory
      * @throws IOException If there is trouble zipping up the directory
      */
-    @SuppressWarnings("PMD.AvoidFileStream")
+    @SuppressWarnings(PMD.AVOID_FILE_STREAM)
     private static void dirToZip(final File aSourceDir, final String aRootDir, final FilenameFilter aFilter,
             final ZipOutputStream aZipStream) throws IOException {
         for (final File inFile : aSourceDir.listFiles()) {

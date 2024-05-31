@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Utilities related to ports.
  */
@@ -24,7 +26,7 @@ public final class PortUtils {
      * @return An open port
      * @throws I18nRuntimeException If a local port cannot be found
      */
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+    @SuppressWarnings(PMD.AVOID_THROWING_RAW_EXCEPTION_TYPES)
     public static int getPort() {
         try (ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();
@@ -53,7 +55,7 @@ public final class PortUtils {
         private int myNextPort;
 
         @Override
-        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        @SuppressWarnings(PMD.AVOID_CATCHING_GENERIC_EXCEPTION)
         public boolean hasNext() {
             try {
                 myNextPort = getPort();
@@ -64,7 +66,7 @@ public final class PortUtils {
         }
 
         @Override
-        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        @SuppressWarnings(PMD.AVOID_CATCHING_GENERIC_EXCEPTION)
         public Integer next() {
             final Integer port;
 

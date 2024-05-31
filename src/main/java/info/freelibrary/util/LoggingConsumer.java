@@ -17,7 +17,7 @@ import info.freelibrary.util.warnings.PMD;
 public interface LoggingConsumer<T> extends Consumer<T> {
 
     @Override
-    @SuppressWarnings({ "PMD.AvoidCatchingGenericException", PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default void accept(final T aType) {
         try {
             acceptLogs(aType);
@@ -33,7 +33,7 @@ public interface LoggingConsumer<T> extends Consumer<T> {
      * @param aType A type being accepted by the consumer
      * @throws Exception If the function throws an exception
      */
-    @SuppressWarnings({ "PMD.SignatureDeclareThrowsException", PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
+    @SuppressWarnings({ PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
     void acceptLogs(T aType) throws Exception;
 
 }

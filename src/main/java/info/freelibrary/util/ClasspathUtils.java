@@ -6,8 +6,11 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import info.freelibrary.util.warnings.PMD;
 
 /**
  * Utilities for working with the Java classpath.
@@ -57,7 +60,7 @@ public final class ClasspathUtils {
      * @return The names of directories from the system classpath
      */
     public static String[] getDirs() {
-        final ArrayList<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
@@ -78,7 +81,7 @@ public final class ClasspathUtils {
      * @return The directories from the system classpath
      */
     public static File[] getDirFiles() {
-        final ArrayList<File> list = new ArrayList<>();
+        final List<File> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
@@ -101,7 +104,7 @@ public final class ClasspathUtils {
      * @return The names of directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getDirs(final FilenameFilter aFilter) {
-        final ArrayList<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
@@ -122,7 +125,7 @@ public final class ClasspathUtils {
      * @return The directories from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static File[] getDirFiles(final FilenameFilter aFilter) {
-        final ArrayList<File> list = new ArrayList<>();
+        final List<File> list = new ArrayList<>();
 
         for (final String filename : System.getProperty(CLASSPATH).split(DELIMETER)) {
             final File file = new File(filename);
@@ -144,7 +147,7 @@ public final class ClasspathUtils {
      * @return The names of jars from the system classpath
      */
     public static String[] getJars() {
-        final ArrayList<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -166,7 +169,7 @@ public final class ClasspathUtils {
      * @return The names of jars from the system classpath that match the supplied <code>FilenameFilter</code>
      */
     public static String[] getJars(final FilenameFilter aFilter) {
-        final ArrayList<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -189,7 +192,7 @@ public final class ClasspathUtils {
      * @throws IOException If there is trouble reading the file system while looking for Jar files
      */
     public static JarFile[] getJarFiles() throws IOException {
-        final ArrayList<JarFile> list = new ArrayList<>();
+        final List<JarFile> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -212,7 +215,7 @@ public final class ClasspathUtils {
      * @throws IOException If there is trouble reading the file system while looking for Jar files
      */
     public static JarFile[] getJarFiles(final FilenameFilter aFilter) throws IOException {
-        final ArrayList<JarFile> list = new ArrayList<>();
+        final List<JarFile> list = new ArrayList<>();
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 
         for (final String part : System.getProperty(CLASSPATH).split(File.pathSeparator)) {
@@ -236,7 +239,7 @@ public final class ClasspathUtils {
      * @return The {@link URL} of the file we want to read
      * @throws IOException If there is trouble reading from the file system or jars
      */
-    @SuppressWarnings("PMD.CognitiveComplexity")
+    @SuppressWarnings(PMD.COGNITIVE_COMPLEXITY)
     public static URL findFirst(final String aFileName) throws IOException {
         final FileExtFileFilter filter = new FileExtFileFilter(JAR_EXT);
 

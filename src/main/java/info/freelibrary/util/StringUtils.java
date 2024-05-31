@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,11 +19,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Provides a few convenience methods for working with strings.
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.CyclomaticComplexity", "PMD.GodClass" })
+@SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
 public final class StringUtils {
+
+    /**
+     * A double space constant.
+     */
+    private static final String DOUBLE_SPACE = "  ";
 
     /**
      * The logger used by the string utilities.
@@ -40,11 +48,6 @@ public final class StringUtils {
     private static final String RANGE_DELIMETER = "-";
 
     /**
-     * A double space constant.
-     */
-    private static final String DOUBLE_SPACE = "  ";
-
-    /**
      * Creates a class of string utilities.
      */
     private StringUtils() {
@@ -52,44 +55,29 @@ public final class StringUtils {
     }
 
     /**
-     * Trims a string; if there is nothing left after the trimming, returns null. If the passed in object is not a
-     * string, a cast exception will be thrown.
+     * Adds line numbers to any string. This is useful when I need to debug an XQuery outside the context of an IDE
+     * (i.e., in debugging output).
      *
-     * @param aString The string to be trimmed
-     * @return The trimmed string or null if string is empty
+     * @param aMessage Text to which line numbers should be added
+     * @return The supplied text with line numbers at the first of each line
      */
-    public static String trimToNull(final String aString) {
-        return trimTo(aString, null);
-    }
+    public static String addLineNumbers(final String aMessage) {
+        final StringBuilder buffer = new StringBuilder();
+        final String[] lines = aMessage.split(EOL);
 
-    /**
-     * Trims a string object down into a boolean and has the ability to define what the default value should be. We only
-     * offer the method with the default value because most times a boolean with either exist or not (and in the case of
-     * not a default should be specified).
-     *
-     * @param aString A boolean in string form
-     * @param aBool A default boolean value
-     * @return The boolean representation of the string value or the default value
-     */
-    public static boolean trimToBool(final String aString, final boolean aBool) {
-        final String boolString = trimTo(aString, Boolean.toString(aBool));
-        return Boolean.parseBoolean(boolString);
-    }
+        int lineCount = 1; // Error messages start with line 1
 
-    /**
-     * Trims a string; if there is nothing left after the trimming, returns whatever the default value passed in is.
-     *
-     * @param aString The string to be trimmed
-     * @param aDefault A default string to return if a null string is passed in
-     * @return The trimmed string or the default value if string is empty
-     */
-    public static String trimTo(final String aString, final String aDefault) {
-        if (aString == null) {
-            return aDefault;
+        for (final String line : lines) {
+            buffer.append(lineCount).append(' ').append(line);
+            lineCount++;
+            buffer.append(EOL);
         }
 
-        final String trimmed = aString.trim();
-        return trimmed.length() == 0 ? aDefault : trimmed;
+        final int length = buffer.length();
+
+        buffer.delete(length - EOL.length(), length);
+
+        return buffer.toString();
     }
 
     /**
@@ -101,7 +89,7 @@ public final class StringUtils {
      * @return The formatted message
      */
     public static String format(final String aMessage, final Object... aDetail) {
-        return format(aMessage, StringUtils.toStrings(aDetail));
+        return format(aMessage, toStrings(aDetail));
     }
 
     /**
@@ -129,19 +117,48 @@ public final class StringUtils {
     }
 
     /**
-     * Converts a varargs into an array of strings by calling <code>toString()</code> on each object.
+     * Returns true if the supplied string is null, empty, or contains nothing but whitespace.
      *
-     * @param aVarargs A varargs of objects
-     * @return An array of strings
+     * @param aString A string to test to see if it is null, empty or contains nothing but whitespace
+     * @return True if the supplied string is empty; else, false
      */
-    public static String[] toStrings(final Object... aVarargs) {
-        final String[] strings = new String[aVarargs.length];
+    public static boolean isEmpty(final String aString) {
+        boolean result = true;
 
-        for (int index = 0; index < strings.length; index++) {
-            strings[index] = aVarargs[index].toString();
+        if (aString != null) {
+            for (int index = 0; index < aString.length(); index++) {
+                if (!Character.isWhitespace(aString.charAt(index))) {
+                    result = false;
+                    break;
+                }
+            }
         }
 
-        return strings;
+        return result;
+    }
+
+    /**
+     * Turns the keys in a map into a character delimited string. The order is only consistent if the map is sorted.
+     *
+     * @param aMap The map from which to pull the keys
+     * @param aSeparator The character separator for the construction of the string
+     * @return A string constructed from the keys in the map
+     */
+    public static String joinKeys(final Map<String, ?> aMap, final char aSeparator) {
+        if (aMap.isEmpty()) {
+            return "";
+        }
+
+        final Iterator<String> iterator = aMap.keySet().iterator();
+        final StringBuilder buffer = new StringBuilder();
+
+        while (iterator.hasNext()) {
+            buffer.append(iterator.next()).append(aSeparator);
+        }
+
+        final int length = buffer.length() - 1;
+
+        return buffer.charAt(length) == aSeparator ? buffer.substring(0, length) : buffer.toString();
     }
 
     /**
@@ -152,6 +169,28 @@ public final class StringUtils {
      */
     public static String normalizeWS(final String aMessage) {
         return aMessage.replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Pads the end of a supplied string with the repetition of a supplied value.
+     *
+     * @param aString The string to pad
+     * @param aPadding The string to be repeated as the padding
+     * @param aRepeatCount How many times to repeat the padding
+     * @return The end padded string
+     */
+    public static String padEnd(final String aString, final String aPadding, final int aRepeatCount) {
+        if (aRepeatCount != 0) {
+            final StringBuilder buffer = new StringBuilder(aString);
+
+            for (int index = 0; index < aRepeatCount; index++) {
+                buffer.append(aPadding);
+            }
+
+            return buffer.toString();
+        }
+
+        return aString;
     }
 
     /**
@@ -177,25 +216,134 @@ public final class StringUtils {
     }
 
     /**
-     * Pads the end of a supplied string with the repetition of a supplied value.
+     * Parses strings with an integer range (e.g., 2-5) and returns an expanded integer array {2, 3, 4, 5} with those
+     * values.
      *
-     * @param aString The string to pad
-     * @param aPadding The string to be repeated as the padding
-     * @param aRepeatCount How many times to repeat the padding
-     * @return The end padded string
+     * @param aIntRange A string representation of a range of integers
+     * @return An int array with the expanded values of the string representation
+     * @throws NumberFormatException if the supplied string isn't an integer range
      */
-    public static String padEnd(final String aString, final String aPadding, final int aRepeatCount) {
-        if (aRepeatCount != 0) {
-            final StringBuilder buffer = new StringBuilder(aString);
+    @SuppressWarnings(PMD.AVOID_LITERALS_IN_IF_CONDITION)
+    public static int[] parseIntRange(final String aIntRange) {
+        final String[] range = aIntRange.split(RANGE_DELIMETER);
+        final int[] ints;
 
-            for (int index = 0; index < aRepeatCount; index++) {
-                buffer.append(aPadding);
+        if (range.length == 1) {
+            ints = new int[range.length];
+            ints[0] = Integer.parseInt(aIntRange);
+        } else {
+            final int start = Integer.parseInt(range[0]);
+            final int end = Integer.parseInt(range[1]);
+
+            if (end < start) {
+                throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMETER, end));
             }
 
-            return buffer.toString();
+            int position = 0;
+            final int size = end - start;
+
+            ints = new int[size + 1]; // because we're zero-based
+
+            for (int index = start; index <= end; index++) {
+                ints[position] = index;
+                position++;
+            }
         }
 
-        return aString;
+        return ints;
+    }
+
+    /**
+     * Reads the contents of a file into a string using the UTF-8 character set encoding.
+     *
+     * @param aFile The file from which to read
+     * @return The information read from the file
+     * @throws IOException If the supplied file could not be read
+     */
+    public static String read(final File aFile) throws IOException {
+        String string = new String(readBytes(aFile), StandardCharsets.UTF_8.name());
+
+        if (string.endsWith(EOL)) {
+            string = string.substring(0, string.length() - 1);
+        }
+
+        return string;
+    }
+
+    /**
+     * Reads the contents of a file using the supplied {@link Charset}; the default system charset may vary across
+     * systems so can't be trusted.
+     *
+     * @param aFile The file from which to read
+     * @param aCharset The character set of the file to be read
+     * @return The information read from the file
+     * @throws IOException If the supplied file could not be read
+     */
+    public static String read(final File aFile, final Charset aCharset) throws IOException {
+        String string = new String(readBytes(aFile), aCharset);
+
+        if (string.endsWith(EOL)) {
+            string = string.substring(0, string.length() - 1);
+        }
+
+        return string;
+    }
+
+    /**
+     * Reads the contents of a file using the supplied {@link Charset}; the default system charset may vary across
+     * systems so can't be trusted.
+     *
+     * @param aFile The file from which to read
+     * @param aCharsetName The name of the character set of the file to be read
+     * @return The information read from the file
+     * @throws IOException If the supplied file could not be read
+     */
+    public static String read(final File aFile, final String aCharsetName) throws IOException {
+        return read(aFile, Charset.forName(aCharsetName));
+    }
+
+    /**
+     * Creates a new string from the repetition of a supplied char.
+     *
+     * @param aChar The char to repeat, creating a new string
+     * @param aRepeatCount The number of times to repeat the supplied value
+     * @return The new string containing the supplied value repeated the specified number of times
+     */
+    public static String repeat(final char aChar, final int aRepeatCount) {
+        final StringBuilder buffer = new StringBuilder();
+
+        for (int index = 0; index < aRepeatCount; index++) {
+            buffer.append(aChar);
+        }
+
+        return buffer.toString();
+    }
+
+    /**
+     * Creates a new string from the repetition of a supplied value.
+     *
+     * @param aValue The string to repeat, creating a new string
+     * @param aRepeatCount The number of times to repeat the supplied value
+     * @return The new string containing the supplied value repeated the specified number of times
+     */
+    public static String repeat(final String aValue, final int aRepeatCount) {
+        final StringBuilder buffer = new StringBuilder();
+
+        for (int index = 0; index < aRepeatCount; index++) {
+            buffer.append(aValue);
+        }
+
+        return buffer.toString();
+    }
+
+    /**
+     * Reverses the characters in a string.
+     *
+     * @param aString A string whose characters are to be reversed
+     * @return A string with the supplied string reversed
+     */
+    public static String reverse(final String aString) {
+        return new StringBuffer(aString).reverse().toString();
     }
 
     /**
@@ -233,128 +381,6 @@ public final class StringUtils {
     }
 
     /**
-     * Creates a new string from the repetition of a supplied value.
-     *
-     * @param aValue The string to repeat, creating a new string
-     * @param aRepeatCount The number of times to repeat the supplied value
-     * @return The new string containing the supplied value repeated the specified number of times
-     */
-    public static String repeat(final String aValue, final int aRepeatCount) {
-        final StringBuilder buffer = new StringBuilder();
-
-        for (int index = 0; index < aRepeatCount; index++) {
-            buffer.append(aValue);
-        }
-
-        return buffer.toString();
-    }
-
-    /**
-     * Creates a new string from the repetition of a supplied char.
-     *
-     * @param aChar The char to repeat, creating a new string
-     * @param aRepeatCount The number of times to repeat the supplied value
-     * @return The new string containing the supplied value repeated the specified number of times
-     */
-    public static String repeat(final char aChar, final int aRepeatCount) {
-        final StringBuilder buffer = new StringBuilder();
-
-        for (int index = 0; index < aRepeatCount; index++) {
-            buffer.append(aChar);
-        }
-
-        return buffer.toString();
-    }
-
-    /**
-     * Reads the contents of a file using the supplied {@link Charset}; the default system charset may vary across
-     * systems so can't be trusted.
-     *
-     * @param aFile The file from which to read
-     * @param aCharsetName The name of the character set of the file to be read
-     * @return The information read from the file
-     * @throws IOException If the supplied file could not be read
-     */
-    public static String read(final File aFile, final String aCharsetName) throws IOException {
-        return read(aFile, Charset.forName(aCharsetName));
-    }
-
-    /**
-     * Reads the contents of a file using the supplied {@link Charset}; the default system charset may vary across
-     * systems so can't be trusted.
-     *
-     * @param aFile The file from which to read
-     * @param aCharset The character set of the file to be read
-     * @return The information read from the file
-     * @throws IOException If the supplied file could not be read
-     */
-    public static String read(final File aFile, final Charset aCharset) throws IOException {
-        String string = new String(readBytes(aFile), aCharset);
-
-        if (string.endsWith(EOL)) {
-            string = string.substring(0, string.length() - 1);
-        }
-
-        return string;
-    }
-
-    /**
-     * Reads the contents of a file into a string using the UTF-8 character set encoding.
-     *
-     * @param aFile The file from which to read
-     * @return The information read from the file
-     * @throws IOException If the supplied file could not be read
-     */
-    public static String read(final File aFile) throws IOException {
-        String string = new String(readBytes(aFile), StandardCharsets.UTF_8.name());
-
-        if (string.endsWith(EOL)) {
-            string = string.substring(0, string.length() - 1);
-        }
-
-        return string;
-    }
-
-    /**
-     * Removes empty and null strings from a string array.
-     *
-     * @param aStringArray A varargs that may contain empty or null strings
-     * @return A string array without empty or null strings
-     */
-    public static String[] trim(final String... aStringArray) {
-        final ArrayList<String> list = new ArrayList<>();
-
-        for (final String string : aStringArray) {
-            if (string != null && !"".equals(string)) {
-                list.add(string);
-            }
-        }
-
-        return list.toArray(new String[0]);
-    }
-
-    /**
-     * Returns true if the supplied string is null, empty, or contains nothing but whitespace.
-     *
-     * @param aString A string to test to see if it is null, empty or contains nothing but whitespace
-     * @return True if the supplied string is empty; else, false
-     */
-    public static boolean isEmpty(final String aString) {
-        boolean result = true;
-
-        if (aString != null) {
-            for (int index = 0; index < aString.length(); index++) {
-                if (!Character.isWhitespace(aString.charAt(index))) {
-                    result = false;
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    /**
      * A convenience method for toString(Object[], char) to add varargs support.
      *
      * @param aPadChar A padding character
@@ -366,54 +392,14 @@ public final class StringUtils {
     }
 
     /**
-     * Concatenates the string representations of a series of objects (by calling their <code>Object.toString()</code>
-     * method). Concatenated strings are separated using the supplied 'padding' character.
+     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1" becomes
+     * "first", "2" becomes "second", etc.
      *
-     * @param aObjArray An array of objects whose <code>toString()</code> representations should be concatenated
-     * @param aPadChar The character used to separate concatenated strings
-     * @return A concatenation of the supplied objects' string representations
+     * @param aInt An int to convert into a string
+     * @return The string form of the supplied int
      */
-    @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
-    public static String toString(final Object[] aObjArray, final char aPadChar) {
-        if (aObjArray == null || aObjArray.length == 0) {
-            return "";
-        }
-
-        if (aObjArray.length == 1) {
-            return aObjArray[0].toString();
-        }
-
-        final StringBuilder buffer = new StringBuilder();
-
-        for (final Object obj : aObjArray) {
-            buffer.append(obj).append(aPadChar);
-        }
-
-        return buffer.deleteCharAt(buffer.length() - 1).toString();
-    }
-
-    /**
-     * Turns the keys in a map into a character delimited string. The order is only consistent if the map is sorted.
-     *
-     * @param aMap The map from which to pull the keys
-     * @param aSeparator The character separator for the construction of the string
-     * @return A string constructed from the keys in the map
-     */
-    public static String joinKeys(final Map<String, ?> aMap, final char aSeparator) {
-        if (aMap.isEmpty()) {
-            return "";
-        }
-
-        final Iterator<String> iterator = aMap.keySet().iterator();
-        final StringBuilder buffer = new StringBuilder();
-
-        while (iterator.hasNext()) {
-            buffer.append(iterator.next()).append(aSeparator);
-        }
-
-        final int length = buffer.length() - 1;
-
-        return buffer.charAt(length) == aSeparator ? buffer.substring(0, length) : buffer.toString();
+    public static String toString(final int aInt) {
+        return toUpcaseString(aInt).toLowerCase(Locale.getDefault());
     }
 
     /**
@@ -448,119 +434,46 @@ public final class StringUtils {
     }
 
     /**
-     * Adds line numbers to any string. This is useful when I need to debug an XQuery outside the context of an IDE
-     * (i.e., in debugging output).
+     * Concatenates the string representations of a series of objects (by calling their <code>Object.toString()</code>
+     * method). Concatenated strings are separated using the supplied 'padding' character.
      *
-     * @param aMessage Text to which line numbers should be added
-     * @return The supplied text with line numbers at the first of each line
+     * @param aObjArray An array of objects whose <code>toString()</code> representations should be concatenated
+     * @param aPadChar The character used to separate concatenated strings
+     * @return A concatenation of the supplied objects' string representations
      */
-    public static String addLineNumbers(final String aMessage) {
+    @SuppressWarnings(PMD.AVOID_LITERALS_IN_IF_CONDITION)
+    public static String toString(final Object[] aObjArray, final char aPadChar) {
+        if (aObjArray == null || aObjArray.length == 0) {
+            return "";
+        }
+
+        if (aObjArray.length == 1) {
+            return aObjArray[0].toString();
+        }
+
         final StringBuilder buffer = new StringBuilder();
-        final String[] lines = aMessage.split(EOL);
 
-        int lineCount = 1; // Error messages start with line 1
-
-        for (final String line : lines) {
-            buffer.append(lineCount).append(' ').append(line);
-            lineCount++;
-            buffer.append(EOL);
+        for (final Object obj : aObjArray) {
+            buffer.append(obj).append(aPadChar);
         }
 
-        final int length = buffer.length();
-
-        buffer.delete(length - EOL.length(), length);
-
-        return buffer.toString();
+        return buffer.deleteCharAt(buffer.length() - 1).toString();
     }
 
     /**
-     * Reads the contents of a file into a byte array.
+     * Converts a varargs into an array of strings by calling <code>toString()</code> on each object.
      *
-     * @param aFile The file from which to read
-     * @return The bytes read from the file
-     * @throws IOException If the supplied file could not be read in its entirety
+     * @param aVarargs A varargs of objects
+     * @return An array of strings
      */
-    @SuppressWarnings("PMD.AvoidFileStream")
-    private static byte[] readBytes(final File aFile) throws IOException {
-        try (FileInputStream fileStream = new FileInputStream(aFile)) {
-            final ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
-            final int read = fileStream.getChannel().read(buf);
+    public static String[] toStrings(final Object... aVarargs) {
+        final String[] strings = new String[aVarargs.length];
 
-            if (read != aFile.length()) {
-                throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_044, aFile));
-            }
-
-            return buf.array();
-        }
-    }
-
-    /**
-     * Parses strings with an integer range (e.g., 2-5) and returns an expanded integer array {2, 3, 4, 5} with those
-     * values.
-     *
-     * @param aIntRange A string representation of a range of integers
-     * @return An int array with the expanded values of the string representation
-     * @throws NumberFormatException if the supplied string isn't an integer range
-     */
-    @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
-    public static int[] parseIntRange(final String aIntRange) {
-        final String[] range = aIntRange.split(RANGE_DELIMETER);
-        final int[] ints;
-
-        if (range.length == 1) {
-            ints = new int[range.length];
-            ints[0] = Integer.parseInt(aIntRange);
-        } else {
-            final int start = Integer.parseInt(range[0]);
-            final int end = Integer.parseInt(range[1]);
-
-            if (end < start) {
-                throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMETER, end));
-            }
-
-            int position = 0;
-            final int size = end - start;
-
-            ints = new int[size + 1]; // because we're zero-based
-
-            for (int index = start; index <= end; index++) {
-                ints[position] = index;
-                position++;
-            }
+        for (int index = 0; index < strings.length; index++) {
+            strings[index] = aVarargs[index].toString();
         }
 
-        return ints;
-    }
-
-    /**
-     * Returns a human-friendly, locale dependent, string representation of the supplied int; for instance, "1" becomes
-     * "first", "2" becomes "second", etc.
-     *
-     * @param aInt An int to convert into a string
-     * @return The string form of the supplied int
-     */
-    public static String toString(final int aInt) {
-        return toUpcaseString(aInt).toLowerCase(Locale.getDefault());
-    }
-
-    /**
-     * Reverses the characters in a string.
-     *
-     * @param aString A string whose characters are to be reversed
-     * @return A string with the supplied string reversed
-     */
-    public static String reverse(final String aString) {
-        return new StringBuffer(aString).reverse().toString();
-    }
-
-    /**
-     * Upcases a string.
-     *
-     * @param aString A string to upcase
-     * @return The upcased string
-     */
-    public static String upcase(final String aString) {
-        return aString.substring(0, 1).toUpperCase(Locale.getDefault()) + aString.substring(1);
+        return strings;
     }
 
     /**
@@ -571,7 +484,7 @@ public final class StringUtils {
      * @return The string form of the supplied integer
      * @throws UnsupportedOperationException If the supplied integer isn't one that is supported
      */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings(PMD.CYCLOMATIC_COMPLEXITY)
     public static String toUpcaseString(final int aInt) {
         switch (aInt) {
             case 1:
@@ -620,6 +533,75 @@ public final class StringUtils {
     }
 
     /**
+     * Removes empty and null strings from a string array.
+     *
+     * @param aStringArray A varargs that may contain empty or null strings
+     * @return A string array without empty or null strings
+     */
+    public static String[] trim(final String... aStringArray) {
+        final List<String> list = new ArrayList<>();
+
+        for (final String string : aStringArray) {
+            if (string != null && !"".equals(string)) {
+                list.add(string);
+            }
+        }
+
+        return list.toArray(new String[0]);
+    }
+
+    /**
+     * Trims a string; if there is nothing left after the trimming, returns whatever the default value passed in is.
+     *
+     * @param aString The string to be trimmed
+     * @param aDefault A default string to return if a null string is passed in
+     * @return The trimmed string or the default value if string is empty
+     */
+    public static String trimTo(final String aString, final String aDefault) {
+        if (aString == null) {
+            return aDefault;
+        }
+
+        final String trimmed = aString.trim();
+        return trimmed.length() == 0 ? aDefault : trimmed;
+    }
+
+    /**
+     * Trims a string object down into a boolean and has the ability to define what the default value should be. We only
+     * offer the method with the default value because most times a boolean with either exist or not (and in the case of
+     * not a default should be specified).
+     *
+     * @param aString A boolean in string form
+     * @param aBool A default boolean value
+     * @return The boolean representation of the string value or the default value
+     */
+    public static boolean trimToBool(final String aString, final boolean aBool) {
+        final String boolString = trimTo(aString, Boolean.toString(aBool));
+        return Boolean.parseBoolean(boolString);
+    }
+
+    /**
+     * Trims a string; if there is nothing left after the trimming, returns null. If the passed in object is not a
+     * string, a cast exception will be thrown.
+     *
+     * @param aString The string to be trimmed
+     * @return The trimmed string or null if string is empty
+     */
+    public static String trimToNull(final String aString) {
+        return trimTo(aString, null);
+    }
+
+    /**
+     * Upcases a string.
+     *
+     * @param aString A string to upcase
+     * @return The upcased string
+     */
+    public static String upcase(final String aString) {
+        return aString.substring(0, 1).toUpperCase(Locale.getDefault()) + aString.substring(1);
+    }
+
+    /**
      * Checks a string for the number of brackets compared to the number of arguments and throws an exception if the two
      * numbers aren't equal.
      *
@@ -642,5 +624,26 @@ public final class StringUtils {
         }
 
         return 0;
+    }
+
+    /**
+     * Reads the contents of a file into a byte array.
+     *
+     * @param aFile The file from which to read
+     * @return The bytes read from the file
+     * @throws IOException If the supplied file could not be read in its entirety
+     */
+    @SuppressWarnings(PMD.AVOID_FILE_STREAM)
+    private static byte[] readBytes(final File aFile) throws IOException {
+        try (FileInputStream fileStream = new FileInputStream(aFile)) {
+            final ByteBuffer buf = ByteBuffer.allocate((int) aFile.length());
+            final int read = fileStream.getChannel().read(buf);
+
+            if (read != aFile.length()) {
+                throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_044, aFile));
+            }
+
+            return buf.array();
+        }
     }
 }

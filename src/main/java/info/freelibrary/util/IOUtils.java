@@ -21,6 +21,8 @@ import javax.imageio.stream.ImageOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Utilities for working with IO streams.
  */
@@ -36,51 +38,6 @@ public final class IOUtils {
      */
     private IOUtils() {
         // This is intentionally left empty
-    }
-
-    /**
-     * Closes a reader, catching and logging any exceptions.
-     *
-     * @param aReader A supplied reader to close
-     */
-    public static void closeQuietly(final Reader aReader) {
-        if (aReader != null) {
-            try {
-                aReader.close();
-            } catch (final IOException details) {
-                LOGGER.error(details.getMessage(), details);
-            }
-        }
-    }
-
-    /**
-     * Closes a writer, catching and logging any exceptions.
-     *
-     * @param aWriter A supplied writer to close
-     */
-    public static void closeQuietly(final Writer aWriter) {
-        if (aWriter != null) {
-            try {
-                aWriter.close();
-            } catch (final IOException details) {
-                LOGGER.error(details.getMessage(), details);
-            }
-        }
-    }
-
-    /**
-     * Closes an input stream, catching and logging any exceptions.
-     *
-     * @param aInputStream A supplied input stream to close
-     */
-    public static void closeQuietly(final InputStream aInputStream) {
-        if (aInputStream != null) {
-            try {
-                aInputStream.close();
-            } catch (final IOException details) {
-                LOGGER.error(details.getMessage(), details);
-            }
-        }
     }
 
     /**
@@ -114,14 +71,14 @@ public final class IOUtils {
     }
 
     /**
-     * Closes an output stream, catching and logging any exceptions.
+     * Closes an input stream, catching and logging any exceptions.
      *
-     * @param aOutputStream A supplied output stream to close
+     * @param aInputStream A supplied input stream to close
      */
-    public static void closeQuietly(final OutputStream aOutputStream) {
-        if (aOutputStream != null) {
+    public static void closeQuietly(final InputStream aInputStream) {
+        if (aInputStream != null) {
             try {
-                aOutputStream.close();
+                aInputStream.close();
             } catch (final IOException details) {
                 LOGGER.error(details.getMessage(), details);
             }
@@ -139,6 +96,74 @@ public final class IOUtils {
                 aJarFile.close();
             } catch (final IOException details) {
                 LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Closes an output stream, catching and logging any exceptions.
+     *
+     * @param aOutputStream A supplied output stream to close
+     */
+    public static void closeQuietly(final OutputStream aOutputStream) {
+        if (aOutputStream != null) {
+            try {
+                aOutputStream.close();
+            } catch (final IOException details) {
+                LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Closes a reader, catching and logging any exceptions.
+     *
+     * @param aReader A supplied reader to close
+     */
+    public static void closeQuietly(final Reader aReader) {
+        if (aReader != null) {
+            try {
+                aReader.close();
+            } catch (final IOException details) {
+                LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Closes a writer, catching and logging any exceptions.
+     *
+     * @param aWriter A supplied writer to close
+     */
+    public static void closeQuietly(final Writer aWriter) {
+        if (aWriter != null) {
+            try {
+                aWriter.close();
+            } catch (final IOException details) {
+                LOGGER.error(details.getMessage(), details);
+            }
+        }
+    }
+
+    /**
+     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input stream
+     * is closed for you since just a <code>File</code> was passed in.
+     *
+     * @param aFile A file from which to read
+     * @param aOutStream An output stream to which to write
+     * @throws IOException If there is a problem reading or writing
+     */
+    @SuppressWarnings({ PMD.AVOID_FILE_STREAM })
+    public static void copyStream(final File aFile, final OutputStream aOutStream) throws IOException {
+        try (FileInputStream input = new FileInputStream(aFile); FileChannel channel = input.getChannel()) {
+            final byte[] buffer = new byte[256 * 1024];
+            final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
+
+            int length;
+
+            while ((length = channel.read(byteBuffer)) != -1) {
+                aOutStream.write(buffer, 0, length);
+                byteBuffer.clear();
             }
         }
     }
@@ -165,29 +190,6 @@ public final class IOUtils {
 
         outStream.write(byteStream.toByteArray());
         outStream.flush();
-    }
-
-    /**
-     * Writes a file to an output stream. You're responsible for closing the <code>OutputStream</code>; the input stream
-     * is closed for you since just a <code>File</code> was passed in.
-     *
-     * @param aFile A file from which to read
-     * @param aOutStream An output stream to which to write
-     * @throws IOException If there is a problem reading or writing
-     */
-    @SuppressWarnings("PMD.AvoidFileStream")
-    public static void copyStream(final File aFile, final OutputStream aOutStream) throws IOException {
-        try (FileInputStream input = new FileInputStream(aFile); FileChannel channel = input.getChannel()) {
-            final byte[] buffer = new byte[256 * 1024];
-            final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
-
-            int length;
-
-            while ((length = channel.read(byteBuffer)) != -1) {
-                aOutStream.write(buffer, 0, length);
-                byteBuffer.clear();
-            }
-        }
     }
 
     /**

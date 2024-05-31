@@ -16,15 +16,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * Utilities to assist with working with URLs.
  */
 public final class URLUtils {
-
-    /**
-     * The logger used by URLUtils.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, MessageCodes.BUNDLE);
 
     /**
      * A file protocol constant.
@@ -32,14 +29,9 @@ public final class URLUtils {
     private static final String FILE_PROTOCOL = "file";
 
     /**
-     * A simple URL protocol delimiter.
+     * The logger used by URLUtils.
      */
-    private static final String SIMPLE_PREFIX = FILE_PROTOCOL + ":/";
-
-    /**
-     * A full URL protocol delimiter.
-     */
-    private static final String STANDARD_PREFIX = SIMPLE_PREFIX + "/";
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLUtils.class, MessageCodes.BUNDLE);
 
     /**
      * The OS name from its system property.
@@ -52,10 +44,109 @@ public final class URLUtils {
     private static final String PERCENT = "%25";
 
     /**
+     * A simple URL protocol delimiter.
+     */
+    private static final String SIMPLE_PREFIX = FILE_PROTOCOL + ":/";
+
+    /**
+     * A full URL protocol delimiter.
+     */
+    private static final String STANDARD_PREFIX = SIMPLE_PREFIX + "/";
+
+    /**
      * Creates a new URL utilities instance.
      */
     private URLUtils() {
         // This intentionally left empty.
+    }
+
+    /**
+     * Decodes an encoded path. If it has been doubly encoded, it is doubly decoded.
+     *
+     * @param aString An encoded path
+     * @return A decoded path
+     */
+    public static String decode(final String aString) {
+        return decode(aString, StandardCharsets.UTF_8.name());
+    }
+
+    /**
+     * Decodes an encoded path. If it has been doubly encoded, it is doubly decoded.
+     *
+     * @param aURL An encoded URL String
+     * @param aEncoding A character encoding to use for the string decoding
+     * @return A decoded URL String
+     * @throws UnsupportedEncodingI18nException If the JVM doesn't support the supplied encoding
+     */
+    public static String decode(final String aURL, final String aEncoding) {
+        String urlString = aURL;
+        String decodedString;
+
+        try {
+            do {
+                decodedString = urlString;
+
+                // Java's URLDecoder needs a little help with occurrences of '%' that aren't percent escaped values
+                urlString = URLDecoder.decode(decodedString.replaceAll("%(?![0-9a-fA-F]{2})", PERCENT), aEncoding);
+            } while (!urlString.equals(decodedString));
+        } catch (final UnsupportedEncodingException details) {
+            throw new UnsupportedEncodingI18nException(details, aEncoding);
+        }
+
+        if (LOGGER.isDebugEnabled() && !aURL.equals(decodedString)) {
+            LOGGER.debug(MessageCodes.UTIL_048, aURL, decodedString);
+        }
+
+        return decodedString;
+    }
+
+    /**
+     * Percent-encodes supplied string but only after decoding it completely first.
+     *
+     * @param aString The string to encode
+     * @param aIgnoreSlashFlag Whether slashes should be encoded or not
+     * @return The percent-encoded string
+     */
+    @SuppressWarnings(PMD.CYCLOMATIC_COMPLEXITY)
+    public static String encode(final String aString, final boolean aIgnoreSlashFlag) {
+        final CharacterIterator iterator = new StringCharacterIterator(decode(aString));
+        final StringBuilder builder = new StringBuilder();
+
+        for (char c = iterator.first(); c != CharacterIterator.DONE; c = iterator.next()) {
+            switch (c) {
+                case '%':
+                    builder.append(PERCENT);
+                    break;
+                case '/':
+                    if (aIgnoreSlashFlag) {
+                        builder.append(c);
+                    } else {
+                        builder.append("%2F");
+                    }
+                    break;
+                case '?':
+                    builder.append("%3F");
+                    break;
+                case '#':
+                    builder.append("%23");
+                    break;
+                case '[':
+                    builder.append("%5B");
+                    break;
+                case ']':
+                    builder.append("%5D");
+                    break;
+                case '@':
+                    builder.append("%40");
+                    break;
+                default:
+                    builder.append(c);
+                    break;
+            }
+        }
+
+        // Must percent-encode any characters outside the US-ASCII set
+        return URI.create(builder.toString()).toASCIIString();
     }
 
     /**
@@ -70,7 +161,7 @@ public final class URLUtils {
      * @throws UnsupportedEncodingI18nException If the JVM doesn't support UTF-8
      * @throws UnsupportedOperationException If the supplied URL doesn't use the file protocol
      */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings(PMD.CYCLOMATIC_COMPLEXITY)
     public static File toFile(final URL aURL) {
         Objects.requireNonNull(aURL, LOGGER.getI18n(MessageCodes.UTIL_031));
 
@@ -124,94 +215,5 @@ public final class URLUtils {
         try (Scanner scanner = new Scanner(aURL.openStream(), StandardCharsets.UTF_8.name())) {
             return scanner.useDelimiter("\\A").next();
         }
-    }
-
-    /**
-     * Decodes an encoded path. If it has been doubly encoded, it is doubly decoded.
-     *
-     * @param aString An encoded path
-     * @return A decoded path
-     */
-    public static String decode(final String aString) {
-        return decode(aString, StandardCharsets.UTF_8.name());
-    }
-
-    /**
-     * Decodes an encoded path. If it has been doubly encoded, it is doubly decoded.
-     *
-     * @param aURL An encoded URL String
-     * @param aEncoding A character encoding to use for the string decoding
-     * @return A decoded URL String
-     * @throws UnsupportedEncodingI18nException If the JVM doesn't support the supplied encoding
-     */
-    public static String decode(final String aURL, final String aEncoding) {
-        String urlString = aURL;
-        String decodedString;
-
-        try {
-            do {
-                decodedString = urlString;
-
-                // Java's URLDecoder needs a little help with occurrences of '%' that aren't percent escaped values
-                urlString = URLDecoder.decode(decodedString.replaceAll("%(?![0-9a-fA-F]{2})", PERCENT), aEncoding);
-            } while (!urlString.equals(decodedString));
-        } catch (final UnsupportedEncodingException details) {
-            throw new UnsupportedEncodingI18nException(details, aEncoding);
-        }
-
-        if (LOGGER.isDebugEnabled() && !aURL.equals(decodedString)) {
-            LOGGER.debug(MessageCodes.UTIL_048, aURL, decodedString);
-        }
-
-        return decodedString;
-    }
-
-    /**
-     * Percent-encodes supplied string but only after decoding it completely first.
-     *
-     * @param aString The string to encode
-     * @param aIgnoreSlashFlag Whether slashes should be encoded or not
-     * @return The percent-encoded string
-     */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
-    public static String encode(final String aString, final boolean aIgnoreSlashFlag) {
-        final CharacterIterator iterator = new StringCharacterIterator(decode(aString));
-        final StringBuilder builder = new StringBuilder();
-
-        for (char c = iterator.first(); c != CharacterIterator.DONE; c = iterator.next()) {
-            switch (c) {
-                case '%':
-                    builder.append(PERCENT);
-                    break;
-                case '/':
-                    if (aIgnoreSlashFlag) {
-                        builder.append(c);
-                    } else {
-                        builder.append("%2F");
-                    }
-                    break;
-                case '?':
-                    builder.append("%3F");
-                    break;
-                case '#':
-                    builder.append("%23");
-                    break;
-                case '[':
-                    builder.append("%5B");
-                    break;
-                case ']':
-                    builder.append("%5D");
-                    break;
-                case '@':
-                    builder.append("%40");
-                    break;
-                default:
-                    builder.append(c);
-                    break;
-            }
-        }
-
-        // Must percent-encode any characters outside the US-ASCII set
-        return URI.create(builder.toString()).toASCIIString();
     }
 }

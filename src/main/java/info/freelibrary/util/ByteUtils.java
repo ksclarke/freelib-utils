@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.RandomAccess;
 
+import info.freelibrary.util.warnings.Eclipse;
+import info.freelibrary.util.warnings.PMD;
+
 /**
  * A utility class for working with bytes.
  */
@@ -24,20 +27,6 @@ public final class ByteUtils {
      */
     private ByteUtils() {
         // This is intentionally left empty
-    }
-
-    /**
-     * Returns a byte array as a list of bytes.
-     *
-     * @param aByteArray An array of bytes
-     * @return A list of bytes
-     */
-    public static List<Byte> asList(final byte[] aByteArray) {
-        if (aByteArray.length == 0) {
-            return Collections.emptyList();
-        }
-
-        return new ByteArrayAsList(aByteArray);
     }
 
     /**
@@ -57,43 +46,17 @@ public final class ByteUtils {
     }
 
     /**
-     * Gets the index of the supplied byte in the supplied byte array, within the bounds of the start and end index
-     * positions.
+     * Returns a byte array as a list of bytes.
      *
-     * @param aByteArray A byte array to check
-     * @param aByte A byte to check
-     * @param aStart A starting position for the check
-     * @param aEnd An ending position for the check
-     * @return The found index position or a -1 if the supplied byte was not found
+     * @param aByteArray An array of bytes
+     * @return A list of bytes
      */
-    private static int indexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
-        for (int index = aStart; index < aEnd; index++) {
-            if (aByteArray[index] == aByte) {
-                return index;
-            }
+    public static List<Byte> asList(final byte[] aByteArray) {
+        if (aByteArray.length == 0) {
+            return Collections.emptyList();
         }
 
-        return -1;
-    }
-
-    /**
-     * Gets the last index of the supplied byte in the supplied byte array, within the bounds of the start and end index
-     * positions.
-     *
-     * @param aByteArray A byte array to check
-     * @param aByte A byte to check
-     * @param aStart A starting position for the check
-     * @param aEnd An ending position for the check
-     * @return The found index position or a -1 if the supplied byte was not found
-     */
-    private static int lastIndexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
-        for (int index = aEnd - 1; index >= aStart; index--) {
-            if (aByteArray[index] == aByte) {
-                return index;
-            }
-        }
-
-        return -1;
+        return new ByteArrayAsList(aByteArray);
     }
 
     /**
@@ -150,6 +113,46 @@ public final class ByteUtils {
     }
 
     /**
+     * Gets the index of the supplied byte in the supplied byte array, within the bounds of the start and end index
+     * positions.
+     *
+     * @param aByteArray A byte array to check
+     * @param aByte A byte to check
+     * @param aStart A starting position for the check
+     * @param aEnd An ending position for the check
+     * @return The found index position or a -1 if the supplied byte was not found
+     */
+    private static int indexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
+        for (int index = aStart; index < aEnd; index++) {
+            if (aByteArray[index] == aByte) {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Gets the last index of the supplied byte in the supplied byte array, within the bounds of the start and end index
+     * positions.
+     *
+     * @param aByteArray A byte array to check
+     * @param aByte A byte to check
+     * @param aStart A starting position for the check
+     * @param aEnd An ending position for the check
+     * @return The found index position or a -1 if the supplied byte was not found
+     */
+    private static int lastIndexOf(final byte[] aByteArray, final byte aByte, final int aStart, final int aEnd) {
+        for (int index = aEnd - 1; index >= aStart; index--) {
+            if (aByteArray[index] == aByte) {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
      * Creates a list wrapper over top of a byte array.
      */
     private static class ByteArrayAsList extends AbstractList<Byte> implements RandomAccess, Serializable {
@@ -165,14 +168,14 @@ public final class ByteUtils {
         final byte[] myArray;
 
         /**
-         * The array start index.
-         */
-        final int myStart;
-
-        /**
          * The array end index.
          */
         final int myEnd;
+
+        /**
+         * The array start index.
+         */
+        final int myStart;
 
         /**
          * Creates a new ByteArrayAsList from the supplied byte array.
@@ -199,13 +202,35 @@ public final class ByteUtils {
         }
 
         @Override
-        public int size() {
-            return myEnd - myStart;
+        public boolean contains(final Object aObject) {
+            return aObject instanceof Byte && ByteUtils.indexOf(myArray, (Byte) aObject, myStart, myEnd) != -1;
         }
 
         @Override
-        public boolean isEmpty() {
-            return false;
+        public boolean equals(final Object aObject) {
+            if (aObject == this) {
+                return true;
+            }
+
+            if (aObject instanceof ByteArrayAsList) {
+                @SuppressWarnings({ PMD.LOOSE_COUPLING })
+                final ByteArrayAsList list = (ByteArrayAsList) aObject;
+                final int size = size();
+
+                if (list.size() != size) {
+                    return false;
+                }
+
+                for (int index = 0; index < size; index++) {
+                    if (myArray[myStart + index] != list.myArray[list.myStart + index]) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return super.equals(aObject);
         }
 
         @Override
@@ -218,8 +243,14 @@ public final class ByteUtils {
         }
 
         @Override
-        public boolean contains(final Object aObject) {
-            return aObject instanceof Byte && ByteUtils.indexOf(myArray, (Byte) aObject, myStart, myEnd) != -1;
+        public int hashCode() {
+            int result = 1;
+
+            for (int index = myStart; index < myEnd; index++) {
+                result = 31 * result + myArray[index];
+            }
+
+            return result;
         }
 
         @Override
@@ -233,6 +264,11 @@ public final class ByteUtils {
             }
 
             return -1;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
         }
 
         @Override
@@ -262,6 +298,11 @@ public final class ByteUtils {
         }
 
         @Override
+        public int size() {
+            return myEnd - myStart;
+        }
+
+        @Override
         public List<Byte> subList(final int aStart, final int aEnd) {
             checkPositionIndexes(aStart, aEnd, size());
 
@@ -270,43 +311,6 @@ public final class ByteUtils {
             }
 
             return new ByteArrayAsList(myArray, myStart + aStart, myStart + aEnd);
-        }
-
-        @Override
-        public boolean equals(final Object aObject) {
-            if (aObject == this) {
-                return true;
-            }
-
-            if (aObject instanceof ByteArrayAsList) {
-                final ByteArrayAsList list = (ByteArrayAsList) aObject;
-                final int size = size();
-
-                if (list.size() != size) {
-                    return false;
-                }
-
-                for (int index = 0; index < size; index++) {
-                    if (myArray[myStart + index] != list.myArray[list.myStart + index]) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            return super.equals(aObject);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = 1;
-
-            for (int index = myStart; index < myEnd; index++) {
-                result = 31 * result + myArray[index];
-            }
-
-            return result;
         }
 
         @Override
@@ -327,7 +331,7 @@ public final class ByteUtils {
          *
          * @return A byte array of the bytes in the list
          */
-        @SuppressWarnings("unused")
+        @SuppressWarnings(Eclipse.UNUSED)
         byte[] toByteArray() {
             return Arrays.copyOfRange(myArray, myStart, myEnd);
         }

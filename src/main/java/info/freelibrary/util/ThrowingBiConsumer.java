@@ -16,7 +16,7 @@ import info.freelibrary.util.warnings.PMD;
 public interface ThrowingBiConsumer<T, U> extends BiConsumer<T, U> {
 
     @Override
-    @SuppressWarnings({ "PMD.AvoidCatchingGenericException", PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default void accept(final T a1stInput, final U a2ndInput) {
         try {
             acceptThrows(a1stInput, a2ndInput);
@@ -32,7 +32,7 @@ public interface ThrowingBiConsumer<T, U> extends BiConsumer<T, U> {
      * @param a2ndInput A second input accepted by the consumer
      * @throws Exception An exception thrown by the consumer
      */
-    @SuppressWarnings({ "PMD.SignatureDeclareThrowsException", PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
+    @SuppressWarnings({ PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
     void acceptThrows(T a1stInput, U a2ndInput) throws Exception;
 
 }

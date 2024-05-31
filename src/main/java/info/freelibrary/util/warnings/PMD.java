@@ -5,7 +5,7 @@ package info.freelibrary.util.warnings;
  * Constants related to PMD validation rules. These don't actually work in the SuppressWarnings annotation, but they can
  * still be used to give an indication of what the <code>// NOPMD</code> comment is instructing PMD to ignore.
  */
-@SuppressWarnings("PMD.LongVariable")
+@SuppressWarnings({ PMD.LONG_VARIABLE })
 public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod */
@@ -33,7 +33,10 @@ public final class PMD {
     public static final String AVOID_REASSIGNING_LOOP_VARIABLES = "PMD.AvoidReassigningLoopVariables";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingnullpointerexception */
-    public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "AvoidThrowingNullPointerException";
+    public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "PMD.AvoidThrowingNullPointerException";
+
+    /** https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingrawexceptiontypes */
+    public static final String AVOID_THROWING_RAW_EXCEPTION_TYPES = "PMD.AvoidThrowingRawExceptionTypes";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#classnamingconventions */
     public static final String CLASS_NAMING_CONVENTIONS = "PMD.ClassNamingConventions";
@@ -47,12 +50,18 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#constructorcallsoverridablemethod */
     public static final String CONSTRUCTOR_CALLS_OVERRIDABLE_METHOD = "PMD.ConstructorCallsOverridableMethod";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#couplingbetweenobjects */
+    public static final String COUPLING_BETWEEN_OBJECTS = "PMD.CouplingBetweenObjects";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#cyclomaticcomplexity */
     public static final String CYCLOMATIC_COMPLEXITY = "PMD.CyclomaticComplexity";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#dataclass */
+    public static final String DATA_CLASS = "PMD.DataClass";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#emptymethodinabstractclassshouldbeabstract */
     public static final String EMPTY_METHOD_IN_ABSTRACT_CLASS_SHOULD_BE_ABSTRACT =
-            "EmptyMethodInAbstractClassShouldBeAbstract";
+            "PMD.EmptyMethodInAbstractClassShouldBeAbstract";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_apex_design.html#excessiveclasslength */
     public static final String EXCESSIVE_CLASS_LENGTH = "PMD.ExcessiveClassLength";
@@ -66,11 +75,20 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#excessivepubliccount */
     public static final String EXCESSIVE_PUBLIC_COUNT = "PMD.ExcessivePublicCount";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#forloopcanbeforeach */
+    public static final String FOR_LOOP_CAN_BE_FOR_EACH = "PMD.ForLoopCanBeForeach";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#godclass */
     public static final String GOD_CLASS = "PMD.GodClass";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#invalidlogmessageformat */
+    public static final String INVALID_LOG_MESSAGE_FORMAT = "PMD.InvalidLogMessageFormat";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#longvariable */
     public static final String LONG_VARIABLE = "PMD.LongVariable";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#loosecoupling */
+    public static final String LOOSE_COUPLING = "PMD.LooseCoupling";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#missingoverride */
     public static final String MISSING_OVERRIDE = "PMD.MissingOverride";
@@ -93,26 +111,38 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#signaturedeclarethrowsexception */
     public static final String SIGNATURE_DECLARE_THROWS_EXCEPTION = "PMD.SignatureDeclareThrowsException";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#simplifybooleanreturns */
+    public static final String SIMPLIFY_BOOLEAN_RETURNS = "PMD.SimplifyBooleanReturns";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#suspiciousequalsmethodname */
     public static final String SUSPICIOUS_EQUALS_METHOD_NAME = "PMD.SuspiciousEqualsMethodName";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#toomanyfields */
-    public static final String TOO_MANY_FIELDS = "TooManyFields";
+    public static final String TOO_MANY_FIELDS = "PMD.TooManyFields";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#toomanymethods */
     public static final String TOO_MANY_METHODS = "PMD.TooManyMethods";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#toomanystaticimports */
-    public static final String TOO_MANY_STATIC_IMPORTS = "TooManyStaticImports";
+    public static final String TOO_MANY_STATIC_IMPORTS = "PMD.TooManyStaticImports";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#unnecessaryboxing */
+    public static final String UNNECESSARY_BOXING = "PMD.UnnecessaryBoxing";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedformalparameter */
     public static final String UNUSED_FORMAL_PARAMETER = "PMD.UnusedFormalParameter";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedlocalvariable */
+    public static final String UNUSED_LOCAL_VARIABLE = "PMD.UnusedLocalVariable";
 
     /** https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatefield */
     public static final String UNUSED_PRIVATE_FIELD = "PMD.UnusedPrivateField";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatemethod */
     public static final String UNUSED_PRIVATE_METHOD = "PMD.UnusedPrivateMethod";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#usetrywithresources */
+    public static final String USE_TRY_WITH_RESOURCES = "PMD.UseTryWithResources";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#usevarargs */
     public static final String USE_VARARGS = "PMD.UseVarargs";
