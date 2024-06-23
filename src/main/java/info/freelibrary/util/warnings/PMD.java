@@ -129,6 +129,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#unnecessaryboxing */
     public static final String UNNECESSARY_BOXING = "PMD.UnnecessaryBoxing";
 
+    /** https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedassignment */
+    public static final String UNUSED_ASSIGNMENT = "PMD.UnusedAssignment";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedformalparameter */
     public static final String UNUSED_FORMAL_PARAMETER = "PMD.UnusedFormalParameter";
 
