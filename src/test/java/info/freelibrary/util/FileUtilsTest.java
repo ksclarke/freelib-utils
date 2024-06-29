@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
 
@@ -22,8 +23,8 @@ import org.junit.Test;
  */
 public class FileUtilsTest {
 
-    /** A temporary file directory used in testing. */
-    private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
+    /** A "does not exist" string. */
+    private static final String DOES_NOT_EXIST = "doesnotexist";
 
     /** A test file. */
     private static final File TEST_FILE = new File("src/test/resources/test_file");
@@ -34,8 +35,8 @@ public class FileUtilsTest {
     /** A mapping of the test folder. */
     private static final String TEST_FOLDER_MAP = "target/test-classes/test_folder-map.txt";
 
-    /** A "does not exist" string. */
-    private static final String DOES_NOT_EXIST = "doesnotexist";
+    /** A temporary file directory used in testing. */
+    private static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir"));
 
     /** A wildcard constant. */
     private static final String WILDCARD = ".*";
@@ -60,27 +61,97 @@ public class FileUtilsTest {
     }
 
     /**
-     * Tests toFileURL.
+     * Tests copy(File, File).
      *
-     * @throws MalformedURLException If the supplied URL is malformed
+     * @throws IOException If there is trouble copying.
      */
-    @Test(expected = MalformedURLException.class)
-    public void testToFileURLBad() throws MalformedURLException {
-        FileUtils.toFile(new URL("http://example.org"));
+    @Test
+    public void testCopyFileDir() throws IOException {
+        final File newDir = new File(TMP_DIR, UUID.randomUUID().toString());
+
+        FileUtils.copy(TEST_FOLDER, newDir);
     }
 
     /**
-     * Tests toFileURL.
+     * Tests copy(File, File).
      *
-     * @throws MalformedURLException If the supplied URL is malformed
+     * @throws IOException If there is trouble copying files
      */
     @Test
-    public void testToFileURL() throws MalformedURLException {
-        final String path = new File(TEST_FOLDER_MAP).getAbsolutePath();
-        final URL url = new URL("file://" + path);
-        final File testFile = FileUtils.toFile(url);
+    public void testCopyFileFile() throws IOException {
+        final File newFile = new File(TMP_DIR, UUID.randomUUID().toString());
 
-        assertTrue("Failed to test: " + url, testFile.exists());
+        FileUtils.copy(TEST_FILE, newFile);
+
+        assertTrue(newFile.exists());
+    }
+
+    /**
+     * Tests copy(File, File).
+     *
+     * @throws IOException If there is trouble copying.
+     */
+    @Test(expected = IOException.class)
+    public void testCopyFileFileDir() throws IOException {
+        FileUtils.copy(TEST_FILE, TMP_DIR);
+    }
+
+    /**
+     * Test method for {@link FileUtils#delete(File)}.
+     */
+    @Test
+    public void testDeleteOfEmptyDir() {
+        final File dir = new File("target/test-classes/test_folder");
+
+        try {
+            if (!dir.exists()) {
+                FileUtils.copy(TEST_FOLDER, dir);
+            }
+        } catch (final IOException details) {
+            fail(details.getMessage());
+        }
+
+        assertTrue(FileUtils.delete(dir));
+    }
+
+    /**
+     * Tests getExt(String).
+     */
+    @Test
+    public void testGetExtString() {
+        assertEquals("txt", FileUtils.getExt(TEST_FOLDER_MAP));
+    }
+
+    /**
+     * Tests getExt(String).
+     */
+    @Test
+    public void testGetExtStringNoExt() {
+        assertEquals("", FileUtils.getExt(TEST_FILE.getName()));
+    }
+
+    /**
+     * Test method for {@link FileUtils#getSize(File)}.
+     */
+    @Test
+    public void testGetSize() {
+        assertEquals(25403, FileUtils.getSize(TEST_FOLDER));
+    }
+
+    /**
+     * Tests getSize().
+     */
+    @Test
+    public void testGetSizeEmpty() {
+        assertEquals(0, FileUtils.getSize(new File(DOES_NOT_EXIST)));
+    }
+
+    /**
+     * Tests getSize().
+     */
+    @Test
+    public void testGetSizeNull() {
+        assertEquals(0, FileUtils.getSize((File) null));
     }
 
     /**
@@ -110,9 +181,8 @@ public class FileUtilsTest {
      * @throws FileNotFoundException If the file isn't found
      */
     @Test
-    public void testListFilesFileFilenameFilterBooleanStringFileTargetJpg() throws FileNotFoundException {
-        assertEquals(0, FileUtils.listFiles(new File(TEST_FOLDER_MAP), new RegexFileFilter(".*\\.jpg"), false,
-                new String[] {}).length);
+    public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
+        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true, "test_folder").length);
     }
 
     /**
@@ -121,8 +191,17 @@ public class FileUtilsTest {
      * @throws FileNotFoundException If the file isn't found
      */
     @Test
-    public void testListFilesFileFilenameFilterBooleanStringFileTargetIgnored() throws FileNotFoundException {
-        assertEquals(3, FileUtils.listFiles(TEST_FOLDER, new RegexFileFilter(".*\\.txt"), true, "test_folder").length);
+    public void testListFilesFileFilenameFilterBooleanStringFileTargetJpg() throws FileNotFoundException {
+        assertEquals(0, FileUtils.listFiles(new File(TEST_FOLDER_MAP), new RegexFileFilter(".*\\.jpg"), false,
+                new String[] {}).length);
+    }
+
+    /**
+     * Test method for {@link FileUtils#sizeFromBytes(long)}.
+     */
+    @Test
+    public void testSizeFromBytes() {
+        assertEquals("40 kilobytes", FileUtils.sizeFromBytes(41787));
     }
 
     /**
@@ -142,105 +221,27 @@ public class FileUtilsTest {
     }
 
     /**
-     * Tests getExt(String).
-     */
-    @Test
-    public void testGetExtString() {
-        assertEquals("txt", FileUtils.getExt(TEST_FOLDER_MAP));
-    }
-
-    /**
-     * Tests getExt(String).
-     */
-    @Test
-    public void testGetExtStringNoExt() {
-        assertEquals("", FileUtils.getExt(TEST_FILE.getName()));
-    }
-
-    /**
-     * Tests getSize().
-     */
-    @Test
-    public void testGetSizeEmpty() {
-        assertEquals(0, FileUtils.getSize(new File(DOES_NOT_EXIST)));
-    }
-
-    /**
-     * Tests getSize().
-     */
-    @Test
-    public void testGetSizeNull() {
-        assertEquals(0, FileUtils.getSize((File) null));
-    }
-
-    /**
-     * Tests copy(File, File).
+     * Tests toFileURL.
      *
-     * @throws IOException If there is trouble copying files
+     * @throws MalformedURLException If the supplied URL is malformed
      */
     @Test
-    public void testCopyFileFile() throws IOException {
-        final File newFile = new File(TMP_DIR, UUID.randomUUID().toString());
+    public void testToFileURL() throws MalformedURLException {
+        final String path = new File(TEST_FOLDER_MAP).getAbsolutePath();
+        final URL url = URI.create("file://" + path).toURL();
+        final File testFile = FileUtils.toFile(url);
 
-        FileUtils.copy(TEST_FILE, newFile);
-
-        assertTrue(newFile.exists());
+        assertTrue("Failed to test: " + url, testFile.exists());
     }
 
     /**
-     * Tests copy(File, File).
+     * Tests toFileURL.
      *
-     * @throws IOException If there is trouble copying.
+     * @throws MalformedURLException If the supplied URL is malformed
      */
-    @Test
-    public void testCopyFileDir() throws IOException {
-        final File newDir = new File(TMP_DIR, UUID.randomUUID().toString());
-
-        FileUtils.copy(TEST_FOLDER, newDir);
-    }
-
-    /**
-     * Tests copy(File, File).
-     *
-     * @throws IOException If there is trouble copying.
-     */
-    @Test(expected = IOException.class)
-    public void testCopyFileFileDir() throws IOException {
-        FileUtils.copy(TEST_FILE, TMP_DIR);
-    }
-
-    /**
-     * Test method for {@link FileUtils#getSize(File)}.
-     */
-    @Test
-    public void testGetSize() {
-        assertEquals(25403, FileUtils.getSize(TEST_FOLDER));
-    }
-
-    /**
-     * Test method for {@link FileUtils#sizeFromBytes(long)}.
-     */
-    @Test
-    public void testSizeFromBytes() {
-        assertEquals("40 kilobytes", FileUtils.sizeFromBytes(41787));
-    }
-
-    /**
-     * Test method for {@link FileUtils#delete(File)}.
-     */
-    @Test
-    public void testDeleteOfEmptyDir() {
-        final File dir = new File("target/test-classes/test_folder");
-
-        try {
-            if (!dir.exists()) {
-                FileUtils.copy(TEST_FOLDER, dir);
-            }
-        } catch (final IOException details) {
-            fail(details.getMessage());
-        }
-
-        assertTrue(FileUtils.delete(dir));
+    @Test(expected = MalformedURLException.class)
+    public void testToFileURLBad() throws MalformedURLException {
+        FileUtils.toFile(URI.create("http://example.org").toURL());
     }
 
 }
