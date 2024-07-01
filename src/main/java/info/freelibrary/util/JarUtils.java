@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -134,7 +135,7 @@ public final class JarUtils {
     public static void extract(final String aJarFilePath, final String aFilePath, final File aDestDir)
             throws IOException {
         if (aJarFilePath.startsWith(JAR_URL_PROTOCOL)) {
-            extract(new URL(aJarFilePath + JAR_URL_DELIMITER + aFilePath), aDestDir);
+            extract(URI.create(aJarFilePath + JAR_URL_DELIMITER + aFilePath).toURL(), aDestDir);
         } else {
             extract(new File(aJarFilePath), aFilePath, aDestDir);
         }
@@ -175,12 +176,11 @@ public final class JarUtils {
         for (final JarFile jarFile : ClasspathUtils.getJarFiles()) {
             try (jarFile) {
                 final Manifest manifest = jarFile.getManifest();
-                final URL jarURL = new URL(JAR_URL_PROTOCOL + jarFile.getName() + JAR_URL_DELIMITER);
+                final URL jarURL = URI.create(JAR_URL_PROTOCOL + jarFile.getName() + JAR_URL_DELIMITER).toURL();
 
                 urlList.add(jarURL);
 
                 if (manifest != null) {
-                    @SuppressWarnings({ PMD.LOOSE_COUPLING })
                     final Attributes attributes = manifest.getMainAttributes();
 
                     if (attributes != null) {
@@ -193,7 +193,7 @@ public final class JarUtils {
                                 final String jarPath = tokenizer.nextToken();
 
                                 if (jarPath.endsWith(".jar")) {
-                                    urlList.add(new URL(jarURL.toExternalForm() + jarPath));
+                                    urlList.add(URI.create(jarURL.toExternalForm() + jarPath).toURL());
                                 }
                             }
                         }

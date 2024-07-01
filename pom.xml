@@ -88,16 +88,10 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <show>public</show>
-          <detectLinks>false</detectLinks>
-          <sourcepath>src/main/java:src/main/generated</sourcepath>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>${basedir}/src/main/tools/checkstyle/checkstyle.xml</configLocation>
           <suppressionsLocation>${basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
       </plugin>
@@ -128,7 +122,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>9.0.2</version>
+    <version>10.0.0</version>
   </parent>
 
 </project>

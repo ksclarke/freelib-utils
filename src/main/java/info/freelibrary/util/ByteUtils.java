@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.RandomAccess;
 
 import info.freelibrary.util.warnings.Eclipse;
-import info.freelibrary.util.warnings.PMD;
 
 /**
  * A utility class for working with bytes.
@@ -212,9 +211,7 @@ public final class ByteUtils {
                 return true;
             }
 
-            if (aObject instanceof ByteArrayAsList) {
-                @SuppressWarnings({ PMD.LOOSE_COUPLING })
-                final ByteArrayAsList list = (ByteArrayAsList) aObject;
+            if (aObject instanceof final ByteArrayAsList list) {
                 final int size = size();
 
                 if (list.size() != size) {
