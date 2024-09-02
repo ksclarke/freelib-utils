@@ -15,6 +15,9 @@ public final class Sonar {
     /** The Sonar warning for a monster class. */
     public static final String MONSTER_CLASS = "java:S6539";
 
+    /** The Sonar warning for the missing use of an override annotation. */
+    public static final String OVERRIDE_REQUIRED = "java:S1161";
+
     /** The Sonar warning for tests that should be parameterized. */
     public static final String PARAMETERIZE_TEST = "java:S5976";
 
