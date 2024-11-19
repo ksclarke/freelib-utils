@@ -117,6 +117,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#suspiciousequalsmethodname */
     public static final String SUSPICIOUS_EQUALS_METHOD_NAME = "PMD.SuspiciousEqualsMethodName";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#systemprintln */
+    public static final String SYSTEM_PRINTLN = "PMD.SystemPrintln";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#toomanyfields */
     public static final String TOO_MANY_FIELDS = "PMD.TooManyFields";
 

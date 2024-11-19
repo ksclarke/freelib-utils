@@ -24,6 +24,9 @@ public final class Sonar {
     /** The Sonar warning for the use of a singleton. */
     public static final String SINGLETON_USE = "java:S6548";
 
+    /** The Sonar warning for use of System.err. */
+    public static final String SYSTEM_OUT_ERR = "java:S106";
+
     /**
      * Creates a new Sonar constants class.
      */
