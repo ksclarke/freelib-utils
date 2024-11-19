@@ -35,7 +35,7 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingnullpointerexception */
     public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "PMD.AvoidThrowingNullPointerException";
 
-    /** https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingrawexceptiontypes */
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingrawexceptiontypes */
     public static final String AVOID_THROWING_RAW_EXCEPTION_TYPES = "PMD.AvoidThrowingRawExceptionTypes";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#classnamingconventions */
@@ -132,7 +132,7 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#unnecessaryboxing */
     public static final String UNNECESSARY_BOXING = "PMD.UnnecessaryBoxing";
 
-    /** https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedassignment */
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedassignment */
     public static final String UNUSED_ASSIGNMENT = "PMD.UnusedAssignment";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedformalparameter */
@@ -141,7 +141,7 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedlocalvariable */
     public static final String UNUSED_LOCAL_VARIABLE = "PMD.UnusedLocalVariable";
 
-    /** https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatefield */
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatefield */
     public static final String UNUSED_PRIVATE_FIELD = "PMD.UnusedPrivateField";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatemethod */
