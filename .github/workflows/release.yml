@@ -26,6 +26,11 @@ jobs:
           cache: maven
           distribution: ${{ matrix.jdk }}
           java-version: ${{ matrix.java }}
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.BUILD_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Set up Maven if needed
         if: ${{ env.ACT }}
@@ -39,9 +44,9 @@ jobs:
 
       - name: Release with Maven
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.BUILD_PASSPHRASE }}
-          MAVEN_GPG_KEY: ${{ secrets.BUILD_KEY }}
         run: |
           mvn -B -ntp -Prelease clean deploy -DlogLevel=DEBUG -DtestLogLevel=DEBUG \
-          -Drevision=${{ github.event.release.tag_name }} -Dautorelease.artifact=true
+          -Drevision=${{ github.event.release.tag_name }} -Dautorelease.artifact=${{ env.AUTORELEASE_ARTIFACT }}
