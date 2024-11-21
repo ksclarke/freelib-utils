@@ -42,7 +42,8 @@ jobs:
 
       - name: Release with Maven
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.BUILD_PASSPHRASE }}
           MAVEN_GPG_KEY: ${{ secrets.BUILD_KEY }}
         run: |
