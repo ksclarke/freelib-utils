@@ -210,4 +210,41 @@ public final class HTTP {
     private HTTP() {
         // This is intentionally left empty
     }
+
+    /**
+     * An HTTP method constants class.
+     */
+    public static final class Method {
+
+        /** A constant for the CONNECT method. */
+        public static final String CONNECT = "Connect";
+
+        /** A constant for the DELETE method. */
+        public static final String DELETE = "DELETE";
+
+        /** A constant for the GET method. */
+        public static final String GET = "GET";
+
+        /** A constant for the HEAD method. */
+        public static final String HEAD = "HEAD";
+
+        /** A constant for the OPTIONS method. */
+        public static final String OPTIONS = "OPTIONS";
+
+        /** A constant for the PATCH method. */
+        public static final String PATCH = "PATCH";
+
+        /** A constant for the POST method. */
+        public static final String POST = "POST";
+
+        /** A constant for the PUT method. */
+        public static final String PUT = "PUT";
+
+        /**
+         * A private constructor for HTTP method constants.
+         */
+        private Method() {
+            // This is intentionally left blank.
+        }
+    }
 }
