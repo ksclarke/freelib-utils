@@ -2,6 +2,8 @@
 package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.EOL;
+import static info.freelibrary.util.Constants.SPACE;
+import static java.util.stream.Collectors.joining;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,24 +29,16 @@ import info.freelibrary.util.warnings.PMD;
 @SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
 public final class StringUtils {
 
-    /**
-     * A double space constant.
-     */
+    /** A double space constant. */
     private static final String DOUBLE_SPACE = "  ";
 
-    /**
-     * The logger used by the string utilities.
-     */
+    /** The logger used by the string utilities. */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, MessageCodes.BUNDLE);
 
-    /**
-     * A message format regex pattern.
-     */
+    /** A message format regex pattern. */
     private static final Pattern PATTERN = Pattern.compile("\\{\\}");
 
-    /**
-     * A range delimiter constant.
-     */
+    /** A range delimiter constant. */
     private static final String RANGE_DELIMETER = "-";
 
     /**
@@ -114,6 +108,18 @@ public final class StringUtils {
         }
 
         return matcher.appendTail(builder).toString();
+    }
+
+    /**
+     * Indents a multi-line string using spaces.
+     *
+     * @param aString A string to indent
+     * @param anIndentationCount The number of spaces to indent
+     * @return An indented string
+     */
+    public static String indent(final String aString, final int anIndentationCount) {
+        final String indent = SPACE.repeat(anIndentationCount);
+        return aString.lines().map(line -> indent + line).collect(joining(EOL));
     }
 
     /**
@@ -486,50 +492,29 @@ public final class StringUtils {
      */
     @SuppressWarnings(PMD.CYCLOMATIC_COMPLEXITY)
     public static String toUpcaseString(final int aInt) {
-        switch (aInt) {
-            case 1:
-                return "First";
-            case 2:
-                return "Second";
-            case 3:
-                return "Third";
-            case 4:
-                return "Fourth";
-            case 5:
-                return "Fifth";
-            case 6:
-                return "Sixth";
-            case 7:
-                return "Seventh";
-            case 8:
-                return "Eighth";
-            case 9:
-                return "Ninth";
-            case 10:
-                return "Tenth";
-            case 11:
-                return "Eleventh";
-            case 12:
-                return "Twelveth";
-            case 13:
-                return "Thirteenth";
-            case 14:
-                return "Fourteenth";
-            case 15:
-                return "Fifthteenth";
-            case 16:
-                return "Sixteenth";
-            case 17:
-                return "Seventeenth";
-            case 18:
-                return "Eighteenth";
-            case 19:
-                return "Nineteenth";
-            case 20:
-                return "Twentieth";
-            default:
-                throw new UnsupportedOperationException(LOGGER.getI18n(MessageCodes.UTIL_046, aInt));
-        }
+        return switch (aInt) {
+            case 1 -> "First";
+            case 2 -> "Second";
+            case 3 -> "Third";
+            case 4 -> "Fourth";
+            case 5 -> "Fifth";
+            case 6 -> "Sixth";
+            case 7 -> "Seventh";
+            case 8 -> "Eighth";
+            case 9 -> "Ninth";
+            case 10 -> "Tenth";
+            case 11 -> "Eleventh";
+            case 12 -> "Twelveth";
+            case 13 -> "Thirteenth";
+            case 14 -> "Fourteenth";
+            case 15 -> "Fifthteenth";
+            case 16 -> "Sixteenth";
+            case 17 -> "Seventeenth";
+            case 18 -> "Eighteenth";
+            case 19 -> "Nineteenth";
+            case 20 -> "Twentieth";
+            default -> throw new UnsupportedOperationException(LOGGER.getI18n(MessageCodes.UTIL_046, aInt));
+        };
     }
 
     /**
