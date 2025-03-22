@@ -11,9 +11,10 @@ import info.freelibrary.util.warnings.PMD;
  *
  * @param <T> The first input that the function accepts
  * @param <U> The second input that the function accepts
+ * @param <E> The type of Exception that can be caught and wrapped
  */
 @FunctionalInterface
-public interface ThrowingBiConsumer<T, U> extends BiConsumer<T, U> {
+public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsumer<T, U> {
 
     @Override
     @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
@@ -30,9 +31,22 @@ public interface ThrowingBiConsumer<T, U> extends BiConsumer<T, U> {
      *
      * @param a1stInput A first input accepted by the consumer
      * @param a2ndInput A second input accepted by the consumer
-     * @throws Exception An exception thrown by the consumer
+     * @throws E An exception thrown by the consumer
      */
     @SuppressWarnings({ PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
-    void acceptThrows(T a1stInput, U a2ndInput) throws Exception;
+    void acceptThrows(T a1stInput, U a2ndInput) throws E;
 
+    /**
+     * Converts a ThrowingBiConsumer&lt;T, U, E&gt; into a standard BiConsumer&lt;T, U&gt; by wrapping exceptions in an
+     * {@code I18nRuntimeException}.
+     *
+     * @param <T> The first type passed to the consumer
+     * @param <U> The second type passed to the consumer
+     * @param <E> The type of exception that's wrapped by the consumer
+     * @param aThrowingBiConsumer The ThrowingBiConsumer instance
+     * @return A BiConsumer&lt;T, U&gt; that automatically handles exceptions
+     */
+    static <T, U, E extends Exception> BiConsumer<T, U> wrap(final ThrowingBiConsumer<T, U, E> aThrowingBiConsumer) {
+        return aThrowingBiConsumer;
+    }
 }
