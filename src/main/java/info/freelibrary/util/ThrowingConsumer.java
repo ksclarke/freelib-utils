@@ -6,13 +6,13 @@ import java.util.function.Consumer;
 import info.freelibrary.util.warnings.PMD;
 
 /**
- * A consumer that throws a runtime exception. This is not an ideal solution (as the PMD suppressions indicate), but it
- * provides a generic way to handle exceptions thrown in lambdas.
+ * A consumer that captures a checked exception and throws it as a runtime exception.
  *
  * @param <T> The type that the function accepts
+ * @param <E> The type of exception that the function wraps
  */
 @FunctionalInterface
-public interface ThrowingConsumer<T> extends Consumer<T> {
+public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
     @Override
     @SuppressWarnings(PMD.AVOID_CATCHING_GENERIC_EXCEPTION)
@@ -28,9 +28,20 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
      * A method that wraps any exceptions through by the consumer with a runtime exception.
      *
      * @param aType A type being accepted by the consumer
-     * @throws Exception An exception thrown by the consumer
+     * @throws E An exception thrown by the consumer
      */
-    @SuppressWarnings(PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION)
-    void acceptThrows(T aType) throws Exception;
+    void acceptThrows(T aType) throws E;
 
+    /**
+     * Converts a ThrowingConsumer&lt;T, E&gt; into a standard Consumer&lt;T&gt; by wrapping exceptions in an
+     * {@code I18nRuntimeException}.
+     *
+     * @param <T> A type being accepted by the consumer
+     * @param <E> The type of exception that can be caught and wrapped
+     * @param aThrowingConsumer The ThrowingConsumer instance
+     * @return A Consumer&lt;T&gt; that automatically handles exceptions
+     */
+    static <T, E extends Exception> Consumer<T> wrap(final ThrowingConsumer<T, E> aThrowingConsumer) {
+        return aThrowingConsumer;
+    }
 }

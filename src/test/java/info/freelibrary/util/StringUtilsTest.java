@@ -27,61 +27,26 @@ public class StringUtilsTest {
     /** A constant for 'default'. */
     private static final String DEFAULT = "default";
 
-    /** A constant for 'first'. */
-    private static final String FIRST = "first";
-
-    /** A constant for 'second'. */
-    private static final String SECOND = "second";
-
-    /** A constant for 'third'. */
-    private static final String THIRD = "third";
+    /** A constant test value. */
+    private static final String EMPTY_A = " a ";
 
     /** A symbol constant. */
     private static final String EXCLAMATION_AT = "!@";
 
-    /** A constant for 'source'. */
-    private static final String SOURCE = "source";
-
-    /** A constant test value. */
-    private static final String EMPTY_A = " a ";
+    /** A constant for 'first'. */
+    private static final String FIRST = "first";
 
     /** A constant test value. */
     private static final String ONE_21_3 = "1~21~3";
 
-    /**
-     * Tests {@link StringUtils#trimTo(Object, String)}.
-     */
-    @Test
-    public void trimToStringString() {
-        final String assertion = StringUtils.trimTo(" original ", DEFAULT);
+    /** A constant for 'second'. */
+    private static final String SECOND = "second";
 
-        assertEquals(DEFAULT, StringUtils.trimTo(null, DEFAULT));
-        assertEquals(DEFAULT, StringUtils.trimTo(EMPTY, DEFAULT));
-        assertEquals("original", assertion);
-    }
+    /** A constant for 'source'. */
+    private static final String SOURCE = "source";
 
-    /**
-     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
-     */
-    @Test
-    public void testFormatTwoCurlyBraces() {
-        assertEquals("12", StringUtils.format("{}{}", 1, 2));
-    }
-
-    /**
-     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
-     */
-    @Test
-    public void testFormatPassThrough() {
-        assertEquals(FIRST, StringUtils.format(FIRST));
-    }
-
-    /**
-     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
-     */
-    public void testForSiblingCurlyBrances() {
-        assertEquals("first://secondthird", StringUtils.format("{}://{}{}", FIRST, SECOND, THIRD));
-    }
+    /** A constant for 'third'. */
+    private static final String THIRD = "third";
 
     /**
      * Tests {@link StringUtils#formatMessage()}.
@@ -111,6 +76,41 @@ public class StringUtilsTest {
     }
 
     /**
+     * Tests {@link StringUtils#repeat(Char, Int)}.
+     */
+    @Test
+    public void repeatCharInt() {
+        assertEquals("@@@", StringUtils.repeat("@", 3));
+    }
+
+    /**
+     * Tests {@link StringUtils#repeat(String, Int)}.
+     */
+    @Test
+    public void repeatStringInt() {
+        assertEquals("!@!@!@", StringUtils.repeat(EXCLAMATION_AT, 3));
+    }
+
+    /**
+     * Tests {@link StringUtils#addLineNumbers(String)}.
+     */
+    @Test
+    public void testAddLineNumbersString() {
+        final String original = "This is my content?\nYes!\n\nThis is my content?";
+        final String expected = "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
+
+        assertEquals(expected, StringUtils.addLineNumbers(original));
+    }
+
+    /**
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
+     */
+    @Test
+    public void testFormatPassThrough() {
+        assertEquals(FIRST, StringUtils.format(FIRST));
+    }
+
+    /**
      * Tests {@link StringUtils#formatTo80Chars(String)}.
      */
     @Test
@@ -135,13 +135,18 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#trimToNull(String)}.
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
      */
     @Test
-    public void testTrimToNullString() {
-        assertEquals(null, StringUtils.trimToNull(EMPTY));
-        assertEquals("a", StringUtils.trimToNull(EMPTY_A));
-        assertEquals(null, StringUtils.trimToNull(null));
+    public void testFormatTwoCurlyBraces() {
+        assertEquals("12", StringUtils.format("{}{}", 1, 2));
+    }
+
+    /**
+     * Tests {@code info.freelibrary.util.StringUtils#format(String, Object...)}.
+     */
+    public void testForSiblingCurlyBrances() {
+        assertEquals("first://secondthird", StringUtils.format("{}://{}{}", FIRST, SECOND, THIRD));
     }
 
     /**
@@ -156,94 +161,6 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#read(File, String)}.
-     */
-    @Test
-    public void testReadFileString() {
-        final File tmpFile = new File(getClass().getName());
-        final String original = "This is my content?\nYes!";
-
-        try {
-            final FileWriter fileWriter = new FileWriter(tmpFile);
-            fileWriter.write(original);
-            fileWriter.close();
-
-            assertEquals(original, StringUtils.read(tmpFile, StandardCharsets.UTF_8.toString()));
-        } catch (final IOException details) {
-            fail(details.getMessage());
-        } finally {
-            tmpFile.delete();
-        }
-    }
-
-    /**
-     * Tests {@link StringUtils#joinKeys(Map, char)}.
-     */
-    @Test
-    public void toKeysString() {
-        final Map<String, String> map = new TreeMap<>();
-
-        map.put("one", "two");
-        map.put("three", "four");
-        map.put("five", "six");
-
-        // This is only consistent because we're using a sorted map
-        assertEquals("five one three", StringUtils.joinKeys(map, ' '));
-    }
-
-    /**
-     * Tests {@link StringUtils#toString(Object[], Char)}.
-     */
-    @Test
-    public void toStringObjectArrayChar() {
-        final Integer i1 = 1;
-        final Integer i2 = 21;
-        final Integer i3 = 3;
-
-        final Integer[] array = { i1, i2, i3 };
-        assertEquals(ONE_21_3, StringUtils.toString(array, '~'));
-    }
-
-    /**
-     * Tests {@link StringUtils#toString(char, Object...)}.
-     */
-    @Test
-    public void toStringCharVarargs() {
-        final Integer i1 = 1;
-        final Integer i2 = 21;
-        final Integer i3 = 3;
-
-        final Object[] array = { i1, i2, i3 };
-
-        assertEquals(ONE_21_3, StringUtils.toString('~', array));
-    }
-
-    /**
-     * Tests {@link StringUtils#repeat(String, Int)}.
-     */
-    @Test
-    public void repeatStringInt() {
-        assertEquals("!@!@!@", StringUtils.repeat(EXCLAMATION_AT, 3));
-    }
-
-    /**
-     * Tests {@link StringUtils#repeat(Char, Int)}.
-     */
-    @Test
-    public void repeatCharInt() {
-        assertEquals("@@@", StringUtils.repeat("@", 3));
-    }
-
-    /**
-     * Tests {@link StringUtils#padStart(String, String, Int)}.
-     */
-    @Test
-    public void testPadStartStringStringInt() {
-        final String result = StringUtils.padStart(SOURCE, EXCLAMATION_AT, 3);
-        assertEquals("!@!@!@source", result);
-    }
-
-    /**
      * Tests {@link StringUtils#padEnd(String, String, Int)}.
      */
     @Test
@@ -253,14 +170,12 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#addLineNumbers(String)}.
+     * Tests {@link StringUtils#padStart(String, String, Int)}.
      */
     @Test
-    public void testAddLineNumbersString() {
-        final String original = "This is my content?\nYes!\n\nThis is my content?";
-        final String expected = "1 This is my content?\n2 Yes!\n3 \n4 This is my content?";
-
-        assertEquals(expected, StringUtils.addLineNumbers(original));
+    public void testPadStartStringStringInt() {
+        final String result = StringUtils.padStart(SOURCE, EXCLAMATION_AT, 3);
+        assertEquals("!@!@!@source", result);
     }
 
     /**
@@ -287,5 +202,90 @@ public class StringUtilsTest {
         } catch (final NumberFormatException details) {
             // This is expected
         }
+    }
+
+    /**
+     * Tests {@link StringUtils#read(File, String)}.
+     */
+    @Test
+    public void testReadFileString() {
+        final File tmpFile = new File(getClass().getName());
+        final String original = "This is my content?\nYes!";
+
+        try {
+            final FileWriter fileWriter = new FileWriter(tmpFile);
+            fileWriter.write(original);
+            fileWriter.close();
+
+            assertEquals(original, StringUtils.read(tmpFile, StandardCharsets.UTF_8.toString()));
+        } catch (final IOException details) {
+            fail(details.getMessage());
+        } finally {
+            tmpFile.delete();
+        }
+    }
+
+    /**
+     * Tests {@link StringUtils#trimToNull(String)}.
+     */
+    @Test
+    public void testTrimToNullString() {
+        assertEquals(null, StringUtils.trimToNull(EMPTY));
+        assertEquals("a", StringUtils.trimToNull(EMPTY_A));
+        assertEquals(null, StringUtils.trimToNull(null));
+    }
+
+    /**
+     * Tests {@link StringUtils#joinKeys(Map, char)}.
+     */
+    @Test
+    public void toKeysString() {
+        final Map<String, String> map = new TreeMap<>();
+
+        map.put("one", "two");
+        map.put("three", "four");
+        map.put("five", "six");
+
+        // This is only consistent because we're using a sorted map
+        assertEquals("five one three", StringUtils.joinKeys(map, ' '));
+    }
+
+    /**
+     * Tests {@link StringUtils#toString(char, Object...)}.
+     */
+    @Test
+    public void toStringCharVarargs() {
+        final Integer i1 = 1;
+        final Integer i2 = 21;
+        final Integer i3 = 3;
+
+        final Object[] array = { i1, i2, i3 };
+
+        assertEquals(ONE_21_3, StringUtils.toString('~', array));
+    }
+
+    /**
+     * Tests {@link StringUtils#toString(Object[], Char)}.
+     */
+    @Test
+    public void toStringObjectArrayChar() {
+        final Integer i1 = 1;
+        final Integer i2 = 21;
+        final Integer i3 = 3;
+
+        final Integer[] array = { i1, i2, i3 };
+        assertEquals(ONE_21_3, StringUtils.toString(array, '~'));
+    }
+
+    /**
+     * Tests {@link StringUtils#trimTo(Object, String)}.
+     */
+    @Test
+    public void trimToStringString() {
+        final String assertion = StringUtils.trimTo(" original ", DEFAULT);
+
+        assertEquals(DEFAULT, StringUtils.trimTo(null, DEFAULT));
+        assertEquals(DEFAULT, StringUtils.trimTo(EMPTY, DEFAULT));
+        assertEquals("original", assertion);
     }
 }
