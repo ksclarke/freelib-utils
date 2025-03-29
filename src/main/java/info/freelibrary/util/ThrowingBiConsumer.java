@@ -3,6 +3,7 @@ package info.freelibrary.util;
 
 import java.util.function.BiConsumer;
 
+import info.freelibrary.util.warnings.JDK;
 import info.freelibrary.util.warnings.PMD;
 
 /**
@@ -16,11 +17,16 @@ import info.freelibrary.util.warnings.PMD;
 @FunctionalInterface
 public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsumer<T, U> {
 
+    /** The logger for the {@code ThrowingBiConsumer}. */
+    Logger LOGGER = LoggerFactory.getLogger(ThrowingBiConsumer.class, MessageCodes.BUNDLE);
+
     @Override
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION, PMD.AVOID_RETHROWING_EXCEPTION })
     default void accept(final T a1stInput, final U a2ndInput) {
         try {
             acceptThrows(a1stInput, a2ndInput);
+        } catch (final RuntimeException | Error details) {
+            throw details;
         } catch (final Exception details) {
             throw new I18nRuntimeException(details);
         }
@@ -37,16 +43,73 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     void acceptThrows(T a1stInput, U a2ndInput) throws E;
 
     /**
-     * Converts a ThrowingBiConsumer&lt;T, U, E&gt; into a standard BiConsumer&lt;T, U&gt; by wrapping exceptions in an
-     * {@code I18nRuntimeException}.
+     * Returns a BiConsumer that sneaks any thrown checked exception.
      *
-     * @param <T> The first type passed to the consumer
-     * @param <U> The second type passed to the consumer
-     * @param <E> The type of exception that's wrapped by the consumer
-     * @param aThrowingBiConsumer The ThrowingBiConsumer instance
-     * @return A BiConsumer&lt;T, U&gt; that automatically handles exceptions
+     * @param <F> A first input
+     * @param <S> A second input
+     * @param <E> The thrown exception
+     * @param aFunc The supplied ThrowingBiConsumer
+     * @return A standard BiConsumer
      */
-    static <T, U, E extends Exception> BiConsumer<T, U> wrap(final ThrowingBiConsumer<T, U, E> aThrowingBiConsumer) {
-        return aThrowingBiConsumer;
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    static <F, S, E extends Exception> BiConsumer<F, S> sneaky(final ThrowingBiConsumer<F, S, E> aFunc) {
+        return (first, second) -> {
+            try {
+                aFunc.acceptThrows(first, second);
+            } catch (final Exception details) {
+                sneakyThrow(details);
+            }
+        };
+    }
+
+    /**
+     * Unwraps a ThrowingBiConsumer, converting an unchecked exceptions into a checked exception.
+     *
+     * @param <F> The first input type
+     * @param <S> The second input type
+     * @param <E> The exception type
+     * @param aFunc The ThrowingBiConsumer to wrap
+     * @return A ThrowingBiConsumer that handles exceptions
+     */
+    @SuppressWarnings({ PMD.PRESERVE_STACK_TRACE, JDK.UNCHECKED })
+    static <F, S, E extends Exception> ThrowingBiConsumer<F, S, E> unwrap(final ThrowingBiConsumer<F, S, E> aFunc) {
+        return (first, second) -> {
+            try {
+                aFunc.acceptThrows(first, second);
+            } catch (final I18nRuntimeException details) {
+                final Throwable cause = details.getCause();
+
+                if (cause instanceof final Exception exception) {
+                    throw (E) exception;
+                }
+
+                throw new IllegalStateException(LOGGER.getMessage(MessageCodes.UTIL_078), cause);
+            }
+        };
+    }
+
+    /**
+     * Wraps a ThrowingBiFunction, converting checked exceptions into runtime exceptions.
+     *
+     * @param <F> The first input type
+     * @param <S> The second input type
+     * @param <E> The exception type
+     * @param aFunc The ThrowingBiFunction to wrap
+     * @return A ThrowingBiConsumer that handles exceptions
+     */
+    static <F, S, E extends Exception> ThrowingBiConsumer<F, S, E> wrap(final ThrowingBiConsumer<F, S, E> aFunc) {
+        return aFunc::acceptThrows;
+    }
+
+    /**
+     * Sneakily throws a checked exception as an unchecked one.
+     *
+     * @param aException The exception to throw
+     * @param <E> The exception type
+     * @throws E The sneaky exception
+     */
+    @SuppressWarnings({ JDK.UNCHECKED })
+    private static <E extends Throwable> void sneakyThrow(final Throwable aException) throws E {
+        throw (E) aException;
     }
 }

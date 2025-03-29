@@ -21,6 +21,9 @@ public final class Sonar {
     /** The Sonar warning for tests that should be parameterized. */
     public static final String PARAMETERIZE_TEST = "java:S5976";
 
+    /** The Sonar warning for use of pseudo-random number generators. */
+    public static final String PSEUDORANDOM_NUM_GEN = "java:S2245";
+
     /** The Sonar warning for the use of a singleton. */
     public static final String SINGLETON_USE = "java:S6548";
 

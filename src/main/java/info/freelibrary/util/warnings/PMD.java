@@ -32,6 +32,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#avoidreassigningloopvariables */
     public static final String AVOID_REASSIGNING_LOOP_VARIABLES = "PMD.AvoidReassigningLoopVariables";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidrethrowingexception */
+    public static final String AVOID_RETHROWING_EXCEPTION = "PMD.AvoidRethrowingException";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingnullpointerexception */
     public static final String AVOID_THROWING_NULLPOINTEREXCEPTION = "PMD.AvoidThrowingNullPointerException";
 
@@ -81,6 +84,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#godclass */
     public static final String GOD_CLASS = "PMD.GodClass";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#implicitfunctionalinterface */
+    public static final String IMPLICIT_FUNCTIONAL_INTERFACE = "PMD.ImplicitFunctionalInterface";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#invalidlogmessageformat */
     public static final String INVALID_LOG_MESSAGE_FORMAT = "PMD.InvalidLogMessageFormat";
 
@@ -117,6 +123,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#suspiciousequalsmethodname */
     public static final String SUSPICIOUS_EQUALS_METHOD_NAME = "PMD.SuspiciousEqualsMethodName";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#switchdensity */
+    public static final String SWITCH_DENSITY = "PMD.SwitchDensity";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#systemprintln */
     public static final String SYSTEM_PRINTLN = "PMD.SystemPrintln";
 
@@ -146,6 +155,9 @@ public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#unusedprivatemethod */
     public static final String UNUSED_PRIVATE_METHOD = "PMD.UnusedPrivateMethod";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#usediamondoperator */
+    public static final String USE_DIAMOND_OPERATOR = "PMD.UseDiamondOperator";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#usetrywithresources */
     public static final String USE_TRY_WITH_RESOURCES = "PMD.UseTryWithResources";
