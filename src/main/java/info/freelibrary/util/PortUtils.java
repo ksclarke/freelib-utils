@@ -26,7 +26,6 @@ public final class PortUtils {
      * @return An open port
      * @throws I18nRuntimeException If a local port cannot be found
      */
-    @SuppressWarnings(PMD.AVOID_THROWING_RAW_EXCEPTION_TYPES)
     public static int getPort() {
         try (ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();

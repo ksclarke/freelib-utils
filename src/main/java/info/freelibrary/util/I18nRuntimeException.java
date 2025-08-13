@@ -1,6 +1,7 @@
 
 package info.freelibrary.util;
 
+import java.io.Serial;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ public class I18nRuntimeException extends RuntimeException {
     /**
      * The <code>serialVersionUID</code> for the <code>I18nException</code>.
      */
+    @Serial
     private static final long serialVersionUID = 1137212882896281357L;
 
     /**

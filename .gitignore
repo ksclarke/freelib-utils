@@ -17,3 +17,6 @@ src/main/generated
 
 # Ignore this little dir Eclipse sometimes creates out of the gate
 /bin/
+
+# JetBrains config
+*.iml

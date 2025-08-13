@@ -13,8 +13,7 @@ import info.freelibrary.util.warnings.PMD;
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  */
-@SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT, PMD.EXCESSIVE_CLASS_LENGTH,
-    PMD.CYCLOMATIC_COMPLEXITY })
+@SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT, PMD.CYCLOMATIC_COMPLEXITY })
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
     /**
@@ -462,7 +461,6 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aMessage A message with information about the exception
      * @param aVarargs Additional details about the exception being thrown
      */
-    @SuppressWarnings(PMD.COGNITIVE_COMPLEXITY)
     public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)

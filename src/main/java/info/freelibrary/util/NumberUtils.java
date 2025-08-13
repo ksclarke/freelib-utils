@@ -24,8 +24,7 @@ import info.freelibrary.util.warnings.PMD;
  * Class comes from the commons-lang3 library and is licensed under their license.
  * </p>
  */
-@SuppressWarnings({ PMD.EXCESSIVE_CLASS_LENGTH, PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS,
-    PMD.EXCESSIVE_PUBLIC_COUNT })
+@SuppressWarnings({ PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT })
 public final class NumberUtils {
 
     /** Reusable Byte constant for minus one. */
@@ -139,7 +138,6 @@ public final class NumberUtils {
      * @return The converted {@link BigInteger} (or null if the input is null)
      * @throws NumberFormatException If the value cannot be converted
      */
-    @SuppressWarnings({ PMD.N_PATH_COMPLEXITY })
     public static BigInteger createBigInteger(final String aString) {
         if (aString == null) {
             return null;
@@ -283,9 +281,8 @@ public final class NumberUtils {
      * @return Number created from the string (or null if the input is null)
      * @throws NumberFormatException If the value cannot be converted
      */
-    @SuppressWarnings({ PMD.EXCESSIVE_METHOD_LENGTH, PMD.COGNITIVE_COMPLEXITY, PMD.EXCESSIVE_METHOD_LENGTH,
-        PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.UNNECESSARY_BOXING, PMD.N_PATH_COMPLEXITY,
-        PMD.UNNECESSARY_BOXING, Checkstyle.BOOLEAN_EXPR_COMPLEXITY, "checkstyle:BooleanExpressionComplexity" })
+    @SuppressWarnings({ PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
+        Checkstyle.BOOLEAN_EXPR_COMPLEXITY })
     public static Number createNumber(final String aString) {
         if (aString == null) {
             return null;
@@ -386,17 +383,18 @@ public final class NumberUtils {
             switch (lastChar) {
                 case 'l':
                 case 'L':
-                    if (dec == null && exp == null &&
-                            (!numeric.isEmpty() && numeric.charAt(0) == '-' && isNumeric(numeric.substring(1)) ||
-                                    isNumeric(numeric))) {
-                        try {
-                            return createLong(numeric);
-                        } catch (final NumberFormatException ignored) {
-                            // Too big for a long
+                    if (dec == null && exp == null) {
+                        final String string = numeric.startsWith("-") ? numeric.substring(1) : numeric;
+
+                        if (!string.isEmpty() && isNumeric(string)) {
+                            try {
+                                return createLong(numeric);
+                            } catch (NumberFormatException ignored) {
+                                // Too big for a long
+                            }
+
+                            return createBigInteger(numeric);
                         }
-
-                        return createBigInteger(numeric);
-
                     }
 
                     throw new NumberFormatException(LOGGER.getMessage(MessageCodes.UTIL_075, aString));
@@ -405,7 +403,7 @@ public final class NumberUtils {
                     try {
                         final Float f = createFloat(aString);
 
-                        if (!f.isInfinite() && (f.floatValue() != 0.0F || isZero(mant, dec))) {
+                        if (!f.isInfinite() && (f != 0.0F || isZero(mant, dec))) {
                             // If it's too big for a float or the float value = 0, and the string
                             // has non-zeros in it, then float does not have the precision we want
                             return f;
@@ -421,7 +419,7 @@ public final class NumberUtils {
                     try {
                         final Double d = createDouble(aString);
 
-                        if (!d.isInfinite() && (d.doubleValue() != 0.0D || isZero(mant, dec))) {
+                        if (!d.isInfinite() && (d != 0.0D || isZero(mant, dec))) {
                             return d;
                         }
                     } catch (final NumberFormatException ignored) {
@@ -470,18 +468,18 @@ public final class NumberUtils {
             final Float f = createFloat(aString);
             final Double d = createDouble(aString);
 
-            if (!f.isInfinite() && (f.floatValue() != 0.0F || isZero(mant, dec)) && f.toString().equals(d.toString())) {
+            if (!f.isInfinite() && (f != 0.0F || isZero(mant, dec)) && f.toString().equals(d.toString())) {
                 return f;
             }
 
-            if (!d.isInfinite() && (d.doubleValue() != 0.0D || isZero(mant, dec))) {
-                final BigDecimal b = createBigDecimal(aString);
+            if (!d.isInfinite() && (d != 0.0D || isZero(mant, dec))) {
+                final BigDecimal bigDecimal = createBigDecimal(aString);
 
-                if (b.compareTo(BigDecimal.valueOf(d)) == 0) {
+                if (bigDecimal.compareTo(BigDecimal.valueOf(d)) == 0) {
                     return d;
                 }
 
-                return b;
+                return bigDecimal;
             }
         } catch (final NumberFormatException ignored) {
             // Ignore the bad number
@@ -511,8 +509,8 @@ public final class NumberUtils {
      * @param aString The {@link String} to check
      * @return True if the string is a correctly formatted number; else, false
      */
-    @SuppressWarnings({ "checkstyle:BooleanExpressionComplexity", PMD.EXCESSIVE_METHOD_LENGTH, PMD.NCSS_COUNT,
-        PMD.COGNITIVE_COMPLEXITY, PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH })
+    @SuppressWarnings({ Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY,
+        PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH })
     public static boolean isCreatable(final String aString) {
         if (StringUtils.isEmpty(aString)) {
             return false;
@@ -532,16 +530,14 @@ public final class NumberUtils {
         // Leading 0, skip if is a decimal number
         if (length > start + 1 && chars[start] == '0' && !aString.contains(PERIOD)) {
             if (chars[start + 1] == 'x' || chars[start + 1] == 'X') { // Leading 0x/0X
-                int index = start + 2;
+                final int loopIndex = start + 2;
 
-                if (index == length) {
+                if (loopIndex == length) {
                     return false; // If string == "0x"
                 }
 
-                // Checking hex (it can't be anything else)
-                for (; index < chars.length; index++) {
-                    if ((chars[index] < '0' || chars[index] > '9') && (chars[index] < 'a' || chars[index] > 'f') &&
-                            (chars[index] < 'A' || chars[index] > 'F')) {
+                for (int index = loopIndex; index < chars.length; index++) {
+                    if (Character.digit(chars[index], 16) == -1) {
                         return false;
                     }
                 }
