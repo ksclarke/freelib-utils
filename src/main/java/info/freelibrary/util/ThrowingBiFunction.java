@@ -41,7 +41,6 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @return The function result
      * @throws E If an error occurs during execution
      */
-    @SuppressWarnings({ PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
     R applyThrows(F a1stInput, S a2ndInput) throws E;
 
     /**

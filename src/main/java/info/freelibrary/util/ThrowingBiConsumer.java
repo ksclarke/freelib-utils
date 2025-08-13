@@ -39,7 +39,6 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param a2ndInput A second input accepted by the consumer
      * @throws E An exception thrown by the consumer
      */
-    @SuppressWarnings({ PMD.SIGNATURE_DECLARE_THROWS_EXCEPTION })
     void acceptThrows(T a1stInput, U a2ndInput) throws E;
 
     /**
@@ -48,14 +47,14 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param <F> A first input
      * @param <S> A second input
      * @param <E> The thrown exception
-     * @param aFunc The supplied ThrowingBiConsumer
+     * @param aFunction The supplied ThrowingBiConsumer
      * @return A standard BiConsumer
      */
     @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
-    static <F, S, E extends Exception> BiConsumer<F, S> sneaky(final ThrowingBiConsumer<F, S, E> aFunc) {
+    static <F, S, E extends Exception> BiConsumer<F, S> sneaky(final ThrowingBiConsumer<F, S, E> aFunction) {
         return (first, second) -> {
             try {
-                aFunc.acceptThrows(first, second);
+                aFunction.acceptThrows(first, second);
             } catch (final Exception details) {
                 sneakyThrow(details);
             }
