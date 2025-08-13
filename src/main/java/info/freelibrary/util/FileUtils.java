@@ -36,7 +36,7 @@ import info.freelibrary.util.warnings.PMD;
 /**
  * Utilities for working with files.
  */
-@SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS, PMD.AVOID_DUPLICATE_LITERALS })
+@SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
 public final class FileUtils {
 
     /**
@@ -178,7 +178,7 @@ public final class FileUtils {
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.AVOID_DUPLICATE_LITERALS })
+    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
@@ -230,7 +230,6 @@ public final class FileUtils {
      * @param aPermString A string representing the desired permissions of the directory
      * @return True if the directory is okay to be used; else, false
      */
-    @SuppressWarnings({ PMD.SIMPLIFY_BOOLEAN_RETURNS })
     public static boolean dirIsUseable(final String aDirName, final String aPermString) {
         final File dir = new File(aDirName);
 
@@ -368,7 +367,7 @@ public final class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.AVOID_DUPLICATE_LITERALS, PMD.COGNITIVE_COMPLEXITY })
+    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
             final String... aIgnoreList) throws FileNotFoundException {
         final List<File> fileList;

@@ -1,12 +1,9 @@
 
 package info.freelibrary.util;
 
-import info.freelibrary.util.warnings.PMD;
-
 /**
  * HTTP response code constants.
  */
-@SuppressWarnings({ PMD.AVOID_DUPLICATE_LITERALS, PMD.LONG_VARIABLE })
 public final class HTTP {
 
     /** Accepted HTTP response code. */

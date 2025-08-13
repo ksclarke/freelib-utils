@@ -3,12 +3,9 @@ package info.freelibrary.util;
 
 import java.util.Objects;
 
-import info.freelibrary.util.warnings.PMD;
-
 /**
  * An extension to the Java environment properties interface.
  */
-@SuppressWarnings({ PMD.INVALID_LOG_MESSAGE_FORMAT })
 public final class Env {
 
     /** A logger for the <code>Env</code> convenience class. */

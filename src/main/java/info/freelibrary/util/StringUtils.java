@@ -29,17 +29,14 @@ import info.freelibrary.util.warnings.PMD;
 @SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
 public final class StringUtils {
 
-    /** A double space constant. */
-    private static final String DOUBLE_SPACE = "  ";
-
     /** The logger used by the string utilities. */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class, MessageCodes.BUNDLE);
 
     /** A message format regex pattern. */
-    private static final Pattern PATTERN = Pattern.compile("\\{\\}");
+    private static final Pattern PATTERN = Pattern.compile("\\{}");
 
     /** A range delimiter constant. */
-    private static final String RANGE_DELIMETER = "-";
+    private static final String RANGE_DELIMITER = "-";
 
     /**
      * Creates a class of string utilities.
@@ -58,20 +55,14 @@ public final class StringUtils {
     public static String addLineNumbers(final String aMessage) {
         final StringBuilder buffer = new StringBuilder();
         final String[] lines = aMessage.split(EOL);
+        final int length;
 
-        int lineCount = 1; // Error messages start with line 1
-
-        for (final String line : lines) {
-            buffer.append(lineCount).append(' ').append(line);
-            lineCount++;
-            buffer.append(EOL);
+        for (int index = 0; index < lines.length; index++) {
+            buffer.append(index + 1).append(' ').append(lines[index]).append(EOL);
         }
 
-        final int length = buffer.length();
-
-        buffer.delete(length - EOL.length(), length);
-
-        return buffer.toString();
+        length = buffer.length();
+        return buffer.delete(length - EOL.length(), length).toString();
     }
 
     /**
@@ -99,12 +90,9 @@ public final class StringUtils {
         final StringBuilder builder = new StringBuilder();
         final Matcher matcher = PATTERN.matcher(aMessage);
 
-        int index = checkBracketCount(aMessage, aDetails);
-
-        while (matcher.find()) {
-            matcher.appendReplacement(builder, "");
+        for (int index = checkBracketCount(aMessage, aDetails); matcher.find(); index++) {
+            matcher.appendReplacement(builder, Constants.EMPTY);
             builder.append(aDetails[index]);
-            index++;
         }
 
         return matcher.appendTail(builder).toString();
@@ -118,14 +106,13 @@ public final class StringUtils {
      * @return An indented string
      */
     public static String indent(final String aString, final int anIndentationCount) {
-        final String indent = SPACE.repeat(anIndentationCount);
-        return aString.lines().map(line -> indent + line).collect(joining(EOL));
+        return aString.lines().map(line -> SPACE.repeat(anIndentationCount) + line).collect(joining(EOL));
     }
 
     /**
      * Returns true if the supplied string is null, empty, or contains nothing but whitespace.
      *
-     * @param aString A string to test to see if it is null, empty or contains nothing but whitespace
+     * @param aString A string to test to see if it is null, empty, or contains nothing but whitespace
      * @return True if the supplied string is empty; else, false
      */
     public static boolean isEmpty(final String aString) {
@@ -152,18 +139,18 @@ public final class StringUtils {
      */
     public static String joinKeys(final Map<String, ?> aMap, final char aSeparator) {
         if (aMap.isEmpty()) {
-            return "";
+            return Constants.EMPTY;
         }
 
         final Iterator<String> iterator = aMap.keySet().iterator();
         final StringBuilder buffer = new StringBuilder();
+        final int length;
 
         while (iterator.hasNext()) {
             buffer.append(iterator.next()).append(aSeparator);
         }
 
-        final int length = buffer.length() - 1;
-
+        length = buffer.length() - 1;
         return buffer.charAt(length) == aSeparator ? buffer.substring(0, length) : buffer.toString();
     }
 
@@ -174,7 +161,7 @@ public final class StringUtils {
      * @return The message with white space normalized
      */
     public static String normalizeWS(final String aMessage) {
-        return aMessage.replaceAll("\\s+", " ");
+        return aMessage.replaceAll("\\s+", SPACE);
     }
 
     /**
@@ -186,17 +173,7 @@ public final class StringUtils {
      * @return The end padded string
      */
     public static String padEnd(final String aString, final String aPadding, final int aRepeatCount) {
-        if (aRepeatCount != 0) {
-            final StringBuilder buffer = new StringBuilder(aString);
-
-            for (int index = 0; index < aRepeatCount; index++) {
-                buffer.append(aPadding);
-            }
-
-            return buffer.toString();
-        }
-
-        return aString;
+        return aRepeatCount > 0 ? aString + String.valueOf(aPadding).repeat(aRepeatCount) : aString;
     }
 
     /**
@@ -231,7 +208,7 @@ public final class StringUtils {
      */
     @SuppressWarnings(PMD.AVOID_LITERALS_IN_IF_CONDITION)
     public static int[] parseIntRange(final String aIntRange) {
-        final String[] range = aIntRange.split(RANGE_DELIMETER);
+        final String[] range = aIntRange.split(RANGE_DELIMITER);
         final int[] ints;
 
         if (range.length == 1) {
@@ -242,7 +219,7 @@ public final class StringUtils {
             final int end = Integer.parseInt(range[1]);
 
             if (end < start) {
-                throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMETER, end));
+                throw new NumberFormatException(LOGGER.getI18n(MessageCodes.UTIL_045, start, RANGE_DELIMITER, end));
             }
 
             int position = 0;
@@ -267,7 +244,7 @@ public final class StringUtils {
      * @throws IOException If the supplied file could not be read
      */
     public static String read(final File aFile) throws IOException {
-        String string = new String(readBytes(aFile), StandardCharsets.UTF_8.name());
+        String string = new String(readBytes(aFile), StandardCharsets.UTF_8);
 
         if (string.endsWith(EOL)) {
             string = string.substring(0, string.length() - 1);
@@ -374,11 +351,11 @@ public final class StringUtils {
                 if ((count += 1) < aCount) {
                     builder.append(' ');
                 } else {
-                    builder.append(EOL).append(DOUBLE_SPACE);
+                    builder.append(EOL).append(Constants.DOUBLE_SPACE);
                     count = 2;
                 }
             } else {
-                builder.append(EOL).append(DOUBLE_SPACE).append(word);
+                builder.append(EOL).append(Constants.DOUBLE_SPACE).append(word);
                 count = word.length() + 2; // two spaces at start of line
             }
         }
@@ -504,10 +481,10 @@ public final class StringUtils {
             case 9 -> "Ninth";
             case 10 -> "Tenth";
             case 11 -> "Eleventh";
-            case 12 -> "Twelveth";
+            case 12 -> "Twelfth";
             case 13 -> "Thirteenth";
             case 14 -> "Fourteenth";
-            case 15 -> "Fifthteenth";
+            case 15 -> "Fifteenth";
             case 16 -> "Sixteenth";
             case 17 -> "Seventeenth";
             case 18 -> "Eighteenth";
@@ -540,7 +517,7 @@ public final class StringUtils {
      *
      * @param aString The string to be trimmed
      * @param aDefault A default string to return if a null string is passed in
-     * @return The trimmed string or the default value if string is empty
+     * @return The trimmed string or the default value if the string is empty
      */
     public static String trimTo(final String aString, final String aDefault) {
         if (aString == null) {
@@ -548,7 +525,7 @@ public final class StringUtils {
         }
 
         final String trimmed = aString.trim();
-        return trimmed.length() == 0 ? aDefault : trimmed;
+        return trimmed.isEmpty() ? aDefault : trimmed;
     }
 
     /**
@@ -605,7 +582,8 @@ public final class StringUtils {
         }
 
         if (count != aDetails.length) {
-            throw new IndexOutOfBoundsException(LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length));
+            throw new IndexOutOfBoundsException(
+                    LOGGER.getI18n(MessageCodes.UTIL_043, count, aDetails.length, StringUtils.toString(aDetails, '|')));
         }
 
         return 0;

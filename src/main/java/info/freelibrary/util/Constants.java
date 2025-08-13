@@ -9,6 +9,9 @@ public final class Constants {
     /** A constant for a message slot. */
     public static final String MESSAGE_SLOT = "{}";
 
+    /** A double space constant. */
+    public static final String DOUBLE_SPACE = "  ";
+
     /** The default / any host IP address. */
     public static final String INADDR_ANY = "0.0.0.0"; // NOPMD - don't hard code IPs
 

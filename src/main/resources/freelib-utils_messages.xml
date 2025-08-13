@@ -50,7 +50,7 @@
   <entry key="UTIL-040">Must stop before calling start again</entry>
   <entry key="UTIL-041">Cannot stop if not currently running</entry>
   <entry key="UTIL-042">Must stop first</entry>
-  <entry key="UTIL-043">Different number of slots and values: {} and {}</entry>
+  <entry key="UTIL-043">Different number of slots and values: {} and {} [values: {}]</entry>
   <entry key="UTIL-044">Failed to read whole file: {}</entry>
   <entry key="UTIL-045">Inverted number range: {}{}{}</entry>
   <entry key="UTIL-046">Don't have a string value for: {}</entry>
