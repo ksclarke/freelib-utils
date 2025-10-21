@@ -15,8 +15,11 @@ public final class Constants {
     /** The default / any host IP address. */
     public static final String INADDR_ANY = "0.0.0.0"; // NOPMD - don't hard code IPs
 
-    /** A constant for an end of line character. */
+    /** A constant for an end-of-line character. */
     public static final String EOL = System.lineSeparator();
+
+    /** A constant for a line feed character. */
+    public static final String LF = "\n";
 
     /** A constant for an empty string. */
     public static final String EMPTY = "";
