@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -29,7 +28,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param aThrowingRunnable A throwing runnable
      * @return A standard Runnable that sneakily throws exceptions
      */
-    @SuppressWarnings({ PMD.AVOID_RETHROWING_EXCEPTION, PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
     static <E extends Exception> Runnable sneaky(final ThrowingRunnable<E> aThrowingRunnable) {
         return () -> {
             try {
@@ -50,7 +49,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param aRunnable The wrapped runnable
      * @return A ThrowingRunnable that rethrows the original exception
      */
-    @SuppressWarnings({ JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE })
+    @SuppressWarnings({JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE})
     static <E extends Exception> ThrowingRunnable<E> unwrap(final Runnable aRunnable) {
         return () -> {
             try {
@@ -74,7 +73,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param aThrowingRunnable A runnable that throws checked exceptions
      * @return A runnable that turns checked exceptions into unchecked exceptions
      */
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
     static <E extends Exception> Runnable wrap(final ThrowingRunnable<E> aThrowingRunnable) {
         return () -> {
             try {

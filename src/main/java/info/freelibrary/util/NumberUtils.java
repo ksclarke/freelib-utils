@@ -1,5 +1,13 @@
-
 package info.freelibrary.util; // NOPMD - ExcessivePublicCount
+
+import info.freelibrary.util.warnings.Checkstyle;
+import info.freelibrary.util.warnings.PMD;
+
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.Objects;
 
 import static info.freelibrary.util.Constants.DASH_CHAR;
 import static info.freelibrary.util.Constants.DOT_CHAR;
@@ -9,22 +17,13 @@ import static info.freelibrary.util.Constants.PLUS_CHAR;
 import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
 import static info.freelibrary.util.Constants.ZERO_CHAR;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.util.Objects;
-
-import info.freelibrary.util.warnings.Checkstyle;
-import info.freelibrary.util.warnings.PMD;
-
 /**
  * Provides extra functionality for Java Number classes.
  * <p>
  * Class comes from the commons-lang3 library and is licensed under their license.
  * </p>
  */
-@SuppressWarnings({ PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT })
+@SuppressWarnings({PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT})
 public final class NumberUtils {
 
     /** Reusable Byte constant for minus one. */
@@ -281,8 +280,8 @@ public final class NumberUtils {
      * @return Number created from the string (or null if the input is null)
      * @throws NumberFormatException If the value cannot be converted
      */
-    @SuppressWarnings({ PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
-        Checkstyle.BOOLEAN_EXPR_COMPLEXITY })
+    @SuppressWarnings({PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
+            Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static Number createNumber(final String aString) {
         if (aString == null) {
             return null;
@@ -293,7 +292,7 @@ public final class NumberUtils {
         }
 
         // Need to deal with all possible hex prefixes here
-        final String[] hexPrefixes = { HEX_PREFIX_LC, HEX_PREFIX_UC, HASH };
+        final String[] hexPrefixes = {HEX_PREFIX_LC, HEX_PREFIX_UC, HASH};
         final int length = aString.length();
         final int offset = aString.charAt(0) == '+' || aString.charAt(0) == '-' ? 1 : 0;
         final int hexDigits;
@@ -509,8 +508,9 @@ public final class NumberUtils {
      * @param aString The {@link String} to check
      * @return True if the string is a correctly formatted number; else, false
      */
-    @SuppressWarnings({ Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY,
-        PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH })
+    @SuppressWarnings(
+            {Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
+                    PMD.FOR_LOOP_CAN_BE_FOR_EACH, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static boolean isCreatable(final String aString) {
         if (StringUtils.isEmpty(aString)) {
             return false;
@@ -620,8 +620,7 @@ public final class NumberUtils {
                 return foundDigit;
             }
 
-            if (!allowSigns &&
-                    (chars[index] == 'd' || chars[index] == 'D' || chars[index] == 'f' || chars[index] == 'F')) {
+            if (!allowSigns && (chars[index] == 'd' || chars[index] == 'D' || chars[index] == 'f' || chars[index] == 'F')) {
                 return foundDigit;
             }
 
@@ -1306,7 +1305,7 @@ public final class NumberUtils {
      *
      * @param aValue The {@link BigDecimal} to convert
      * @return The double represented by the {@link BigDecimal} or {@code 0.0d} if the {@link BigDecimal} is
-     *         {@code null}
+     * {@code null}
      */
     public static double toDouble(final BigDecimal aValue) {
         return toDouble(aValue, 0.0d);
@@ -1326,7 +1325,7 @@ public final class NumberUtils {
      * @param aValue The {@link BigDecimal} to convert
      * @param aDefaultValue A default value
      * @return The double represented by the {@link BigDecimal} or the defaultValue if the {@link BigDecimal} is
-     *         {@code null}
+     * {@code null}
      */
     public static double toDouble(final BigDecimal aValue, final double aDefaultValue) {
         return aValue == null ? aDefaultValue : aValue.doubleValue();

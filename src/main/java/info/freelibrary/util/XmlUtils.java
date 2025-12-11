@@ -1,8 +1,4 @@
-
 package info.freelibrary.util;
-
-import java.io.StringReader;
-import java.io.StringWriter;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -12,6 +8,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 /**
  * Utilities for working with XML.
@@ -56,7 +54,6 @@ public final class XmlUtils {
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, YES);
         transformer.setOutputProperty(OutputKeys.INDENT, YES);
         transformer.transform(xmlInput, xmlOutput);
-        xmlOutput.getWriter().toString();
 
         return xmlOutput.getWriter().toString();
     }

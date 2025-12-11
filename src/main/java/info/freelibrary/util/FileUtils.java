@@ -1,7 +1,6 @@
-
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.EMPTY;
+import info.freelibrary.util.warnings.PMD;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -25,18 +25,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import info.freelibrary.util.warnings.PMD;
+import static info.freelibrary.util.Constants.EMPTY;
 
 /**
  * Utilities for working with files.
  */
-@SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
+@SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS})
 public final class FileUtils {
 
     /**
@@ -49,7 +48,6 @@ public final class FileUtils {
 
     /** A constant for the EXECUTE permission. */
     private static final String EXECUTE = "x";
-
     /** A constant for file type. */
     private static final String FILE_TYPE = "file";
 
@@ -178,7 +176,7 @@ public final class FileUtils {
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY})
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
@@ -203,7 +201,7 @@ public final class FileUtils {
      * @param aDir A directory to delete
      * @return True if file was successfully deleted; else, false
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
@@ -309,26 +307,33 @@ public final class FileUtils {
      * @throws NoSuchAlgorithmException If the supplied algorithm isn't supported
      * @throws IOException If there is trouble reading the file
      */
+    @SuppressWarnings({PMD.EMPTY_CONTROL_STATEMENT})
     public static String hash(final File aFile, final String aAlgorithm) throws NoSuchAlgorithmException, IOException {
         final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
         final Path filePath = Paths.get(aFile.getAbsolutePath());
 
-        try (InputStream inStream = Files.newInputStream(filePath); Formatter formatter = new Formatter();
-                DigestInputStream mdStream = new DigestInputStream(inStream, md)) {
-            final byte[] bytes = new byte[8192];
-            int bytesRead = 0;
+        try (InputStream inStream = Files.newInputStream(filePath);
+             DigestInputStream mdStream = new DigestInputStream(inStream, md);
+             OutputStream devNull = new OutputStream() {
+                 @Override
+                 public void write(int b) {
+                     // This is intentionally empty
+                 }
+             }) {
+            mdStream.transferTo(devNull); // Drains the stream so we can get the digest
 
-            while (bytesRead != -1) {
-                bytesRead = mdStream.read(bytes);
+            final byte[] digest = md.digest();
+            final StringBuilder hex = new StringBuilder(digest.length * 2);
+
+            for (final byte singleByte : digest) {
+                hex.append(String.format("%02x", singleByte));
             }
 
-            for (final byte bite : md.digest()) {
-                formatter.format("%02x", bite);
-            }
-
-            return formatter.toString();
+            devNull.close();
+            return hex.toString();
         }
     }
+
 
     /**
      * An array of all the files in the supplied directory that match the supplied <code>FilenameFilter</code>.
@@ -367,7 +372,7 @@ public final class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY})
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
             final String... aIgnoreList) throws FileNotFoundException {
         final List<File> fileList;
@@ -379,7 +384,7 @@ public final class FileUtils {
 
         if (aDir.isFile()) {
             if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
-                return new File[] { aDir };
+                return new File[]{aDir};
             }
 
             return new File[0];
@@ -574,7 +579,7 @@ public final class FileUtils {
      * @return True if the copy was successful; else, false
      * @throws IOException If there is a problem copying the file
      */
-    @SuppressWarnings({ PMD.N_PATH_COMPLEXITY, PMD.AVOID_FILE_STREAM })
+    @SuppressWarnings({PMD.N_PATH_COMPLEXITY, PMD.AVOID_FILE_STREAM})
     private static boolean copyFile(final File aSourceFile, final File aDestFile) throws IOException {
         boolean success = true;
 
@@ -590,8 +595,8 @@ public final class FileUtils {
 
         if (success) {
             try (FileOutputStream outputStream = new FileOutputStream(aDestFile);
-                    FileInputStream inputStream = new FileInputStream(aSourceFile);
-                    FileChannel source = inputStream.getChannel()) {
+                 FileInputStream inputStream = new FileInputStream(aSourceFile);
+                 FileChannel source = inputStream.getChannel()) {
                 outputStream.getChannel().transferFrom(source, 0, source.size());
             }
         }

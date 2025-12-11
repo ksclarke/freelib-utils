@@ -1,10 +1,9 @@
-
 package info.freelibrary.util;
-
-import java.util.function.BiConsumer;
 
 import info.freelibrary.util.warnings.JDK;
 import info.freelibrary.util.warnings.PMD;
+
+import java.util.function.BiConsumer;
 
 /**
  * A bi-consumer that throws a runtime exception. This is not an ideal solution (as the PMD suppressions indicate), but
@@ -21,7 +20,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     Logger LOGGER = LoggerFactory.getLogger(ThrowingBiConsumer.class, MessageCodes.BUNDLE);
 
     @Override
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION, PMD.AVOID_RETHROWING_EXCEPTION })
+    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
     default void accept(final T a1stInput, final U a2ndInput) {
         try {
             acceptThrows(a1stInput, a2ndInput);
@@ -50,7 +49,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param aFunction The supplied ThrowingBiConsumer
      * @return A standard BiConsumer
      */
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
     static <F, S, E extends Exception> BiConsumer<F, S> sneaky(final ThrowingBiConsumer<F, S, E> aFunction) {
         return (first, second) -> {
             try {
@@ -70,7 +69,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param aFunc The ThrowingBiConsumer to wrap
      * @return A ThrowingBiConsumer that handles exceptions
      */
-    @SuppressWarnings({ PMD.PRESERVE_STACK_TRACE, JDK.UNCHECKED })
+    @SuppressWarnings({PMD.PRESERVE_STACK_TRACE, JDK.UNCHECKED})
     static <F, S, E extends Exception> ThrowingBiConsumer<F, S, E> unwrap(final ThrowingBiConsumer<F, S, E> aFunc) {
         return (first, second) -> {
             try {
@@ -107,7 +106,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param <E> The exception type
      * @throws E The sneaky exception
      */
-    @SuppressWarnings({ JDK.UNCHECKED })
+    @SuppressWarnings({JDK.UNCHECKED})
     private static <E extends Throwable> void sneakyThrow(final Throwable aException) throws E {
         throw (E) aException;
     }

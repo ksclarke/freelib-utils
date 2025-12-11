@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 /**
@@ -209,8 +208,156 @@ public final class HTTP {
     }
 
     /**
-     * An HTTP method constants class.
+     * The Header class provides a collection of constants representing common HTTP header names. These constants can be
+     * used to reference standard HTTP headers in a type-safe manner, avoiding hardcoded string literals throughout the
+     * codebase.
+     * <p>
+     * This class includes well-known HTTP headers used in client-server communication such as Content-Type, Accept,
+     * Cache-Control, Authorization, and many others. It also includes custom headers often used in specific application
+     * configurations or by proxies such as X-Forwarded-* headers.
+     * <p>
+     * The Header class is immutable and cannot be instantiated.
      */
+    public static final class Header {
+
+        /** Content-Type header. */
+        public static final String CONTENT_TYPE = "Content-Type";
+
+        /** Content-Length header. */
+        public static final String CONTENT_LENGTH = "Content-Length";
+
+        /** Location header. */
+        public static final String LOCATION = "Location";
+
+        /** Connection header. */
+        public static final String CONNECTION = "Connection";
+
+        /** Accept header. */
+        public static final String ACCEPT = "Accept";
+
+        /** Accept-Charset header. */
+        public static final String ACCEPT_CHARSET = "Accept-Charset";
+
+        /** Accept-Encoding header. */
+        public static final String ACCEPT_ENCODING = "Accept-Encoding";
+
+        /** Accept-Language header. */
+        public static final String ACCEPT_LANGUAGE = "Accept-Language";
+
+        /** User-Agent header. */
+        public static final String USER_AGENT = "User-Agent";
+
+        /** Host header. */
+        public static final String HOST = "Host";
+
+        /** Content-Encoding header. */
+        public static final String CONTENT_ENCODING = "Content-Encoding";
+
+        /** Content-Disposition header. */
+        public static final String CONTENT_DISPOSITION = "Content-Disposition";
+
+        /** Content-Language header. */
+        public static final String CONTENT_LANGUAGE = "Content-Language";
+
+        /** Transfer-Encoding header. */
+        public static final String TRANSFER_ENCODING = "Transfer-Encoding";
+
+        /** Date header. */
+        public static final String DATE = "Date";
+
+        /** Server header. */
+        public static final String SERVER = "Server";
+
+        /** ETag header. */
+        public static final String ETAG = "ETag";
+
+        /** Last-Modified header. */
+        public static final String LAST_MODIFIED = "Last-Modified";
+
+        /** Cache-Control header. */
+        public static final String CACHE_CONTROL = "Cache-Control";
+
+        /** Authorization header. */
+        public static final String AUTHORIZATION = "Authorization";
+
+        /** Cookie header. */
+        public static final String COOKIE = "Cookie";
+
+        /** Set-Cookie header. */
+        public static final String SET_COOKIE = "Set-Cookie";
+
+        /** Referer header. */
+        public static final String REFERER = "Referer";
+
+        /** Allow header. */
+        public static final String ALLOW = "Allow";
+
+        /** Origin header. */
+        public static final String ORIGIN = "Origin";
+
+        /** Access-Control-Allow-Origin header. */
+        public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+
+        /** Access-Control-Allow-Credentials header. */
+        public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+
+        /** Access-Control-Allow-Headers header. */
+        public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
+
+        /** Access-Control-Allow-Methods header. */
+        public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
+
+        /** Access-Control-Expose-Headers header. */
+        public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+
+        /** Access-Control-Max-Age header. */
+        public static final String ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age";
+
+        /** Access-Control-Request-Headers header. */
+        public static final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
+
+        /** Access-Control-Request-Method header. */
+        public static final String ACCESS_CONTROL_REQUEST_METHOD = "Access-Control-Request-Method";
+
+        /** Strict-Transport-Security header. */
+        public static final String STRICT_TRANSPORT_SECURITY = "Strict-Transport-Security";
+
+        /** X-Forwarded-For header. */
+        public static final String X_FORWARDED_FOR = "X-Forwarded-For";
+
+        /** X-Forwarded-Proto header. */
+        public static final String X_FORWARDED_PROTO = "X-Forwarded-Proto";
+
+        /** X-Forwarded-Host header. */
+        public static final String X_FORWARDED_HOST = "X-Forwarded-Host";
+
+        /** X-Forwarded-Port header. */
+        public static final String X_FORWARDED_PORT = "X-Forwarded-Port";
+
+        /** X-Requested-With header. */
+        public static final String X_REQUESTED_WITH = "X-Requested-With";
+
+        /** X-Real-IP header. */
+        public static final String X_REAL_IP = "X-Real-IP";
+
+        /** X-Forwarded-Server header. */
+        public static final String X_FORWARDED_SERVER = "X-Forwarded-Server";
+
+        /** X-Forwarded-SSL header. */
+        public static final String X_FORWARDED_SSL = "X-Forwarded-SSL";
+
+        /** X-Forwarded-Prefix header. */
+        public static final String X_FORWARDED_PREFIX = "X-Forwarded-Prefix";
+
+        /** X-Forwarded-Context-Path header. */
+        public static final String X_FORWARDED_CONTEXT_PATH = "X-Forwarded-Context-Path";
+
+        /** X-Forwarded-Scheme header. */
+        public static final String X_FORWARDED_SCHEME = "X-Forwarded-Scheme";
+
+    }
+
+    /** An HTTP method constants class. */
     public static final class Method {
 
         /** A constant for the CONNECT method. */
