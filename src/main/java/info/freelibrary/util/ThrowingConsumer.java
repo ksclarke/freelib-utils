@@ -1,10 +1,10 @@
 
 package info.freelibrary.util;
 
-import java.util.function.Consumer;
-
 import info.freelibrary.util.warnings.JDK;
 import info.freelibrary.util.warnings.PMD;
+
+import java.util.function.Consumer;
 
 /**
  * A consumer that captures a checked exception and throws it as a runtime exception.
@@ -44,7 +44,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * @param aConsumer The ThrowingConsumer to wrap
      * @return A Consumer that rethrows checked exceptions as unchecked
      */
-    @SuppressWarnings({ PMD.AVOID_RETHROWING_EXCEPTION, PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <T, E extends Exception> Consumer<T> sneaky(final ThrowingConsumer<T, E> aConsumer) {
         return input -> {
             try {

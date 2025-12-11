@@ -1,10 +1,10 @@
 
 package info.freelibrary.util;
 
-import java.util.function.BiFunction;
-
 import info.freelibrary.util.warnings.JDK;
 import info.freelibrary.util.warnings.PMD;
+
+import java.util.function.BiFunction;
 
 /**
  * A bi-function that throws a checked exception. This allows exception-throwing logic in lambda expressions while still
@@ -22,7 +22,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
     Logger LOGGER = LoggerFactory.getLogger(ThrowingBiFunction.class, MessageCodes.BUNDLE);
 
     @Override
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION, PMD.AVOID_RETHROWING_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default R apply(final F a1stInput, final S a2ndInput) {
         try {
             return applyThrows(a1stInput, a2ndInput);
@@ -53,7 +53,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @param <E> The exception type
      * @return A BiFunction that rethrows checked exceptions as unchecked
      */
-    @SuppressWarnings({ PMD.AVOID_RETHROWING_EXCEPTION, PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <F, S, R, E extends Exception> BiFunction<F, S, R> sneaky(final ThrowingBiFunction<F, S, R, E> aFunc) {
         return (first, second) -> {
             try {

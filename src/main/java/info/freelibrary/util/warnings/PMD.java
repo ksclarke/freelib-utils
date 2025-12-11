@@ -62,6 +62,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#dataclass */
     public static final String DATA_CLASS = "PMD.DataClass";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#emptycontrolstatement */
+    public static final String EMPTY_CONTROL_STATEMENT = "PMD.EmptyControlStatement";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#emptymethodinabstractclassshouldbeabstract */
     public static final String EMPTY_METHOD_IN_ABSTRACT_CLASS_SHOULD_BE_ABSTRACT =
             "PMD.EmptyMethodInAbstractClassShouldBeAbstract";

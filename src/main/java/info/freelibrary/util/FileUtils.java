@@ -1,7 +1,7 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.EMPTY;
+import info.freelibrary.util.warnings.PMD;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -25,13 +26,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import info.freelibrary.util.warnings.PMD;
+import static info.freelibrary.util.Constants.EMPTY;
 
 /**
  * Utilities for working with files.
@@ -203,7 +203,7 @@ public final class FileUtils {
      * @param aDir A directory to delete
      * @return True if file was successfully deleted; else, false
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY })
+    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
@@ -313,20 +313,26 @@ public final class FileUtils {
         final MessageDigest md = MessageDigest.getInstance(aAlgorithm);
         final Path filePath = Paths.get(aFile.getAbsolutePath());
 
-        try (InputStream inStream = Files.newInputStream(filePath); Formatter formatter = new Formatter();
-                DigestInputStream mdStream = new DigestInputStream(inStream, md)) {
-            final byte[] bytes = new byte[8192];
-            int bytesRead = 0;
+        try (InputStream inStream = Files.newInputStream(filePath);
+                DigestInputStream mdStream = new DigestInputStream(inStream, md);
+                OutputStream devNull = new OutputStream() {
 
-            while (bytesRead != -1) {
-                bytesRead = mdStream.read(bytes);
+                    @Override
+                    public void write(final int aByte) {
+                        // This is intentionally empty
+                    }
+                }) {
+            mdStream.transferTo(devNull); // Drains the stream so we can get the digest
+
+            final byte[] digest = md.digest();
+            final StringBuilder hex = new StringBuilder(digest.length * 2);
+
+            for (final byte singleByte : digest) {
+                hex.append(String.format("%02x", singleByte));
             }
 
-            for (final byte bite : md.digest()) {
-                formatter.format("%02x", bite);
-            }
-
-            return formatter.toString();
+            devNull.close();
+            return hex.toString();
         }
     }
 

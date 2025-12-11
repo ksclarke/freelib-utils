@@ -1,13 +1,8 @@
 
 package info.freelibrary.util; // NOPMD - ExcessivePublicCount
 
-import static info.freelibrary.util.Constants.DASH_CHAR;
-import static info.freelibrary.util.Constants.DOT_CHAR;
-import static info.freelibrary.util.Constants.HASH;
-import static info.freelibrary.util.Constants.PERIOD;
-import static info.freelibrary.util.Constants.PLUS_CHAR;
-import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
-import static info.freelibrary.util.Constants.ZERO_CHAR;
+import info.freelibrary.util.warnings.Checkstyle;
+import info.freelibrary.util.warnings.PMD;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -15,8 +10,13 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-import info.freelibrary.util.warnings.Checkstyle;
-import info.freelibrary.util.warnings.PMD;
+import static info.freelibrary.util.Constants.DASH_CHAR;
+import static info.freelibrary.util.Constants.DOT_CHAR;
+import static info.freelibrary.util.Constants.HASH;
+import static info.freelibrary.util.Constants.PERIOD;
+import static info.freelibrary.util.Constants.PLUS_CHAR;
+import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
+import static info.freelibrary.util.Constants.ZERO_CHAR;
 
 /**
  * Provides extra functionality for Java Number classes.
@@ -282,7 +282,7 @@ public final class NumberUtils {
      * @throws NumberFormatException If the value cannot be converted
      */
     @SuppressWarnings({ PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
-        Checkstyle.BOOLEAN_EXPR_COMPLEXITY })
+        Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public static Number createNumber(final String aString) {
         if (aString == null) {
             return null;
@@ -510,7 +510,7 @@ public final class NumberUtils {
      * @return True if the string is a correctly formatted number; else, false
      */
     @SuppressWarnings({ Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY,
-        PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH })
+        PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public static boolean isCreatable(final String aString) {
         if (StringUtils.isEmpty(aString)) {
             return false;

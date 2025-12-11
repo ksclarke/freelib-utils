@@ -1,14 +1,13 @@
 
 package info.freelibrary.util;
 
-import static info.freelibrary.util.Constants.COLON;
-import static info.freelibrary.util.Constants.SPACE;
-
+import info.freelibrary.util.warnings.PMD;
 import org.slf4j.MDC;
 import org.slf4j.MDC.MDCCloseable;
 import org.slf4j.Marker;
 
-import info.freelibrary.util.warnings.PMD;
+import static info.freelibrary.util.Constants.COLON;
+import static info.freelibrary.util.Constants.SPACE;
 
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
@@ -139,6 +138,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
@@ -220,6 +220,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void debug(final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
@@ -328,6 +329,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void error(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
@@ -409,6 +411,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void error(final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
@@ -435,6 +438,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aThrowable A throwable exception
      * @param aMessage A message with information about the exception
      */
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public void error(final Throwable aThrowable, final String aMessage) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
@@ -461,6 +465,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aMessage A message with information about the exception
      * @param aVarargs Additional details about the exception being thrown
      */
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
@@ -643,6 +648,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void info(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
@@ -724,6 +730,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void info(final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
@@ -882,6 +889,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
@@ -963,6 +971,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void trace(final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
@@ -1071,6 +1080,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
@@ -1152,6 +1162,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
+    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
     @Override
     public void warn(final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {

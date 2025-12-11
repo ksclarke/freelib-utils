@@ -1,10 +1,10 @@
 
 package info.freelibrary.util;
 
-import java.util.function.BiConsumer;
-
 import info.freelibrary.util.warnings.JDK;
 import info.freelibrary.util.warnings.PMD;
+
+import java.util.function.BiConsumer;
 
 /**
  * A bi-consumer that throws a runtime exception. This is not an ideal solution (as the PMD suppressions indicate), but
@@ -21,7 +21,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     Logger LOGGER = LoggerFactory.getLogger(ThrowingBiConsumer.class, MessageCodes.BUNDLE);
 
     @Override
-    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION, PMD.AVOID_RETHROWING_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default void accept(final T a1stInput, final U a2ndInput) {
         try {
             acceptThrows(a1stInput, a2ndInput);

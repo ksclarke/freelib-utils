@@ -29,7 +29,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param aThrowingRunnable A throwing runnable
      * @return A standard Runnable that sneakily throws exceptions
      */
-    @SuppressWarnings({ PMD.AVOID_RETHROWING_EXCEPTION, PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <E extends Exception> Runnable sneaky(final ThrowingRunnable<E> aThrowingRunnable) {
         return () -> {
             try {
