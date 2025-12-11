@@ -1,10 +1,11 @@
+
 package info.freelibrary.util.warnings;
 
 /**
  * Constants related to PMD validation rules. These don't actually work in the SuppressWarnings annotation, but they can
  * still be used to give an indication of what the <code>// NOPMD</code> comment is instructing PMD to ignore.
  */
-@SuppressWarnings({PMD.LONG_VARIABLE})
+@SuppressWarnings({ PMD.LONG_VARIABLE })
 public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod */

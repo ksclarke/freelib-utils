@@ -1,13 +1,8 @@
 
 package info.freelibrary.util; // NOPMD - ExcessivePublicCount
 
-import static info.freelibrary.util.Constants.DASH_CHAR;
-import static info.freelibrary.util.Constants.DOT_CHAR;
-import static info.freelibrary.util.Constants.HASH;
-import static info.freelibrary.util.Constants.PERIOD;
-import static info.freelibrary.util.Constants.PLUS_CHAR;
-import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
-import static info.freelibrary.util.Constants.ZERO_CHAR;
+import info.freelibrary.util.warnings.Checkstyle;
+import info.freelibrary.util.warnings.PMD;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -15,8 +10,13 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-import info.freelibrary.util.warnings.Checkstyle;
-import info.freelibrary.util.warnings.PMD;
+import static info.freelibrary.util.Constants.DASH_CHAR;
+import static info.freelibrary.util.Constants.DOT_CHAR;
+import static info.freelibrary.util.Constants.HASH;
+import static info.freelibrary.util.Constants.PERIOD;
+import static info.freelibrary.util.Constants.PLUS_CHAR;
+import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
+import static info.freelibrary.util.Constants.ZERO_CHAR;
 
 /**
  * Provides extra functionality for Java Number classes.
