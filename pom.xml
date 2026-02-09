@@ -122,7 +122,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>13.0.3</version>
+    <version>14.0.2</version>
   </parent>
 
 </project>
