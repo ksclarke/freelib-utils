@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 /**
@@ -29,6 +28,9 @@ public final class Constants {
 
     /** A constant for a colon. */
     public static final String COLON = ":";
+
+    /** A constant for an ampersand character. */
+    public static final String AMPERSAND = "&";
 
     /** A constant for a slash. */
     public static final String SLASH = "/";
