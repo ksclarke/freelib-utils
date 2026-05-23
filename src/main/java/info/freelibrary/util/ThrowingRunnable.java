@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -30,7 +31,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * <p>
      * {@snippet lang = java:
      * executor.execute(ThrowingRunnable.uncheck(() -> Files.delete(path)));
-     *}
+     * }
      * <p>
      * Runtime exceptions and errors are rethrown unchanged.
      *
@@ -38,7 +39,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param aThrowingRunnable A throwing runnable
      * @return A standard {@code Runnable} that propagates checked exceptions without compiler-enforced handling
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <E extends Exception> Runnable uncheck(final ThrowingRunnable<E> aThrowingRunnable) {
         return () -> {
             try {
@@ -67,13 +68,13 @@ public interface ThrowingRunnable<E extends Exception> {
      * } catch (final IOException details) {
      *     // Handle the original checked exception here.
      * }
-     *}
+     * }
      *
      * @param <E> The exception type to unwrap
      * @param aRunnable The wrapped runnable
      * @return A {@code ThrowingRunnable} that rethrows the original exception
      */
-    @SuppressWarnings({JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE})
+    @SuppressWarnings({ JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE })
     static <E extends Exception> ThrowingRunnable<E> unwrap(final Runnable aRunnable) {
         return () -> {
             try {
@@ -105,13 +106,13 @@ public interface ThrowingRunnable<E extends Exception> {
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      *
      * @param <E> The exception type that is caught and wrapped in an {@code I18nRuntimeException}
      * @param aThrowingRunnable A runnable that throws checked exceptions
      * @return A runnable that turns checked exceptions into unchecked exceptions
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <E extends Exception> Runnable wrap(final ThrowingRunnable<E> aThrowingRunnable) {
         return () -> {
             try {

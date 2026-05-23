@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -38,14 +39,14 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      *
      * @param a1stInput The first input argument
      * @param a2ndInput The second input argument
      * @return The function result
      */
     @Override
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default R apply(final F a1stInput, final S a2ndInput) {
         try {
             return applyThrows(a1stInput, a2ndInput);
@@ -69,7 +70,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * } catch (final IOException details) {
      *     // Handle the checked exception here.
      * }
-     *}
+     * }
      *
      * @param a1stInput The first input argument
      * @param a2ndInput The second input argument
@@ -86,10 +87,11 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * can throw a checked exception and you do not want that exception wrapped in an {@link I18nRuntimeException}:
      * <p>
      * {@snippet lang = java:
+     *
      * BiFunction<Path, Charset, String> reader = ThrowingBiFunction.uncheck(Files::readString);
      *
      * final String contents = reader.apply(path, StandardCharsets.UTF_8);
-     *}
+     * }
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling. Runtime exceptions and
      * errors are rethrown unchanged.
@@ -101,7 +103,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @param <E> The exception type
      * @return A {@code BiFunction} that propagates checked exceptions without compiler-enforced handling
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <F, S, R, E extends Exception> BiFunction<F, S, R> uncheck(final ThrowingBiFunction<F, S, R, E> aFunc) {
         return (first, second) -> {
             try {
@@ -131,15 +133,14 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      *     }
      * };
      *
-     * ThrowingBiFunction<Path, Charset, String, IOException> reader =
-     *         ThrowingBiFunction.unwrap(wrappedReader);
+     * ThrowingBiFunction<Path, Charset, String, IOException> reader = ThrowingBiFunction.unwrap(wrappedReader);
      *
      * try {
      *     final String contents = reader.applyThrows(path, StandardCharsets.UTF_8);
      * } catch (final IOException details) {
      *     // Handle the original checked exception here.
      * }
-     *}
+     * }
      * <p>
      * If the {@code I18nRuntimeException}'s cause is not an {@link Exception}, the returned function throws an
      * {@link IllegalStateException}.
@@ -151,9 +152,9 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @param aFunc The {@code ThrowingBiFunction} to unwrap
      * @return A {@code ThrowingBiFunction} that rethrows wrapped causes as checked exceptions
      */
-    @SuppressWarnings({PMD.PRESERVE_STACK_TRACE, JDK.UNCHECKED})
+    @SuppressWarnings({ PMD.PRESERVE_STACK_TRACE, JDK.UNCHECKED, PMD.COMMENT_SIZE })
     static <F, S, R, E extends Exception> ThrowingBiFunction<F, S, R, E>
-    unwrap(final ThrowingBiFunction<F, S, R, E> aFunc) {
+            unwrap(final ThrowingBiFunction<F, S, R, E> aFunc) {
         return (first, second) -> {
             try {
                 return aFunc.applyThrows(first, second);
@@ -184,7 +185,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      * <p>
      * Use {@link #uncheck(ThrowingBiFunction)} instead when checked exceptions should be propagated without wrapping.
      *
@@ -196,7 +197,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @return A {@code ThrowingBiFunction} that wraps checked exceptions when used as a standard {@code BiFunction}
      */
     static <F, S, R, E extends Exception> ThrowingBiFunction<F, S, R, E>
-    wrap(final ThrowingBiFunction<F, S, R, E> aFunc) {
+            wrap(final ThrowingBiFunction<F, S, R, E> aFunc) {
         return aFunc;
     }
 
@@ -209,7 +210,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @return Nothing (this method never returns normally)
      * @throws E The unchecked exception
      */
-    @SuppressWarnings({JDK.UNCHECKED})
+    @SuppressWarnings({ JDK.UNCHECKED })
     private static <E extends Throwable, R> R throwUnchecked(final Throwable aException) throws E {
         throw (E) aException;
     }

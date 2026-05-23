@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -40,7 +41,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * } catch (final IOException details) {
      *     // Handle the checked exception here.
      * }
-     *}
+     * }
      *
      * @param aType A type being accepted by the consumer
      * @throws E An exception thrown by the consumer
@@ -55,14 +56,14 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * <p>
      * {@snippet lang = java:
      * paths.forEach(ThrowingConsumer.uncheck(path -> Files.delete(path)));
-     *}
+     * }
      *
      * @param <T> The accepted type
      * @param <E> The exception type
      * @param aConsumer The ThrowingConsumer to wrap
      * @return A Consumer that rethrows checked exceptions as unchecked
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <T, E extends Exception> Consumer<T> uncheck(final ThrowingConsumer<T, E> aConsumer) {
         return input -> {
             try {
@@ -91,14 +92,14 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * } catch (final IOException details) {
      *     // Handle the original checked exception here.
      * }
-     *}
+     * }
      *
      * @param <T> The accepted type
      * @param <E> The exception type
      * @param aConsumer The ThrowingConsumer to unwrap
      * @return A ThrowingConsumer that unwraps the runtime exception
      */
-    @SuppressWarnings({JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE})
+    @SuppressWarnings({ JDK.UNCHECKED, PMD.PRESERVE_STACK_TRACE })
     static <T, E extends Exception> ThrowingConsumer<T, E> unwrap(final ThrowingConsumer<T, E> aConsumer) {
         return input -> {
             try {
@@ -130,7 +131,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      *
      * @param <T> A type being accepted by the consumer
      * @param <E> The type of exception that can be caught and wrapped

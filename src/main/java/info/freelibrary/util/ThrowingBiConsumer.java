@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -36,13 +37,13 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      *
      * @param a1stInput A first input accepted by the consumer
      * @param a2ndInput A second input accepted by the consumer
      */
     @Override
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default void accept(final T a1stInput, final U a2ndInput) {
         try {
             acceptThrows(a1stInput, a2ndInput);
@@ -66,7 +67,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * } catch (final IOException details) {
      *     // Handle the checked exception here.
      * }
-     *}
+     * }
      *
      * @param a1stInput A first input accepted by the consumer
      * @param a2ndInput A second input accepted by the consumer
@@ -83,7 +84,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * <p>
      * {@snippet lang = java:
      * filesAndContents.forEach(ThrowingBiConsumer.uncheck((path, contents) -> Files.writeString(path, contents)));
-     *}
+     * }
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling.
      *
@@ -93,7 +94,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param aFunc The supplied {@code ThrowingBiConsumer}
      * @return A standard {@code BiConsumer} that propagates checked exceptions without compiler-enforced handling
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <F, S, E extends Exception> BiConsumer<F, S> uncheck(final ThrowingBiConsumer<F, S, E> aFunc) {
         return (first, second) -> {
             try {
@@ -122,15 +123,14 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      *     }
      * };
      *
-     * ThrowingBiConsumer<Path, String, IOException> writer =
-     *         ThrowingBiConsumer.unwrap(wrappedWriter);
+     * ThrowingBiConsumer<Path, String, IOException> writer = ThrowingBiConsumer.unwrap(wrappedWriter);
      *
      * try {
      *     writer.acceptThrows(path, contents);
      * } catch (final IOException details) {
      *     // Handle the original checked exception here.
      * }
-     *}
+     * }
      * <p>
      * If the {@code I18nRuntimeException}'s cause is not an {@link Exception}, the returned consumer throws an
      * {@link IllegalStateException}.
@@ -141,7 +141,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param aFunc The {@code ThrowingBiConsumer} to unwrap
      * @return A {@code ThrowingBiConsumer} that rethrows wrapped causes as checked exceptions
      */
-    @SuppressWarnings({PMD.PRESERVE_STACK_TRACE})
+    @SuppressWarnings({ PMD.PRESERVE_STACK_TRACE, PMD.COMMENT_SIZE })
     static <F, S, E extends Exception> ThrowingBiConsumer<F, S, E> unwrap(final ThrowingBiConsumer<F, S, E> aFunc) {
         return (first, second) -> {
             try {
@@ -173,7 +173,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * } catch (final I18nRuntimeException details) {
      *     // The original checked exception is available as details.getCause().
      * }
-     *}
+     * }
      * <p>
      * Use {@link #uncheck(ThrowingBiConsumer)} instead when checked exceptions should be propagated without wrapping.
      *
@@ -194,7 +194,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @param <E> The exception type
      * @throws E The unchecked exception
      */
-    @SuppressWarnings({JDK.UNCHECKED})
+    @SuppressWarnings({ JDK.UNCHECKED })
     private static <E extends Throwable> void throwUnchecked(final Throwable aException) throws E {
         throw (E) aException;
     }

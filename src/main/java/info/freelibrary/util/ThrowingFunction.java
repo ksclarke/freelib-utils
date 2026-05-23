@@ -1,3 +1,4 @@
+
 package info.freelibrary.util;
 
 import info.freelibrary.util.warnings.JDK;
@@ -6,8 +7,7 @@ import info.freelibrary.util.warnings.PMD;
 import java.util.function.Function;
 
 /**
- * Represents a functional interface similar to {@code Function}, which allows the function to throw checked
- * exceptions.
+ * Represents a functional interface similar to {@code Function}, which allows the function to throw checked exceptions.
  *
  * @param <T> The input type of the function
  * @param <R> The output type of the function
@@ -24,10 +24,11 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * throw a checked exception:
      * <p>
      * {@snippet lang = java:
+     *
      * Function<Path, String> reader = ThrowingFunction.uncheck(path -> Files.readString(path));
      *
      * final String contents = reader.apply(path);
-     *}
+     * }
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling.
      *
@@ -56,6 +57,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * propagating a checked exception without declaring it:
      * <p>
      * {@snippet lang = java:
+     *
      * Function<Path, String> reader = path -> {
      *     try {
      *         return Files.readString(path);
@@ -63,7 +65,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      *         return ThrowingFunction.throwUnchecked(details);
      *     }
      * };
-     *}
+     * }
      * <p>
      * This method never returns normally.
      *
@@ -92,7 +94,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * } catch (final IOException details) {
      *     // Handle the checked exception here.
      * }
-     *}
+     * }
      *
      * @param aType The input to the function
      * @return The result of applying the function to the given input
