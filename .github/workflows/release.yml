@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ "17" ]
+        java: [ "21" ]
         maven: [ "3.8.6" ]
         jdk: [ "temurin" ]
 
@@ -43,5 +43,4 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.BUILD_PASSPHRASE }}
           MAVEN_GPG_KEY: ${{ secrets.BUILD_KEY }}
         run: |
-          mvn -V -B -ntp deploy -Prelease -Drevision="${{ github.event.release.tag_name }}" \
-          -DlogLevel="DEBUG" -DtestLogLevel="DEBUG"
+          mvn -V -B -ntp deploy -Prelease -Drevision="${{ github.event.release.tag_name }}"

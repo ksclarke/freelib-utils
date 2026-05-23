@@ -1,6 +1,8 @@
 
 package info.freelibrary.util;
 
+import static info.freelibrary.util.Constants.EMPTY;
+
 import info.freelibrary.util.warnings.PMD;
 
 import java.io.File;
@@ -30,8 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static info.freelibrary.util.Constants.EMPTY;
 
 /**
  * Utilities for working with files.
@@ -426,22 +426,22 @@ public final class FileUtils {
     }
 
     /**
-     * Returns a human readable size from a large number of bytes.
+     * Returns a human-readable size from a large number of bytes.
      *
      * @param aByteCount A large number of bytes
-     * @return A human readable size
+     * @return A human-readable size
      */
     public static String sizeFromBytes(final long aByteCount) {
         return sizeFromBytes(aByteCount, false);
     }
 
     /**
-     * Returns a human readable size from a large number of bytes. You can specify that the human readable size use an
+     * Returns a human-readable size from a large number of bytes. You can specify that the human readable size use an
      * abbreviated label (e.g., GB or MB).
      *
      * @param aByteCount A large number of bytes
      * @param aAbbreviatedLabel Whether the label should be abbreviated
-     * @return A human readable size
+     * @return A human-readable size
      */
     public static String sizeFromBytes(final long aByteCount, final boolean aAbbreviatedLabel) {
         long count;
