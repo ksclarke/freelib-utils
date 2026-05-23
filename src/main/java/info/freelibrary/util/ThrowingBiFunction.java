@@ -22,7 +22,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
     Logger LOGGER = LoggerFactory.getLogger(ThrowingBiFunction.class, MessageCodes.BUNDLE);
 
     @Override
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     default R apply(final F a1stInput, final S a2ndInput) {
         try {
             return applyThrows(a1stInput, a2ndInput);
@@ -53,7 +53,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @param <E> The exception type
      * @return A BiFunction that rethrows checked exceptions as unchecked
      */
-    @SuppressWarnings({PMD.AVOID_CATCHING_GENERIC_EXCEPTION})
+    @SuppressWarnings({ PMD.AVOID_CATCHING_GENERIC_EXCEPTION })
     static <F, S, R, E extends Exception> BiFunction<F, S, R> sneaky(final ThrowingBiFunction<F, S, R, E> aFunc) {
         return (first, second) -> {
             try {
@@ -119,7 +119,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      * @return Nothing – this method never returns normally
      * @throws E The sneaky exception
      */
-    @SuppressWarnings({JDK.UNCHECKED})
+    @SuppressWarnings({ JDK.UNCHECKED })
     private static <E extends Throwable, R> R sneakyThrow(final Throwable aException) throws E {
         throw (E) aException;
     }
