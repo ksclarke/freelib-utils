@@ -6,7 +6,7 @@ This project is a small collection of convenience and utility classes (mostly us
 
 ## Building the Project
 
-To build freelib-utils, you will need JDK 17 or higher and Maven 3.2.2 or higher. Once you have those installed, you can check the project out from GitHub and build it with the following commands:
+To build freelib-utils, you will need JDK 21 or higher and Maven 3.2.2 or higher. Once you have those installed, you can check the project out from GitHub and build it with the following commands:
 
     git clone https://github.com/ksclarke/freelib-utils.git
     cd freelib-utils
