@@ -47,6 +47,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#cognitivecomplexity */
     public static final String COGNITIVE_COMPLEXITY = "PMD.CognitiveComplexity";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_documentation.html#commentsize */
+    public static final String COMMENT_SIZE = "PMD.CommentSize";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#consecutiveliteralappends */
     public static final String CONSECUTIVE_LITERAL_APPENDS = "PMD.ConsecutiveLiteralAppends";
 
