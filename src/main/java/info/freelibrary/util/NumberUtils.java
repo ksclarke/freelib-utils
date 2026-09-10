@@ -20,6 +20,7 @@ import static info.freelibrary.util.Constants.ZERO_CHAR;
 
 /**
  * Provides extra functionality for Java Number classes.
+ *
  * <p>
  * Class comes from the commons-lang3 library and is licensed under their license.
  * </p>
@@ -108,6 +109,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@link BigDecimal}.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -130,6 +132,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@link BigInteger}; handles hex (0x or #) and octal (0) notations.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -176,6 +179,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@link Double}.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -194,6 +198,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@link Float}.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -213,6 +218,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link String} to a {@link Integer}, handling hex (0xhhhh) and octal (0dddd) notations. Note: a
      * leading zero means octal; spaces are not trimmed.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -233,6 +239,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link String} to a {@link Long}; handles hex (0Xhhhh) and octal (0ddd) notations. Note: a leading
      * zero means octal; spaces are not trimmed.
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
@@ -251,27 +258,33 @@ public final class NumberUtils {
 
     /**
      * Turns a string value into a {@link java.lang.Number}.
+     *
      * <p>
      * If the string starts with {@code 0x} or {@code -0x} (lower or upper case) or {@code #} or {@code -#}, it will be
      * interpreted as a hexadecimal Integer - or Long, if the number of digits after the prefix is more than 8 - or
      * BigInteger if there are more than 16 digits.
      * </p>
+     *
      * <p>
      * Then, the value is examined for a type qualifier on the end, i.e. one of {@code 'f', 'F', 'd', 'D', 'l', 'L'}. If
      * it is found, it starts trying to create successively larger types from the type specified until one is found that
      * can represent the value.
      * </p>
+     *
      * <p>
      * If a type specifier is not found, it will check for a decimal point and then try successively larger types from
      * {@link Integer} to {@link BigInteger} and from {@link Float} to {@link BigDecimal}.
      * </p>
+     *
      * <p>
      * Integral values with a leading {@code 0} will be interpreted as octal; the returned number will be Integer, Long
      * or BigDecimal as appropriate.
      * </p>
+     *
      * <p>
      * Returns {@code null} if the string is {@code null}.
      * </p>
+     *
      * <p>
      * This method does not trim the input string, i.e., strings with leading or trailing spaces will generate
      * NumberFormatExceptions.
@@ -490,18 +503,22 @@ public final class NumberUtils {
 
     /**
      * Checks whether the String a valid Java number.
+     *
      * <p>
      * Valid numbers include hexadecimal marked with the {@code 0x} or {@code 0X} qualifier, octal numbers, scientific
      * notation and numbers marked with a type qualifier (e.g. 123L).
      * </p>
+     *
      * <p>
      * Non-hexadecimal strings beginning with a leading zero are treated as octal values. Thus the string {@code 09}
      * will return {@code false}, since {@code 9} is not a valid octal value. However, numbers beginning with {@code 0.}
      * are treated as decimal.
      * </p>
+     *
      * <p>
      * {@code null} and empty/blank {@link String} will return {@code false}.
      * </p>
+     *
      * <p>
      * Note, {@link #createNumber(String)} should return a number for every input resulting in {@code true}.
      * </p>
@@ -642,9 +659,11 @@ public final class NumberUtils {
     /**
      * Checks if the CharSequence contains only Unicode digits. A decimal point is not a Unicode digit and returns
      * false.
+     *
      * <p>
      * {@code null} will return {@code false}. An empty CharSequence (length()=0) will return {@code false}.
      * </p>
+     *
      * <p>
      * Note that the method does not allow for a leading sign, either positive or negative. Also, if a String passes the
      * numeric test, it may still generate a NumberFormatException when parsed by Integer.parseInt or Long.parseLong,
@@ -686,15 +705,18 @@ public final class NumberUtils {
 
     /**
      * Checks whether the given String is a parsable number.
+     *
      * <p>
      * Parsable numbers include those Strings understood by {@link Integer#parseInt(String)},
      * {@link Long#parseLong(String)}, {@link Float#parseFloat(String)} or {@link Double#parseDouble(String)}. This
      * method can be used instead of catching {@link java.text.ParseException} when calling one of those methods.
      * </p>
+     *
      * <p>
      * Hexadecimal and scientific notations are <strong>not</strong> considered parsable. See
      * {@link #isCreatable(String)} on those cases.
      * </p>
+     *
      * <p>
      * {@code null} and empty String will return {@code false}.
      * </p>
@@ -792,6 +814,7 @@ public final class NumberUtils {
 
     /**
      * Gets the maximum of three {@code double} values.
+     *
      * <p>
      * If any value is {@code NaN}, {@code NaN} is returned. Infinity is handled.
      * </p>
@@ -834,6 +857,7 @@ public final class NumberUtils {
 
     /**
      * Gets the maximum of three {@code float} values.
+     *
      * <p>
      * If any value is {@code NaN}, {@code NaN} is returned. Infinity is handled.
      * </p>
@@ -1056,6 +1080,7 @@ public final class NumberUtils {
 
     /**
      * Gets the minimum of three {@code double} values.
+     *
      * <p>
      * If any value is {@code NaN}, {@code NaN} is returned. Infinity is handled.
      * </p>
@@ -1098,6 +1123,7 @@ public final class NumberUtils {
 
     /**
      * Gets the minimum of three {@code float} values.
+     *
      * <p>
      * If any value is {@code NaN}, {@code NaN} is returned. Infinity is handled.
      * </p>
@@ -1248,6 +1274,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code byte}, returning {@code zero} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code zero} is returned.
      * </p>
@@ -1267,6 +1294,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code byte}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1295,6 +1323,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link BigDecimal} to a {@code double}.
+     *
      * <p>
      * If the {@link BigDecimal} is {@code null}, then the specified default value is returned.
      * </p>
@@ -1314,6 +1343,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link BigDecimal} to a {@code double}.
+     *
      * <p>
      * If the {@link BigDecimal} is {@code null}, then the specified default value is returned.
      * </p>
@@ -1334,6 +1364,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code double}, returning {@code 0.0d} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code 0.0d} is returned.
      * </p>
@@ -1353,6 +1384,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code double}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1381,6 +1413,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code float}, returning {@code 0.0f} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code 0.0f} is returned.
      * </p>
@@ -1400,6 +1433,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code float}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1428,6 +1462,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to an {@code int}, returning {@code zero} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code zero} is returned.
      * </p>
@@ -1447,6 +1482,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to an {@code int}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1475,6 +1511,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code long}, returning {@code zero} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code zero} is returned.
      * </p>
@@ -1494,6 +1531,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code long}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1523,6 +1561,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link BigDecimal} to a {@link BigDecimal} with a scale of two that has been rounded using
      * {@code RoundingMode.HALF_EVEN}. If the supplied value is null, then {@code BigDecimal.ZERO} is returned.
+     *
      * <p>
      * Note, the scale of a {@link BigDecimal} is the number of digits to the right of the decimal point.
      * </p>
@@ -1555,6 +1594,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link Double} to a {@link BigDecimal} with a scale of two that has been rounded using
      * {@code RoundingMode.HALF_EVEN}. If the supplied value is null, then {@code BigDecimal.ZERO} is returned.
+     *
      * <p>
      * Note, the scale of a {@link BigDecimal} is the number of digits to the right of the decimal point.
      * </p>
@@ -1587,6 +1627,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link Float} to a {@link BigDecimal} with a scale of two that has been rounded using
      * {@code RoundingMode.HALF_EVEN}. If the supplied value is null, then {@code BigDecimal.ZERO} is returned.
+     *
      * <p>
      * Note, the scale of a {@link BigDecimal} is the number of digits to the right of the decimal point.
      * </p>
@@ -1619,6 +1660,7 @@ public final class NumberUtils {
     /**
      * Converts a {@link String} to a {@link BigDecimal} with a scale of two that has been rounded using
      * {@code RoundingMode.HALF_EVEN}. If the supplied value is null, then {@code BigDecimal.ZERO} is returned.
+     *
      * <p>
      * Note, the scale of a {@link BigDecimal} is the number of digits to the right of the decimal point.
      * </p>
@@ -1650,6 +1692,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to a {@code short}, returning {@code zero} if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, {@code zero} is returned.
      * </p>
@@ -1669,6 +1712,7 @@ public final class NumberUtils {
 
     /**
      * Converts a {@link String} to an {@code short}, returning a default value if the conversion fails.
+     *
      * <p>
      * If the string is {@code null}, the default value is returned.
      * </p>
@@ -1697,6 +1741,7 @@ public final class NumberUtils {
 
     /**
      * A utility method for {@link #createNumber(java.lang.String)}.
+     *
      * <p>
      * Returns mantissa of the given number.
      * </p>
@@ -1714,6 +1759,7 @@ public final class NumberUtils {
 
     /**
      * A utility method for {@link #createNumber(java.lang.String)}.
+     *
      * <p>
      * Returns {@code true} if s is {@code null} or empty.
      * </p>
@@ -1762,17 +1808,21 @@ public final class NumberUtils {
 
     /**
      * A utility method for {@link #createNumber(java.lang.String)}.
+     *
      * <p>
      * This will check if the magnitude of the number is zero by checking if there are only zeros before and after the
      * decimal place.
      * </p>
+     *
      * <p>
      * Note: It is <strong>assumed</strong> that the input string has been converted to either a Float or Double with a
      * value of zero when this method is called. This eliminates invalid input for example {@code ".", ".D", ".e0"}.
      * </p>
+     *
      * <p>
      * Thus the method only requires checking if both arguments are null, empty or contain only zeros.
      * </p>
+     *
      * <p>
      * Given {@code string = aMantissa + "." + aDecimal}:
      * </p>

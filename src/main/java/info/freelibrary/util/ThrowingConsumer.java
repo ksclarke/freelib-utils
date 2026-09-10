@@ -30,8 +30,10 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
     /**
      * A method that wraps any exceptions through by the consumer with a runtime exception.
+     *
      * <p>
      * Use this method when you want the caller to handle or declare the checked exception:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingConsumer<Path, IOException> deleter = Files::delete;
@@ -50,9 +52,11 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
     /**
      * Returns a standard Consumer that rethrows checked exceptions as unchecked using an unchecked throw.
+     *
      * <p>
      * Use this method when an API requires a standard {@link Consumer}, but the lambda or method reference can throw a
      * checked exception, and you do not want that exception wrapped in an {@link I18nRuntimeException}:
+     *
      * <p>
      * {@snippet lang = java:
      * paths.forEach(ThrowingConsumer.uncheck(path -> Files.delete(path)));
@@ -78,10 +82,12 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
     /**
      * Returns a ThrowingConsumer that rethrows {@code I18nRuntimeException}'s cause as a checked exception.
+     *
      * <p>
      * Use this method when a throwing consumer may have been invoked through {@link #accept(Object)}, causing checked
      * exceptions to be wrapped in {@link I18nRuntimeException}, and you want to expose the original checked exception
      * again:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingConsumer<Path, IOException> deleter = Files::delete;
@@ -119,9 +125,11 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
     /**
      * Converts a ThrowingConsumer&lt;T, E&gt; into a standard Consumer&lt;T&gt; by wrapping exceptions in an
      * {@code I18nRuntimeException}.
+     *
      * <p>
      * Use this method when an API requires a standard {@link Consumer} and you want checked exceptions to be converted
      * into {@link I18nRuntimeException}:
+     *
      * <p>
      * {@snippet lang = java:
      * Consumer<Path> deleter = ThrowingConsumer.wrap(path -> Files.delete(path));

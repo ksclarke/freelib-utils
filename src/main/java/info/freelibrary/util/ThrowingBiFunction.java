@@ -23,13 +23,16 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
 
     /**
      * Applies this function to the supplied arguments using {@link #applyThrows(Object, Object)}.
+     *
      * <p>
      * When this method is called through the standard {@link BiFunction} API, checked exceptions thrown by
      * {@link #applyThrows(Object, Object)} are wrapped in an {@link I18nRuntimeException}. Runtime exceptions and
      * errors are rethrown unchanged.
+     *
      * <p>
      * Use this method indirectly when an API requires a standard {@code BiFunction<F, S, R>} and checked exceptions
      * should be converted into runtime exceptions:
+     *
      * <p>
      * {@snippet lang = java:
      * BiFunction<Path, Charset, String> reader = ThrowingBiFunction.wrap(Files::readString);
@@ -59,8 +62,10 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
 
     /**
      * Applies this function to the supplied arguments, allowing the operation to throw a checked exception.
+     *
      * <p>
      * Use this method when the caller should handle or declare the checked exception directly:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingBiFunction<Path, Charset, String, IOException> reader = Files::readString;
@@ -82,9 +87,11 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
     /**
      * Converts a {@code ThrowingBiFunction<F, S, R, E>} into a standard {@link BiFunction}, allowing checked exceptions
      * to be propagated without requiring them to be declared.
+     *
      * <p>
      * Use this method when an API requires a standard {@code BiFunction<F, S, R>}, but the lambda or method reference
      * can throw a checked exception and you do not want that exception wrapped in an {@link I18nRuntimeException}:
+     *
      * <p>
      * {@snippet lang = java:
      *
@@ -92,6 +99,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      *
      * final String contents = reader.apply(path, StandardCharsets.UTF_8);
      * }
+     *
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling. Runtime exceptions and
      * errors are rethrown unchanged.
@@ -120,9 +128,11 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
     /**
      * Returns a {@code ThrowingBiFunction} that rethrows an {@link I18nRuntimeException}'s cause as a checked
      * exception.
+     *
      * <p>
      * Use this method when a function may throw an {@code I18nRuntimeException} that wraps an original checked
      * exception, and the caller should handle that original checked exception again:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingBiFunction<Path, Charset, String, IOException> wrappedReader = (path, charset) -> {
@@ -141,6 +151,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      *     // Handle the original checked exception here.
      * }
      * }
+     *
      * <p>
      * If the {@code I18nRuntimeException}'s cause is not an {@link Exception}, the returned function throws an
      * {@link IllegalStateException}.
@@ -173,9 +184,11 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
     /**
      * Returns a {@code ThrowingBiFunction} whose standard {@link BiFunction#apply(Object, Object)} behavior wraps
      * checked exceptions in an {@link I18nRuntimeException}.
+     *
      * <p>
      * Use this method when an API requires a standard {@code BiFunction<F, S, R>} and checked exceptions should be
      * converted into runtime exceptions:
+     *
      * <p>
      * {@snippet lang = java:
      * BiFunction<Path, Charset, String> reader = ThrowingBiFunction.wrap(Files::readString);
@@ -186,6 +199,7 @@ public interface ThrowingBiFunction<F, S, R, E extends Exception> extends BiFunc
      *     // The original checked exception is available as details.getCause().
      * }
      * }
+     *
      * <p>
      * Use {@link #uncheck(ThrowingBiFunction)} instead when checked exceptions should be propagated without wrapping.
      *
