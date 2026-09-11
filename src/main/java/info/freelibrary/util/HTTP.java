@@ -212,10 +212,12 @@ public final class HTTP {
      * The Header class provides a collection of constants representing common HTTP header names. These constants can be
      * used to reference standard HTTP headers in a type-safe manner, avoiding hardcoded string literals throughout the
      * codebase.
+     *
      * <p>
      * This class includes well-known HTTP headers used in client-server communication such as Content-Type, Accept,
      * Cache-Control, Authorization, and many others. It also includes custom headers often used in specific application
      * configurations or by proxies such as X-Forwarded-* headers.
+     *
      * <p>
      * The Header class is immutable and cannot be instantiated.
      */
