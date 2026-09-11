@@ -21,13 +21,16 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
 
     /**
      * Accepts the supplied inputs using {@link #acceptThrows(Object, Object)}.
+     *
      * <p>
      * When this method is called through the standard {@link BiConsumer} API, checked exceptions thrown by
      * {@link #acceptThrows(Object, Object)} are wrapped in an {@link I18nRuntimeException}. Runtime exceptions and
      * errors are rethrown unchanged.
+     *
      * <p>
      * Use this method indirectly when an API requires a standard {@code BiConsumer<T, U>} and checked exceptions should
      * be converted into runtime exceptions:
+     *
      * <p>
      * {@snippet lang = java:
      * BiConsumer<Path, String> writer = ThrowingBiConsumer.wrap(Files::writeString);
@@ -56,8 +59,10 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
 
     /**
      * Accepts the supplied inputs, allowing the operation to throw a checked exception.
+     *
      * <p>
      * Use this method when the caller should handle or declare the checked exception directly:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingBiConsumer<Path, String, IOException> writer = Files::writeString;
@@ -78,13 +83,16 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     /**
      * Converts a {@code ThrowingBiConsumer<F, S, E>} into a standard {@link BiConsumer}, allowing checked exceptions to
      * be propagated without requiring them to be declared.
+     *
      * <p>
      * Use this method when an API requires a standard {@code BiConsumer<F, S>}, but the lambda or method reference can
      * throw a checked exception and you do not want that exception wrapped in an {@link I18nRuntimeException}:
+     *
      * <p>
      * {@snippet lang = java:
      * filesAndContents.forEach(ThrowingBiConsumer.uncheck((path, contents) -> Files.writeString(path, contents)));
      * }
+     *
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling.
      *
@@ -110,9 +118,11 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     /**
      * Returns a {@code ThrowingBiConsumer} that rethrows an {@link I18nRuntimeException}'s cause as a checked
      * exception.
+     *
      * <p>
      * Use this method when a bi-consumer may throw an {@code I18nRuntimeException} that wraps an original checked
      * exception, and the caller should handle that original checked exception again:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingBiConsumer<Path, String, IOException> wrappedWriter = (path, contents) -> {
@@ -131,6 +141,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      *     // Handle the original checked exception here.
      * }
      * }
+     *
      * <p>
      * If the {@code I18nRuntimeException}'s cause is not an {@link Exception}, the returned consumer throws an
      * {@link IllegalStateException}.
@@ -161,9 +172,11 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     /**
      * Returns a {@code ThrowingBiConsumer} whose standard {@link BiConsumer#accept(Object, Object)} behavior wraps
      * checked exceptions in an {@link I18nRuntimeException}.
+     *
      * <p>
      * Use this method when an API requires a standard {@code BiConsumer<F, S>} and checked exceptions should be
      * converted into runtime exceptions:
+     *
      * <p>
      * {@snippet lang = java:
      * BiConsumer<Path, String> writer = ThrowingBiConsumer.wrap(Files::writeString);
@@ -174,6 +187,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      *     // The original checked exception is available as details.getCause().
      * }
      * }
+     *
      * <p>
      * Use {@link #uncheck(ThrowingBiConsumer)} instead when checked exceptions should be propagated without wrapping.
      *

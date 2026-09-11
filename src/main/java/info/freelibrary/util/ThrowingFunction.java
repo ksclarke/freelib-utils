@@ -19,9 +19,11 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     /**
      * Converts a {@link ThrowingFunction} into a standard {@link Function}, allowing checked exceptions to be
      * propagated without requiring them to be declared in the method's {@code throws} clause.
+     *
      * <p>
      * Use this method when an API requires a standard {@code Function<T, R>}, but the lambda or method reference can
      * throw a checked exception:
+     *
      * <p>
      * {@snippet lang = java:
      *
@@ -29,6 +31,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      *
      * final String contents = reader.apply(path);
      * }
+     *
      * <p>
      * The checked exception is not wrapped. It is rethrown without compiler-enforced handling.
      *
@@ -52,9 +55,11 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     /**
      * Rethrows a given {@link Throwable} without wrapping it in another exception, bypassing checked exception
      * handling.
+     *
      * <p>
      * This method is primarily useful inside adapter methods or lambdas that need to return a value while still
      * propagating a checked exception without declaring it:
+     *
      * <p>
      * {@snippet lang = java:
      *
@@ -66,6 +71,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      *     }
      * };
      * }
+     *
      * <p>
      * This method never returns normally.
      *
@@ -83,8 +89,10 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     /**
      * Applies the function to the given input and produces a result, allowing the operation to throw a checked
      * exception.
+     *
      * <p>
      * Use this method when the caller should handle or declare the checked exception directly:
+     *
      * <p>
      * {@snippet lang = java:
      * ThrowingFunction<Path, String, IOException> reader = path -> Files.readString(path);

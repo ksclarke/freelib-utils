@@ -25,13 +25,16 @@ public interface ThrowingRunnable<E extends Exception> {
     /**
      * Converts a {@code ThrowingRunnable} into a standard {@link Runnable}, allowing checked exceptions to be
      * propagated without requiring them to be declared.
+     *
      * <p>
      * Use this method when an API requires a standard {@code Runnable}, but the operation can throw a checked exception
      * and you do not want that exception wrapped in an {@link I18nRuntimeException}:
+     *
      * <p>
      * {@snippet lang = java:
      * executor.execute(ThrowingRunnable.uncheck(() -> Files.delete(path)));
      * }
+     *
      * <p>
      * Runtime exceptions and errors are rethrown unchanged.
      *
@@ -55,9 +58,11 @@ public interface ThrowingRunnable<E extends Exception> {
     /**
      * Unwraps a {@code Runnable} by extracting and rethrowing the original checked exception wrapped in an
      * {@link I18nRuntimeException}.
+     *
      * <p>
      * Use this method when a runnable may have wrapped a checked exception in {@code I18nRuntimeException}, and the
      * caller should handle the original checked exception again:
+     *
      * <p>
      * {@snippet lang = java:
      * Runnable wrapped = ThrowingRunnable.wrap(() -> Files.delete(path));
@@ -94,9 +99,11 @@ public interface ThrowingRunnable<E extends Exception> {
     /**
      * Converts a {@code ThrowingRunnable} into a standard {@link Runnable} that wraps checked exceptions in an
      * {@link I18nRuntimeException}.
+     *
      * <p>
      * Use this method when an API requires a standard {@code Runnable} and checked exceptions should be converted into
      * runtime exceptions:
+     *
      * <p>
      * {@snippet lang = java:
      * Runnable deleter = ThrowingRunnable.wrap(() -> Files.delete(path));
