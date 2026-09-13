@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 /**
@@ -358,6 +357,10 @@ public final class HTTP {
         /** X-Forwarded-Scheme header. */
         public static final String X_FORWARDED_SCHEME = "X-Forwarded-Scheme";
 
+        /** Creates a new HTTP header. */
+        private Header() {
+            // This is intentionally left empty
+        }
     }
 
     /** An HTTP method constants class. */

@@ -1,5 +1,12 @@
+package info.freelibrary.util;
 
-package info.freelibrary.util; // NOPMD - ExcessivePublicCount
+import static info.freelibrary.util.Constants.DASH_CHAR;
+import static info.freelibrary.util.Constants.DOT_CHAR;
+import static info.freelibrary.util.Constants.HASH;
+import static info.freelibrary.util.Constants.PERIOD;
+import static info.freelibrary.util.Constants.PLUS_CHAR;
+import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
+import static info.freelibrary.util.Constants.ZERO_CHAR;
 
 import info.freelibrary.util.warnings.Checkstyle;
 import info.freelibrary.util.warnings.PMD;
@@ -10,14 +17,6 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-import static info.freelibrary.util.Constants.DASH_CHAR;
-import static info.freelibrary.util.Constants.DOT_CHAR;
-import static info.freelibrary.util.Constants.HASH;
-import static info.freelibrary.util.Constants.PERIOD;
-import static info.freelibrary.util.Constants.PLUS_CHAR;
-import static info.freelibrary.util.Constants.SINGLE_INSTANCE;
-import static info.freelibrary.util.Constants.ZERO_CHAR;
-
 /**
  * Provides extra functionality for Java Number classes.
  *
@@ -25,7 +24,8 @@ import static info.freelibrary.util.Constants.ZERO_CHAR;
  * Class comes from the commons-lang3 library and is licensed under their license.
  * </p>
  */
-@SuppressWarnings({ PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT })
+@SuppressWarnings({PMD.GOD_CLASS, PMD.CYCLOMATIC_COMPLEXITY, PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT,
+  PMD.TOO_MANY_STATIC_IMPORTS})
 public final class NumberUtils {
 
     /** Reusable Byte constant for minus one. */
@@ -257,45 +257,27 @@ public final class NumberUtils {
     }
 
     /**
-     * Turns a string value into a {@link java.lang.Number}.
+     * Converts a string to a {@link Number}.
      *
-     * <p>
-     * If the string starts with {@code 0x} or {@code -0x} (lower or upper case) or {@code #} or {@code -#}, it will be
-     * interpreted as a hexadecimal Integer - or Long, if the number of digits after the prefix is more than 8 - or
-     * BigInteger if there are more than 16 digits.
-     * </p>
+     * <p>Returns {@code null} if {@code aString} is {@code null}. The input is not trimmed;
+     * leading or trailing whitespace causes a {@link NumberFormatException}.</p>
      *
-     * <p>
-     * Then, the value is examined for a type qualifier on the end, i.e. one of {@code 'f', 'F', 'd', 'D', 'l', 'L'}. If
-     * it is found, it starts trying to create successively larger types from the type specified until one is found that
-     * can represent the value.
-     * </p>
+     * <p>Values prefixed with {@code 0x}, {@code -0x}, {@code #}, or {@code -#}
+     * (case-insensitive where applicable) are interpreted as hexadecimal and returned as an {@link Integer},
+     * {@link Long}, or {@link java.math.BigInteger}, depending on the number of digits.</p>
      *
-     * <p>
-     * If a type specifier is not found, it will check for a decimal point and then try successively larger types from
-     * {@link Integer} to {@link BigInteger} and from {@link Float} to {@link BigDecimal}.
-     * </p>
+     * <p>A trailing type qualifier ({@code f}, {@code F}, {@code d}, {@code D},
+     * {@code l}, or {@code L}) selects the initial target type; progressively larger compatible types are tried if
+     * necessary. Without a qualifier, integral values are converted from {@link Integer} through
+     * {@link java.math.BigInteger}, and decimal values from {@link Float} through {@link java.math.BigDecimal}.
+     * Integral values with a leading {@code 0} are interpreted as octal.</p>
      *
-     * <p>
-     * Integral values with a leading {@code 0} will be interpreted as octal; the returned number will be Integer, Long
-     * or BigDecimal as appropriate.
-     * </p>
-     *
-     * <p>
-     * Returns {@code null} if the string is {@code null}.
-     * </p>
-     *
-     * <p>
-     * This method does not trim the input string, i.e., strings with leading or trailing spaces will generate
-     * NumberFormatExceptions.
-     * </p>
-     *
-     * @param aString A string containing a number
-     * @return Number created from the string (or null if the input is null)
-     * @throws NumberFormatException If the value cannot be converted
+     * @param aString a string containing a number
+     * @return the parsed number, or {@code null} if {@code aString} is {@code null}
+     * @throws NumberFormatException if the value cannot be converted
      */
-    @SuppressWarnings({ PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
-        Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.COGNITIVE_COMPLEXITY, PMD.NCSS_COUNT, PMD.CYCLOMATIC_COMPLEXITY, PMD.N_PATH_COMPLEXITY,
+      Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static Number createNumber(final String aString) {
         if (aString == null) {
             return null;
@@ -306,7 +288,7 @@ public final class NumberUtils {
         }
 
         // Need to deal with all possible hex prefixes here
-        final String[] hexPrefixes = { HEX_PREFIX_LC, HEX_PREFIX_UC, HASH };
+        final String[] hexPrefixes = {HEX_PREFIX_LC, HEX_PREFIX_UC, HASH};
         final int length = aString.length();
         final int offset = aString.charAt(0) == '+' || aString.charAt(0) == '-' ? 1 : 0;
         final int hexDigits;
@@ -526,8 +508,8 @@ public final class NumberUtils {
      * @param aString The {@link String} to check
      * @return True if the string is a correctly formatted number; else, false
      */
-    @SuppressWarnings({ Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY,
-        PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({Checkstyle.BOOLEAN_EXPR_COMPLEXITY, PMD.NCSS_COUNT, PMD.COGNITIVE_COMPLEXITY,
+      PMD.N_PATH_COMPLEXITY, PMD.FOR_LOOP_CAN_BE_FOR_EACH, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static boolean isCreatable(final String aString) {
         if (StringUtils.isEmpty(aString)) {
             return false;
@@ -638,7 +620,7 @@ public final class NumberUtils {
             }
 
             if (!allowSigns &&
-                    (chars[index] == 'd' || chars[index] == 'D' || chars[index] == 'f' || chars[index] == 'F')) {
+                (chars[index] == 'd' || chars[index] == 'D' || chars[index] == 'f' || chars[index] == 'F')) {
                 return foundDigit;
             }
 
@@ -688,7 +670,7 @@ public final class NumberUtils {
      * @return True if only contains digits and is non-null; else, false
      */
     public static boolean isNumeric(final CharSequence aCharSequence) {
-        if (aCharSequence == null || aCharSequence.length() == 0) {
+        if (aCharSequence == null || aCharSequence.isEmpty()) {
             return false;
         }
 
@@ -1334,8 +1316,7 @@ public final class NumberUtils {
      * </pre>
      *
      * @param aValue The {@link BigDecimal} to convert
-     * @return The double represented by the {@link BigDecimal} or {@code 0.0d} if the {@link BigDecimal} is
-     *         {@code null}
+     * @return The double represented by the {@link BigDecimal} or {@code 0.0d} if the {@link BigDecimal} is null
      */
     public static double toDouble(final BigDecimal aValue) {
         return toDouble(aValue, 0.0d);
@@ -1355,8 +1336,7 @@ public final class NumberUtils {
      *
      * @param aValue The {@link BigDecimal} to convert
      * @param aDefaultValue A default value
-     * @return The double represented by the {@link BigDecimal} or the defaultValue if the {@link BigDecimal} is
-     *         {@code null}
+     * @return The double represented by the {@link BigDecimal} or the defaultValue if the {@link BigDecimal} is null
      */
     public static double toDouble(final BigDecimal aValue, final double aDefaultValue) {
         return aValue == null ? aDefaultValue : aValue.doubleValue();
@@ -1583,7 +1563,7 @@ public final class NumberUtils {
      * @return The scaled, with appropriate rounding, {@link BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final BigDecimal aValue, final int aScale,
-            final RoundingMode aRoundingMode) {
+      final RoundingMode aRoundingMode) {
         if (aValue == null) {
             return BigDecimal.ZERO;
         }
@@ -1616,7 +1596,7 @@ public final class NumberUtils {
      * @return The scaled, with appropriate rounding, {@link BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Double aValue, final int aScale,
-            final RoundingMode aRoundingMode) {
+      final RoundingMode aRoundingMode) {
         if (aValue == null) {
             return BigDecimal.ZERO;
         }
@@ -1649,7 +1629,7 @@ public final class NumberUtils {
      * @return The scaled, with appropriate rounding, {@link BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Float aValue, final int aScale,
-            final RoundingMode aRoundingMode) {
+      final RoundingMode aRoundingMode) {
         if (aValue == null) {
             return BigDecimal.ZERO;
         }
@@ -1682,7 +1662,7 @@ public final class NumberUtils {
      * @return The scaled, with appropriate rounding, {@link BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final String aValue, final int aScale,
-            final RoundingMode aRoundingMode) {
+      final RoundingMode aRoundingMode) {
         if (aValue == null) {
             return BigDecimal.ZERO;
         }
