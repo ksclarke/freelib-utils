@@ -1,11 +1,10 @@
-
 package info.freelibrary.util.warnings;
 
 /**
  * Constants related to PMD validation rules. These don't actually work in the SuppressWarnings annotation, but they can
  * still be used to give an indication of what the <code>// NOPMD</code> comment is instructing PMD to ignore.
  */
-@SuppressWarnings({ PMD.LONG_VARIABLE })
+@SuppressWarnings({PMD.LONG_VARIABLE})
 public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod */
@@ -22,6 +21,12 @@ public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#avoidduplicateliterals */
     public static final String AVOID_DUPLICATE_LITERALS = "PMD.AvoidDuplicateLiterals";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#avoidfieldnamematchingmethodname */
+    public static final String AVOID_FIELD_NAME_MATCHING_METHOD_NAME = "PMD.AvoidFieldNameMatchingMethodName";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#avoidfieldnamematchingtypename */
+    public static final String AVOID_FIELD_NAME_MATCHING_TYPE_NAME = "PMD.AvoidFieldNameMatchingTypeName";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#avoidfilestream */
     public static final String AVOID_FILE_STREAM = "PMD.AvoidFileStream";
@@ -41,6 +46,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoidthrowingrawexceptiontypes */
     public static final String AVOID_THROWING_RAW_EXCEPTION_TYPES = "PMD.AvoidThrowingRawExceptionTypes";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#avoiduncheckedexceptionsinsignatures */
+    public static final String AVOID_UNCHECKED_EXCEPTIONS_IN_SIGNATURES = "PMD.AvoidUncheckedExceptionsInSignatures";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#classnamingconventions */
     public static final String CLASS_NAMING_CONVENTIONS = "PMD.ClassNamingConventions";
 
@@ -49,6 +57,9 @@ public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_documentation.html#commentsize */
     public static final String COMMENT_SIZE = "PMD.CommentSize";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#compareobjectswithequals */
+    public static final String COMPARE_OBJECTS_WITH_EQUALS = "PMD.CompareObjectsWithEquals";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#consecutiveliteralappends */
     public static final String CONSECUTIVE_LITERAL_APPENDS = "PMD.ConsecutiveLiteralAppends";
@@ -70,7 +81,10 @@ public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#emptymethodinabstractclassshouldbeabstract */
     public static final String EMPTY_METHOD_IN_ABSTRACT_CLASS_SHOULD_BE_ABSTRACT =
-            "PMD.EmptyMethodInAbstractClassShouldBeAbstract";
+      "PMD.EmptyMethodInAbstractClassShouldBeAbstract";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#exceptionasflowcontrol */
+    public static final String EXCEPTION_AS_FLOW_CONTROL = "PMD.ExceptionAsFlowControl";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_apex_design.html#excessiveclasslength */
     public static final String EXCESSIVE_CLASS_LENGTH = "PMD.ExcessiveClassLength";
@@ -93,6 +107,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#implicitfunctionalinterface */
     public static final String IMPLICIT_FUNCTIONAL_INTERFACE = "PMD.ImplicitFunctionalInterface";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#toofewbranchesforswitch */
+    public static final String IMPLICIT_SWITCH_FALL_THROUGH = "PMD.ImplicitSwitchFallThrough";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#invalidlogmessageformat */
     public static final String INVALID_LOG_MESSAGE_FORMAT = "PMD.InvalidLogMessageFormat";
 
@@ -114,11 +131,17 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#ncsscount */
     public static final String NCSS_COUNT = "PMD.NcssCount";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#nonexhaustiveswitch */
+    public static final String NON_EXHAUSTIVE_SWITCH = "PMD.NonExhaustiveSwitch";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#nullassignment */
     public static final String NULL_ASSIGNMENT = "PMD.NullAssignment";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#preservestacktrace */
     public static final String PRESERVE_STACK_TRACE = "PMD.PreserveStackTrace";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#shortmethodname */
+    public static final String SHORT_METHOD_NAME = "PMD.ShortMethodName";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#signaturedeclarethrowsexception */
     public static final String SIGNATURE_DECLARE_THROWS_EXCEPTION = "PMD.SignatureDeclareThrowsException";
@@ -134,6 +157,9 @@ public final class PMD {
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_bestpractices.html#systemprintln */
     public static final String SYSTEM_PRINTLN = "PMD.SystemPrintln";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#toofewbranchesforswitch */
+    public static final String TOO_FEW_BRANCHES_FOR_SWITCH = "PMD.TooFewBranchesForSwitch";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#toomanyfields */
     public static final String TOO_MANY_FIELDS = "PMD.TooManyFields";
