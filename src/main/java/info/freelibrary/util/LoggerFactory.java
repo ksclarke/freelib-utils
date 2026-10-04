@@ -1,9 +1,9 @@
-
 package info.freelibrary.util;
 
-import java.util.ResourceBundle;
-
 import org.slf4j.ILoggerFactory;
+
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * A facade for SLF4J's {@link org.slf4j.LoggerFactory}.
@@ -59,15 +59,7 @@ public final class LoggerFactory {
      */
     public static Logger getLogger(final String aName, final String aBundleName) {
         final ILoggerFactory factory = org.slf4j.LoggerFactory.getILoggerFactory();
-        final Logger logger;
-
-        if (aBundleName != null) {
-            logger = new Logger(factory.getLogger(aName), aBundleName);
-        } else {
-            logger = new Logger(factory.getLogger(aName));
-        }
-
-        return logger;
+        return new Logger(factory.getLogger(aName), Objects.requireNonNull(aBundleName));
     }
 
 }

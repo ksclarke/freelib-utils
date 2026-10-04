@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 import java.io.BufferedInputStream;
@@ -30,7 +29,7 @@ public class CustomBundleControl extends ResourceBundle.Control {
     /**
      * An array of expected resource file extensions.
      */
-    private static final String[] FORMATS = { XML, PROPERTIES };
+    private static final String[] FORMATS = {XML, PROPERTIES};
 
     /**
      * Returns a list of formats supported for the supplied base name.
@@ -55,8 +54,8 @@ public class CustomBundleControl extends ResourceBundle.Control {
      */
     @Override
     public ResourceBundle newBundle(final String aBaseName, final Locale aLocale, final String aFormat,
-            final ClassLoader aClassLoader, final boolean aReload)
-            throws IllegalAccessException, InstantiationException, IOException {
+      final ClassLoader aClassLoader, final boolean aReload)
+    throws IllegalAccessException, InstantiationException, IOException {
         checkForNull(aBaseName, aLocale, aFormat, aClassLoader);
 
         if (canRead(aFormat)) {
@@ -108,7 +107,8 @@ public class CustomBundleControl extends ResourceBundle.Control {
      * @param aInputStream An {@link InputStream} from which to build a {@link ResourceBundle}
      * @param aFormat The format of the bundle's resources
      * @return A {@link ResourceBundle}
-     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied {@link InputStream}
+     * @throws IOException If there is trouble building the {@link ResourceBundle} from the supplied
+     *   {@link InputStream}
      */
     private ResourceBundle makeBundle(final InputStream aInputStream, final String aFormat) throws IOException {
         final ResourceBundle bundle;

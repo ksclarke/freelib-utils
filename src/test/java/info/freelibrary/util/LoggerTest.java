@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.EMPTY;
@@ -6,22 +5,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-import java.util.UUID;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.OutputStreamAppender;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Tests FreeLibrary Logger facade.
@@ -56,7 +54,7 @@ public class LoggerTest {
     @Before
     public void setUp() throws Exception {
         final ch.qos.logback.classic.Logger logger =
-                (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(UUID.randomUUID().toString());
+          (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(UUID.randomUUID().toString());
         final LoggerContext loggerContext = (LoggerContext) org.slf4j.LoggerFactory.getILoggerFactory();
         final PatternLayoutEncoder encoder = new PatternLayoutEncoder();
         final OutputStreamAppender<ILoggingEvent> appender = new OutputStreamAppender<>();
@@ -132,7 +130,7 @@ public class LoggerTest {
      */
     @Test
     public void testDebugMessageKeyVarargDetails() throws IOException {
-        myLogger.debug(TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.debug(TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_DEBUG + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -143,7 +141,7 @@ public class LoggerTest {
      */
     @Test
     public void testDebugMessageVarargDetails() throws IOException {
-        myLogger.debug(TestConstants.THIS_AND_THAT, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.debug(TestConstants.THIS_AND_THAT, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_DEBUG + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -277,7 +275,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.debug(notifyAdmin, TestConstants.THIS_AND_THAT,
-                new Object[] { TestConstants.ASDF, TestConstants.SADF });
+          new Object[]{TestConstants.ASDF, TestConstants.SADF});
         assertEquals(TestConstants.MAIN_DEBUG + getLoggerInfo() + TestConstants.DASH_ASDF_SADF, getLog());
     }
 
@@ -291,7 +289,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.debug(notifyAdmin, TestConstants.TEST_VALUE_TWO,
-                new Object[] { TestConstants.ONE, TestConstants.TWO });
+          new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_DEBUG + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -428,7 +426,7 @@ public class LoggerTest {
      */
     @Test
     public void testErrorMessageKeyVarargDetails() throws IOException {
-        myLogger.error(TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.error(TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -439,7 +437,7 @@ public class LoggerTest {
      */
     @Test
     public void testErrorMessageVarargDetails() throws IOException {
-        myLogger.error(TestConstants.THIS_AND_THAT, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.error(TestConstants.THIS_AND_THAT, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -543,7 +541,7 @@ public class LoggerTest {
     @Test
     public void testErrorMessageKeyThrowableVarargs() throws IOException {
         myLogger.error(new IOException(TestConstants.BAD), TestConstants.TEST_VALUE_TWO, TestConstants.ONE,
-                TestConstants.TWO);
+          TestConstants.TWO);
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
         assertTrue(getStackTrace().startsWith(IOException.class.getName()));
     }
@@ -567,7 +565,7 @@ public class LoggerTest {
     @Test
     public void testErrorThrowableMessageVarargs() throws IOException {
         myLogger.error(new IOException(TestConstants.BAD), TestConstants.THIS_AND_THAT, TestConstants.ONE,
-                TestConstants.TWO);
+          TestConstants.TWO);
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
         assertTrue(getStackTrace().startsWith(IOException.class.getName()));
     }
@@ -590,7 +588,7 @@ public class LoggerTest {
      */
     @Test
     public void testErrorThrowableMessageVarargs2() throws IOException {
-        myLogger.error(new IOException(TestConstants.BAD), TestConstants.ONE_AND_TWO, new Object[] {});
+        myLogger.error(new IOException(TestConstants.BAD), TestConstants.ONE_AND_TWO, new Object[]{});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
         assertTrue(getStackTrace().startsWith(IOException.class.getName()));
     }
@@ -602,7 +600,7 @@ public class LoggerTest {
      */
     @Test
     public void testErrorThrowableNullMessageVarargs2() throws IOException {
-        myLogger.error((Throwable) null, TestConstants.ONE_AND_TWO, new Object[] {});
+        myLogger.error((Throwable) null, TestConstants.ONE_AND_TWO, new Object[]{});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -690,7 +688,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.error(notifyAdmin, TestConstants.THIS_AND_THAT,
-                new Object[] { TestConstants.ASDF, TestConstants.SADF });
+          new Object[]{TestConstants.ASDF, TestConstants.SADF});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ASDF_SADF, getLog());
     }
 
@@ -704,7 +702,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.error(notifyAdmin, TestConstants.TEST_VALUE_TWO,
-                new Object[] { TestConstants.ONE, TestConstants.TWO });
+          new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_ERROR + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -841,7 +839,7 @@ public class LoggerTest {
      */
     @Test
     public void testInfoMessageKeyVarargDetails() throws IOException {
-        myLogger.info(TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.info(TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_INFO + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -852,7 +850,7 @@ public class LoggerTest {
      */
     @Test
     public void testInfoMessageVarargDetails() throws IOException {
-        myLogger.info(TestConstants.THIS_AND_THAT, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.info(TestConstants.THIS_AND_THAT, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_INFO + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -986,7 +984,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.info(notifyAdmin, TestConstants.THIS_AND_THAT,
-                new Object[] { TestConstants.ASDF, TestConstants.SADF });
+          new Object[]{TestConstants.ASDF, TestConstants.SADF});
         assertEquals(TestConstants.MAIN_INFO + getLoggerInfo() + TestConstants.DASH_ASDF_SADF, getLog());
     }
 
@@ -999,7 +997,7 @@ public class LoggerTest {
     public void testInfoMarkerMessageKeyVarargs() throws IOException {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
-        myLogger.info(notifyAdmin, TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.info(notifyAdmin, TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_INFO + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1136,7 +1134,7 @@ public class LoggerTest {
      */
     @Test
     public void testTraceMessageKeyVarargDetails() throws IOException {
-        myLogger.trace(TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.trace(TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_TRACE + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1147,7 +1145,7 @@ public class LoggerTest {
      */
     @Test
     public void testTraceMessageVarargDetails() throws IOException {
-        myLogger.trace(TestConstants.THIS_AND_THAT, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.trace(TestConstants.THIS_AND_THAT, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_TRACE + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1281,7 +1279,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.trace(notifyAdmin, TestConstants.THIS_AND_THAT,
-                new Object[] { TestConstants.ASDF, TestConstants.SADF });
+          new Object[]{TestConstants.ASDF, TestConstants.SADF});
         assertEquals(TestConstants.MAIN_TRACE + getLoggerInfo() + TestConstants.DASH_ASDF_SADF, getLog());
     }
 
@@ -1295,7 +1293,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.trace(notifyAdmin, TestConstants.TEST_VALUE_TWO,
-                new Object[] { TestConstants.ONE, TestConstants.TWO });
+          new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_TRACE + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1432,7 +1430,7 @@ public class LoggerTest {
      */
     @Test
     public void testWarnMessageKeyVarargDetails() throws IOException {
-        myLogger.warn(TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.warn(TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_WARN + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1443,7 +1441,7 @@ public class LoggerTest {
      */
     @Test
     public void testWarnMessageVarargDetails() throws IOException {
-        myLogger.warn(TestConstants.THIS_AND_THAT, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.warn(TestConstants.THIS_AND_THAT, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_WARN + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1577,7 +1575,7 @@ public class LoggerTest {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
         myLogger.warn(notifyAdmin, TestConstants.THIS_AND_THAT,
-                new Object[] { TestConstants.ASDF, TestConstants.SADF });
+          new Object[]{TestConstants.ASDF, TestConstants.SADF});
         assertEquals(TestConstants.MAIN_WARN + getLoggerInfo() + TestConstants.DASH_ASDF_SADF, getLog());
     }
 
@@ -1590,7 +1588,7 @@ public class LoggerTest {
     public void testWarnMarkerMessageKeyVarargs() throws IOException {
         final Marker notifyAdmin = MarkerFactory.getMarker(TestConstants.NOTIFY_ADMIN);
 
-        myLogger.warn(notifyAdmin, TestConstants.TEST_VALUE_TWO, new Object[] { TestConstants.ONE, TestConstants.TWO });
+        myLogger.warn(notifyAdmin, TestConstants.TEST_VALUE_TWO, new Object[]{TestConstants.ONE, TestConstants.TWO});
         assertEquals(TestConstants.MAIN_WARN + getLoggerInfo() + TestConstants.DASH_ONE_TWO, getLog());
     }
 
@@ -1690,7 +1688,7 @@ public class LoggerTest {
     @Test
     public void testGetMessageVarargs() {
         assertEquals(TestConstants.ONE_AND_TWO,
-                myLogger.getMessage(TestConstants.THIS_AND_THAT, TestConstants.ONE, TestConstants.TWO));
+          myLogger.getMessage(TestConstants.THIS_AND_THAT, TestConstants.ONE, TestConstants.TWO));
     }
 
     /**
@@ -1699,7 +1697,7 @@ public class LoggerTest {
     @Test
     public void testGetMessageKey() {
         assertEquals(TestConstants.ONE_AND_TWO,
-                myLogger.getMessage(TestConstants.TEST_VALUE_TWO, TestConstants.ONE, TestConstants.TWO));
+          myLogger.getMessage(TestConstants.TEST_VALUE_TWO, TestConstants.ONE, TestConstants.TWO));
     }
 
     /**
