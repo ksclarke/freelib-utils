@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 import java.io.BufferedReader;
@@ -38,14 +37,14 @@ public class BufferedFileReader extends BufferedReader {
      * @throws UnsupportedEncodingException If the supplied encoding isn't supported by the JVM
      */
     public BufferedFileReader(final File aFile, final String aEncoding)
-            throws NoSuchFileException, IOException, UnsupportedEncodingException {
+    throws NoSuchFileException, IOException, UnsupportedEncodingException {
         super(new InputStreamReader(Files.newInputStream(Paths.get(aFile.getAbsolutePath())), aEncoding));
     }
 
     /**
      * Gets a {@link Reader} for the supplied file using the UTF-8 encoding.
      *
-     * @param aFile The file for which to get a {#link Reader}
+     * @param aFile The file for which to getI18n a {#link Reader}
      * @return A {#link Reader} that will read using the UTF-8 charset
      * @throws NoSuchFileException If the supplied file couldn't be found
      * @throws UnsupportedEncodingI18nException If the supplied encoding isn't supported by the JVM
@@ -54,7 +53,7 @@ public class BufferedFileReader extends BufferedReader {
     private static Reader getReader(final File aFile) throws NoSuchFileException, IOException {
         try {
             return new InputStreamReader(Files.newInputStream(Paths.get(aFile.getAbsolutePath())),
-                    StandardCharsets.UTF_8.name());
+              StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingException details) {
             throw new UnsupportedEncodingI18nException(details, StandardCharsets.UTF_8);
         }

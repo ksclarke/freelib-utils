@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 import static info.freelibrary.util.Constants.EMPTY;
@@ -36,7 +35,7 @@ import java.util.Set;
 /**
  * Utilities for working with files.
  */
-@SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS })
+@SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY, PMD.GOD_CLASS})
 public final class FileUtils {
 
     /**
@@ -178,7 +177,7 @@ public final class FileUtils {
      * @param aToFile A file or directory destination
      * @throws IOException If there is an exception copying the files or directories
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY})
     public static void copy(final File aFromFile, final File aToFile) throws IOException {
         if (aFromFile.isDirectory() && aToFile.isFile() || aFromFile.isFile() && aToFile.isDirectory()) {
             throw new IOException(LOGGER.getI18n(MessageCodes.UTIL_037, aFromFile, aToFile));
@@ -203,7 +202,7 @@ public final class FileUtils {
      * @param aDir A directory to delete
      * @return True if file was successfully deleted; else, false
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY, PMD.COGNITIVE_COMPLEXITY, PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public static boolean delete(final File aDir) {
         if (aDir.exists() && aDir.listFiles() != null) {
             for (final File file : aDir.listFiles()) {
@@ -314,14 +313,14 @@ public final class FileUtils {
         final Path filePath = Paths.get(aFile.getAbsolutePath());
 
         try (InputStream inStream = Files.newInputStream(filePath);
-                DigestInputStream mdStream = new DigestInputStream(inStream, md);
-                OutputStream devNull = new OutputStream() {
+             DigestInputStream mdStream = new DigestInputStream(inStream, md);
+             OutputStream devNull = new OutputStream() {
 
-                    @Override
-                    public void write(final int aByte) {
-                        // This is intentionally empty
-                    }
-                }) {
+                 @Override
+                 public void write(final int aByte) {
+                     // This is intentionally empty
+                 }
+             }) {
             mdStream.transferTo(devNull); // Drains the stream so we can get the digest
 
             final byte[] digest = md.digest();
@@ -358,7 +357,7 @@ public final class FileUtils {
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing)
-            throws FileNotFoundException {
+    throws FileNotFoundException {
         return listFiles(aDir, aFilter, aDeepListing, (String[]) null);
     }
 
@@ -373,9 +372,9 @@ public final class FileUtils {
      * @return An array of matching files
      * @throws FileNotFoundException If the supplied directory doesn't exist
      */
-    @SuppressWarnings({ PMD.CYCLOMATIC_COMPLEXITY })
+    @SuppressWarnings({PMD.CYCLOMATIC_COMPLEXITY})
     public static File[] listFiles(final File aDir, final FilenameFilter aFilter, final boolean aDeepListing,
-            final String... aIgnoreList) throws FileNotFoundException {
+      final String... aIgnoreList) throws FileNotFoundException {
         final List<File> fileList;
         final String[] ignoreList;
 
@@ -385,7 +384,7 @@ public final class FileUtils {
 
         if (aDir.isFile()) {
             if (aFilter.accept(aDir.getParentFile(), aDir.getName())) {
-                return new File[] { aDir };
+                return new File[]{aDir};
             }
 
             return new File[0];
@@ -526,7 +525,7 @@ public final class FileUtils {
      * @throws FileNotFoundException If the directory for the supplied file path does not exist
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern)
-            throws FileNotFoundException {
+    throws FileNotFoundException {
         return toHashMap(aFilePath, aPattern, (String[]) null);
     }
 
@@ -543,7 +542,7 @@ public final class FileUtils {
      * @throws I18nRuntimeException If a duplicate file path name is discovered
      */
     public static Map<String, List<String>> toHashMap(final String aFilePath, final String aPattern,
-            final String... aIgnoreList) throws FileNotFoundException {
+      final String... aIgnoreList) throws FileNotFoundException {
         final String filePattern = aPattern != null ? aPattern : WILDCARD;
         final RegexFileFilter filter = new RegexFileFilter(filePattern);
         final Map<String, List<String>> fileMap = new HashMap<>();
@@ -580,7 +579,7 @@ public final class FileUtils {
      * @return True if the copy was successful; else, false
      * @throws IOException If there is a problem copying the file
      */
-    @SuppressWarnings({ PMD.N_PATH_COMPLEXITY, PMD.AVOID_FILE_STREAM })
+    @SuppressWarnings({PMD.N_PATH_COMPLEXITY, PMD.AVOID_FILE_STREAM})
     private static boolean copyFile(final File aSourceFile, final File aDestFile) throws IOException {
         boolean success = true;
 
@@ -596,8 +595,8 @@ public final class FileUtils {
 
         if (success) {
             try (FileOutputStream outputStream = new FileOutputStream(aDestFile);
-                    FileInputStream inputStream = new FileInputStream(aSourceFile);
-                    FileChannel source = inputStream.getChannel()) {
+                 FileInputStream inputStream = new FileInputStream(aSourceFile);
+                 FileChannel source = inputStream.getChannel()) {
                 outputStream.getChannel().transferFrom(source, 0, source.size());
             }
         }

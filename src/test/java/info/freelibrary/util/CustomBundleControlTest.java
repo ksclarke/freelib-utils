@@ -1,14 +1,13 @@
-
 package info.freelibrary.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Locale;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Locale;
 
 /**
  * Tests of the <code>XMLBundleControl</code> class.

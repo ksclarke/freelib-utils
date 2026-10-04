@@ -1,12 +1,9 @@
-/**
- * Licensed under the GNU LGPL v.2.1 or later.
- */
-
 package info.freelibrary.util;
 
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -15,17 +12,11 @@ import java.util.ResourceBundle;
  */
 public class I18nObject {
 
-    /**
-     * The internationalized object's internal resource bundle.
-     */
+    /** The internationalized object's internal resource bundle. */
     private final I18nResourceBundle myBundle;
 
-    /**
-     * Empty constructor for an I18nObject.
-     */
-    I18nObject() {
-        myBundle = null;
-    }
+    /** The base name of the internationalized object's resource bundle. */
+    private final String myBundleName;
 
     /**
      * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
@@ -34,8 +25,9 @@ public class I18nObject {
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(final String aBundleName) {
+        myBundleName = aBundleName;
         myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
-                new CustomBundleControl());
+          new CustomBundleControl());
     }
 
     /**
@@ -46,8 +38,9 @@ public class I18nObject {
      * @param aLocale The locale of the desired bundle.
      */
     public I18nObject(final String aBundleName, final Locale aLocale) {
-        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale),
-                new CustomBundleControl());
+        myBundleName = aBundleName;
+        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale), aLocale,
+          new CustomBundleControl());
     }
 
     /**
@@ -162,6 +155,90 @@ public class I18nObject {
         }
 
         return StringUtils.normalizeWS(myBundle.get(aMessageKey, strings));
+    }
+
+    /**
+     * Gets the internationalized value for the supplied message key and locale, using an object array as additional
+     * information.
+     *
+     * @param aLocale A locale for the message
+     * @param aMessageKey A message key
+     * @param aDetails Additional details for the message
+     * @return The internationalized message
+     */
+    protected String getI18n(final Locale aLocale, final String aMessageKey, final Object... aDetails) {
+        Objects.requireNonNull(aMessageKey);
+        final ResourceBundle bundle = bundleFor(aLocale);
+        final String[] strings = new String[aDetails.length];
+
+        for (int index = 0; index < aDetails.length; index++) {
+            if (aDetails[index] instanceof File) {
+                strings[index] = ((File) aDetails[index]).getAbsolutePath();
+            } else if (aDetails[index] != null) {
+                strings[index] = aDetails[index].toString();
+            }
+        }
+
+        if (bundle instanceof I18nResourceBundle) {
+            return StringUtils.normalizeWS(((I18nResourceBundle) bundle).get(aMessageKey, strings));
+        }
+
+        return StringUtils.normalizeWS(StringUtils.format(bundle.getString(aMessageKey), strings));
+    }
+
+    /**
+     * Gets the internationalized message for the supplied locale and key.
+     *
+     * @param aLocale A locale for the message
+     * @param aKey A message key
+     * @return The internationalized message
+     */
+    public String getI18n(final Locale aLocale, final String aKey) {
+        Objects.requireNonNull(aKey);
+        return bundleFor(aLocale).getString(aKey);
+    }
+
+    /**
+     * Gets the internationalized message for the supplied bundle name, locale, and key.
+     *
+     * @param aBundleName A bundle name
+     * @param aLocale A locale for the message
+     * @param aKey A message key
+     * @return The internationalized message
+     */
+    public static String getI18n(final String aBundleName, final Locale aLocale, final String aKey) {
+        Objects.requireNonNull(aKey);
+        return bundleFor(aBundleName, aLocale).getString(aKey);
+    }
+
+    /**
+     * Internal method to get the resource bundle for the supplied locale using the instance's bundle name.
+     *
+     * @param aLocale A locale
+     * @return The resource bundle
+     * @throws IllegalStateException If the bundle name has not been set
+     */
+    private ResourceBundle bundleFor(final Locale aLocale) {
+        Objects.requireNonNull(aLocale);
+
+        if (myBundleName == null) {
+            throw new IllegalStateException();
+        }
+
+        return bundleFor(myBundleName, aLocale);
+    }
+
+    /**
+     * Internal static method to get the resource bundle for the supplied bundle name and locale.
+     *
+     * @param aBundleName A bundle name
+     * @param aLocale A locale
+     * @return The resource bundle
+     */
+    private static ResourceBundle bundleFor(final String aBundleName, final Locale aLocale) {
+        Objects.requireNonNull(aBundleName);
+        Objects.requireNonNull(aLocale);
+        return ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale), aLocale, new CustomBundleControl());
     }
 
     /**

@@ -1,18 +1,17 @@
-
 package info.freelibrary.util;
+
+import static info.freelibrary.util.Constants.COLON;
+import static info.freelibrary.util.Constants.SPACE;
 
 import info.freelibrary.util.warnings.PMD;
 import org.slf4j.MDC;
 import org.slf4j.MDC.MDCCloseable;
 import org.slf4j.Marker;
 
-import static info.freelibrary.util.Constants.COLON;
-import static info.freelibrary.util.Constants.SPACE;
-
 /**
  * Creates a SLF4J logger that is backed by a {@link java.util.ResourceBundle}.
  */
-@SuppressWarnings({ PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT, PMD.CYCLOMATIC_COMPLEXITY })
+@SuppressWarnings({PMD.TOO_MANY_METHODS, PMD.EXCESSIVE_PUBLIC_COUNT, PMD.CYCLOMATIC_COMPLEXITY})
 public class Logger extends I18nObject implements org.slf4j.Logger {
 
     /**
@@ -34,16 +33,6 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * Creates a logger using the supplied class as the name.
      *
      * @param aLogger A SLF4J logger to wrap
-     */
-    Logger(final org.slf4j.Logger aLogger) {
-        super();
-        myLogger = aLogger;
-    }
-
-    /**
-     * Creates a logger using the supplied class as the name.
-     *
-     * @param aLogger A SLF4J logger to wrap
      * @param aBundleName A resource bundle name to use with the logger
      */
     Logger(final org.slf4j.Logger aLogger, final String aBundleName) {
@@ -55,7 +44,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final Marker aMarker, final String aMessage) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -74,7 +63,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -94,7 +83,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -119,7 +108,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -128,7 +117,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                            updateMessage(detail2));
+                      updateMessage(detail2));
                 } else {
                     myLogger.debug(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -138,12 +127,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void debug(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -168,7 +157,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final String aMessage) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(getI18n(aMessage));
                 } else {
@@ -182,7 +171,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final String aMessage, final Object aDetail) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(getI18n(aMessage), aDetail);
                 } else {
@@ -196,7 +185,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final String aMessage, final Object... aDetails) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(getI18n(aMessage), aDetails);
                 } else {
@@ -210,7 +199,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void debug(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.debug(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -220,12 +209,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void debug(final String aMessage, final Throwable aThrowable) {
         if (isDebugEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.debug(getI18n(aMessage), aThrowable);
@@ -245,7 +234,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final Marker aMarker, final String aMessage) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -264,7 +253,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -285,7 +274,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -310,7 +299,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -319,7 +308,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                            updateMessage(detail2));
+                      updateMessage(detail2));
                 } else {
                     myLogger.error(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -329,12 +318,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void error(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -359,7 +348,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final String aMessage) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(getI18n(aMessage));
                 } else {
@@ -373,7 +362,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final String aMessage, final Object aDetail) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(getI18n(aMessage), aDetail);
                 } else {
@@ -387,7 +376,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final String aMessage, final Object... aDetails) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(getI18n(aMessage), aDetails);
                 } else {
@@ -401,7 +390,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void error(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.error(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -411,12 +400,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void error(final String aMessage, final Throwable aThrowable) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.error(getI18n(aMessage), aThrowable);
@@ -438,11 +427,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aThrowable A throwable exception
      * @param aMessage A message with information about the exception
      */
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public void error(final Throwable aThrowable, final String aMessage) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.error(getI18n(aMessage), aThrowable);
@@ -465,11 +454,11 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
      * @param aMessage A message with information about the exception
      * @param aVarargs Additional details about the exception being thrown
      */
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     public void error(final Throwable aThrowable, final String aMessage, final Object... aVarargs) {
         if (isErrorEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.error(getI18n(aMessage, aVarargs), aThrowable);
@@ -564,7 +553,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final Marker aMarker, final String aMessage) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -583,7 +572,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -604,7 +593,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -629,7 +618,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -638,7 +627,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                            updateMessage(detail2));
+                      updateMessage(detail2));
                 } else {
                     myLogger.info(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -648,12 +637,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void info(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -678,7 +667,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final String aMessage) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage));
                 } else {
@@ -692,7 +681,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final String aMessage, final Object aDetail) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), aDetail);
                 } else {
@@ -706,7 +695,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final String aMessage, final Object... aDetails) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), aDetails);
                 } else {
@@ -720,7 +709,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void info(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.info(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -730,12 +719,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void info(final String aMessage, final Throwable aThrowable) {
         if (isInfoEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.info(getI18n(aMessage), aThrowable);
@@ -805,7 +794,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final Marker aMarker, final String aMessage) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -824,7 +813,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -845,7 +834,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -870,7 +859,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -879,7 +868,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                            updateMessage(detail2));
+                      updateMessage(detail2));
                 } else {
                     myLogger.trace(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -889,12 +878,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void trace(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -919,7 +908,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final String aMessage) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(getI18n(aMessage));
                 } else {
@@ -933,7 +922,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final String aMessage, final Object aDetail) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(getI18n(aMessage), aDetail);
                 } else {
@@ -947,7 +936,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final String aMessage, final Object... aDetails) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(getI18n(aMessage), aDetails);
                 } else {
@@ -961,7 +950,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void trace(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.trace(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -971,12 +960,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void trace(final String aMessage, final Throwable aThrowable) {
         if (isTraceEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.trace(getI18n(aMessage), aThrowable);
@@ -996,7 +985,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final Marker aMarker, final String aMessage) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -1015,7 +1004,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final Marker aMarker, final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail = aDetail.toString();
 
                 // We can output different types of EOL based on marker
@@ -1036,7 +1025,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final Marker aMarker, final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final Object[] details = new String[aDetails.length];
 
                 // We can output different types of EOL based on marker
@@ -1061,7 +1050,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final Marker aMarker, final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 final String detail1 = a1stDetail.toString();
                 final String detail2 = a2ndDetail.toString();
 
@@ -1070,7 +1059,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
 
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(aMarker, updateMessage(getI18n(aMessage)), updateMessage(detail1),
-                            updateMessage(detail2));
+                      updateMessage(detail2));
                 } else {
                     myLogger.warn(aMarker, updateMessage(aMessage), updateMessage(detail1), updateMessage(detail2));
                 }
@@ -1080,12 +1069,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void warn(final Marker aMarker, final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 // We can output different types of EOL based on marker
                 addMarker(aMarker);
 
@@ -1110,7 +1099,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final String aMessage) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage));
                 } else {
@@ -1124,7 +1113,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final String aMessage, final Object aDetail) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), aDetail);
                 } else {
@@ -1138,7 +1127,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final String aMessage, final Object... aDetails) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), aDetails);
                 } else {
@@ -1152,7 +1141,7 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
     public void warn(final String aMessage, final Object a1stDetail, final Object a2ndDetail) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     myLogger.warn(getI18n(aMessage), a1stDetail, a2ndDetail);
                 } else {
@@ -1162,12 +1151,12 @@ public class Logger extends I18nObject implements org.slf4j.Logger {
         }
     }
 
-    @SuppressWarnings({ PMD.AVOID_DEEPLY_NESTED_IF_STMTS })
+    @SuppressWarnings({PMD.AVOID_DEEPLY_NESTED_IF_STMTS})
     @Override
     public void warn(final String aMessage, final Throwable aThrowable) {
         if (isWarnEnabled()) {
             try (@SuppressWarnings(PMD.UNUSED_LOCAL_VARIABLE)
-            MDCCloseable closeable = setLineNumber()) {
+                 MDCCloseable closeable = setLineNumber()) {
                 if (hasI18nKey(aMessage)) {
                     if (aThrowable != null) {
                         myLogger.warn(getI18n(aMessage), aThrowable);
