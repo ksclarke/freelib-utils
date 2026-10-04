@@ -25,6 +25,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#avoidfieldnamematchingmethodname */
     public static final String AVOID_FIELD_NAME_MATCHING_METHOD_NAME = "PMD.AvoidFieldNameMatchingMethodName";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#avoidfieldnamematchingtypename */
+    public static final String AVOID_FIELD_NAME_MATCHING_TYPE_NAME = "PMD.AvoidFieldNameMatchingTypeName";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#avoidfilestream */
     public static final String AVOID_FILE_STREAM = "PMD.AvoidFileStream";
 
@@ -55,6 +58,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_documentation.html#commentsize */
     public static final String COMMENT_SIZE = "PMD.CommentSize";
 
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_errorprone.html#compareobjectswithequals */
+    public static final String COMPARE_OBJECTS_WITH_EQUALS = "PMD.CompareObjectsWithEquals";
+
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_performance.html#consecutiveliteralappends */
     public static final String CONSECUTIVE_LITERAL_APPENDS = "PMD.ConsecutiveLiteralAppends";
 
@@ -76,6 +82,9 @@ public final class PMD {
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_codestyle.html#emptymethodinabstractclassshouldbeabstract */
     public static final String EMPTY_METHOD_IN_ABSTRACT_CLASS_SHOULD_BE_ABSTRACT =
       "PMD.EmptyMethodInAbstractClassShouldBeAbstract";
+
+    /** Cf. https://docs.pmd-code.org/latest/pmd_rules_java_design.html#exceptionasflowcontrol */
+    public static final String EXCEPTION_AS_FLOW_CONTROL = "PMD.ExceptionAsFlowControl";
 
     /** Cf. https://docs.pmd-code.org/latest/pmd_rules_apex_design.html#excessiveclasslength */
     public static final String EXCESSIVE_CLASS_LENGTH = "PMD.ExcessiveClassLength";
