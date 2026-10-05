@@ -20,27 +20,25 @@ public class I18nObject {
 
     /**
      * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
-     * something specific to the package that's extending the <code>I18nObject</code>.
+     * something specific to the package that's extending the {@code I18nObject}.
      *
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      */
     public I18nObject(final String aBundleName) {
-        myBundleName = aBundleName;
-        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.getDefault()),
-          new CustomBundleControl());
+        myBundleName = Objects.requireNonNull(aBundleName);
+        myBundle = (I18nResourceBundle) bundleFor(aBundleName, Locale.getDefault());
     }
 
     /**
      * Constructor for an I18nObject that takes a {@link ResourceBundle} name as an argument. The name should be
-     * something specific to the package that's extending the <code>I18nObject</code>.
+     * something specific to the package that's extending the {@code I18nObject}.
      *
      * @param aBundleName The name of a {@link ResourceBundle} that gets lower cased automatically
      * @param aLocale The locale of the desired bundle.
      */
     public I18nObject(final String aBundleName, final Locale aLocale) {
-        myBundleName = aBundleName;
-        myBundle = (I18nResourceBundle) ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale), aLocale,
-          new CustomBundleControl());
+        myBundleName = Objects.requireNonNull(aBundleName);
+        myBundle = (I18nResourceBundle) bundleFor(aBundleName, aLocale);
     }
 
     /**
@@ -127,13 +125,7 @@ public class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final File... aFileArray) {
-        final String[] fileNames = new String[aFileArray.length];
-
-        for (int index = 0; index < fileNames.length; index++) {
-            fileNames[index] = aFileArray[index].getAbsolutePath();
-        }
-
-        return StringUtils.normalizeWS(myBundle.get(aMessageKey, fileNames));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, detailsToStrings((Object[]) aFileArray)));
     }
 
     /**
@@ -144,17 +136,7 @@ public class I18nObject {
      * @return The internationalized message
      */
     protected String getI18n(final String aMessageKey, final Object... aObjArray) {
-        final String[] strings = new String[aObjArray.length];
-
-        for (int index = 0; index < aObjArray.length; index++) {
-            if (aObjArray[index] instanceof File) {
-                strings[index] = ((File) aObjArray[index]).getAbsolutePath();
-            } else {
-                strings[index] = aObjArray[index].toString();
-            }
-        }
-
-        return StringUtils.normalizeWS(myBundle.get(aMessageKey, strings));
+        return StringUtils.normalizeWS(myBundle.get(aMessageKey, detailsToStrings(aObjArray)));
     }
 
     /**
@@ -166,24 +148,23 @@ public class I18nObject {
      * @param aDetails Additional details for the message
      * @return The internationalized message
      */
-    protected String getI18n(final Locale aLocale, final String aMessageKey, final Object... aDetails) {
-        Objects.requireNonNull(aMessageKey);
-        final ResourceBundle bundle = bundleFor(aLocale);
-        final String[] strings = new String[aDetails.length];
+    public String getI18n(final Locale aLocale, final String aMessageKey, final Object... aDetails) {
+        return getI18n(bundleFor(aLocale), aMessageKey, aDetails);
+    }
 
-        for (int index = 0; index < aDetails.length; index++) {
-            if (aDetails[index] instanceof File) {
-                strings[index] = ((File) aDetails[index]).getAbsolutePath();
-            } else if (aDetails[index] != null) {
-                strings[index] = aDetails[index].toString();
-            }
-        }
-
-        if (bundle instanceof I18nResourceBundle) {
-            return StringUtils.normalizeWS(((I18nResourceBundle) bundle).get(aMessageKey, strings));
-        }
-
-        return StringUtils.normalizeWS(StringUtils.format(bundle.getString(aMessageKey), strings));
+    /**
+     * Gets the internationalized value for the supplied bundle name, locale, and message key, using an object array as
+     * additional information.
+     *
+     * @param aMessageBundle A message bundle name
+     * @param aLocale A locale for the message
+     * @param aMessageKey A message key
+     * @param aDetails Additional details for the message
+     * @return The internationalized message
+     */
+    public String getI18n(final String aMessageBundle, final Locale aLocale, final String aMessageKey,
+      final Object... aDetails) {
+        return getI18n(bundleFor(aMessageBundle, aLocale), aMessageKey, aDetails);
     }
 
     /**
@@ -195,7 +176,7 @@ public class I18nObject {
      */
     public String getI18n(final Locale aLocale, final String aKey) {
         Objects.requireNonNull(aKey);
-        return bundleFor(aLocale).getString(aKey);
+        return StringUtils.normalizeWS(bundleFor(aLocale).getString(aKey));
     }
 
     /**
@@ -207,8 +188,49 @@ public class I18nObject {
      * @return The internationalized message
      */
     public static String getI18n(final String aBundleName, final Locale aLocale, final String aKey) {
-        Objects.requireNonNull(aKey);
-        return bundleFor(aBundleName, aLocale).getString(aKey);
+        return getI18n(bundleFor(aBundleName, aLocale), aKey);
+    }
+
+    /**
+     * Internal method to get the internationalized value from the supplied bundle, using an object array as additional
+     * information.
+     *
+     * @param aBundle A resource bundle
+     * @param aMessageKey A message key
+     * @param aDetails Additional details for the message
+     * @return The internationalized message
+     */
+    private static String getI18n(final ResourceBundle aBundle, final String aMessageKey, final Object... aDetails) {
+        Objects.requireNonNull(aBundle);
+        Objects.requireNonNull(aMessageKey);
+        final String[] strings = detailsToStrings(aDetails);
+
+        if (aBundle instanceof I18nResourceBundle) {
+            return StringUtils.normalizeWS(((I18nResourceBundle) aBundle).get(aMessageKey, strings));
+        }
+
+        return StringUtils.normalizeWS(StringUtils.format(aBundle.getString(aMessageKey), strings));
+    }
+
+    /**
+     * Converts message details to strings for message formatting.
+     *
+     * @param aDetails Message details
+     * @return String versions of the supplied details
+     */
+    private static String[] detailsToStrings(final Object... aDetails) {
+        Objects.requireNonNull(aDetails);
+        final String[] strings = new String[aDetails.length];
+
+        for (int index = 0; index < aDetails.length; index++) {
+            if (aDetails[index] instanceof File file) {
+                strings[index] = file.getAbsolutePath();
+            } else if (aDetails[index] != null) {
+                strings[index] = aDetails[index].toString();
+            }
+        }
+
+        return strings;
     }
 
     /**
@@ -238,7 +260,7 @@ public class I18nObject {
     private static ResourceBundle bundleFor(final String aBundleName, final Locale aLocale) {
         Objects.requireNonNull(aBundleName);
         Objects.requireNonNull(aLocale);
-        return ResourceBundle.getBundle(aBundleName.toLowerCase(aLocale), aLocale, new CustomBundleControl());
+        return ResourceBundle.getBundle(aBundleName.toLowerCase(Locale.ENGLISH), aLocale, new CustomBundleControl());
     }
 
     /**
