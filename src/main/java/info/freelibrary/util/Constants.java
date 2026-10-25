@@ -35,6 +35,21 @@ public final class Constants {
     /** A constant for an ampersand character. */
     public static final String AMPERSAND = "&";
 
+    /** A constant for an @ sign. */
+    public static final String AT_SIGN = "@";
+
+    /** A constant for an open bracket. */
+    public static final String OPEN_BRACKET = "[";
+
+    /** A constant for a close bracket. */
+    public static final String CLOSE_BRACKET = "]";
+
+    /** A constant for an open paren. */
+    public static final String OPEN_PAREN = "(";
+
+    /** A constant for a close paren. */
+    public static final String CLOSE_PAREN = ")";
+
     /** A constant for a slash. */
     public static final String SLASH = "/";
 
@@ -106,6 +121,12 @@ public final class Constants {
 
     /** A constant for an underscore character. */
     public static final char UNDERSCORE_CHAR = '_';
+
+    /** A constant for an open bracket character. */
+    public static final char OPEN_BRACKET_CHAR = '[';
+
+    /** A constant for a close bracket character. */
+    public static final char CLOSE_BRACKET_CHAR = ']';
 
     /** A constant for the string representation of Boolean.TRUE. */
     public static final String TRUE = "true";

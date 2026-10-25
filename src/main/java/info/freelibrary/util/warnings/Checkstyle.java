@@ -1,4 +1,3 @@
-
 package info.freelibrary.util.warnings;
 
 /**
@@ -22,6 +21,9 @@ public final class Checkstyle {
 
     /** Cf. <a href="https://checkstyle.sourceforge.io/checks/misc/uncommentedmain.html">Checkstyle</a>. */
     public static final String UNCOMMENTED_MAIN = "checkstyle:UncommentedMain";
+
+    /** Cf. <a href="https://checkstyle.sourceforge.io/checks/coding/missingswitchdefault.html">Checkstyle</a>. */
+    public static final String MISSING_SWITCH_DEFAULT = "checkstyle:MissingSwitchDefault";
 
     /**
      * Creates a new Checkstyle warnings class.

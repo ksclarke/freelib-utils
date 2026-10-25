@@ -29,7 +29,7 @@
 
     <developers>
         <developer>
-            <email>ksclarke@ksclarke.io</email>
+            <email>my.freelib-utils@kevinclarke.info</email>
             <name>Kevin S. Clarke</name>
             <url>http://kevinclarke.info</url>
             <roles>
@@ -120,7 +120,7 @@
     <parent>
         <artifactId>freelib-parent</artifactId>
         <groupId>info.freelibrary</groupId>
-        <version>14.3.0</version>
+        <version>14.3.5</version>
     </parent>
 
 </project>
