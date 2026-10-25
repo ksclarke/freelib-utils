@@ -1,4 +1,3 @@
-
 package info.freelibrary.util;
 
 /**
@@ -30,8 +29,26 @@ public final class Constants {
     /** A constant for a colon. */
     public static final String COLON = ":";
 
+    /** A constant for a colon and space. */
+    public static final String COLON_SPACE = ": ";
+
     /** A constant for an ampersand character. */
     public static final String AMPERSAND = "&";
+
+    /** A constant for an @ sign. */
+    public static final String AT_SIGN = "@";
+
+    /** A constant for an open bracket. */
+    public static final String OPEN_BRACKET = "[";
+
+    /** A constant for a close bracket. */
+    public static final String CLOSE_BRACKET = "]";
+
+    /** A constant for an open paren. */
+    public static final String OPEN_PAREN = "(";
+
+    /** A constant for a close paren. */
+    public static final String CLOSE_PAREN = ")";
 
     /** A constant for a slash. */
     public static final String SLASH = "/";
@@ -44,6 +61,12 @@ public final class Constants {
 
     /** A constant for a comma. */
     public static final String COMMA = ",";
+
+    /** A constant for a comma and space. */
+    public static final String COMMA_SPACE = ", ";
+
+    /** A constant for a semicolon. */
+    public static final String SEMICOLON = ";";
 
     /** A constant for a period. */
     public static final String PERIOD = ".";
@@ -77,6 +100,33 @@ public final class Constants {
 
     /** A constant for a dot character. */
     public static final char DOT_CHAR = '.';
+
+    /** A constant for a comma character. */
+    public static final char COMMA_CHAR = ',';
+
+    /** A constant for a vertical bar character. */
+    public static final char VERTICAL_BAR_CHAR = '|';
+
+    /** A constant for a slash character. */
+    public static final char SLASH_CHAR = '/';
+
+    /** A constant for an equals character. */
+    public static final char EQUALS_CHAR = '=';
+
+    /** A constant for a colon character. */
+    public static final char COLON_CHAR = ':';
+
+    /** A constant for a semicolon character. */
+    public static final char SEMICOLON_CHAR = ';';
+
+    /** A constant for an underscore character. */
+    public static final char UNDERSCORE_CHAR = '_';
+
+    /** A constant for an open bracket character. */
+    public static final char OPEN_BRACKET_CHAR = '[';
+
+    /** A constant for a close bracket character. */
+    public static final char CLOSE_BRACKET_CHAR = ']';
 
     /** A constant for the string representation of Boolean.TRUE. */
     public static final String TRUE = "true";
